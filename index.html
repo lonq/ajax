@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="fullpage">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content=" ">
+    <title>首页</title>
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/iconfont/iconfont.css" rel="stylesheet">
+    <script src="js/flexible.js"></script>
+    <style type="text/css">
+        .pull-down,
+        .pull-up {
+            padding: .266667rem;
+            font-size: .373333rem;
+            text-align: center;
+            color: #999;
+        }
+
+        .v-swiper {
+            overflow: auto;
+        }
+
+        .v-swiper,
+        .w {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .swiper-slide {
+            height: auto;
+        }
+
+        .list+.list {
+            margin-top: 0;
+        }
+
+        .list .item:first-child {
+            margin-top: 0;
+        }
+        
+        .tabs .btn.active .icon.iconfont-homepage:before {
+            content: "\e7ce";
+        }
+        .tabs .btn.active .icon.iconfont-product:before {
+            content: "\e7e6";
+        }
+        .tabs .btn.active .icon.iconfont-file:before {
+            content: "\e7c8";
+        }
+        .tabs .btn.active .icon.iconfont-user:before {
+            content: "\e7ea";
+        }
+    </style>
+</head>
+
+<body>
+    <div class="v-swiper">
+        <div class="swiper-wrapper w">
+            <div class="swiper-slide d">
+                <div class="pull-down" style="display: none;">下拉更新</div>
+                <div class="slide-picture"></div>
+                <div class="list title">
+                    <div class="item vertical-center">
+                        <div class="item-body">
+                            <p>产品列表</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="list main"></div>
+                <div class="pull-up">上拉加载更多</div>
+            </div>
+        </div>
+    </div>
+
+    <footer id="footer">
+        <ul class="footer affix tabs tabs-vertical text-center">
+            <li>
+                <a class="btn btn-clear active" href="index.html">
+                    <i class="icon iconfont-homepage"></i><span class="tip">首页</span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-clear" href="productList.html">
+                    <i class="icon iconfont-product"><span class="badge badge-danger">6</span></i><span class="tip">产品</span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-clear" href="articleList.html">
+                    <i class="icon iconfont-file"></i><span class="tip">文章</span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-clear" href="user.html">
+                    <i class="icon iconfont-user"></i><span class="tip">我</span>
+                </a>
+            </li>
+        </ul>
+    </footer>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/touch.min.js"></script>
+    <script src="js/checkLogin.js"></script>
+    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/timeago.js-master/dist/timeago.min.js"></script>
+    <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/zepto.picLazyLoad.min.js"></script>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        var _container = $('.v-swiper');
+        var _nav = $('.slide-picture');
+        var _footer = $('.footer');
+        var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
+        var page = 1;
+        var loadFlag = true;
+        var loading;
+
+        var targetSlideObj = $('.slide-picture');
+        var targetObj = $('.list.main'); //目标数据容器
+        var pullDown = $('.pull-down');
+        var pullUp = $('.pull-up');
+
+        //初始化y轴滚动
+        var vSwiper = new Swiper('.v-swiper', {
+            direction: 'vertical',
+            slidesPerView: 'auto',
+            mousewheelControl: true,
+            freeMode: true,
+            observer: true,
+            observeParents: true,
+            scrollbar: {
+                el: '.v-swiper-scrollbar'
+            },
+            on: {
+                touchMove: function (event) {
+                    positionJudge();
+                },
+                touchEnd: function (event) {
+                    pullDownAction();
+                    pullUpAction();
+                    return false;
+                }
+            }
+        });
+
+        $(function () {
+            // 屏蔽控制台消息
+            console.log = function () {
+                return
+            };
+            // 插入幻灯
+            getSlide(targetSlideObj);
+            // 默认加载第一选项第一屏数据
+            getData(targetObj);
+            // 修正容器高度
+            fixedContainerH();
+        });
+        //修正容器高度
+        function fixedContainerH() {
+            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
+        }
+        //通过滑动距离，判断滑动状态
+        function positionJudge() {
+            if (vSwiper.translate < 50 && vSwiper.translate > 0) {
+                pullDown.show().html('下拉更新');
+            } else if (vSwiper.translate > 50) {
+                pullDown.show().html('释放更新');
+            }
+        }
+        //下拉更新
+        function pullDownAction() {
+            if (vSwiper.translate >= 50) {
+                pullDown.show().html('<i class="iconfont-loading animation-spinner"></i> 更新中...');
+                loadFlag = true;
+                updateData(targetObj);
+                pullDown.hide();
+                pullUp.show();
+            } else if (vSwiper.translate >= 0 && vSwiper.translate < 50) {
+                pullDown.hide();
+            }
+        }
+        //上拉加载
+        function pullUpAction() {
+            var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
+            var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
+            if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
+                if (loadFlag) {
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
+                } else {
+                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
+                }
+                //加载数据
+                page++;
+                getData(targetObj);
+                if (loadFlag) {
+                    pullUp.html('上拉加载更多');
+                }
+            }
+        }
+
+        // 幻灯
+        function getSlide(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=slides',
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    // 无数据
+                    if (reponse != 0) {
+                        // 有数据
+                        var str = '';
+                        var list = reponse;
+                        str += '<div class="swiper-container">' +
+                            '<div class="swiper-wrapper">';
+                        $.each(list, function (i, k) {
+                            var linkurl = k.linkurl;
+                            if (linkurl != '') {
+                                linkurl = linkurl;
+                            } else {
+                                linkurl = 'javascript:;'
+                            }
+                            str += '<div class="swiper-slide"><a href=' + linkurl +
+                                '><img class="img-responsive" src="' + k.pictures + '"></a></div>';
+                        });
+                        str += '</div>' +
+                            '<div class="swiper-pagination"></div>';
+                        '</div>';
+                        target.html(str);
+                        // 幻灯
+                        var slidePicture = new Swiper('.slide-picture>.swiper-container', { //子swiper
+                            observer: true, //修改swiper自己或子元素时，自动初始化swiper
+                            observeParents: true, //修改swiper的父元素时，自动初始化swiper
+                            pagination: {
+                                el: '.swiper-pagination'
+                            }
+                        });
+                    }
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+
+        // 产品列表
+        function getData(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=lists',
+                data: {
+                    page: page
+                },
+                timeout: 150000,
+                dataType: 'json',
+                beforeSend: function () {
+                    loadingMsg('加载中...');
+                },
+                success: function (reponse) {
+                    loading.close();
+                    // 无数据
+                    if (reponse == 0) {
+                        page = 1;
+                        loadFlag = false;
+                        pullUp.hide().html();
+                        pullDown.hide();
+                        noData('default', '什么也没找到~');
+                    } else {
+                        // 有数据
+                        var str = '';
+                        var maxlistsid = reponse.maxid;
+                        var maxPageCount = reponse.pagecount;
+                        localStorage.setItem('oldProductListsID', maxlistsid);
+                        var list = reponse.rows;
+                        if (page > maxPageCount) {
+                            page = maxPageCount;
+                            loadFlag = false;
+                        }
+                        $.each(list, function (i, k) {
+                            var linkurl = k.linkurl;
+                            if (linkurl != '') {
+                                linkurl = linkurl;
+                            } else {
+                                linkurl = 'product.html?ID=' + k.id
+                            }
+                            var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" :
+                                k.sharing;
+                            var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) +
+                                "万" : k.comments;
+                            str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
+                                '<div class="thumb thumb-md">';
+                            if (k.pictures.constructor === Array) {
+                                str += '<img src="' + k.pictures[0] +
+                                    '" style="width: 3.68rem;height: 3.68rem;">';
+                            } else {
+                                str += '<img src="' + k.pictures +
+                                    '" style="width: 3.68rem;height: 3.68rem;">';
+                            }
+                            str += '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
+                                '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
+                                '<p class="text-lg text-danger"><small>¥</small>' + k.price +
+                                '</p>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
+                                '<li><i class="icon iconfont-commenting"></i> ' + comments +
+                                '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        //有数据的时候要做判断
+                        //如果当前是第一页，则把容器中的内容即为请求数据
+                        //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
+                        if (loadFlag) {
+                            if (page == 1) {
+                                target.html(str);
+                            } else {
+                                $(str).appendTo(target);
+                            }
+                        }
+                    }
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+
+        //更新产品列表
+        function updateData(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=updatelists',
+                timeout: 15000,
+                dataType: 'json',
+                data: {
+                    maxlistsid: localStorage.getItem('oldProductListsID')
+                },
+                success: function (reponse) {
+                    if (reponse != 0) {
+                        // 有数据
+                        var str = '';
+                        var total = reponse.total;
+                        var listid = reponse.maxid;
+                        var list = reponse.rows;
+                        $.each(list, function (i, k) {
+                            var linkurl = k.linkurl;
+                            if (linkurl != '') {
+                                linkurl = linkurl;
+                            } else {
+                                linkurl = 'product.html?ID=' + k.id
+                            }
+                            var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" :
+                                k.sharing;
+                            var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) +
+                                "万" : k.comments;
+                            str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
+                                '<div class="thumb thumb-md">';
+                            if (k.pictures.constructor === Array) {
+                                str += '<img src="' + k.pictures[0] + '">';
+                            } else {
+                                str += '<img src="' + k.pictures + '">';
+                            }
+                            str += '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
+                                '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
+                                '<p class="text-lg text-danger"><small>¥</small>' + k.price +
+                                '</p>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
+                                '<li><i class="icon iconfont-commenting"></i> ' + comments +
+                                '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        target.prepend(str);
+                        localStorage.setItem('oldProductListsID', listid);
+                        msg('更新了' + total + '条数据');
+                    }
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+        // 消息提示
+        function loadingMsg(str) {
+            loading = $(document).dialog({
+                type: 'toast',
+                infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
+                infoText: str
+            });
+        }
+        // 消息提示
+        function msg(str) {
+            $(document).dialog({
+                type: 'notice',
+                infoText: str,
+                autoClose: 1500,
+                position: 'bottom'
+            });
+        }
+        // 消息提示
+        function noData(type, text) {
+            var color, icon;
+            switch (type) {
+                case 'primary':
+                    color = 'msg msg-primary';
+                    icon = 'icon iconfont-correctcircle';
+                    break;
+                default:
+                    color = 'msg msg-default';
+                    icon = 'icon iconfont-infocircle';
+            }
+            var str = '';
+            str += '<div class="' + color + '">';
+            str += '<h1><i class="' + icon + '"></i></h1>' +
+                '<h3 class="text-center">' + text + '</h3>' +
+                '</div>';
+            targetObj.html(str);
+        }
+        //]]>
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="fullpage">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content=" ">
+    <title>ajax上拉加载、下拉刷新</title>
+    <script src="js/flexible.js"></script>
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="js/Swiper-3.3.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/iconfont/iconfont.css" rel="stylesheet">
+    <style type="text/css">
+        #nav {
+            padding-top: 1.28rem;
+            width: 100%;
+            height: 1.28rem;
+            background-color: #fff;
+        }
+
+        #footer {
+            padding-bottom: 1.44rem;
+            width: 100%;
+            height: 1.44rem;
+        }
+
+        .tab {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 989;
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            height: 1.28rem;
+            line-height: 1.28rem;
+            width: 100%;
+        }
+
+        .tab li {
+            flex: 1;
+            min-width: 0;
+            color: #666;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .tab li a {
+            display: inline-block;
+            padding: 0 .133333rem;
+            height: 1.28rem;
+            color: #666;
+            font-size: .373333rem;
+        }
+
+        .tab li.active a {
+            border-bottom: 2px solid #1edbb5;
+            color: #1edbb5;
+        }
+
+        .pull-down,
+        .pull-up {
+            padding: .266667rem;
+            font-size: .373333rem;
+            text-align: center;
+            color: #999;
+        }
+
+        .x-swiper {
+            overflow: auto;
+        }
+
+        .x-swiper,
+        .w {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .swiper-slide {
+            height: auto;
+        }
+
+        .list+.list {
+            margin-top: 0;
+        }
+
+        .list .item:first-child {
+            margin-top: 0;
+        }
+
+        .list .item:active {
+            background-color: #ececec;
+        }
+
+        .img-module-wrap {
+            width: 100%;
+            height: auto;
+            background-size: 100% auto;
+            background-color: #dcdcdc;
+        }
+    </style>
+</head>
+
+<body>
+    <nav id="nav">
+        <ul class="tab border-bottom">
+            <li><a href="javascript:;">详情</a></li>
+            <li><a href="javascript:;">评论</a></li>
+            <li><a href="javascript:;">推荐</a></li>
+        </ul>
+    </nav>
+    <div class="x-swiper">
+        <div class="swiper-wrapper w">
+            <div class="swiper-slide d">
+                <div class="pull-down" style="display: none;">下拉更新</div>
+                <div class="y-swiper">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide list"></div>
+                        <div class="swiper-slide list"></div>
+                        <div class="swiper-slide list"></div>
+                    </div>
+                </div>
+                <div class="pull-up">上拉加载更多</div>
+            </div>
+        </div>
+        <div class="swiper-scrollbar x-swiper-scrollbar"></div>
+    </div>
+    <footer id="footer">
+        <div class="footer double-btn">
+            <div class="btn-left"><a class="btn btn-default btn-block btn-full text-md" href="#">返回</a></div>
+            <div class="btn-right"><a class="btn btn-danger btn-block btn-full text-md" href="#">立即前往</a></div>
+        </div>
+    </footer>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/touch.min.js"></script>
+    <script src="js/Swiper-3.3.1/dist/js/swiper.min.js"></script>
+    <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <!-- <script src="js/zepto.picLazyLoad.min.js"></script> -->
+    <script type="text/javascript">
+        //<![CDATA[
+        var _container = $('.x-swiper');
+        var _nav = $('#nav');
+        var _navH = _nav.height() / 37.5;
+        var _footer = $('#footer');
+        var _footerH = _footer.height() / 37.5;
+        var _offsetHeight = _navH + _footerH; //滑动束缚容器的偏移高度
+
+        var page = 1; //初始加载页码
+        var loadFlag = true; //执行开关
+        var isEnd = false;
+        var targetObj = $('.swiper-slide.list'); //目标数据容器
+        var pullDown = $('.pull-down');
+        var pullUp = $('.pull-up');
+        //初始化X轴滚动
+        var xSwiper = new Swiper('.x-swiper', {
+            direction: 'vertical-center',
+            scrollbar: '.x-swiper-scrollbar',
+            scrollbarHide: true,
+            slidesPerView: 'auto',
+            mousewheelControl: true,
+            freeMode: true,
+            onTouchMove: function (swiper) {
+                positionJudge();
+            },
+            onTouchEnd: function (swiper) {
+                pullDownAction();
+                pullUpAction();
+                return false;
+            }
+        });
+        //初始化详情幻灯
+        var detailsSwiper = new Swiper('.details-swiper', {
+            pagination: '.details-swiper-pagination'
+        });
+        //滑动切换选项卡
+        var ySwiper = new Swiper('.y-swiper', {
+            onTransitionEnd: function (swiper) {
+                $('.w').css('transform', 'translate3d(0px, 0px, 0px)');
+                $('.y-swiper .swiper-slide-active').css('height', 'auto').siblings('.swiper-slide').css('height', '0px');
+                xSwiper.update();
+                $('.tab>li').eq(ySwiper.activeIndex).addClass('active').siblings('li').removeClass('active');
+                getData(ySwiper.activeIndex);
+            }
+        });
+        $(function () {
+            //点击切换选项卡
+            $('.tab>li').on('tap', function () {
+                _t = $(this);
+                _t.addClass('active').siblings().removeClass('active');
+                ySwiper.slideTo(_t.index(), 500, false)
+                $('.w').css('transform', 'translate3d(0px, 0px, 0px)');
+                $('.y-swiper .swiper-slide-active').css('height', 'auto').siblings('.swiper-slide').css('height', '0px');
+                xSwiper.update();
+                getData(_t.index());
+            });
+            //修正容器高度
+            fixedContainerH();
+            // 默认加载第一选项第一屏数据
+            getData(0);
+        });
+        //修正容器高度
+        function fixedContainerH() {
+            $('.x-swiper, .w').css('height', 'calc(100vh - ' + _offsetHeight + 'rem)');
+        }
+        //通过滑动距离，判断滑动状态
+        function positionJudge() {
+            if (xSwiper.translate < 50 && xSwiper.translate > 0) {
+                pullDown.show().html('下拉更新');
+            } else if (xSwiper.translate > 50) {
+                pullDown.show().html('释放更新');
+            }
+        }
+        //下拉更新
+        function pullDownAction() {
+            if (xSwiper.translate >= 50) {
+                pullDown.show().html('<i class="iconfont-loading animation-spinner"></i> 更新中...');
+                loadFlag = true;
+                setTimeout(function () {
+                    updateData(ySwiper.activeIndex);
+                    pullDown.hide();
+                    pullUp.show();
+                    //更新操作
+                    xSwiper.update(); //重新计算高度;
+                }, 1000);
+            } else if (xSwiper.translate >= 0 && xSwiper.translate < 50) {
+                pullDown.hide();
+            }
+        }
+        //上拉加载
+        function pullUpAction() {
+            var _viewHeight = $('.swiper-wrapper').get(0).offsetHeight;
+            var _contentHeight = $('.swiper-slide').get(0).offsetHeight;
+            if (xSwiper.translate < 0 && xSwiper.translate <= (_viewHeight - (_contentHeight + _offsetHeight))) {
+                if (loadFlag) {
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
+                } else {
+                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
+                }
+                setTimeout(function () {
+                    //加载数据
+                    page++;
+                    getData(ySwiper.activeIndex);
+                    if (loadFlag) {
+                        pullUp.html('上拉加载更多');
+                    }
+                    xSwiper.update(); // 重新计算高度;
+                }, 400);
+            }
+        }
+        // 获取数据
+        function getData(target) {
+            $('.tab>li').eq(target).addClass('active').siblings('li').removeClass('active');
+            ySwiper.slideTo(target, 500, false);
+            if (target == 0) {
+                getDetails(target);
+            } else if (target == 1) {
+                getComments(target);
+            } else if (target == 2) {
+                getRecommendation(target);
+            } else {
+                getDetails(target);
+            }
+        }
+        // 更新数据
+        function updateData(target) {
+            if (target == 0) {
+                updateDetails(target);
+            } else if (target == 1) {
+                updateComments(target);
+            } else if (target == 2) {
+                updateRecommendations(target);
+            } else {
+                updateDetails(target);
+            }
+        }
+        // 产品详情
+        function getDetails(target) {
+            pullUp.hide();
+            pullDown.hide();
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=details',
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    var str = '';
+                    str += '<div class="details-swiper">' +
+                        '<div class="swiper-wrapper">' +
+                        '<div class="swiper-slide">' +
+                        '<img class="img-responsive" src="uploadfiles/products/product-01.jpg">' +
+                        '</div>' +
+                        '<div class="swiper-slide">' +
+                        '<img class="img-responsive" src="uploadfiles/products/product-02.jpg">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="swiper-pagination details-swiper-pagination"></div>' +
+                        '</div>';
+                    //有数据的时候要做判断
+                    //如果当前是第一页，则把容器中的内容即为请求数据
+                    //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
+                    targetObj.eq(target).html(str);
+                    xSwiper.update();
+                },
+                error: function (xhr, type, errorThrown) {
+                    targetObj.eq(target).html('加载失败！');
+                }
+            });
+        };
+
+        // 评论
+        function getComments(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=comments',
+                data: {
+                    page: page
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    var maxcommentsid = reponse.maxcommentsid;
+                    var maxPageCount = reponse.pagecount;
+                    var data = reponse.rows;
+                    localStorage.setItem("oldCommentsID", maxcommentsid);
+                    if (page > maxPageCount) {
+                        loadFlag = false;
+                    }
+                    // 无数据
+                    if (reponse.status === 200) {
+                        // 首次加载无数据
+                        pullUp.hide();
+                        targetObj.eq(target).html('暂无记录');
+                    } else {
+                        // 有数据
+                        var str = '';
+                        $.each(data, function (i, k) {
+                            str += '<div class="item item-avatar">' +
+                                '<div class="avatar">' +
+                                '<img src=' + k.avatar + '>' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis">' + k.nickname + '</h4>' +
+                                '<p class="text-muted"><small>' + k.addtime + '</small></p>' +
+                                '<p class="desc">' + k.comment + '</p>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                        //有数据的时候要做判断
+                        //如果当前是第一页，则把容器中的内容即为请求数据
+                        //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
+                        if (loadFlag) {
+                            if (page == 1) {
+                                targetObj.eq(target).html(str);
+                            } else {
+                                $(str).appendTo(targetObj.eq(target));
+                            }
+                        }
+                    }
+                    xSwiper.update();
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+
+        //更新评论
+        function updateComments(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=updatecomments',
+                timeout: 15000,
+                dataType: 'json',
+                data: {
+                    maxcommentsid: localStorage.getItem("oldCommentsID")
+                },
+                success: function (reponse) {
+                    var total = reponse.total;
+                    var commentsid = reponse.maxid;
+                    var data = reponse.rows;
+                    if (reponse != 0) {
+                        // 有数据
+                        var str = '';
+                        $.each(data, function (i, k) {
+                            str += '<div class="item item-avatar">' +
+                                '<div class="avatar">' +
+                                '<img src=' + k.avatar + '>' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis">' + k.nickname + '</h4>' +
+                                '<p class="text-muted"><small>' + k.addtime + '</small></p>' +
+                                '<p class="desc">' + k.comment + '</p>' +
+                                '</div>' +
+                                '</div>';
+                        });
+                        targetObj.eq(target).prepend(str);
+                        xSwiper.update();
+                        localStorage.setItem("oldCommentsID", commentsid);
+                        msg('更新了' + total + '条数据');
+                    }
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+
+        // 推荐
+        function getRecommendation(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=recommendations',
+                data: {
+                    page: page
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    var maxrecommendationsid = reponse.maxid;
+                    var maxPageCount = reponse.pagecount;
+                    var data = reponse.rows;
+                    localStorage.setItem("oldRecommendationsID", maxrecommendationsid);
+                    if (page > maxPageCount) {
+                        loadFlag = false;
+                    }
+                    // 无数据
+                    if (reponse.status === 200) {
+                        // 首次加载无数据
+                        pullUp.hide();
+                        targetObj.eq(target).html('暂无记录');
+                    } else {
+                        // 有数据
+                        var str = '';
+                        $.each(data, function (i, k) {
+                            var linkurl = k.linkurl;
+                            if (linkurl != '') {
+                                linkurl = linkurl;
+                            } else {
+                                linkurl = 'javascript:;'
+                            }
+                            var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
+                            var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
+                            str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
+                                '<div class="thumb">' +
+                                '<img src=' + k.picture + ' alt=' + k.title + '>' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                '<p class="desc text-muted text-ellipsis">' + k.description + '</p>' +
+                                '<p class="text-danger"><small class="">¥</small>' + k.price + '</p>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
+                                '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        //有数据的时候要做判断
+                        //如果当前是第一页，则把容器中的内容即为请求数据
+                        //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
+                        if (loadFlag) {
+                            if (page == 1) {
+                                targetObj.eq(target).html(str);
+                            } else {
+                                $(str).appendTo(targetObj.eq(target));
+                            }
+                        }
+                    }
+                    xSwiper.update();
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+
+        //更新推荐
+        function updateRecommendations(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=updaterecommendations',
+                timeout: 15000,
+                dataType: 'json',
+                data: {
+                    maxrecommendationsid: localStorage.getItem("oldRecommendationsID")
+                },
+                success: function (reponse) {
+                    var total = reponse.total;
+                    var recommendationsid = reponse.maxid;
+                    var data = reponse.rows;
+                    if (reponse != 0) {
+                        // 有数据
+                        var str = '';
+                        $.each(data, function (i, k) {
+                            var linkurl = k.linkurl;
+                            if (linkurl != '') {
+                                linkurl = linkurl;
+                            } else {
+                                linkurl = 'javascript:;'
+                            }
+                            var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
+                            var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
+                            str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
+                                '<div class="thumb">' +
+                                '<img src=' + k.picture + ' alt=' + k.title + '>' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                '<p class="desc text-muted text-ellipsis">' + k.description + '</p>' +
+                                '<p class="text-danger"><small class="">¥</small>' + k.price + '</p>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
+                                '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        targetObj.eq(target).prepend(str);
+                        xSwiper.update();
+                        localStorage.setItem("oldRecommendationsID", recommendationsid);
+                        msg('更新了' + total + '条数据');
+                    }
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+        // 消息提示
+        function msg(str) {
+            $(document).dialog({
+                type: 'notice',
+                infoText: str,
+                autoClose: 1500,
+                position: 'bottom'
+            });
+        }
+        //]]>
+    </script>
+</body>
+
+</html>

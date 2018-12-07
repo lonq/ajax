@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="fullpage">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content=" ">
+    <title>视频详情</title>
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="js/video.js-7.3.0/video-js.min.css" rel="stylesheet">
+    <link href="css/iconfont/iconfont.css" rel="stylesheet">
+    <script src="js/flexible.js"></script>
+    <style type="text/css">
+        #nav {
+            padding-top: 1.28rem;
+            width: 100%;
+            height: 1.28rem;
+            background-color: #fff;
+        }
+
+        .nav-title {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 989;
+            padding: 0 .4rem;
+            width: 100%;
+            height: 1.28rem;
+            line-height: 1.28rem;
+            font-size: .373333rem;
+        }
+
+        .pull-down,
+        .pull-up {
+            padding: .266667rem;
+            font-size: .373333rem;
+            text-align: center;
+            color: #999;
+        }
+
+        .v-swiper {
+            overflow: auto;
+        }
+
+        .v-swiper,
+        .w {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+        }
+
+        .swiper-slide {
+            height: auto;
+        }
+
+        .list+.list {
+            margin-top: 0;
+        }
+
+        .list .item:first-child {
+            margin-top: 0;
+        }
+        /* 播放器按钮 */
+        .v-play {
+            display: block;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            z-index: 1;
+            margin: -0.6rem 0 0 -0.6rem !important;
+            width: 1.2rem !important;
+            height: 1.2rem !important;
+            background-image: url("images/video-play.png");
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: center;
+        }
+        .video-js .vjs-big-play-button {
+            font-size: 2.5em;
+            line-height: 2.3em;
+            height: 2.5em;
+            width: 2.5em;
+            -webkit-border-radius: 2.5em;
+            -moz-border-radius: 2.5em;
+            border-radius: 2.5em;
+            background-color: #73859f;
+            background-color: rgba(115,133,159,.5);
+            border-width: 0.15em;
+            margin-top: -1.25em;
+            margin-left: -1.75em;
+        }
+        /* 中间的播放箭头 */
+        .vjs-big-play-button .vjs-icon-placeholder {
+            font-size: 1.63em;
+        }
+        /* 加载圆圈 */
+        .vjs-loading-spinner {
+            font-size: 2.5em;
+            width: 2em;
+            height: 2em;
+            border-radius: 1em;
+            margin-top: -1em;
+            margin-left: -1.5em;
+        }
+        .video-js.vjs-playing .vjs-tech {
+            pointer-events: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="v-swiper">
+        <div class="swiper-wrapper w">
+            <div class="swiper-slide d">
+                <div class="pull-down" style="display: none;">下拉更新</div>
+                <div class="video-wrap"></div>
+                <div class="list border-tiny-top border-tiny-bottom">
+                    <div class="item vertical-center">更多视频</div>
+                </div>
+                <div class="list main"></div>
+                <div class="pull-up">上拉加载更多</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/touch.min.js"></script>
+    <script src="js/checkLogin.js"></script>
+    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/timeago.js-master/dist/timeago.min.js"></script>
+    <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/video.js-7.3.0/video.min.js"></script>
+    <script src="js/zepto.picLazyLoad.min.js"></script>
+    
+    <script type="text/javascript">
+        //<![CDATA[
+        var _container = $('.v-swiper');
+        var _nav = $('#video');
+        var _navH = _nav.children().height();
+        var _offsetHeight = _navH; //滑动束缚容器的偏移高度
+        var id = getUrlParam('ID');
+        var type = getUrlParam('Type');
+        var page = 1;
+        var loadFlag = true;
+        var pullUpFlag = true; //上拉标记
+
+        var targetObj = $('.list.main'); //目标数据容器
+        var pullDown = $('.pull-down');
+        var pullUp = $('.pull-up');
+
+        //初始化y轴滚动
+        var vSwiper = new Swiper('.v-swiper', {
+            direction: 'vertical',
+            slidesPerView: 'auto',
+            mousewheelControl: true,
+            freeMode: true,
+            observer: true,
+            observeParents: true,
+            scrollbar: {
+                el: '.v-swiper-scrollbar'
+            },
+            on: {
+                touchEnd: function(event){
+                    pullUpAction();
+                    return false;
+                }
+            }
+        });
+        
+        $(function () {
+            getContent();
+            // 默认加载第一选项第一屏数据
+            getData();
+            // 修正容器高度
+            fixedContainerH();
+            // 点击播放视频
+            $(document).on('tap', '.video-js', function(){
+                playCurVideo();
+            });
+        });
+        //修正容器高度
+        function fixedContainerH() {
+            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh)');
+        }
+        //上拉加载
+        function pullUpAction() {
+            var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
+            var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
+            if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
+                if (loadFlag) {
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
+                } else {
+                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
+                }
+                //加载数据
+                page++;
+                getData();
+                if (loadFlag) {
+                    pullUp.html('上拉加载更多');
+                }
+            }
+        }
+
+        // 文章正文
+        function getContent() {
+            $.ajax({
+                type: 'GET',
+                url: 'getArticles.asp?Action=content',
+                data: {
+                    id: id,
+                    type: type
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    // 无数据
+                    if (reponse == 0) {
+                        pullUp.hide().html();
+                        pullDown.hide();
+                        noData('default', '什么也没找到~');
+                    } else {
+                        // 有数据
+                        var str = '';
+                        var type = reponse.type;
+                        var linkurl = reponse.linkurl;
+                        if (linkurl != '') {
+                            linkurl = linkurl;
+                        } else {
+                            linkurl = 'javascript:;'
+                        }
+                        var sharing = reponse.sharing > 9999 ? (reponse.sharing/10000).toFixed(1) + "万" : reponse.sharing;
+                        var comments = reponse.comments > 9999 ? (reponse.comments/10000).toFixed(1) + "万" : reponse.comments;
+                        str += '<div class="v-video">' +
+                            '<video id="video' + reponse.id + '" class="video-js vjs-fluid vjs-big-play-centered">' +
+                            '<source src="' + reponse.video + '" type="video/mp4">' +
+                            '<p class="vjs-no-js">播放视频需要启用 JavaScript，推荐使用<a href="http://videojs.com/html5-video-support/" target="_blank">支持HTML5</a>的浏览器访问。</p>' +
+                            '</video>' +
+                            '<div class="margin-bottom padding border-bottom bg-white">' +
+                            '<div class="v-title margin-bottom text-md">' + reponse.title + '</div>' +
+                            '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                            '<li>' + reponse.source + '</li>' +
+                            '<li><i class="iconfont-clock"></i>&nbsp;' + secToTime(reponse.duration) + '</li>' +
+                            '</ul>' +
+                            '</div>' +
+                            '</div>';
+                        $('.video-wrap').html(str);
+                        $('title').html(reponse.title);
+                        playCurVideo();
+                    }
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+
+        // 文章列表
+        function getData() {
+            $.ajax({
+                type: 'GET',
+                url: 'getArticles.asp?Action=related',
+                data: {
+                    id: id,
+                    page: page,
+                    type: type
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    // 无数据
+                    if (reponse == 0) {
+                        page = 1;
+                        loadFlag = false;
+                        pullUp.hide().html();
+                        pullDown.hide();
+                        noData('default', '什么也没找到~');
+                    } else {
+                        loadFlag = true;
+                        // 有数据
+                        var str = '';
+                        var maxPageCount = reponse.pagecount;
+                        var list = reponse.rows;
+                        var maxPageCount = reponse.pagecount;
+                        if (page > maxPageCount) {
+                            page = maxPageCount;
+                            loadFlag = false;
+                        }
+                        $.each(list, function (i, k) {
+                            str += '<a class="item item-thumb item-access" href="video.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                '<div class="thumb thumb-sm">' +
+                                '<div class="v-play"></div>' +
+                                '<img src="' + k.pictures + '">' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li>' + k.source + '</li>' +
+                                '<li><i class="icon iconfont-clock"></i>&nbsp;' + secToTime(k.duration) + '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        
+                        //有数据的时候要做判断
+                        //如果当前是第一页，则把容器中的内容即为请求数据
+                        //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
+                        if (loadFlag) {
+                            if (page == 1) {
+                                targetObj.html(str);
+                            } else {
+                                $(str).appendTo(targetObj);
+                            }
+                        }
+                    }
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+        // 播放视频
+        function playCurVideo() {
+            var curID = 'video' + id;
+            videojs(curID, {"controls": true, "autoplay": false, "preload": "auto"}, function () {
+                var myPlayer = videojs(curID);
+                myPlayer.ready(function () {
+                    var myPlayer = this;
+		            // this.play();
+                    $('#' + curID).parents('.thumb').addClass('active');
+                });
+                myPlayer.on("ended", function (event) {
+		            // console.log(1);
+                });
+            });
+        }
+        // 消息提示
+        function msg(str) {
+            $(document).dialog({
+                type: 'notice',
+                infoText: str,
+                autoClose: 1500,
+                position: 'bottom'
+            });
+        }
+        // 消息提示
+        function noData(type, text) {
+            var color, icon;
+            switch (type) {
+                case 'primary':
+                color = 'msg msg-primary';
+                icon = 'icon iconfont-correctcircle';
+                break;
+                default:
+                color = 'msg msg-default';
+                icon = 'icon iconfont-infocircle';
+            }
+            var str = '';
+            str += '<div class="' + color + '">';
+            str += '<h1><i class="' + icon + '"></i></h1>' +
+            '<h3 class="text-center">' + text + '</h3>' +
+            '</div>';
+            targetObj.html(str);
+        }
+        // 秒转换为时间
+        function secToTime(result) {
+            var h = Math.floor(result / 3600) < 10 ? '0' + Math.floor(result / 3600) : Math.floor(result / 3600);
+            var m = Math.floor((result / 60 % 60)) < 10 ? '0' + Math.floor((result / 60 % 60)) : Math.floor((result / 60 % 60));
+            var s = Math.floor((result % 60)) < 10 ? '0' + Math.floor((result % 60)) : Math.floor((result % 60));
+            if (h == '00') {
+                return result = m + ":" + s;
+            } else {
+                return result = h + ":" + m + ":" + s;
+            }
+        }
+        function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg); //匹配目标参数
+            if (r != null) return unescape(r[2]);
+            return null; //返回参数值
+        }
+        //]]>
+    </script>
+</body>
+
+</html>

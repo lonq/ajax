@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content=" ">
+    <title>ajax上拉加载、下拉刷新</title>
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/iconfont/iconfont.css" rel="stylesheet">
+    <style type="text/css">
+        #wrapper {
+            position: absolute;
+            z-index: 1;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        #scroller {
+            position: absolute;
+            z-index: 1;
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            width: 100%;
+            -webkit-transform: translateZ(0);
+            -moz-transform: translateZ(0);
+            -ms-transform: translateZ(0);
+            -o-transform: translateZ(0);
+            transform: translateZ(0);
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            -webkit-text-size-adjust: none;
+            -moz-text-size-adjust: none;
+            -ms-text-size-adjust: none;
+            -o-text-size-adjust: none;
+            text-size-adjust: none;
+        }
+
+        #pullUp,
+        #pullDown,
+        .pulldown-tips {
+            padding: 10px 15px;
+            font-size: 14px;
+            color: #999;
+            height: 60px;
+            text-align: center;
+        }
+
+        #pullDown {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -moz-box;
+            display: -moz-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            -moz-align-items: center;
+            align-items: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+
+        #pullDown>p {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            -ms-flex: 1;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .pulldown-tips {
+            position: absolute;
+            top: -60px;
+            left: 0;
+            width: 100%;
+            line-height: 40px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div id="scroller">
+            <div id="pullDown" class="">
+                <div class="pullDownLabel">
+                    <p class="state">下拉刷新</p>
+                    <p class="update-time"></p>
+                </div>
+            </div>
+            <div class="pulldown-tips">下拉刷新</div>
+            <div id="list" class="list">
+            </div>
+            <div id="pullUp" class="">
+                <div class="pullUpLabel">上拉加载更多</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/iscroll-master/build/iscroll-probe.js"></script>
+    <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript">
+        var page = 1; //初始加载页码
+        var maxID; //最大ID
+        var myScroll,
+            pullDown = $("#pullDown"),
+            pullUp = $("#pullUp"),
+            pullDownLabel = $(".pullDownLabel"),
+            pullUpLabel = $(".pullUpLabel"),
+            container = $('#list'),
+            loadingStep = 0; //加载状态0默认，1显示加载状态，2执行加载数据，只有当为0时才能再次加载，这是防止过快拉动刷新
+
+        pullDown.hide();
+        pullUp.hide();
+
+        $(function () {
+            getData();
+        });
+
+        myScroll = new IScroll("#wrapper", {
+            scrollbars: true,
+            mouseWheel: false,
+            interactiveScrollbars: true,
+            shrinkScrollbars: 'scale',
+            fadeScrollbars: true,
+            scrollY: true,
+            probeType: 2,
+            bindToWrapper: true
+        });
+        myScroll.on("scroll", function () {
+            if (loadingStep == 0 && !pullDown.attr("class").match('refresh|loading') && !pullUp.attr("class").match(
+                    'refresh')) {
+                if (this.y > 60) { //下拉刷新操作
+                    $(".pulldown-tips").hide();
+                    pullDown.addClass("refresh").show();
+                    pullDownLabel.find(".state").html("松手刷新数据");
+                    loadingStep = 1;
+                    myScroll.refresh();
+                } else if (this.y < (this.maxScrollY - 14)) { //上拉加载更多
+                    pullUp.addClass("refresh").show();
+                    pullUpLabel.html('<i class="iconfont-loading animation-spinner"></i> 加载中…');
+                    loadingStep = 1;
+                    pullUpAction();
+                }
+            }
+        });
+        myScroll.on("scrollEnd", function () {
+            if (loadingStep == 1) {
+                if (pullDown.attr("class").match("refresh")) { //下拉刷新操作
+                    pullDown.removeClass("refresh").addClass("loading");
+                    pullDownLabel.find(".state").html('<i class="iconfont-loading animation-spinner"></i> 加载中…');
+                    loadingStep = 2;
+                    pullDownAction();
+                }
+            }
+        });
+
+        function pullDownAction() {
+            setTimeout(function () {
+                updateData()
+                pullDown.attr('class', '').hide();
+                pullDownLabel.find(".state").html("下拉刷新");
+                loadingStep = 0;
+                $(".pulldown-tips").show().html("下拉刷新");
+            }, 1000);
+        }
+
+        function pullUpAction() {
+            setTimeout(function () {
+                page++;
+                getData();
+                pullUp.attr('class', '').hide();
+                loadingStep = 0;
+            }, 1000);
+        }
+        //数据
+        function getData() {
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=lists',
+                data: {
+                    page: page
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    var maxPageCount = reponse.pagecount;
+                    var data = reponse.rows;
+                    // 无数据
+                    if (reponse.status === 200) {
+                        // 首次加载无数据
+                        pullUp.hide();
+                        targetList.html('暂无记录');
+                    } else {
+                        // 有数据
+                        var str = '';
+                        $.each(data, function (i, k) {
+                            str += '<a class="item item-thumb item-access " href=' + k.linkurl +
+                                '>' +
+                                '<div class="thumb">' +
+                                '<img src=' + k.picture + ' alt=' + k.title + '>' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
+                                '<p class="desc text-ellipsis-2">' + k.content + '</p>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li><i class="icon iconfont-share"></i> ' + k.sharing + '</li>' +
+                                '<li><i class="icon iconfont-commenting"></i> ' + k.comments +
+                                '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        //有数据的时候要做判断
+                        //如果当前是第一页，则把容器中的内容即为请求数据
+                        //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
+                        if (page == 1) {
+                            container.html(str);
+                        } else if (page > maxPageCount) {
+                            pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
+                        } else {
+                            $(str).appendTo(container);
+                        }
+                    }
+                    myScroll.refresh();
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        }
+        //更新数据
+        function updateData() {
+            var maxid;
+            $.ajax({
+                type: 'GET',
+                url: 'getProducts.asp?Action=update',
+                timeout: 15000,
+                dataType: 'json',
+                data: {
+                    maxid: maxid
+                },
+                success: function (reponse) {
+                    var count = reponse.pagecount;
+                    var data = reponse.rows;
+                    if (reponse == 0) {
+                        $(document).dialog({
+                            type: 'notice',
+                            infoText: '没有新数据' + maxid + '',
+                            autoClose: 1500,
+                            position: 'bottom'
+                        });
+                    } else {
+                        // 有数据
+                        var str = '';
+                        $.each(data, function (i, k) {
+                            str += '<a class="item item-thumb item-access " href=' + k.linkurl +
+                                '>' +
+                                '<div class="thumb">' +
+                                '<img src=' + k.picture + ' alt=' + k.title + '>' +
+                                '</div>' +
+                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
+                                '<p class="desc text-ellipsis-2">' + k.content + '</p>' +
+                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<li><i class="icon iconfont-share"></i> ' + k.sharing + '</li>' +
+                                '<li><i class="icon iconfont-commenting"></i> ' + k.comments +
+                                '</li>' +
+                                '</ul>' +
+                                '</div>' +
+                                '</a>';
+                        });
+                        container.prepend(str);
+                        myScroll.refresh();
+                        $(document).dialog({
+                            type: 'notice',
+                            infoText: '更新了' + count + '条数据',
+                            autoClose: 1500,
+                            position: 'bottom'
+                        });
+                        var time2 = new Date().Format("yyyy-MM-dd HH:mm:ss");
+                        pullDownLabel.find(".update-time").html('最后更新：' + time2);
+                    }
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
+    </script>
+</body>
+
+</html>
