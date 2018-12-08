@@ -85,14 +85,14 @@ body {
 }
 
 /* 顶部底部分割线 */
-.list.border-tiny-top,
-.list.border-tiny-bottom,
+.list.border-top,
+.list.border-bottom,
 .list {
     position: relative;
 }
 
-.list.border-tiny-top:before,
-.list.border-tiny-bottom:after {
+.list.border-top:before,
+.list.border-bottom:after {
     content: " ";
     position: absolute;
     left: 0;
@@ -104,14 +104,14 @@ body {
     z-index: 2;
 }
 
-.list.border-tiny-top:before {
+.list.border-top:before {
     top: 0;
     border-top: 1px solid #dcdcdc;
     -webkit-transform-origin: 0 0;
     transform-origin: 0 0;
 }
 
-.list.border-tiny-bottom:after {
+.list.border-bottom:after {
     bottom: 0;
     border-bottom: 1px solid #dcdcdc;
     -webkit-transform-origin: 0 100%;
@@ -564,9 +564,9 @@ body {
     flex-wrap: wrap;
 }
 
-.list.view-horizontal .border-tiny-top:before,
+.list.view-horizontal .border-top:before,
 .list.view-horizontal:before,
-.list.view-horizontal .border-tiny-top:after,
+.list.view-horizontal .border-top:after,
 .list.view-horizontal:after {
     display: none;
 }
