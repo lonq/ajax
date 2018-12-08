@@ -753,11 +753,6 @@ input[type="button"].btn-full {
     border-radius: 50% !important;
     -webkit-border-radius: 50% !important;
 }
-/* 弧形 */
-/* .btn-curve {
-    border-radius: 18% 100% !important;
-    -webkit-border-radius: 18% 100% !important;
-} */
 /*提示*/
 .alert i {
     display: block;
@@ -1190,13 +1185,10 @@ a.badge:focus {
     top: 0rem;
     border-top: 1px solid #dcdcdc;
 }
-.form-horizontal .form-group .control-content {}
 .form-vertical .form-group label {
     display: block;
 }
 /*选择框*/
-.radio,
-.checkbox {}
 .radio input:before,
 .checkbox input:before {
     color: #999;

@@ -50,16 +50,19 @@
         .list .item:first-child {
             margin-top: 0;
         }
-        
+
         .tabs .btn.active .icon.iconfont-homepage:before {
             content: "\e7ce";
         }
+
         .tabs .btn.active .icon.iconfont-product:before {
             content: "\e7e6";
         }
+
         .tabs .btn.active .icon.iconfont-file:before {
             content: "\e7c8";
         }
+
         .tabs .btn.active .icon.iconfont-user:before {
             content: "\e7ea";
         }
@@ -236,9 +239,9 @@
                             str += '<div class="swiper-slide"><a href=' + linkurl +
                                 '><img class="img-responsive" src="' + k.pictures + '"></a></div>';
                         });
-                        str += '</div>' +
+                            str += '</div>' +
                             '<div class="swiper-pagination"></div>';
-                        '</div>';
+                            '</div>';
                         target.html(str);
                         // 幻灯
                         var slidePicture = new Swiper('.slide-picture>.swiper-container', { //子swiper
@@ -280,6 +283,7 @@
                         pullDown.hide();
                         noData('default', '什么也没找到~');
                     } else {
+                        loadFlag = true;
                         // 有数据
                         var str = '';
                         var maxlistsid = reponse.maxid;

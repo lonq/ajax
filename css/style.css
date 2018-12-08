@@ -473,10 +473,6 @@ body {
     pointer-events: none;
 }
 
-.platform-android4_2 .toggle .track {
-    -webkit-background-clip: padding-box;
-}
-
 .toggle .handle {
     -webkit-transition: 0.3s cubic-bezier(0, 1.1, 1, 1.1);
     transition: 0.3s cubic-bezier(0, 1.1, 1, 1.1);
