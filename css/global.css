@@ -1860,23 +1860,17 @@ table {
 .flex-wrap.direction-column {
     flex-direction: column;
 }
-.flex-wrap.align-space-between {
-    align-content: space-between;
-}
 .flex-wrap.row-wrap {
     /*换行，需要列宽*/
     -webkit-flex-wrap: wrap;
     flex-wrap: wrap;
 }
-.flex-wrap.vertical-center {
-    /*垂直居中*/
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    align-items: center;
+.flex-wrap.align-space-between {
+    /*垂直对齐*/
+    align-content: space-between;
 }
 .flex-wrap.justify-content-space-between {
-    /*两端对齐，需要容器带有宽度或高度*/
+    /*水平对齐，需要容器带有宽度或高度*/
     -webkit-justify-content: space-between;
     justify-content: space-between;
 }
@@ -1884,6 +1878,11 @@ table {
     /*水平居中*/
     -webkit-justify-content: center;
     justify-content: center;
+}
+.flex-wrap.vertical-center {
+    /*垂直居中*/
+    -webkit-align-items: center;
+    align-items: center;
 }
 .space-top>*+* {
     margin-top: .266667rem;
@@ -1894,7 +1893,6 @@ table {
 .flex-wrap>.flex-item {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
-    -ms-flex: 1;
     flex: 1;
     min-width: 0;
 }
