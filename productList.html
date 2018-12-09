@@ -12,7 +12,7 @@
     <meta name="format-detection" content="telephone=no,email=no">
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
-    <title>首页</title>
+    <title>产品列表</title>
     <link href="css/normalize.css" rel="stylesheet">
     <link href="css/global.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         .pull-down,
         .pull-up {
             padding: .266667rem;
-            font-size: .373333rem;
+            font-size: .32rem;
             text-align: center;
             color: #999;
         }
@@ -58,10 +58,10 @@
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
                 <div class="pull-down" style="display: none;">下拉更新</div>
-                <div class="list title border-bottom">
+                <div class="list title border-top border-bottom">
                     <div class="item vertical-center">
                         <div class="item-body">
-                            <p>列表</p>
+                            <span>产品列表</span>
                         </div>
                         <div class="item-footer"><i class="iconfont-modeimage" id="changeViewMode"></i></div>
                     </div>
@@ -192,7 +192,9 @@
                 timeout: 150000,
                 dataType: 'json',
                 beforeSend: function () {
-                    loadingMsg('加载中...');
+                    if (loadFlag) {
+                        loadingMsg('加载中...');
+                    }
                 },
                 success: function (reponse) {
                     loading.close();

@@ -24,7 +24,7 @@
         .pull-down,
         .pull-up {
             padding: .266667rem;
-            font-size: .373333rem;
+            font-size: .32rem;
             text-align: center;
             color: #999;
         }
@@ -227,7 +227,9 @@
                 timeout: 15000,
                 dataType: 'json',
                 beforeSend: function () {
-                    loadingMsg('加载中...');
+                    if (loadFlag) {
+                        loadingMsg('加载中...');
+                    }
                 },
                 success: function (reponse) {
                     loading.close();

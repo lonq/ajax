@@ -194,7 +194,7 @@ html input[disabled] {
 }
 .affix.affix-bottom {
     left: 0;
-    bottom: 350px;
+    bottom: 0;
 }
 .relative {
     position: relative;
@@ -763,7 +763,6 @@ input[type="button"].btn-full {
     text-align: center;
     font-size: .96rem;
     font-family: 'iconfont';
-    speak: none;
     font-style: normal;
     font-weight: normal;
     font-variant: normal;
@@ -1665,22 +1664,16 @@ a.badge:focus {
     color: #ee3f24;
 }
 /*遮罩*/
-.dropdown-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 990;
-}
 .backdrop {
     display: none;
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
+    right: 0;
+    bottom: 0;
     left: 0;
-    background-color: rgba(0, 0, 0, 0);
+    background-color: rgba(0, 0, 0, .7);
     transition: background .3s;
     -webkit-transition: background .3s;
 }

@@ -165,6 +165,7 @@ body {
     -webkit-box-flex: 1;
     -webkit-flex: 1;
     flex: 1;
+    min-width: 0;
     font-size: .4rem;
 }
 
@@ -958,8 +959,8 @@ ul.footer {
 
 .footer .icon .badge {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: .066667rem;
+    right: .066667rem;
     font-size: .24rem;
     color: #fff !important;
 }
@@ -1883,8 +1884,8 @@ button.close {
 }
 .navbar a .badge {
     position: absolute;
-    top: .133333rem;
-    right: 0;
+    top: .2rem;
+    right: .133333rem;
     font-size: .24rem;
     color: #fff !important;
 }

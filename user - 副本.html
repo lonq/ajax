@@ -21,79 +21,149 @@
     <link href="css/iconfont/iconfont.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
     <style>
-        .menu-swiper {
-            width: 100%;
-            height: 100%;
-        }
-        .menu {
-            width: 70%;
-            background-color: #f5f5f5;
-            overflow-y: auto;
-        }
-        .content {
-            width: 100%;
-        }
+        .swiper-container {
+			width: 100%;
+			height: 100%;
+		}
+		.swiper-slide {
+			text-align: center;
+			font-size: .48rem;
+			background: #fff;
+
+			/* Center slide text vertically */
+			display: -webkit-box;
+			display: -ms-flexbox;
+			display: -webkit-flex;
+			display: flex;
+			-webkit-box-pack: center;
+			-ms-flex-pack: center;
+			-webkit-justify-content: center;
+			justify-content: center;
+			-webkit-box-align: center;
+			-ms-flex-align: center;
+			-webkit-align-items: center;
+			align-items: center;
+		}
+		.menu {
+			min-width: 2.666667rem;
+			width: 70%;
+			max-width: 8.533333rem;
+
+			background-color: #2C8DFB;
+			color: #fff;
+		}
+		.content {
+			width: 100%;
+		}
+
+		.menu-button {
+			position: absolute;
+			top: 0rem; left: 0rem;
+
+			padding: .4rem;
+
+			cursor: pointer;
+
+			-webkit-transition: .3s;
+			transition: .3s;
+
+			background-color: #2C8DFB;
+
+			/*margin: .373333rem;
+			border-radius: .133333rem;*/
+		}
+		.menu-button .bar:nth-of-type(1) {
+			margin-top: 0rem;
+		}
+		.menu-button .bar:nth-of-type(3) {
+			margin-bottom: 0rem;
+		}
+
+		.bar {
+			position: relative;
+			display: block;
+
+			width: 1.333333rem;
+			height: .133333rem;
+
+			margin: .266667rem auto;
+			background-color: #fff;
+
+			border-radius: .266667rem;
+
+			-webkit-transition: .3s;
+			transition: .3s;
+		}
+
+		.menu-button:hover .bar:nth-of-type(1) {
+			-webkit-transform: translateY(.04rem) rotate(-4.5deg);
+			-ms-transform: translateY(.04rem) rotate(-4.5deg);
+			transform: translateY(.04rem) rotate(-4.5deg);
+		}
+		.menu-button:hover .bar:nth-of-type(2) {
+			opacity: .9;
+		}
+		.menu-button:hover .bar:nth-of-type(3) {
+			-webkit-transform: translateY(-0.04rem) rotate(4.5deg);
+			-ms-transform: translateY(-0.04rem) rotate(4.5deg);
+			transform: translateY(-0.04rem) rotate(4.5deg);
+		}
+
+		.cross .bar:nth-of-type(1) {
+			-webkit-transform: translateY(.4rem) rotate(-45deg);
+			-ms-transform: translateY(.4rem) rotate(-45deg);
+			transform: translateY(.4rem) rotate(-45deg);
+		}
+		.cross .bar:nth-of-type(2) {
+			opacity: 0;
+		}
+		.cross .bar:nth-of-type(3) {
+			-webkit-transform: translateY(-0.4rem) rotate(45deg);
+			-ms-transform: translateY(-0.4rem) rotate(45deg);
+			transform: translateY(-0.4rem) rotate(45deg);
+		}
+		.cross:hover .bar:nth-of-type(1) {
+			-webkit-transform: translateY(.36rem) rotate(-40.5deg);
+			-ms-transform: translateY(.36rem) rotate(-40.5deg);
+			transform: translateY(.36rem) rotate(-40.5deg);
+		}
+		.cross:hover .bar:nth-of-type(2) {
+			opacity: .1;
+		}
+		.cross:hover .bar:nth-of-type(3) {
+			-webkit-transform: translateY(-0.36rem) rotate(40.5deg);
+			-ms-transform: translateY(-0.36rem) rotate(40.5deg);
+			transform: translateY(-0.36rem) rotate(40.5deg);
+		}
     </style>
 </head>
 
 <body>
-    <!-- Swiper -->
-    <div class="menu-swiper">
+    <div class="swiper-container">
         <div class="swiper-wrapper">
-            <div class="swiper-slide menu">
-                <div class="list border-top border-bottom">
-                    <a class="item item-avatar vertical-center item-access" href="javascript:;">
-                        <div class="avatar"><img src="images/placeholder-avatar.jpg"></div>
-                        <div class="item-body overflow-hidden">
-                            <h4 class="title text-ellipsis">人间风雪客</h4>
-                            <p class="text-muted"><small>他很懒，什么都没留下。</small></p>
-                        </div>
-                        <div class="item-footer"></div>
-                    </a>
-                </div>
-                <div class="list border-top border-bottom">
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-body">
-                            <span>功能反馈</span>
-                        </div>
-                        <div class="item-footer"></div>
-                    </a>
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-body">
-                            <span>清除本地缓存</span>
-                        </div>
-                        <div class="item-footer item-note"></div>
-                    </a>
-                </div>
-                <div class="list border-top border-bottom">
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-body">
-                            <span>关于</span>
-                        </div>
-                        <div class="item-footer"></div>
-                    </a>
-                </div>
-                <div class="list padding-horizontal">
-                    <a href="logout.asp" class="btn btn-lg btn-default btn-block">退出登录</a>
-                </div>
-            </div>
-            
+            <div class="swiper-slide menu">Menu slide</div>
             <div class="swiper-slide content">
                 <div class="backdrop"></div>
+                <div class="menu-button">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
 
                 <header class="user-header text-white" style="background-image: url(images/user-cover.jpg)">
                     <nav class="navbar">
                         <ul class="navbar-left">
-                            <li id="menuButton"><a href="javascript:;"><i class="iconfont-setting"></i></a></li>
+                            <li><a href="javascript: history.go(-1);"><i class="iconfont-angleleft"></i> 返回</a></li>
                         </ul>
                         <h3 class="navbar-title">我</h3>
                         <ul class="navbar-right">
                             <li><a href="javascript:;"><i class="iconfont-bell"></i><span class="badge badge-danger">6</span></a></li>
+                            <li><a href="javascript:;"><i class="iconfont-setting"></i></a></li>
                         </ul>
                     </nav>
                     <div class="user-wrap">
                         <div class="user-face">
-                            <a href="javascript:;"><img src="images/placeholder-avatar.jpg"></a>
+                            <a href="javascript:;"><img src="images/user-face-001.jpg"></a>
                         </div>
                         <h4 class="user-name">张三</h4>
                         <p class="user-autograph">他很懒，什么都没留下。</p>
@@ -126,33 +196,32 @@
                     </div>
                 </header>
 
-                <div class="item-divider">相关功能</div>
                 <div class="list border-top border-bottom margin-top padding-horizontal bg-white">
                     <ul class="user-capability">
                         <li>
                             <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-01.png"></dt>
+                                <dt><img src="images/user-capability-01.png"></dt>
                                 <dd>稳定</dd>
                                 <dd><small>功能描述</small></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-02.png"></dt>
+                                <dt><img src="images/user-capability-02.png"></dt>
                                 <dd>反应</dd>
                                 <dd><small>功能描述</small></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-03.png"></dt>
+                                <dt><img src="images/user-capability-03.png"></dt>
                                 <dd>贡献</dd>
                                 <dd><small>功能描述</small></dd>
                             </dl>
                         </li>
                         <li>
                             <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-04.png"></dt>
+                                <dt><img src="images/user-capability-04.png"></dt>
                                 <dd>兴趣</dd>
                                 <dd><small>功能描述</small></dd>
                             </dl>
@@ -160,20 +229,21 @@
                     </ul>
                 </div>
 
+                <div class="item-divider">标题</div>
                 <div class="list border-top border-bottom">
                     <a class="item vertical-center item-access" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-file text-success"></i></div>
                         <div class="item-body">
-                            <span>已解锁答案</span>
+                            <p>已解锁答案</p>
                         </div>
                         <div class="item-footer"></div>
                     </a>
                     <a class="item vertical-center item-access" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-clock text-danger"></i></div>
                         <div class="item-body">
-                            <span>待解决问题</span>
+                            <p>待解决问题</p>
                         </div>
-                        <div class="item-footer"><span class="badge">3</span></div>
+                        <div class="item-footer"></div>
                     </a>
                 </div>
 
@@ -181,31 +251,24 @@
                     <a class="item vertical-center item-access" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-user text-primary"></i></div>
                         <div class="item-body">
-                            <span>个人信息</span>
+                            <p>个人信息</p>
                         </div>
                         <div class="item-footer item-note">详情</div>
                     </a>
                     <a class="item vertical-center item-access" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-wallet text-warning"></i></div>
                         <div class="item-body">
-                            <span>钱包</span>
+                            <p>钱包</p>
                         </div>
-                        <div class="item-footer item-note">余额：&yen;&nbsp;<span class="text-md text-danger">320.00</span></div>
-                    </a>
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-header"><i class="icon iconfont-qrcode text-muted"></i></div>
-                        <div class="item-body">
-                            <span>我的名片</span>
-                        </div>
-                        <div class="item-footer item-note"></div>
+                        <div class="item-footer item-note">320</div>
                     </a>
                 </div>
 
-                <div class="list border-top border-bottom margin-bottom">
+                <div class="list border-bottom margin-bottom">
                     <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-header"><i class="icon iconfont-questioncircle text-muted"></i></div>
+                        <div class="item-header"><i class="icon iconfont-setting text-muted"></i></div>
                         <div class="item-body">
-                            <span>使用帮助</span>
+                            <p>设置</p>
                         </div>
                         <div class="item-footer"></div>
                     </a>
@@ -225,43 +288,35 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        var menuButton = $('#menuButton');
-        var menu = $('.menu');
-        var backdrop = $('.backdrop');
         $(function () {
-            var menuSwiper = new Swiper('.menu-swiper', {
-                slidesPerView: 'auto',
-                initialSlide: 1,
-                resistanceRatio: 0,
-                slideToClickedSlide: true,
-                on: {
-                    init: function () {
-                        var slider = this;
-                        menuButton.on('tap', function () {
-                            if (slider.activeIndex === 0) {
-                                slider.slideNext();
-                            } else {
-                                slider.slidePrev();
-                            }
-                        });
-                    },
-                    slideChange: function () {
-                        var slider = this;
-                        if (slider.activeIndex === 0) {
-                            $('html, body').css({'overflow': 'hidden'});
-                            menuButton.addClass('cross');
-                            backdrop.addClass('backdrop-toggle');
-                            var menuZindex = Number($('.backdrop-toggle').css('z-index')) + 1;
-                            menu.css({'z-index': menuZindex});
-                        } else {
-                            $('html, body').css({'overflow': 'auto'});
-                            menuButton.removeClass('cross');
-                            backdrop.removeClass('backdrop-toggle');
-                            menu.css({'z-index': 'auto'});
+            var toggleMenu = function () {
+                if (swiper.previousIndex == 0) swiper.slidePrev()
+            },
+                menuButton = document.getElementsByClassName('menu-button')[0],
+                slideContent = document.getElementsByClassName('backdrop')[0],
+                swiper = new Swiper('.swiper-container', {
+                    slidesPerView: 'auto',
+                    initialSlide: 1,
+                    resistanceRatio: .00000000000001,
+                    on: {
+                        slideChangeStart: function (slider) {
+                            if (slider.activeIndex == 0) {
+                                menuButton.classList.add('cross')
+                                menuButton.removeEventListener('click', toggleMenu, false)
+                            } else
+                                menuButton.classList.remove('cross')
+                            slideContent.classList.remove('backdrop-toggle')
+                        },
+                        slideChangeEnd: function (slider) {
+                            if (slider.activeIndex == 0) {
+                                menuButton.removeEventListener('click', toggleMenu, false)
+                                slideContent.classList.add('backdrop-toggle')
+                            } else
+                                menuButton.addEventListener('click', toggleMenu, false)
                         }
                     },
-                }
-            });
+                    slideToClickedSlide: true
+                })
         });
         //]]>
     </script>
