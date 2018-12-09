@@ -9,7 +9,8 @@ html.fullpage body {
 
 @media screen and (min-width: 768px) {
     html body {
-        width: 10.24rem;
+        min-width: 8.533333rem;
+        max-width: 14.4rem;
         margin: 0 auto;
     }
 }
@@ -1715,6 +1716,12 @@ button.close {
 .article-content p {
     margin-top: .133333rem;
     margin-bottom: .266667rem;
+}
+.article-content img {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    height: auto;
 }
 
 /*
