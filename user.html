@@ -82,20 +82,21 @@
                 <div class="backdrop"></div>
 
                 <header class="user-header text-white" style="background-image: url(images/user-cover.jpg)">
-                    <nav class="navbar">
+                    <nav class="navbar navbar-dark">
                         <ul class="navbar-left">
                             <li id="menuButton"><a href="javascript:;"><i class="iconfont-setting"></i></a></li>
                         </ul>
                         <h3 class="navbar-title">我</h3>
                         <ul class="navbar-right">
                             <li><a href="javascript:;"><i class="iconfont-bell"></i><span class="badge badge-danger">6</span></a></li>
+                            <li><a href="javascript:;"><i class="iconfont-edit"></i></a></li>
                         </ul>
                     </nav>
                     <div class="user-wrap">
                         <div class="user-face">
                             <a href="javascript:;"><img src="images/placeholder-avatar.jpg"></a>
                         </div>
-                        <h4 class="user-name">张三</h4>
+                        <h4 class="user-name">人间风雪客</h4>
                         <p class="user-autograph">他很懒，什么都没留下。</p>
                         <ul class="user-info">
                             <li>
@@ -249,13 +250,11 @@
                         var slider = this;
                         if (slider.activeIndex === 0) {
                             $('html, body').css({'overflow': 'hidden'});
-                            menuButton.addClass('cross');
                             backdrop.addClass('backdrop-toggle');
                             var menuZindex = Number($('.backdrop-toggle').css('z-index')) + 1;
                             menu.css({'z-index': menuZindex});
                         } else {
                             $('html, body').css({'overflow': 'auto'});
-                            menuButton.removeClass('cross');
                             backdrop.removeClass('backdrop-toggle');
                             menu.css({'z-index': 'auto'});
                         }
