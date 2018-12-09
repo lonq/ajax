@@ -70,15 +70,15 @@ Else
     Else
         If IsAdminVariable=1 Then
             '设置cookie
-            Response.Cookies("LQ_Cookies")("AdminID")=Int(Rs("AdminID"))
-            Response.Cookies("LQ_Cookies")("AdminName")=Trim(Rs("AdminName"))
-            Response.Cookies("LQ_Cookies")("Password")=Trim(Rs("Password"))
-            Response.Cookies("LQ_Cookies")("AdminSignature")=Trim(Rs("AdminSignature"))
-            Response.Cookies("LQ_Cookies")("IsSuperAdmin")=Int(Rs("IsSuperAdmin"))
-            Response.Cookies("LQ_Cookies")("ListFlag")=Trim(Rs("ListFlag"))
-            Response.Cookies("LQ_Cookies")("AdminFlag")=Trim(Rs("AdminFlag"))
+            Response.Cookies("LQCookies")("AdminID")=Int(Rs("AdminID"))
+            Response.Cookies("LQCookies")("AdminName")=Trim(Rs("AdminName"))
+            Response.Cookies("LQCookies")("Password")=Trim(Rs("Password"))
+            Response.Cookies("LQCookies")("AdminSignature")=Trim(Rs("AdminSignature"))
+            Response.Cookies("LQCookies")("IsSuperAdmin")=Int(Rs("IsSuperAdmin"))
+            Response.Cookies("LQCookies")("ListFlag")=Trim(Rs("ListFlag"))
+            Response.Cookies("LQCookies")("AdminFlag")=Trim(Rs("AdminFlag"))
             If IsCookie>0 Then
-                Response.Cookies("LQ_Cookies").Expires=Date+IsCookie
+                Response.Cookies("LQCookies").Expires=Date+IsCookie
             End If
         Else
             '设置session

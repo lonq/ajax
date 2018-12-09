@@ -101,5 +101,23 @@ var HtmlUtil = {
         if(r!=null)
         return unescape(r[2]);
         return null;
+    },
+    /*4.读取cookie数组，str:参数名称*/
+    getCookie: function (arr, str) {
+        //'username=abc; password=123456; aaa=123; bbb=4r4er'是一个字符串
+        // var arr = document.cookie.split('&');
+        arr = arr.split('&');
+        var i = 0;
+        //arr->['username=abc', 'password=123456', ...]
+        for (i = 0; i < arr.length; i++) {
+            //arr2->['username', 'abc']
+            var arr2 = arr[i].split('=');
+            if (arr2[0] == str) {
+                return arr2[1];
+            }
+        }
+        return '';
     }
 };
+
+

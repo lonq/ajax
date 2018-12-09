@@ -78,13 +78,13 @@ Dim MyAdmin
 Dim MyV_AdminID,MyV_AdminName,MyV_Password,MyV_AdminPetName,MyV_IsSuperAdmin,MyV_ListFlag,MyV_AdminFlag
 If IsAdminVariable=1 Then															'0为Session，1为Cookie
 'cookies
-MyV_AdminID					= Request.Cookies("LQ_Cookies")("AdminID")
-MyV_AdminName				= Request.Cookies("LQ_Cookies")("AdminName")
-MyV_Password				= Request.Cookies("LQ_Cookies")("Password")
-MyV_AdminPetName			= Request.Cookies("LQ_Cookies")("AdminPetName")
-MyV_IsSuperAdmin			= Request.Cookies("LQ_Cookies")("IsSuperAdmin")
-MyV_ListFlag				= Request.Cookies("LQ_Cookies")("ListFlag")
-MyV_AdminFlag				= Request.Cookies("LQ_Cookies")("AdminFlag")
+MyV_AdminID					= Request.Cookies("LQCookies")("AdminID")
+MyV_AdminName				= Request.Cookies("LQCookies")("AdminName")
+MyV_Password				= Request.Cookies("LQCookies")("Password")
+MyV_AdminPetName			= Request.Cookies("LQCookies")("AdminPetName")
+MyV_IsSuperAdmin			= Request.Cookies("LQCookies")("IsSuperAdmin")
+MyV_ListFlag				= Request.Cookies("LQCookies")("ListFlag")
+MyV_AdminFlag				= Request.Cookies("LQCookies")("AdminFlag")
 Else
 'session
 MyV_AdminID					= session("AdminID")

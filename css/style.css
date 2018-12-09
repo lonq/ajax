@@ -85,6 +85,10 @@ body {
     line-height: 1.47058824;
 }
 
+.list small {
+    line-height: 1.2;
+}
+
 /* 顶部底部分割线 */
 .list.border-top,
 .list.border-bottom,
@@ -1951,12 +1955,13 @@ button.close {
 }
 .user-name {
     margin-bottom: .066667rem;
-    padding: 0;
+    padding: 0 .4rem;
     font-size: .453333rem;
     text-align: center;
     color: inherit;
 }
 .user-autograph {
+    padding: 0 .4rem;
     font-size: .32rem;
     text-align: center;
     color: inherit;
