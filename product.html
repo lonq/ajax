@@ -398,6 +398,7 @@
                             pullUp.html('上拉加载更多');
                         }
                     }
+                    timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (reponse, type, errorThrown) {
@@ -440,6 +441,7 @@
                         localStorage.setItem('oldCommentsID', commentsid);
                         msg('更新了' + total + '条数据');
                     }
+                    timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {

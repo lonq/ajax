@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="fullpage">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content="lonq">
+    <title>产品详情</title>
+    <link href="css/normalize.css" rel="stylesheet">
+    <link href="css/global.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/iconfont/iconfont.css" rel="stylesheet">
+    <script src="js/flexible.js"></script>
+</head>
+
+<body>
+    <p class="text-muted"><small class="timeago" datetime="2018/10/16 0:18:56"></small></p>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/touch.min.js"></script>
+    <script src="js/timeago.js-master/dist/timeago.min.js"></script>
+    <script src="js/common.js"></script>
+    <script type="text/javascript">
+        //<![CDATA[
+        $(function () {
+			timeago().render($('.timeago'));
+        });
+        //]]>
+    </script>
+</body>
+
+</html>
