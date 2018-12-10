@@ -23,7 +23,7 @@ End Select
 '正文
 Public Function content()
 Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from [LQ_Admin] where AdminID = "&AdminID&""
+Sql = "Select * from [LQ_Admin] where AdminName = '"&AdminName&"'"
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
     Response.Write (0)

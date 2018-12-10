@@ -218,7 +218,7 @@
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
-    <!-- <script src="js/checkLogin.js"></script> -->
+    <script src="js/checkLogin.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
@@ -227,7 +227,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        var AdminID = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'AdminID'); // 用户ID
+        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'AdminName'); // 用户名
         var menuButton = $('#menuButton');
         var menu = $('.menu');
         var backdrop = $('.backdrop');
@@ -272,7 +272,7 @@
                 type: 'GET',
                 url: 'getUser.asp?Action=content',
                 data: {
-                    AdminID: AdminID
+                    AdminName: adminName
                 },
                 timeout: 15000,
                 dataType: 'json',
