@@ -1,7 +1,6 @@
 <!--#include file="inc/conn.asp"-->
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"-->
-<!--#include file="inc/sub_inc.asp" -->
 <!--#include file="inc/md5.asp"-->
 <%
 Response.CacheControl = "no-cache"

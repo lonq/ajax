@@ -1,8 +1,6 @@
 <!--#include file="inc/conn.asp"-->
 <!--#include file="inc/config.asp"-->
-<!--#include file="inc/function.asp"-->
-<!--#include file="inc/function_page.asp"-->
-<!--#include file="inc/sub_inc.asp" --><%
+<!--#include file="inc/function.asp"--><%
 '常用变量
 Dim Sql, Rs, RsMax, Action, searchKey, ID, GetType, GetMaxArticlesListsID, ReturnStr, OneRecord
 Dim Picture, arrPicture, P

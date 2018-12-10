@@ -848,7 +848,14 @@ button.form-preview-btn {
     color: #1edbb5;
 }
 
+/*顶部悬浮*/
+header#header {
+    padding-top: 1.173333rem;
+}
 /*底部悬浮*/
+footer#footer {
+    padding-top: 1.44rem;
+}
 .footer {
     display: -webkit-box;
     display: -webkit-flex;
@@ -859,13 +866,6 @@ button.form-preview-btn {
     height: 1.44rem;
     color: #999;
     background-color: #fff;
-}
-
-.footer.affix {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    z-index: 989;
 }
 
 .footer.horizontal-center {
@@ -908,7 +908,6 @@ ul.footer {
 .footer a.btn-links {
     color: #999;
 } */
-
 .footer.tabs li,
 .footer>.item-flex {
     -webkit-box-flex: 1;
@@ -942,14 +941,60 @@ ul.footer {
     font-size: .32rem;
     line-height: 1;
 }
-
 .footer .icon {
     font-size: .48rem;
 }
-
+/* 底部导航条图标 */
 .footer.tabs.tabs-vertical li .btn .icon {
+    display: inline-block;
     padding: .133333rem;
+    font-family: "iconfont" !important;
+    font-style: normal;
     font-size: .48rem;
+    line-height: inherit;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-stroke-width: .005333rem;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.footer.tabs.tabs-vertical li:nth-child(1) .btn .icon:before {
+    content: "\e7cf";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(2) .btn .icon:before {
+    content: "\e7e1";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(3) .btn .icon:before {
+    content: "\e7c7";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(4) .btn .icon:before {
+    content: "\e7a9";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(5) .btn .icon:before {
+    content: "\e7e8";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(1) .btn.active .icon:before {
+    content: "\e7ce";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(2) .btn.active .icon:before {
+    content: "\e7e6";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(3) .btn.active .icon:before {
+    content: "\e7c8";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(4) .btn.active .icon:before {
+    content: "\e7ea";
+}
+
+.footer.tabs.tabs-vertical li:nth-child(5) .btn.active .icon:before {
+    content: "\e7e5";
 }
 
 .footer.tabs li .btn:active .icon,
@@ -1253,92 +1298,8 @@ ul.footer {
 }
 
 /*幻灯*/
-/* .swiper-container .swiper-slide img {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-    text-align: center;
-}
-
-.swiper-container-horizontal>.swiper-pagination-bullets {
-    bottom: .266667rem;
-    left: 0;
-    width: 100%;
-} */
-
 .swiper-pagination-bullet-active {
     background: #1edbb5 !important;
-}
-
-/* .swiper-lazy-preloader {
-    width: 100% !important;
-    height: 100% !important;
-    position: absolute !important;
-    left: 0 !important;
-    top: 0 !important;
-    margin-left: 0 !important;
-    margin-top: 0 !important;
-    -webkit-transform-origin: 0 !important;
-    -moz-transform-origin: 0 !important;
-    transform-origin: 0 !important;
-    -webkit-animation: none !important;
-    -moz-animation: none !important;
-    animation: none !important;
-}
-
-.swiper-lazy-preloader:after {
-    background-image: none !important;
-}
-
-.swiper-container .corner {
-    position: absolute;
-    top: 0rem;
-    left: .4rem;
-    z-index: 2;
-    display: block;
-} */
-
-/*滚动图片*/
-.scroll {
-    padding: .266667rem 0;
-    background-color: #fff;
-}
-
-.scroll h3 {
-    padding: .133333rem .4rem .4rem;
-    font-size: .4rem;
-    font-weight: 400;
-}
-
-.swiper2 {
-    margin: 0 .4rem !important;
-}
-
-.swiper2 .swiper-lazy-preloader+h4 {
-    font: 0/0 a !important;
-}
-
-.swiper2 .swiper-slide h4 {
-    /* position: absolute;
-  bottom: 0;
-  left: 0; */
-    display: block;
-    margin: 0;
-    padding: 0;
-    width: 100%;
-    height: 1.066667rem;
-    line-height: 1.066667rem;
-    font-weight: 400;
-    font-size: .373333rem;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
-.swiper2 .swiper-pagination {
-    bottom: 0rem !important;
 }
 
 /*按钮组（宽度自动）*/
@@ -1379,38 +1340,6 @@ ul.footer {
 }
 
 /*模态框*/
-.close {
-    float: right;
-    font-size: .56rem;
-    font-weight: bold;
-    line-height: 1;
-    color: #333;
-    text-shadow: 0 1px 0 #fff;
-    filter: alpha(opacity=20);
-    opacity: .2;
-}
-
-.close:hover,
-.close:focus {
-    color: #333;
-    text-decoration: none;
-    cursor: pointer;
-    filter: alpha(opacity=50);
-    opacity: .5;
-}
-
-button.close {
-    -webkit-appearance: none;
-    padding: 0;
-    cursor: pointer;
-    background: transparent;
-    border: 0;
-}
-
-.modal-open {
-    overflow: hidden;
-}
-
 .modal {
     position: fixed;
     top: 0;
@@ -1422,6 +1351,38 @@ button.close {
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
     outline: 0;
+}
+
+.modal .close {
+    float: right;
+    font-size: .56rem;
+    font-weight: bold;
+    line-height: 1;
+    color: #333;
+    text-shadow: 0 1px 0 #fff;
+    filter: alpha(opacity=20);
+    opacity: .2;
+}
+
+.modal .close:hover,
+.modal .close:focus {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    filter: alpha(opacity=50);
+    opacity: .5;
+}
+
+.modal button.close {
+    -webkit-appearance: none;
+    padding: 0;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+}
+
+.modal-open {
+    overflow: hidden;
 }
 
 .modal-open .modal {
@@ -1544,28 +1505,6 @@ button.close {
     width: 1.333333rem;
     height: 1.333333rem;
     overflow: scroll;
-}
-
-/*二维码和指纹*/
-.qrcode-box {
-    font: 0/0 a;
-}
-
-.qrcode {
-    display: inline-block;
-    padding: .266667rem;
-    width: 50%;
-}
-
-.qrcode.qrcode-fingerprint {
-    background-image: url(../images/zhiwen.png);
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-.qrcode.qrcode-fingerprint img {
-    opacity: 0;
 }
 
 /*详情*/
@@ -1721,6 +1660,7 @@ button.close {
     margin-top: .133333rem;
     margin-bottom: .266667rem;
 }
+
 .article-content img {
     display: block;
     margin: 0 auto;
@@ -1728,10 +1668,7 @@ button.close {
     height: auto;
 }
 
-/*
- * Page: Login & Register
- * ----------------------
- */
+/* 登录和注册 */
 .login-wrap,
 .register-wrap {
     background-color: #1edbb5 !important;
@@ -1864,6 +1801,7 @@ button.close {
     -webkit-box-shadow: inset 0 0.08rem 0.133333rem rgba(0, 0, 0, .125);
     box-shadow: inset 0 0.08rem 0.133333rem rgba(0, 0, 0, .125);
 }
+
 /* 导航 */
 .navbar {
     position: relative;
@@ -1876,18 +1814,23 @@ button.close {
     width: 100%;
     height: 1.173333rem;
 }
+
 .navbar.navbar-light {
-    background-color: rgba(255, 255, 255, .2);
+    background-color: #fff;
 }
+
 .navbar.navbar-dark {
-    background-color: rgba(0, 0, 0, .2);
+    color: #fff;
+    background-color: #333;
 }
+
 .navbar>ul,
 .navbar>ul>li {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 .navbar a {
     position: relative;
     display: block;
@@ -1899,6 +1842,7 @@ button.close {
     font-size: .453333rem;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+
 .navbar a .badge {
     position: absolute;
     top: .2rem;
@@ -1906,6 +1850,7 @@ button.close {
     font-size: .24rem;
     color: #fff !important;
 }
+
 .navbar .navbar-left,
 .navbar .navbar-right {
     display: -webkit-box;
@@ -1914,6 +1859,7 @@ button.close {
     -webkit-align-items: center;
     align-items: center;
 }
+
 .navbar .navbar-title {
     position: absolute;
     left: 50%;
@@ -1938,14 +1884,25 @@ button.close {
     background-repeat: no-repeat;
     background-size: cover;
 }
+
+.user-header .navbar-light {
+    background-color: rgba(255, 255, 255, .175);
+}
+
+.user-header .navbar-dark {
+    background-color: rgba(0, 0, 0, .175);
+}
+
 .user-face {
     margin: .266667rem auto;
     width: 1.6rem;
     height: 1.6rem;
 }
+
 .user-face a {
     display: block;
 }
+
 .user-face img {
     display: block;
     width: 1.6rem;
@@ -1953,25 +1910,30 @@ button.close {
     border: .066667rem solid rgba(255, 255, 255, .5);
     border-radius: .8rem;
 }
+
 .user-name {
-    margin-bottom: .066667rem;
+    margin-bottom: .266667rem;
     padding: 0 .4rem;
     font-size: .453333rem;
     text-align: center;
     color: inherit;
 }
+
 .user-autograph {
+    margin-bottom: .266667rem;
     padding: 0 .4rem;
     font-size: .32rem;
     text-align: center;
     color: inherit;
 }
+
 ul.user-info,
 ul.user-info>li {
     margin: 0;
     padding: 0;
     list-style: none;
 }
+
 ul.user-info {
     display: -webkit-box;
     display: -webkit-flex;
@@ -1981,6 +1943,7 @@ ul.user-info {
     align-items: center;
     padding: .4rem 0;
 }
+
 ul.user-info>li {
     position: relative;
     display: block;
@@ -1989,6 +1952,7 @@ ul.user-info>li {
     flex: 1;
     min-width: 0;
 }
+
 ul.user-info>li:before {
     content: " ";
     position: absolute;
@@ -2003,9 +1967,11 @@ ul.user-info>li:before {
     -webkit-transform: scaleX(0.5);
     transform: scaleX(0.5);
 }
+
 ul.user-info>li:first-child:before {
     display: none;
 }
+
 ul.user-info>li>dl,
 ul.user-info>li>dl>dt,
 ul.user-info>li>dl>dd {
@@ -2014,13 +1980,16 @@ ul.user-info>li>dl>dd {
     line-height: 1;
     text-align: center;
 }
+
 ul.user-info>li>dl>dt {
     font-size: .453333rem;
 }
+
 ul.user-info>li>dl>dd {
     margin-top: .2rem;
     font-size: .32rem;
 }
+
 /* 用户中心图文组 */
 ul.user-capability,
 ul.user-capability>li {
@@ -2028,6 +1997,7 @@ ul.user-capability>li {
     padding: 0;
     list-style: none;
 }
+
 ul.user-capability {
     display: -webkit-box;
     display: -webkit-flex;
@@ -2037,6 +2007,7 @@ ul.user-capability {
     align-items: center;
     padding: .4rem 0;
 }
+
 ul.user-capability>li {
     position: relative;
     display: block;
@@ -2045,6 +2016,7 @@ ul.user-capability>li {
     flex: 1;
     min-width: 0;
 }
+
 ul.user-capability.space-left>li:before {
     content: " ";
     position: absolute;
@@ -2059,9 +2031,11 @@ ul.user-capability.space-left>li:before {
     -webkit-transform: scaleX(0.5);
     transform: scaleX(0.5);
 }
+
 ul.user-capability.space-left>li:first-child:before {
     display: none;
 }
+
 ul.user-capability>li>dl,
 ul.user-capability>li>dl>dt,
 ul.user-capability>li>dl>dd {
@@ -2070,19 +2044,23 @@ ul.user-capability>li>dl>dd {
     line-height: 1;
     text-align: center;
 }
+
 ul.user-capability>li>dl>dt {
     font-size: .6rem;
 }
+
 ul.user-capability>li>dl>dt img {
     display: block;
     margin: 0 auto;
     width: 1.066667rem;
     height: 1.066667rem;
 }
+
 ul.user-capability>li>dl>dd {
     margin-top: .266667rem;
     font-size: .32rem;
 }
+
 ul.user-capability>li>dl>dd:nth-child(3) {
     margin-top: .066667rem;
     color: #999;

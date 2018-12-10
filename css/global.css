@@ -1,5 +1,15 @@
 ﻿@charset "utf-8";
 /* 元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制 */
+/* PS：元素层及规范
+/* default:           2;
+/* navbar:            1000;
+/* dropdown:          1000;
+/* popover:           1060;
+/* tooltip:           1070;
+/* navbar-fixed:      1030;
+/* modal-background:  1040;
+/* modal:             1050;
+*/
 * {
     font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
     box-sizing: border-box;
@@ -186,15 +196,17 @@ html input[disabled] {
 }
 .affix {
     position: fixed;
-    z-index: 2;
+    z-index: 1050;
 }
 .affix.affix-top {
-    left: 0;
     top: 0;
+    right: 0;
+    left: 0;
 }
 .affix.affix-bottom {
-    left: 0;
+    right: 0;
     bottom: 0;
+    left: 0;
 }
 .relative {
     position: relative;
@@ -217,11 +229,17 @@ html input[disabled] {
 .margin-top {
     margin-top: .266667rem;
 }
+.margin-top-lg {
+    margin-top: .8rem;
+}
 .margin-right {
     margin-right: .4rem;
 }
 .margin-bottom {
     margin-bottom: .266667rem;
+}
+.margin-bottom-lg {
+    margin-bottom: .8rem;
 }
 .margin-left {
     margin-left: .4rem;
@@ -242,6 +260,10 @@ html input[disabled] {
 .padding-vertical {
     padding-top: .266667rem;
     padding-bottom: .266667rem;
+}
+.padding-vertical-lg {
+    padding-top: .8rem;
+    padding-bottom: .8rem;
 }
 .no-padding {
     padding: 0 !important;
@@ -1675,7 +1697,7 @@ a.badge:focus {
     background-color: rgba(0, 0, 0, 0);
 }
 .backdrop-toggle {
-    z-index: 9996;
+    z-index: 1040;
     background-color: rgba(0, 0, 0, .7);
     transition: background-color .5s;
     -webkit-transition: background-color .5s;
@@ -1689,7 +1711,7 @@ a.badge:focus {
     -webkit-transform: translate(0, 100%);
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
-    z-index: 9999;
+    z-index: 1050;
     width: 100%;
     background-color: #fff;
     transition: -webkit-transform .3s;
@@ -1701,7 +1723,7 @@ a.badge:focus {
     position: absolute;
     top: .266667rem;
     right: .266667rem;
-    z-index: 9999;
+    z-index: 1050;
 }
 .actionsheet-toggle {
     transform: translate(0, 0);
@@ -1713,7 +1735,7 @@ a.badge:focus {
     position: fixed;
     top: 0;
     left: 0;
-    z-index: 9998;
+    z-index: 1050;
     width: 100%;
 }
 /*返回顶部*/
@@ -1721,7 +1743,7 @@ a.badge:focus {
     position: fixed;
     right: .133333rem;
     bottom: 1.706667rem;
-    z-index: 9997;
+    z-index: 1050;
 }
 .float-tool a {
     display: block;
