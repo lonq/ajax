@@ -247,6 +247,7 @@
     <script src="js/common.js"></script>
 
     <script type="text/javascript">
+        var targetObj = $('.menu-swiper');
         var _container = $('.menu-swiper');
         var _footer = $('.footer');
         var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
@@ -312,8 +313,6 @@
                 success: function (reponse) {
                     // 无数据
                     if (reponse == 0) {
-                        pullUp.hide().html();
-                        pullDown.hide();
                         noData('default', '什么也没找到~');
                     } else {
                         // 有数据

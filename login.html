@@ -24,7 +24,7 @@
 <body class="login-wrap">
   <div class="login-box">
     <div class="login-logo">
-      <img src="images/logo.png">
+      <img src="images/logo-white.png">
       <h4>网站名称</h4>
     </div>
     <div class="login-box-body">
@@ -65,23 +65,17 @@
 
   <script src="js/zepto.min.js"></script>
   <script src="js/touch.min.js"></script>
+  <script src="js/zepto.cookie.min.js"></script>
   <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+  <script src="js/common.js"></script>
 
   <script type="text/javascript">
     //<![CDATA[
-    // var screenHeight = $(document).height(); //屏幕当前的高度
     $(function () {
       $('#mainForm').submit(function () {
         loginForm();
       });
     });
-    // $(window).resize(function () {
-    //   if ($(document).height() < screenHeight) {
-    //     $('.affix-bottom').hide();
-    //   } else {
-    //     $('.affix-bottom').show();
-    //   }
-    // });
     //表单验证
     function loginForm() {
       var LoginAdminName = $.trim($('#LoginAdminName').val());
@@ -112,7 +106,9 @@
                 msg('用户名错误');
                 break;
               case 1:
-                window.location.href = 'index.html';
+                // window.location.href = 'index.html';
+                var prevLink = $.fn.cookie('prevLink');
+                HtmlUtil.forwardUrl(prevLink);
                 break;
               case 2:
                 msg('密码错误');

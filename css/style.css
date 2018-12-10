@@ -883,7 +883,7 @@ ul.footer {
     content: " ";
     position: absolute;
     left: 0;
-    z-index: 990;
+    z-index: 1000;
     width: 100%;
     height: 1px;
     color: #dcdcdc;
@@ -1032,7 +1032,7 @@ ul.footer {
 /*底部弹出列表*/
 .action-sheet {
     position: fixed;
-    z-index: 2;
+    z-index: 1070;
     left: 0;
     bottom: 1.44rem;
     padding: 0 .4rem;
@@ -1182,7 +1182,7 @@ ul.footer {
     position: absolute;
     top: 100%;
     left: 0;
-    z-index: 9999;
+    z-index: 1000;
     display: none;
     float: left;
     padding: 0 .4rem;
@@ -1225,7 +1225,7 @@ ul.footer {
 .fixed-menu {
     position: fixed;
     top: 0;
-    z-index: 9997;
+    z-index: 1000;
     margin: 0 !important;
     width: 100%;
 }
@@ -2064,4 +2064,13 @@ ul.user-capability>li>dl>dd {
 ul.user-capability>li>dl>dd:nth-child(3) {
     margin-top: .066667rem;
     color: #999;
+}
+
+/* 关于 */
+.about-wrap .about-logo img {
+    width: 1.6rem;
+}
+
+.about-wrap .about-qrcode img {
+    width: 3.333333rem;
 }

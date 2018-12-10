@@ -1,3 +1,6 @@
+var selfUrl = 'http://' + window.location.host + '/ajax'; // 本站网址
+$.fn.cookie('prevLink', document.referrer); // 来路网址
+
 $(function () {
     //返回顶部
     // $("body").append("<div class='float-tool'><div id='top-tool'><a href='javascript: void(0);' title='回到顶部'></a></div></div>");
@@ -14,6 +17,7 @@ $(function () {
     //         scrollTop: 0
     //     }, 600)
     // })
+
 });
 
 // 对Date的扩展，将 Date 转化为指定格式的String
@@ -96,16 +100,17 @@ var HtmlUtil = {
     },
     /*4.获取地址栏参数，str:参数名称*/
     getUrlParms: function (str) {
-        var reg = new RegExp("(^|&)"+ str +"=([^&]*)(&|$)");
+        var reg = new RegExp("(^|&)" + str + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
-        if(r!=null)
-        return unescape(r[2]);
+        if (r != null)
+            return unescape(r[2]);
         return null;
     },
     /*4.读取cookie数组，str:参数名称*/
     getCookie: function (arr, str) {
         //'username=abc; password=123456; aaa=123; bbb=4r4er'是一个字符串
         // var arr = document.cookie.split('&');
+        if (!arr) return;
         arr = arr.split('&');
         var i = 0;
         //arr->['username=abc', 'password=123456', ...]
@@ -117,6 +122,20 @@ var HtmlUtil = {
             }
         }
         return '';
+    },
+    // 返回来路网址
+    forwardUrl: function (prevLink) {
+        if ($.trim(prevLink) == '') {
+            location.href = selfUrl + '/index.html';
+        } else {
+            if (prevLink.indexOf(selfUrl) == -1) {	//来自其它站点
+                location.href = selfUrl + '/index.html';
+            }
+            if (prevLink.indexOf('register.html') != -1) {		//来自注册页面
+                location.href = selfUrl + '/index.html';
+            }
+            location.href = prevLink;
+        }
     }
 };
 
