@@ -163,30 +163,28 @@
         </div>
     </div>
 
-    <footer>
-        <ul class="footer affix affix-bottom tabs tabs-vertical text-center">
-            <li>
-                <a class="btn btn-clear" href="index.html">
-                    <i class="icon"></i><span class="tip">首页</span>
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-clear" href="productList.html">
-                    <i class="icon"><span class="badge badge-danger">6</span></i><span class="tip">产品</span>
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-clear" href="articleList.html">
-                    <i class="icon"></i><span class="tip">文章</span>
-                </a>
-            </li>
-            <li>
-                <a class="btn btn-clear active" href="user.html">
-                    <i class="icon"></i><span class="tip">我</span>
-                </a>
-            </li>
-        </ul>
-    </footer>
+    <ul class="footer affix affix-bottom tabs tabs-vertical text-center">
+        <li>
+            <a class="btn btn-clear" href="index.html">
+                <i class="icon"></i><span class="tip">首页</span>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-clear" href="productList.html">
+                <i class="icon"><span class="badge badge-danger">6</span></i><span class="tip">产品</span>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-clear" href="articleList.html">
+                <i class="icon"></i><span class="tip">文章</span>
+            </a>
+        </li>
+        <li>
+            <a class="btn btn-clear active" href="user.html">
+                <i class="icon"></i><span class="tip">我</span>
+            </a>
+        </li>
+    </ul>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
@@ -209,7 +207,7 @@
         var backdrop = $('.backdrop');
         $(function () {
             // 修正容器高度
-            fixedContainerH();
+            // fixedContainerH();
             // 侧滑菜单栏
             var menuSwiper = new Swiper('.menu-swiper', {
                 slidesPerView: 'auto',
@@ -240,6 +238,9 @@
                             menu.css({
                                 'z-index': menuZindex
                             });
+                            _footer.css({
+                                'position': 'static'
+                            });
                         } else {
                             $('html, body').css({
                                 'overflow': ''
@@ -247,6 +248,9 @@
                             backdrop.removeClass('backdrop-toggle');
                             menu.css({
                                 'z-index': ''
+                            });
+                            _footer.css({
+                                'position': 'fixed'
                             });
                         }
                     },
@@ -258,9 +262,9 @@
             getUserCapability($('.js-user-capability'));
         });
         //修正容器高度
-        function fixedContainerH() {
-            _container.css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
-        }
+        // function fixedContainerH() {
+        //     _container.css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
+        // }
         // 文章正文
         function getContent() {
             $.ajax({

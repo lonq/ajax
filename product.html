@@ -34,9 +34,9 @@
         }
         .tab-swiper {
             position: fixed;
-            top: 0;
+            top: 1.173333rem;;
             left: 0;
-            z-index: 989;
+            z-index: 1000;
             list-style: none;
             margin: 0;
             padding: 0;
@@ -95,15 +95,22 @@
 </head>
 
 <body>
-    <nav id="nav">
-        <div class="tab-swiper border-bottom" id="tab">
+    <header id="header">
+        <nav class="navbar navbar-light affix affix-top">
+            <ul class="navbar-left">
+                <li><a href="javascript:history.go(-1);"><i class="iconfont-angleleft"></i></a></li>
+            </ul>
+        </nav>
+    </header>
+    <div id="nav">
+        <div class="tab-swiper border-top border-bottom" id="tab">
             <div class="swiper-wrapper">
                 <div class="swiper-slide"><a href="javascript:;">详情</a></div>
                 <div class="swiper-slide"><a href="javascript:;">评论</a></div>
                 <div class="swiper-slide"><a href="javascript:;">推荐</a></div>
             </div>
         </div>
-    </nav>
+    </div>
     <div class="v-swiper">
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
@@ -133,9 +140,9 @@
         var _container = $('.v-swiper');
         var _nav = $('#nav');
         var _navH = _nav.children().height();
-        var _footer = $('#footer');
-        var _footerH = _footer.children().height();
-        var _offsetHeight = _navH + _footerH; //滑动束缚容器的偏移高度
+        var _header = $('#header');
+        var _headerH = _header.children().height();
+        var _offsetHeight = _headerH + _navH; //滑动束缚容器的偏移高度
 
         var id = HtmlUtil.getUrlParms('ID');
 

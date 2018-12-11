@@ -70,7 +70,13 @@
 </head>
 
 <body>
-  
+    <header id="header">
+        <nav class="navbar navbar-light affix affix-top">
+            <ul class="navbar-left">
+                <li><a href="javascript:history.go(-1);"><i class="iconfont-angleleft"></i></a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="v-swiper">
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
@@ -97,10 +103,10 @@
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _nav = $('.article-wrap');
-        // var _navH = _nav.height();
-        // var _offsetHeight = _navH; //滑动束缚容器的偏移高度
-        var _offsetHeight; //滑动束缚容器的偏移高度
+        var _article = $('.article-wrap');
+        var _header = $('#header');
+        var _headerH = _header.children().height();
+        var _offsetHeight = _headerH; //滑动束缚容器的偏移高度
         
         var id = HtmlUtil.getUrlParms('ID');
         var type = HtmlUtil.getUrlParms('type');
@@ -143,7 +149,7 @@
         });
         //修正容器高度
         function fixedContainerH() {
-            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh)');
+            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
         }
         //上拉加载
         function pullUpAction() {
@@ -205,7 +211,6 @@
                         $('title').html(reponse.title);
                         resetImg();
                     }
-                    _offsetHeight = _nav.height();
                     fixedContainerH(); // 修正容器高度
                     vSwiper.update(); // 更新容器尺寸
                 },
