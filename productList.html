@@ -58,19 +58,46 @@
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
                 <div class="pull-down" style="display: none;">下拉更新</div>
-                <div class="list title border-top border-bottom">
-                    <div class="item vertical-center">
-                        <div class="item-body">
-                            <span>产品列表</span>
+                <herder>
+                    <div class="list title border-top border-bottom">
+                        <div class="item vertical-center">
+                            <div class="item-body">
+                                <span>产品列表</span>
+                            </div>
+                            <div class="item-footer"><i class="iconfont-modeimage" id="changeViewMode"></i></div>
                         </div>
-                        <div class="item-footer"><i class="iconfont-modeimage" id="changeViewMode"></i></div>
                     </div>
-                </div>
+                </herder>
                 <div class="list main" id="viewWrap"></div>
                 <div class="pull-up">上拉加载更多</div>
             </div>
         </div>
     </div>
+
+    <footer id="footer">
+        <ul class="footer affix affix-bottom tabs tabs-vertical text-center">
+            <li>
+                <a class="btn btn-clear" href="index.html">
+                    <i class="icon"></i><span class="tip">首页</span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-clear active" href="productList.html">
+                    <i class="icon"><span class="badge badge-danger">6</span></i><span class="tip">产品</span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-clear" href="articleList.html">
+                    <i class="icon"></i><span class="tip">文章</span>
+                </a>
+            </li>
+            <li>
+                <a class="btn btn-clear" href="user.html">
+                    <i class="icon"></i><span class="tip">我</span>
+                </a>
+            </li>
+        </ul>
+    </footer>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>

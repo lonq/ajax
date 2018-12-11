@@ -1,57 +1,32 @@
 var selfUrl = 'http://' + window.location.host + '/ajax'; // 本站网址
 $.fn.cookie('prevLink', document.referrer); // 来路网址
 
-$(function () {
-    //返回顶部
-    // $("body").append("<div class='float-tool'><div id='top-tool'><a href='javascript: void(0);' title='回到顶部'></a></div></div>");
-    // $('.float-tool').css("display", "none");
-    // $(window).scroll(function () {
-    //     if ($(this).scrollTop() > 500) {
-    //         $('.float-tool').css("display", "block");
-    //     } else {
-    //         $('.float-tool').css("display", "none");
-    //     }
-    // });
-    // $('#top-tool').click(function () {
-    //     $('body, html').animate({
-    //         scrollTop: 0
-    //     }, 600)
-    // })
-
-});
-
-// 对Date的扩展，将 Date 转化为指定格式的String
-// 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符， 
-// 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字) 
-// 例子： 
-// (new Date()).Format("yyyy-MM-dd hh:mm:ss.S") ==> 2006-07-02 08:09:04.423 
-// (new Date()).Format("yyyy-M-d h:m:s.S")      ==> 2006-7-2 8:9:4.18 
-Date.prototype.Format = function (fmt) {
-    var o = {
-        "M+": this.getMonth() + 1,
-        "d+": this.getDate(),
-        "H+": this.getHours(),
-        "m+": this.getMinutes(),
-        "s+": this.getSeconds(),
-        "S+": this.getMilliseconds()
-    };
-    //因位date.getFullYear()出来的结果是number类型的,所以为了让结果变成字符串型，下面有两种方法：
-    if (/(y+)/.test(fmt)) {
-        //第一种：利用字符串连接符“+”给date.getFullYear()+""，加一个空字符串便可以将number类型转换成字符串。
-        fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
-    }
-    for (var k in o) {
-        if (new RegExp("(" + k + ")").test(fmt)) {
-
-            //第二种：使用String()类型进行强制数据类型转换String(date.getFullYear())，这种更容易理解。
-
-            fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(String(o[k]).length)));
-        }
-    }
-    return fmt;
-}
+$(function () {});
 
 var HtmlUtil = {
+    // 对Date的扩展，将 Date 转化为指定格式的String
+    // 月(M)、日(d)、小时(H)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
+    // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)
+    // 例子：
+    // dateFormat("yyyy-MM-dd HH:mm:ss.S", new Date()) ==> 2006-07-02 08:09:04.423
+    // dateFormat.Format("yyyy-M-d H:m:s.S", new Date())      ==> 2006-7-2 8:9:4.18
+    dateFormat: function (fmt, date) {
+        var o = {
+            "M+": date.getMonth() + 1, //月份
+            "d+": date.getDate(), //日
+            "H+": date.getHours(), //小时
+            "m+": date.getMinutes(), //分
+            "s+": date.getSeconds(), //秒
+            "q+": Math.floor((date.getMonth() + 3) / 3), //季度
+            "S": date.getMilliseconds() //毫秒
+        };
+        if (/(y+)/.test(fmt))
+            fmt = fmt.replace(RegExp.$1, (date.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+            if (new RegExp("(" + k + ")").test(fmt))
+                fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    },
     /*1.用浏览器内部转换器实现html转码*/
     htmlEncode: function (html) {
         //1.首先动态创建一个容器标签元素，如DIV
@@ -128,15 +103,13 @@ var HtmlUtil = {
         if ($.trim(prevLink) == '') {
             location.href = selfUrl + '/index.html';
         } else {
-            if (prevLink.indexOf(selfUrl) == -1) {	//来自其它站点
+            if (prevLink.indexOf(selfUrl) == -1) { //来自其它站点
                 location.href = selfUrl + '/index.html';
             }
-            if (prevLink.indexOf('register.html') != -1) {		//来自注册页面
+            if (prevLink.indexOf('register.html') != -1) { //来自注册页面
                 location.href = selfUrl + '/index.html';
             }
             location.href = prevLink;
         }
     }
 };
-
-

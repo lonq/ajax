@@ -1814,6 +1814,9 @@ ul.footer {
     width: 100%;
     height: 1.173333rem;
 }
+.navbar.affix {
+    position: fixed;
+}
 
 .navbar.navbar-light {
     background-color: #fff;
@@ -1991,11 +1994,10 @@ ul.user-info>li>dl>dd {
 }
 
 /* 用户中心图文组 */
-ul.user-capability,
-ul.user-capability>li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
+ul.user-capability {
+    /* margin: 0;
+    padding-left: 0;
+    list-style: none; */
 }
 
 ul.user-capability {
@@ -2005,7 +2007,6 @@ ul.user-capability {
     justify-content: space-between;
     -webkit-align-items: center;
     align-items: center;
-    padding: .4rem 0;
 }
 
 ul.user-capability>li {
@@ -2015,6 +2016,16 @@ ul.user-capability>li {
     -webkit-flex: 1;
     flex: 1;
     min-width: 0;
+}
+
+ul.user-capability>li>a {
+    display: block;
+    padding: .266667rem .133333rem;
+    background-color: #fff;
+}
+
+ul.user-capability>li>a:active {
+    background-color: #eee;
 }
 
 ul.user-capability.space-left>li:before {
@@ -2036,32 +2047,32 @@ ul.user-capability.space-left>li:first-child:before {
     display: none;
 }
 
-ul.user-capability>li>dl,
-ul.user-capability>li>dl>dt,
-ul.user-capability>li>dl>dd {
+ul.user-capability>li dl,
+ul.user-capability>li dl>dt,
+ul.user-capability>li dl>dd {
     margin: 0;
     padding: 0 .133333rem;
     line-height: 1;
     text-align: center;
 }
 
-ul.user-capability>li>dl>dt {
+ul.user-capability>li dl>dt {
     font-size: .6rem;
 }
 
-ul.user-capability>li>dl>dt img {
+ul.user-capability>li dl>dt img {
     display: block;
     margin: 0 auto;
     width: 1.066667rem;
     height: 1.066667rem;
 }
 
-ul.user-capability>li>dl>dd {
+ul.user-capability>li dl>dd {
     margin-top: .266667rem;
     font-size: .32rem;
 }
 
-ul.user-capability>li>dl>dd:nth-child(3) {
+ul.user-capability>li dl>dd:nth-child(3) {
     margin-top: .066667rem;
     color: #999;
 }

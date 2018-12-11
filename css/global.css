@@ -219,6 +219,10 @@ html input[disabled] {
     margin-right: .4rem;
     margin-left: .4rem;
 }
+.margin-horizontal-lg {
+    margin-right: .8rem;
+    margin-left: .8rem;
+}
 .margin-vertical {
     margin-top: .266667rem;
     margin-bottom: .266667rem;
@@ -270,6 +274,9 @@ html input[disabled] {
 }
 .padding {
     padding: .266667rem .4rem;
+}
+.padding-lg {
+    padding: .8rem;
 }
 .padding-top {
     padding-top: .266667rem;

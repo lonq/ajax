@@ -37,7 +37,6 @@
 </head>
 
 <body>
-    <!-- Swiper -->
     <div class="menu-swiper">
         <div class="swiper-wrapper transparent">
             <div class="swiper-slide menu">
@@ -71,7 +70,7 @@
                     <a href="logout.asp" class="btn btn-lg btn-default btn-block">退出登录</a>
                 </div>
             </div>
-            
+
             <div class="swiper-slide content">
                 <div class="backdrop"></div>
 
@@ -83,7 +82,7 @@
                         <h3 class="navbar-title">我</h3>
                         <ul class="navbar-right">
                             <li><a href="javascript:;"><i class="iconfont-bell"></i><span class="badge badge-danger">6</span></a></li>
-                            <li><a href="javascript:;"><i class="iconfont-edit"></i></a></li>
+                            <li><a href="userQrcode.html"><i class="iconfont-qrcode"></i></a></li>
                         </ul>
                     </nav>
                     <div class="user-wrap">
@@ -121,41 +120,9 @@
                     </div>
                 </header>
 
-                <div class="item-divider">相关功能</div>
-                <div class="list border-top border-bottom margin-top padding-horizontal bg-white">
-                    <ul class="user-capability">
-                        <li>
-                            <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-01.png"></dt>
-                                <dd>稳定</dd>
-                                <dd><small>功能描述</small></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-02.png"></dt>
-                                <dd>反应</dd>
-                                <dd><small>功能描述</small></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-03.png"></dt>
-                                <dd>贡献</dd>
-                                <dd><small>功能描述</small></dd>
-                            </dl>
-                        </li>
-                        <li>
-                            <dl>
-                                <dt><img src="uploadfiles/capabilitys/user-capability-04.png"></dt>
-                                <dd>兴趣</dd>
-                                <dd><small>功能描述</small></dd>
-                            </dl>
-                        </li>
-                    </ul>
-                </div>
+                <div class="js-user-capability"></div>
 
-                <div class="list border-top border-bottom">
+                <div class="list border-top border-bottom margin-top">
                     <a class="item vertical-center item-access" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-file text-success"></i></div>
                         <div class="item-body">
@@ -187,23 +154,7 @@
                         </div>
                         <div class="item-footer item-note">余额：&yen;&nbsp;<span class="text-md text-danger">320.00</span></div>
                     </a>
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-header"><i class="icon iconfont-qrcode text-muted"></i></div>
-                        <div class="item-body">
-                            <span>我的名片</span>
-                        </div>
-                        <div class="item-footer item-note"></div>
-                    </a>
-                </div>
-
-                <div class="list border-top border-bottom margin-bottom">
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-header"><i class="icon iconfont-questioncircle text-muted"></i></div>
-                        <div class="item-body">
-                            <span>使用帮助</span>
-                        </div>
-                        <div class="item-footer"></div>
-                    </a>
+                    <div class="item-divider"></div>
                 </div>
 
                 <footer id="footer"></footer>
@@ -215,7 +166,7 @@
     <footer>
         <ul class="footer affix affix-bottom tabs tabs-vertical text-center">
             <li>
-                <a class="btn btn-clear active" href="index.html">
+                <a class="btn btn-clear" href="index.html">
                     <i class="icon"></i><span class="tip">首页</span>
                 </a>
             </li>
@@ -230,7 +181,7 @@
                 </a>
             </li>
             <li>
-                <a class="btn btn-clear" href="user.html">
+                <a class="btn btn-clear active" href="user.html">
                     <i class="icon"></i><span class="tip">我</span>
                 </a>
             </li>
@@ -281,20 +232,30 @@
                     slideChange: function () {
                         var slider = this;
                         if (slider.activeIndex === 0) {
-                            $('html, body').css({'overflow': 'hidden'});
+                            $('html, body').css({
+                                'overflow': 'hidden'
+                            });
                             backdrop.addClass('backdrop-toggle');
                             var menuZindex = Number($('.backdrop-toggle').css('z-index')) + 1;
-                            menu.css({'z-index': menuZindex});
+                            menu.css({
+                                'z-index': menuZindex
+                            });
                         } else {
-                            $('html, body').css({'overflow': ''});
+                            $('html, body').css({
+                                'overflow': ''
+                            });
                             backdrop.removeClass('backdrop-toggle');
-                            menu.css({'z-index': ''});
+                            menu.css({
+                                'z-index': ''
+                            });
                         }
                     },
                 }
             });
             // 插入正文
             getContent();
+            // 插入用户功能
+            getUserCapability($('.js-user-capability'));
         });
         //修正容器高度
         function fixedContainerH() {
@@ -337,7 +298,52 @@
                         }
                         $('.js-userPetname').html(userPetname);
                         $('.js-userAutograph').html(userSignature);
-                        $('.js-userface').html('<img src="'+ userFace +'">');
+                        $('.js-userface').html('<img src="' + userFace + '">');
+                    }
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        }
+        // 用户功能
+        function getUserCapability(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getUser.asp?Action=usercapability',
+                timeout: 15000,
+                dataType: 'json',
+                beforeSend: function () {
+                    target.html('<p class="padding text-center">加载中...</p>');
+                },
+                success: function (reponse) {
+                    // 无数据
+                    if (reponse != 0) {
+                        target.html('');
+                        // 有数据
+                        var str = '';
+                        var list = reponse;
+                        str += '<div class="item-divider">相关功能</div>' +
+                            '<ul class="user-capability list-unstyled border-top border-bottom padding-vertical bg-white">';
+                        $.each(list, function (i, k) {
+                            var linkurl = k.linkurl;
+                            if (linkurl != '') {
+                                linkurl = linkurl;
+                            } else {
+                                linkurl = 'javascript:;';
+                            }
+                            str += '<li>' +
+                                '<a href=' + linkurl + '>' +
+                                '<dl>' +
+                                '<dt><img src="' + k.pictures + '"></dt>' +
+                                '<dd>' + k.title + '</dd>' +
+                                '<dd><small>' + k.description + '</small></dd>' +
+                                '</dl>' +
+                                '</a>' +
+                                '</li>';
+                        });
+                        str += '</ul>';
+                        target.html(str);
                     }
                 },
                 error: function (xhr, type, errorThrown) {
@@ -359,18 +365,18 @@
             var color, icon;
             switch (type) {
                 case 'primary':
-                color = 'msg msg-primary';
-                icon = 'icon iconfont-correctcircle';
-                break;
+                    color = 'msg msg-primary';
+                    icon = 'icon iconfont-correctcircle';
+                    break;
                 default:
-                color = 'msg msg-default';
-                icon = 'icon iconfont-infocircle';
+                    color = 'msg msg-default';
+                    icon = 'icon iconfont-infocircle';
             }
             var str = '';
             str += '<div class="' + color + '">';
             str += '<h1><i class="' + icon + '"></i></h1>' +
-            '<h3 class="text-center">' + text + '</h3>' +
-            '</div>';
+                '<h3 class="text-center">' + text + '</h3>' +
+                '</div>';
             targetObj.html(str);
         }
         //]]>
