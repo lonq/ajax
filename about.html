@@ -38,9 +38,7 @@
             <img class="center-block img-responsive" src="images/logo.png">
         </div>
         <p class="text-muted margin-top">网站名称&nbsp;当前版本： V1.00</p>
-        <div class="about-qrcode margin-top-lg">
-            <img class="center-block img-responsive" src="uploadfiles/qrcodes/qrcode.jpg">
-        </div>
+        <div id="websiteQrcode" class="about-qrcode margin-top-lg"></div>
         <p class="text-muted margin-top">扫描二维码，访问网站</p>
     </div>
 
@@ -72,6 +70,7 @@
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/qrcodejs-master/qrcode.min.js"></script>
     <script src="js/common.js"></script>
 
     <script type="text/javascript">
@@ -80,6 +79,15 @@
         $(function () {
             // 插入正文
             getContent();
+            // 生成二维码
+            var qrcode = new QRCode('websiteQrcode', {
+                text: selfUrl,
+                width: 300,
+                height: 300,
+                colorDark : '#000000',
+                colorLight : '#ffffff',
+                correctLevel : QRCode.CorrectLevel.H
+            });
         });
         // 文章正文
         function getContent() {

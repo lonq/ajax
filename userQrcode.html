@@ -30,27 +30,27 @@
                 <li><a href="javascript:history.go(-1);"><i class="iconfont-angleleft"></i></a></li>
             </ul>
             <h3 class="navbar-title">我的名片</h3>
+            <ul class="navbar-left">
+                <li class="js-share-btn"><a href="javascript:;"><i class="iconfont-share"></i></a></li>
+            </ul>
         </nav>
     </header>
 
-    <div class="flex-wrap vertical-center margin-horizontal-lg full-height">
-        <div class="list bg-white">
-            <div class="item item-avatar vertical-center">
-                <div class="js-userface avatar"><img src="images/placeholder-avatar.jpg"></div>
-                <div class="item-body overflow-hidden space-top">
-                    <h4 class="js-userPetname title text-ellipsis">-</h4>
-                    <p class=" js-userAutograph text-muted text-xs text-ellipsis-2">-</p>
-                </div>
-            </div>
-            <div class="item">
-                <div class="padding-lg center-block img-responsive">
-                    <img src="uploadfiles/qrcodes/qrcode.jpg">
-                </div>
-            </div>
-            <div class="item horizontal-center text-muted">
-                扫描二维码，加我为好友
-            </div>
+    <div class="js-content flex-wrap vertical-center margin-horizontal-lg full-height"></div>
+
+    <div class="actionsheet-backdrop backdrop"></div>
+
+    <div class="actionsheet share-actionsheet">
+        <div class="actionsheet-title bg-white">
+            <i class="close iconfont-wrong"></i>
         </div>
+        <ul class="actionsheet-menu share-actionsheet">
+            <li><i class="iconfont-qzone"></i><span>QQ空间</span></li>
+            <li><i class="iconfont-weibo"></i><span>微博</span></li>
+            <li><i class="iconfont-weixin"></i><span>微信</span></li>
+            <li><i class="iconfont-wxzone"></i><span>微信朋友圈</span></li>
+        </ul>
+        <div class="actionsheet-cancel">取消</div>
     </div>
 
     <script src="js/zepto.min.js"></script>
@@ -60,6 +60,7 @@
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/qrcodejs-master/qrcode.min.js"></script>
     <script src="js/common.js"></script>
 
     <script type="text/javascript">
@@ -68,7 +69,27 @@
         $(function () {
             // 插入正文
             getContent();
+            //底部弹出菜单
+            $('.js-share-btn').on('click', function () {
+                showActionSheet();
+            });
         });
+        // 显示actionsheet
+        function showActionSheet() {
+            var actionsheet = $('.actionsheet');
+            var mask = $('.actionsheet-backdrop');
+            var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
+            mask.on('click', hideActionSheet);
+            actionsheetCancel.on('click', hideActionSheet);
+            actionsheet.addClass('actionsheet-toggle');
+            backdropState('actionsheet-backdrop', 'on');
+        }
+        // 关闭actionsheet
+        function hideActionSheet() {
+            var actionsheet = $('.actionsheet');
+            actionsheet.removeClass('actionsheet-toggle');
+            backdropState('actionsheet-backdrop', 'off');
+        }
         // 文章正文
         function getContent() {
             $.ajax({
@@ -87,10 +108,12 @@
                         noData('default', '什么也没找到~');
                     } else {
                         // 有数据
+                        var str = '';
                         var username = reponse.adminname;
                         var userPetname = reponse.adminpetname;
                         var userSignature = reponse.adminsignature;
                         var userFace = reponse.adminface;
+                        var userCode = '测试';
                         if (userFace) {
                             userFace = userFace;
                         } else {
@@ -106,15 +129,52 @@
                         } else {
                             userSignature = '他很懒，什么都没留下。';
                         }
-                        $('.js-userPetname').html(userPetname);
-                        $('.js-userAutograph').html(userSignature);
-                        $('.js-userface').html('<img src="' + userFace + '">');
+                        str += '<div class="list clear-border user-qrcode-wrap">' +
+                            '<div class="item item-avatar vertical-center">' +
+                            '<div class="avatar"><img src="' + userFace + '"></div>' +
+                            '<div class="item-body overflow-hidden space-top">' +
+                            '<h4 class="title text-ellipsis">' + userPetname + '</h4>' +
+                            '<p class="text-muted text-xs text-ellipsis-2">' + userSignature + '</p>' +
+                            '</div>' +
+                            '</div>' +
+                            '<div class="item horizontal-center">' +
+                            '<div id="userQrcode" class="user-qrcode"><img class="icon" src="images/mini-logo.png"></div>' +
+                            '</div>' +
+                            '<div class="item horizontal-center text-sm text-muted">扫描二维码，加我为好友</div>' +
+                            '</div>';
+                        $('.js-content').html(str);
+                        // 生成二维码
+                        var qrcode = new QRCode('userQrcode', {
+                            text: userCode,
+                            width: 400,
+                            height: 400,
+                            colorDark : '#000000',
+                            colorLight : '#ffffff',
+                            correctLevel : QRCode.CorrectLevel.H
+                        });
                     }
                 },
                 error: function (xhr, type, errorThrown) {
                     pullUp.html('加载失败！');
                 }
             });
+        }
+        // 遮罩层
+        function backdropState(classnames, state) {
+            if ($('div').hasClass(classnames)) {
+                if (state == 'on') {
+                    $('html, body').css({
+                        'overflow': 'hidden'
+                    });
+                    $('.' + classnames).addClass('backdrop-toggle');
+                }
+                if (state == 'off') {
+                    $('html, body').css({
+                        'overflow': ''
+                    });
+                    $('.' + classnames).removeClass('backdrop-toggle');
+                }
+            }
         }
         // 消息提示
         function msg(str) {

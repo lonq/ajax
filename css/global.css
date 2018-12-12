@@ -291,9 +291,9 @@ html input[disabled] {
     padding-left: .4rem;
 }
 /*边框*/
-.no-border,
-.no-border:before,
-.no-border:after {
+.clear-border,
+.clear-border:before,
+.clear-border:after {
     border: none !important;
 }
 .border-top,
@@ -1694,6 +1694,7 @@ a.badge:focus {
 }
 /*遮罩*/
 .backdrop {
+    display: none;
     position: fixed;
     top: 0;
     right: 0;
@@ -1704,38 +1705,13 @@ a.badge:focus {
     background-color: rgba(0, 0, 0, 0);
 }
 .backdrop-toggle {
+    display: block;
     z-index: 1040;
     background-color: rgba(0, 0, 0, .7);
     transition: background-color .5s;
     -webkit-transition: background-color .5s;
 }
 /*actionsheet*/
-.actionsheet {
-    position: fixed;
-    left: 0;
-    bottom: 0;
-    transform: translate(0, 100%);
-    -webkit-transform: translate(0, 100%);
-    -webkit-backface-visibility: hidden;
-    backface-visibility: hidden;
-    z-index: 1050;
-    width: 100%;
-    background-color: #fff;
-    transition: -webkit-transform .3s;
-    transition: transform .3s;
-    transition: transform .3s, -webkit-transform .3s;
-    -webkit-transition: -webkit-transform .3s;
-}
-.actionsheet .close {
-    position: absolute;
-    top: .266667rem;
-    right: .266667rem;
-    z-index: 1050;
-}
-.actionsheet-toggle {
-    transform: translate(0, 0);
-    -webkit-transform: translate(0, 0);
-}
 /*向导*/
 .guide-box .content {
     display: none;
@@ -1916,6 +1892,6 @@ table {
     flex: 1;
     min-width: 0;
 }
-.flex-wrap.no-border>.flex-item .btn {
+.flex-wrap.clear-border>.flex-item .btn {
     border: 0;
 }

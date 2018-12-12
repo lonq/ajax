@@ -1,7 +1,15 @@
 var selfUrl = 'http://' + window.location.host + '/ajax'; // 本站网址
 $.fn.cookie('prevLink', document.referrer); // 来路网址
 
-$(function () {});
+$(function () {
+    // 禁止底部主菜单激活后的行为
+    $('.footer.tabs-vertical .btn').on('click', function(e){
+        var _t = $(this);
+        if (_t.hasClass('active')){
+            e.preventDefault();
+        }
+    });
+});
 
 var HtmlUtil = {
     // 对Date的扩展，将 Date 转化为指定格式的String
