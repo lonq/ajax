@@ -1854,6 +1854,7 @@ table {
     display: flex;
 }
 .flex-wrap.direction-column {
+    /*列*/
     flex-direction: column;
 }
 .flex-wrap.row-wrap {
