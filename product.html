@@ -175,6 +175,7 @@
                     $('.h-swiper>.swiper-wrapper>.swiper-slide-active').css('height', 'auto').siblings('.swiper-slide').css('height', '0px');
                     vSwiper.update();
                     getData(hSwiper.activeIndex);
+                    console.log(loadFlagArr[hSwiper.activeIndex]);
                 },
             }
         });
@@ -194,6 +195,7 @@
                     positionJudge();
                 },
                 touchEnd: function(event){
+                    console.log(loadFlagArr[hSwiper.activeIndex]);
                     pullDownAction();
                     pullUpAction();
                     return false;
@@ -273,6 +275,7 @@
 
         // 产品详情
         function getDetails(target) {
+            loadFlagArr[target] = false;
             pullUp.hide();
             pullDown.hide();
             $.ajax({
