@@ -40,17 +40,36 @@
 
     <div class="actionsheet-backdrop backdrop"></div>
 
-    <div class="actionsheet share-actionsheet">
-        <div class="actionsheet-title bg-white">
+    <div class="actionsheet share-actionsheet padding-horizontal padding-bottom">
+        <div class="actionsheet-title">
             <i class="close iconfont-wrong"></i>
         </div>
         <ul class="actionsheet-menu share-actionsheet">
-            <li><i class="iconfont-qzone"></i><span>QQ空间</span></li>
-            <li><i class="iconfont-weibo"></i><span>微博</span></li>
-            <li><i class="iconfont-weixin"></i><span>微信</span></li>
-            <li><i class="iconfont-wxzone"></i><span>微信朋友圈</span></li>
+            <li>
+                <dl>
+                    <dt class="iconfont-qzone"></dt>
+                    <dd>QQ空间</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="iconfont-weibo"></dt>
+                    <dd>微博</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="iconfont-weixin"></dt>
+                    <dd>微信</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="iconfont-wxzone"></dt>
+                    <dd>微信朋友圈</dd>
+                </dl>
+            </li>
         </ul>
-        <div class="actionsheet-cancel">取消</div>
     </div>
 
     <script src="js/zepto.min.js"></script>
@@ -148,9 +167,9 @@
                             text: userCode,
                             width: 400,
                             height: 400,
-                            colorDark : '#000000',
-                            colorLight : '#ffffff',
-                            correctLevel : QRCode.CorrectLevel.H
+                            colorDark: '#000000',
+                            colorLight: '#ffffff',
+                            correctLevel: QRCode.CorrectLevel.H
                         });
                     }
                 },
