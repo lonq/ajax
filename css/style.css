@@ -223,7 +223,7 @@ body {
     left: 0;
     right: 0;
     margin-left: .4rem;
-    margin-right: .4rem;
+    margin-right: 0;
     width: calc(100vw - .4rem);
     height: 1px;
     -webkit-transform-origin: 0 0;
@@ -331,6 +331,13 @@ body {
 /* 缩略图组 */
 .item.item-thumb-group .thumb>*+* {
     margin-left: .133333rem;
+}
+
+.item.item-thumb:before,
+.item.item-thumb-group:before {
+    margin-left: 0;
+    margin-right: 0;
+    width: calc(100vw);
 }
 
 .item.item-thumb .thumb .badge,
@@ -1067,7 +1074,7 @@ ul.footer {
 
 .actionsheet .actionsheet-title {
     position: relative;
-    padding: .4rem .4rem .266667rem;
+    padding: .4rem 0 .266667rem;
     width: 100%;
     min-height: 1.173333rem;
     font-size: inherit;
@@ -1673,7 +1680,6 @@ ul.footer {
 }
 
 .detail-box {
-    padding: .266667rem .4rem;
     font-size: .373333rem;
     line-height: 1.47058824;
     background-color: #fff;
@@ -1692,9 +1698,16 @@ ul.footer {
 }
 
 .detail-box .content {
-    margin-top: .266667rem;
     line-height: 1.47058824;
     /*  color: #999;*/
+}
+
+.detail-box .content img {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    height: auto;
+    border: 0;
 }
 
 .detail-box p {

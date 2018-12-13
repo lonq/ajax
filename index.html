@@ -49,14 +49,6 @@
             width: 100%;
             height: auto;
         }
-
-        .list+.list {
-            margin-top: 0;
-        }
-
-        .list .item:first-child {
-            margin-top: 0;
-        }
     </style>
 </head>
 
@@ -146,6 +138,10 @@
         });
 
         $(function () {
+            // 屏蔽控制台消息
+            console.log = function () {
+                return
+            };
             // 插入幻灯
             getSlide(targetSlideObj);
             // 默认加载第一选项第一屏数据
@@ -160,15 +156,15 @@
         //通过滑动距离，判断滑动状态
         function positionJudge() {
             if (vSwiper.translate < 50 && vSwiper.translate > 0) {
-                pullDown.show().html('下拉更新');
+                pullDown.html('下拉更新').show();
             } else if (vSwiper.translate > 50) {
-                pullDown.show().html('释放更新');
+                pullDown.html('释放更新').show();
             }
         }
         //下拉更新
         function pullDownAction() {
             if (vSwiper.translate >= 50) {
-                pullDown.show().html('<i class="iconfont-loading animation-spinner"></i> 更新中...');
+                pullDown.html('<i class="iconfont-loading animation-spinner"></i> 更新中...').show();
                 loadFlag = true;
                 updateData(targetObj);
                 pullDown.hide();
@@ -182,7 +178,7 @@
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
                     //加载数据
                     page++;
                     getData(targetObj);
@@ -215,8 +211,8 @@
                             str += '<div class="swiper-slide"><a href=' + linkurl + '><img src="' + k.pictures + '"></a></div>';
                         });
                         str += '</div>' +
-                            '<div class="swiper-pagination"></div>';
-                        '</div>';
+                            '<div class="swiper-pagination"></div>' +
+                            '</div>';
                         target.html(str);
                         // 幻灯
                         var slidePicture = new Swiper('.slide-picture>.swiper-container', { //子swiper
@@ -256,19 +252,20 @@
                         // 无数据
                         page = 1;
                         loadFlag = false;
-                        pullUp.hide().html();
+                        pullUp.hide();
                         pullDown.hide();
                         noData('default', '什么也没找到~');
                     } else {
                         // 有数据
                         var str = '';
                         var maxlistsid = reponse.maxid;
+                        var isend = reponse.isend;
                         var maxPageCount = reponse.pagecount;
                         localStorage.setItem('oldProductListsID', maxlistsid);
                         var list = reponse.rows;
                         if (page > maxPageCount) {
-                            pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
                             loadFlag = false;
+                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
                         } else {
                             $.each(list, function (i, k) {
                                 var linkurl = k.linkurl;
@@ -277,24 +274,20 @@
                                 } else {
                                     linkurl = 'product.html?ID=' + k.id
                                 }
-                                var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" :
-                                    k.sharing;
-                                var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) +
-                                    "万" : k.comments;
+                                var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
+                                var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
                                 str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
                                     '<div class="thumb thumb-md">';
                                 if (k.pictures.constructor === Array) {
-                                    str += '<img src="' + k.pictures[0] +
-                                        '" style="width: 3.68rem;height: 3.68rem;">';
+                                    str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
                                 } else {
-                                    str += '<img src="' + k.pictures +
-                                        '" style="width: 3.68rem;height: 3.68rem;">';
+                                    str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
                                 }
                                 str += '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                     '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
                                     '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
-                                    '<p class="text-lg text-danger"><small>¥</small>' + k.price +
+                                    '<p class="text-lg text-danger"><small>&yen;</small>' + k.price +
                                     '</p>' +
                                     '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
                                     '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
@@ -304,7 +297,7 @@
                                     '</div>' +
                                     '</a>';
                             });
-                            pullUp.show().html('上拉加载更多');
+                            pullUp.html('上拉加载更多').show();
                         }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
@@ -349,10 +342,8 @@
                             } else {
                                 linkurl = 'product.html?ID=' + k.id
                             }
-                            var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" :
-                                k.sharing;
-                            var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) +
-                                "万" : k.comments;
+                            var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
+                            var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
                             str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
                                 '<div class="thumb thumb-md">';
                             if (k.pictures.constructor === Array) {
@@ -364,8 +355,7 @@
                                 '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                 '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
                                 '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
-                                '<p class="text-lg text-danger"><small>¥</small>' + k.price +
-                                '</p>' +
+                                '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
                                 '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
                                 '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
                                 '<li><i class="icon iconfont-commenting"></i> ' + comments +

@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <meta name="renderer" content="webkit">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
@@ -84,11 +85,7 @@
         .swiper-slide {
             height: auto;
         }
-        .list+.list {
-            margin-top: 0;
-        }
-
-        .list .item:first-child {
+        .swiper-slide.list+.list {
             margin-top: 0;
         }
     </style>
@@ -98,7 +95,7 @@
     <header id="header">
         <nav class="navbar navbar-light affix affix-top">
             <ul class="navbar-left">
-                <li><a href="javascript:history.go(-1);"><i class="iconfont-angleleft"></i></a></li>
+                <li><a href="productList.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -170,10 +167,9 @@
                 swiper: tabSwiper,
             },
             on: {
-                transitionEnd: function(event){
-                    $('.v-swiper>.swiper-wrapper').css('transform', 'translate3d(0px, -10px, 0px)');
+                slideChangeTransitionEnd: function(event){
+                    $('.v-swiper>.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)');
                     $('.h-swiper>.swiper-wrapper>.swiper-slide-active').css('height', 'auto').siblings('.swiper-slide').css('height', '0px');
-                    vSwiper.update();
                     getData(hSwiper.activeIndex);
                     console.log(loadFlagArr[hSwiper.activeIndex]);
                 },
@@ -215,20 +211,19 @@
         //通过滑动距离，判断滑动状态
         function positionJudge() {
             if (vSwiper.translate < 50 && vSwiper.translate > 0) {
-                pullDown.show().html('下拉更新');
+                pullDown.html('下拉更新').show();
             } else if (vSwiper.translate > 50) {
-                pullDown.show().html('释放更新');
+                pullDown.html('释放更新').show();
             }
         }
         //下拉更新
         function pullDownAction() {
             if (vSwiper.translate >= 50) {
-                pullDown.show().html('<i class="iconfont-loading animation-spinner"></i> 更新中...');
+                pullDown.html('<i class="iconfont-loading animation-spinner"></i> 更新中...').show();
                 loadFlagArr[hSwiper.activeIndex] = true;
                 updateData(hSwiper.activeIndex);
                 pullDown.hide();
-                pullUp.show();
-            } else if (vSwiper.translate >= 0 && vSwiper.translate < 50) {
+            } else {
                 pullDown.hide();
             }
         }
@@ -238,38 +233,38 @@
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlagArr[hSwiper.activeIndex]) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
-                } else {
-                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
+                    //加载数据
+                    pageArr[hSwiper.activeIndex]++;
+                    getData(hSwiper.activeIndex);
                 }
-                //加载数据
-                pageArr[hSwiper.activeIndex]++;
-                getData(hSwiper.activeIndex);
             }
         }
         // 获取数据
         function getData(target) {
-            hSwiper.slideTo(target, 500, false);
-            if (target == 0) {
+            switch (target) {
+            case 0:
                 getDetails(target);
-            } else if (target == 1) {
+                break;
+            case 1:
                 getComments(target);
-            } else if (target == 2) {
+                break;
+            case 2:
                 getRecommendation(target);
-            } else {
+                break;
+            default:
                 getDetails(target);
             }
         }
         // 更新数据
         function updateData(target) {
-            if (target == 0) {
-                getDetails(target);
-            } else if (target == 1) {
+            switch (target) {
+            case 1:
                 updateComments(target);
-            } else if (target == 2) {
+                break;
+            case 2:
                 updateRecommendations(target);
-            } else {
-                updateDetails(target);
+                break;
             }
         }
 
@@ -277,7 +272,7 @@
         function getDetails(target) {
             loadFlagArr[target] = false;
             pullUp.hide();
-            pullDown.hide();
+            pullDown.html('').hide();
             $.ajax({
                 type: 'GET',
                 url: 'getProducts.asp?Action=details',
@@ -290,6 +285,12 @@
                     var str = '';
                     var sharing = reponse.sharing > 9999 ? (reponse.sharing/10000).toFixed(1) + "万" : reponse.sharing;
                     var comments = reponse.comments > 9999 ? (reponse.comments/10000).toFixed(1) + "万" : reponse.comments;
+                    var content;
+                    if ($.trim(reponse.content)) {
+                        content = HtmlUtil.htmlDecodeByRegExp(reponse.content);
+                    } else {
+                        content = '<p class="padding text-center">暂无详情</p>';
+                    }
                     str += '<div class="detail-picture swiper-container">';
                         if (reponse.pictures.constructor === Array) {
                             str += '<div class="swiper-wrapper">';
@@ -302,7 +303,7 @@
                             str += '<img src="' + reponse.pictures + '">';
                         }
                         str += '</div>' +
-                        '<div class="detail-box flex-wrap direction-column justify-content-space-between border-bottom relative">' +
+                        '<div class="detail-box padding flex-wrap direction-column justify-content-space-between border-bottom relative">' +
                         '<div class="flex-wrap justify-content-space-between vertical-center space-top">' +
                         '<h3 class="text-lg text-danger"><small>¥</small>' + reponse.price + '</h3>' +
                         '<ul class="list-unstyled list-inline text-xs">' +
@@ -311,9 +312,9 @@
                         '</ul>' +
                         '</div>' +
                         '<h1 class="title padding-top">' + reponse.title + '</h1>' +
-                        '<p class="content">' + reponse.description + '</p>' +
+                        '<p class="margin-top">' + reponse.description + '</p>' +
                         '</div>' +
-                        '<div class="list border-top margin-top">' +
+                        '<div class="list border-top border-bottom margin-top">' +
                         '<a href="#" class="item vertical-center item-access">' +
                         '<div class="item-body text-muted">' +
                         '<span>领券</span>' +
@@ -322,12 +323,16 @@
                         '</div>' +
                         '<div class="item-footer"></div>' +
                         '</a>' +
-                        '<a href="#" class="item vertical-center item-access">' +
-                        '<div class="item-body text-muted">' +
-                        '<span>帮助</span>' +
                         '</div>' +
-                        '<div class="item-footer item-note">详细</div>' +
-                        '</a>' +
+                        '<div class="list border-top">' +
+                        '<div class="item vertical-center">' +
+                        '<div class="item-header"><i class="icon iconfont-picture"></i></div>' +
+                        '<div class="item-body">' +
+                        '<span>图文详情</span>' +
+                        '</div>' +
+                        '<div class="item-footer"></div>' +
+                        '</div>' +
+                        '<div class="detail-box bg-white"><div class="content">' + content + '</div></div>';
                         '</div>';
                     targetObj.eq(target).html(str);
                     $('title').html(reponse.title);
@@ -381,19 +386,22 @@
                         localStorage.setItem('oldCommentsID', maxcommentsid);
                         if (pageArr[target] > maxPageCount) {
                             loadFlagArr[target] = false;
+                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+                        } else {
+                            $.each(list, function (i, k) {
+                                str += '<div class="item item-avatar">' +
+                                    '<div class="avatar">' +
+                                    '<img src="' + k.avatar + '">' +
+                                    '</div>' +
+                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                    '<h5 class="title text-ellipsis">' + k.nickname + '</h5>' +
+                                    '<p class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></p>' +
+                                    '<p class="desc">' + k.comment + '</p>' +
+                                    '</div>' +
+                                    '</div>';
+                            });
+                            pullUp.html('上拉加载更多');
                         }
-                        $.each(list, function (i, k) {
-                            str += '<div class="item item-avatar">' +
-                                '<div class="avatar">' +
-                                '<img src="' + k.avatar + '">' +
-                                '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h5 class="title text-ellipsis">' + k.nickname + '</h5>' +
-                                '<p class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></p>' +
-                                '<p class="desc">' + k.comment + '</p>' +
-                                '</div>' +
-                                '</div>';
-                        });
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
                         //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
@@ -403,7 +411,6 @@
                             } else {
                                 $(str).appendTo(targetObj.eq(target));
                             }
-                            pullUp.html('上拉加载更多');
                         }
                     }
                     timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
@@ -486,35 +493,38 @@
                         localStorage.setItem('oldRecommendationsID', maxrecommendationsid);
                         if (pageArr[target] > maxPageCount) {
                             loadFlagArr[target] = false;
-                        }
-                        $.each(list, function (i, k) {
-                            var linkurl = k.linkurl;
-                            if (linkurl != '') {
-                                linkurl = linkurl;
-                            } else {
-                                linkurl = 'product.html?ID=' + k.id
-                            }
-                            var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
-                            var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
-                            str += '<a class="item item-thumb item-access" href="' + linkurl + '">' +
-                                '<div class="thumb thumb-md">';
-                                if (k.pictures.constructor === Array) {
-                                    str += '<img src="' + k.pictures[0] + '">';
+                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+                        } else {
+                            $.each(list, function (i, k) {
+                                var linkurl = k.linkurl;
+                                if (linkurl != '') {
+                                    linkurl = linkurl;
                                 } else {
-                                    str += '<img src="' + k.pictures + '">';
+                                    linkurl = 'product.html?ID=' + k.id
                                 }
-                                str += '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                '<p class="desc text-muted text-ellipsis">' + k.description + '</p>' +
-                                '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
-                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
-                                '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
-                                '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
-                                '</ul>' +
-                                '</div>' +
-                                '</a>';
-                        });
+                                var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
+                                var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
+                                str += '<a class="item item-thumb item-access" href="' + linkurl + '">' +
+                                    '<div class="thumb thumb-md">';
+                                    if (k.pictures.constructor === Array) {
+                                        str += '<img src="' + k.pictures[0] + '">';
+                                    } else {
+                                        str += '<img src="' + k.pictures + '">';
+                                    }
+                                    str += '</div>' +
+                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                    '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                    '<p class="desc text-muted text-ellipsis">' + k.description + '</p>' +
+                                    '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
+                                    '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                    '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
+                                    '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</a>';
+                            });
+                            pullUp.html('上拉加载更多');
+                        }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
                         //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
@@ -524,7 +534,6 @@
                             } else {
                                 $(str).appendTo(targetObj.eq(target));
                             }
-                            pullUp.html('上拉加载更多');
                         }
                     }
                     vSwiper.update(); // 更新容器尺寸

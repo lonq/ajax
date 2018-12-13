@@ -106,7 +106,7 @@ Else
     End If
     ReturnStr = ReturnStr & OneRecord
     ReturnStr = ReturnStr & """description"": """& Rs("Description") & """," & vbCrLf
-    'ReturnStr = ReturnStr & """content"": """& Rs("Content") & """," & vbCrLf
+    ReturnStr = ReturnStr & """content"": """ & HTMLEncodes(Rs("Content")) & """," & vbCrLf
     ReturnStr = ReturnStr & """price"": """ & FormatNumber(Rs("Price"), 2, -1) & """," & vbCrLf
     ReturnStr = ReturnStr & """sharing"": " & Rs("Sharing") & "," & vbCrLf
     ReturnStr = ReturnStr & """comments"": " & Rs("Comments") & "" & vbCrLf

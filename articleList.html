@@ -43,14 +43,6 @@
             height: auto;
         }
 
-        .list+.list {
-            margin-top: 0;
-        }
-
-        .list .item:first-child {
-            margin-top: 0;
-        }
-
         /* 播放器按钮 */
         .v-play {
             display: block;
@@ -138,8 +130,8 @@
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _nav = $('#nav');
-        var _offsetHeight; //滑动束缚容器的偏移高度
+        var _footer = $('.footer');
+        var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
         var page = 1;
         var loadFlag = true;
         var loading;
@@ -199,8 +191,7 @@
         });
         //修正容器高度
         function fixedContainerH() {
-            // $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
-            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh)');
+            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
         }
         //通过滑动距离，判断滑动状态
         function positionJudge() {
@@ -364,8 +355,6 @@
                             }
                         }
                     }
-                    _offsetHeight = _nav.height();
-                    fixedContainerH(); // 修正容器高度
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {

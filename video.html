@@ -22,25 +22,6 @@
     <link href="css/iconfont/iconfont.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
     <style type="text/css">
-        #nav {
-            padding-top: 1.28rem;
-            width: 100%;
-            height: 1.28rem;
-            background-color: #fff;
-        }
-
-        .nav-title {
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 989;
-            padding: 0 .4rem;
-            width: 100%;
-            height: 1.28rem;
-            line-height: 1.28rem;
-            font-size: .32rem;
-        }
-
         .pull-down,
         .pull-up {
             padding: .266667rem;
@@ -64,10 +45,6 @@
         }
 
         .list+.list {
-            margin-top: 0;
-        }
-
-        .list .item:first-child {
             margin-top: 0;
         }
         /* 播放器按钮 */
@@ -122,6 +99,13 @@
     <div class="v-swiper">
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
+                <header>
+                    <nav class="navbar navbar-light">
+                        <ul class="navbar-left">
+                            <li><a href="articleList.html"><i class="iconfont-angleleft"></i></a></li>
+                        </ul>
+                    </nav>
+                </header>
                 <div class="pull-down" style="display: none;">下拉更新</div>
                 <div class="video-wrap"></div>
                 <div class="list border-top border-bottom">
@@ -142,13 +126,11 @@
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/video.js-7.3.0/video.min.js"></script>
     <script src="js/common.js"></script>
-    
+
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _nav = $('#video');
-        var _navH = _nav.children().height();
-        var _offsetHeight = _navH; //滑动束缚容器的偏移高度
+        var _offsetHeight; //滑动束缚容器的偏移高度
         var id = getUrlParam('ID');
         var type = getUrlParam('Type');
         var page = 1;
@@ -177,7 +159,7 @@
                 }
             }
         });
-        
+
         $(function () {
             getContent();
             // 默认加载第一选项第一屏数据
@@ -199,15 +181,10 @@
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
-                } else {
-                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
-                }
-                //加载数据
-                page++;
-                getData();
-                if (loadFlag) {
-                    pullUp.html('上拉加载更多');
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
+                    //加载数据
+                    page++;
+                    getData();
                 }
             }
         }
@@ -226,7 +203,7 @@
                 success: function (reponse) {
                     // 无数据
                     if (reponse == 0) {
-                        pullUp.hide().html();
+                        pullUp.html('').hide();
                         pullDown.hide();
                         noData('default', '什么也没找到~');
                     } else {
@@ -283,7 +260,7 @@
                     if (reponse == 0) {
                         page = 1;
                         loadFlag = false;
-                        pullUp.hide().html();
+                        pullUp.html('').hide();
                         pullDown.hide();
                         noData('default', '什么也没找到~');
                     } else {
@@ -294,25 +271,26 @@
                         var list = reponse.rows;
                         var maxPageCount = reponse.pagecount;
                         if (page > maxPageCount) {
-                            page = maxPageCount;
                             loadFlag = false;
+                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+                        } else {
+                            $.each(list, function (i, k) {
+                                str += '<a class="item item-thumb item-access" href="video.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                    '<div class="thumb thumb-sm">' +
+                                    '<div class="v-play"></div>' +
+                                    '<img src="' + k.pictures + '">' +
+                                    '</div>' +
+                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                    '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                    '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                    '<li>' + k.source + '</li>' +
+                                    '<li><i class="icon iconfont-clock"></i>&nbsp;' + secToTime(k.duration) + '</li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</a>';
+                            });
+                            pullUp.html('上拉加载更多').show();
                         }
-                        $.each(list, function (i, k) {
-                            str += '<a class="item item-thumb item-access" href="video.html?ID=' + k.id + '&Type=' + k.type + '">' +
-                                '<div class="thumb thumb-sm">' +
-                                '<div class="v-play"></div>' +
-                                '<img src="' + k.pictures + '">' +
-                                '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
-                                '<li>' + k.source + '</li>' +
-                                '<li><i class="icon iconfont-clock"></i>&nbsp;' + secToTime(k.duration) + '</li>' +
-                                '</ul>' +
-                                '</div>' +
-                                '</a>';
-                        });
-                        
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
                         //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
