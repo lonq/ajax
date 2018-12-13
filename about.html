@@ -30,6 +30,20 @@
                 <li><a href="user.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
             <h3 class="navbar-title">关于</h3>
+            <ul class="navbar-left">
+                <li class="dropdown pull-right">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">菜单 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Action</a></li>
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">Separated link</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul>
+                </li>
+            </ul>
         </nav>
     </header>
 
@@ -67,6 +81,7 @@
     <script src="js/touch.min.js"></script>
     <script src="js/checkLogin.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/dropdown.js"></script>
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
@@ -84,9 +99,9 @@
                 text: selfUrl,
                 width: 300,
                 height: 300,
-                colorDark : '#000000',
-                colorLight : '#ffffff',
-                correctLevel : QRCode.CorrectLevel.H
+                colorDark: '#000000',
+                colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.H
             });
         });
         // 文章正文

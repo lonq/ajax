@@ -3,11 +3,11 @@
 /* PS：元素层及规范
 /* default:           2;
 /* navbar:            1000;
-/* dropdown:          1000;
 /* popover:           1060;
 /* tooltip:           1070;
 /* navbar-fixed:      1030;
 /* modal-background:  1040;
+/* dropdown:          1050;
 /* modal:             1050;
 */
 * {
@@ -196,7 +196,7 @@ html input[disabled] {
 }
 .affix {
     position: fixed;
-    z-index: 1050;
+    z-index: 1030;
 }
 .affix.affix-top {
     top: 0;
@@ -1292,6 +1292,143 @@ a.badge:focus {
 .checkbox input:checked:after {
     border: 1px solid #1edbb5;
 }
+
+/* 下拉菜单 */
+.caret {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: .053333rem;
+    vertical-align: middle;
+    border-top: .106667rem dashed;
+    border-top: .106667rem solid \9;
+    border-right: .106667rem solid transparent;
+    border-left: .106667rem solid transparent;
+}
+.dropup,
+.dropdown {
+  position: relative;
+}
+.dropdown-toggle:focus {
+  outline: 0;
+}
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  z-index: 1050;
+  display: none;
+  float: left;
+  min-width: 4.266667rem;
+  padding: .133333rem 0;
+  margin: .053333rem 0 0;
+  list-style: none;
+  font-size: .373333rem;
+  text-align: left;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: .106667rem;
+  -webkit-box-shadow: 0 .16rem .32rem rgba(0, 0, 0, 0.175);
+  box-shadow: 0 .16rem .32rem rgba(0, 0, 0, 0.175);
+  background-clip: padding-box;
+}
+.dropdown-menu.pull-right {
+  right: 0;
+  left: auto;
+}
+.dropdown-menu .divider {
+  height: 1px;
+  margin: .24rem 0;
+  overflow: hidden;
+  background-color: #e5e5e5;
+}
+.dropdown-menu > li > a {
+  display: block;
+  padding: .08rem .533333rem;
+  clear: both;
+  font-weight: normal;
+  line-height: 1.42857143;
+  color: #333333;
+  white-space: nowrap;
+}
+.dropdown-menu > li > a:hover,
+.dropdown-menu > li > a:focus {
+  text-decoration: none;
+  color: #262626;
+  background-color: #f5f5f5;
+}
+.dropdown-menu > .active > a,
+.dropdown-menu > .active > a:hover,
+.dropdown-menu > .active > a:focus {
+  color: #fff;
+  text-decoration: none;
+  outline: 0;
+  background-color: #337ab7;
+}
+.dropdown-menu > .disabled > a,
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus {
+  color: #888888;
+}
+.dropdown-menu > .disabled > a:hover,
+.dropdown-menu > .disabled > a:focus {
+  text-decoration: none;
+  background-color: transparent;
+  background-image: none;
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
+  cursor: not-allowed;
+}
+.open > .dropdown-menu {
+  display: block;
+}
+.open > a {
+  outline: 0;
+}
+.dropdown-menu-right {
+  left: auto;
+  right: 0;
+}
+.dropdown-menu-left {
+  left: 0;
+  right: auto;
+}
+.dropdown-header {
+  display: block;
+  padding: .08rem .533333rem;
+  font-size: .32rem;
+  line-height: 1.42857143;
+  color: #888888;
+  white-space: nowrap;
+}
+.pull-right > .dropdown-menu {
+  right: 0;
+  left: auto;
+}
+.dropup .caret,
+.navbar-fixed-bottom .dropdown .caret {
+  border-top: 0;
+  border-bottom: .106667rem dashed;
+  border-bottom: .106667rem solid \9;
+  content: "";
+}
+.dropup .dropdown-menu,
+.navbar-fixed-bottom .dropdown .dropdown-menu {
+  top: auto;
+  bottom: 100%;
+  margin-bottom: .053333rem;
+}
+@media (min-width: 20.48rem) {
+  .navbar-right .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+  .navbar-right .dropdown-menu-left {
+    left: 0;
+    right: auto;
+  }
+}
+
 /*按钮组*/
 .btn-group,
 .btn-group-vertical {
@@ -1704,12 +1841,18 @@ a.badge:focus {
     height: 100%;
     background-color: rgba(0, 0, 0, 0);
 }
-.backdrop-toggle {
+.modal-backdrop,
+.actionsheet-backdrop,
+.siderbar-backdrop {
     display: block;
     z-index: 1040;
     background-color: rgba(0, 0, 0, .7);
     transition: background-color .5s;
     -webkit-transition: background-color .5s;
+}
+.dropdown-backdrop {
+    display: block;
+    z-index: 1040;
 }
 /*actionsheet*/
 /*向导*/

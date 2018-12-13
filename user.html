@@ -72,7 +72,6 @@
             </div>
 
             <div class="swiper-slide content">
-                <div class="siderbar-backdrop backdrop"></div>
 
                 <header class="user-header text-white" style="background-image: url(images/user-cover.jpg)">
                     <nav class="navbar navbar-dark">
@@ -186,8 +185,6 @@
         </li>
     </ul>
 
-    <div class="actionsheet-backdrop backdrop"></div>
-
     <div class="actionsheet user-face-actionsheet">
         <div class="actionsheet-title">
             <!-- <i class="close iconfont-wrong"></i> -->
@@ -217,7 +214,6 @@
         var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'AdminName'); // 用户名
         var siderbarButton = $('#siderbarButton');
         var siderbar = $('.siderbar');
-        var backdrop = $('.backdrop');
         $(function () {
             // 修正容器高度
             // fixedContainerH();
@@ -243,8 +239,8 @@
                     slideChange: function () {
                         var slider = this;
                         if (slider.activeIndex === 0) {
-                            backdropState('siderbar-backdrop', 'on');
-                            var siderbarZindex = Number($('.backdrop-toggle').css('z-index')) + 1;
+                            backdropState($('.content'), 'siderbar-backdrop', 'on');
+                            var siderbarZindex = Number($('.siderbar-backdrop').css('z-index')) + 1;
                             siderbar.css({
                                 'z-index': siderbarZindex
                             });
@@ -252,7 +248,7 @@
                                 'position': 'static'
                             });
                         } else {
-                            backdropState('siderbar-backdrop', 'off');
+                            backdropState($('.content'), 'siderbar-backdrop', 'off');
                             siderbar.css({
                                 'z-index': ''
                             });
@@ -275,18 +271,18 @@
         // 显示actionsheet
         function showActionSheet() {
             var actionsheet = $('.actionsheet');
-            var mask = $('.actionsheet-backdrop');
+            actionsheet.before('<div class="backdrop actionsheet-backdrop"></div>');
+            var mask = $('.backdrop.actionsheet-backdrop');
             var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
             mask.on('click', hideActionSheet);
             actionsheetCancel.on('click', hideActionSheet);
             actionsheet.addClass('actionsheet-toggle');
-            backdropState('actionsheet-backdrop', 'on');
         }
         // 关闭actionsheet
         function hideActionSheet() {
             var actionsheet = $('.actionsheet');
             actionsheet.removeClass('actionsheet-toggle');
-            backdropState('actionsheet-backdrop', 'off');
+            $('.backdrop.actionsheet-backdrop').remove();
         }
         // 文章正文
         function getContent() {
@@ -379,20 +375,19 @@
             });
         }
         // 遮罩层
-        function backdropState(classnames, state) {
-            if ($('div').hasClass(classnames)) {
-                if (state == 'on') {
-                    $('html, body').css({
-                        'overflow': 'hidden'
-                    });
-                    $('.' + classnames).addClass('backdrop-toggle');
-                }
-                if (state == 'off') {
-                    $('html, body').css({
-                        'overflow': ''
-                    });
-                    $('.' + classnames).removeClass('backdrop-toggle');
-                }
+        function backdropState(parent, classnames, state) {
+            parent.prepend('<div class="backdrop '+ classnames +'"></div>');
+            if (state == 'on') {
+                $('html, body').css({
+                    'overflow': 'hidden'
+                });
+                $('.backdrop').addClass(classnames);
+            }
+            if (state == 'off') {
+                $('html, body').css({
+                    'overflow': ''
+                });
+                $('.backdrop').remove();
             }
         }
         // 消息提示
