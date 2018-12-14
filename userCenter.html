@@ -44,8 +44,8 @@
                     <a class="item item-avatar vertical-center item-access" href="javascript:;">
                         <div class="js-userface avatar"><img src="images/placeholder-avatar.jpg"></div>
                         <div class="item-body overflow-hidden space-top">
-                            <h4 class="js-userPetname title text-ellipsis">-</h4>
-                            <p class=" js-userAutograph text-muted text-xs text-ellipsis-2">-</p>
+                            <h4 class="js-userspetname title text-ellipsis">-</h4>
+                            <p class=" js-usersautograph text-muted text-xs text-ellipsis-2">-</p>
                         </div>
                         <div class="item-footer"></div>
                     </a>
@@ -88,8 +88,8 @@
                         <div class="user-face">
                             <a href="javascript:;" class="js-userface"><img src="images/placeholder-avatar.jpg"></a>
                         </div>
-                        <h4 class="js-userPetname user-name">-</h4>
-                        <p class="js-userAutograph user-autograph text-ellipsis">-</p>
+                        <h4 class="js-userspetname user-name">-</h4>
+                        <p class="js-usersautograph user-autograph text-ellipsis">-</p>
                         <ul class="user-info">
                             <li>
                                 <dl>
@@ -218,7 +218,7 @@
         var _footer = $('.footer');
         var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
         //<![CDATA[
-        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
+        var usersname = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
         var siderbarButton = $('#siderbarButton');
         var siderbar = $('.siderbar');
         $(function () {
@@ -297,7 +297,7 @@
                 type: 'GET',
                 url: 'getUser.asp?Action=content',
                 data: {
-                    UsersName: adminName
+                    UsersName: usersname
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -307,28 +307,28 @@
                         noData('default', '什么也没找到~');
                     } else {
                         // 有数据
-                        var username = reponse.adminname;
-                        var userPetname = reponse.adminpetname;
-                        var userSignature = reponse.adminsignature;
-                        var userFace = reponse.adminface;
-                        if (userFace) {
-                            userFace = userFace;
+                        var usersname = reponse.usersname;
+                        var userspetname = reponse.userspetname;
+                        var userssignature = reponse.userssignature;
+                        var usersface = reponse.usersface;
+                        if (usersface) {
+                            usersface = usersface;
                         } else {
-                            userFace = 'images/placeholder-avatar.jpg';
+                            usersface = 'images/placeholder-avatar.jpg';
                         }
-                        if (userPetname) {
-                            userPetname = userPetname;
+                        if (userspetname) {
+                            userspetname = userspetname;
                         } else {
-                            userPetname = username;
+                            userspetname = usersname;
                         }
-                        if (userSignature) {
-                            userSignature = userSignature;
+                        if (userssignature) {
+                            userssignature = userssignature;
                         } else {
-                            userSignature = '他很懒，什么都没留下。';
+                            userssignature = '他很懒，什么都没留下。';
                         }
-                        $('.js-userPetname').html(userPetname);
-                        $('.js-userAutograph').html(userSignature);
-                        $('.js-userface').html('<img src="' + userFace + '">');
+                        $('.js-userspetname').html(userspetname);
+                        $('.js-usersautograph').html(userssignature);
+                        $('.js-userface').html('<img src="' + usersface + '">');
                     }
                 },
                 error: function (xhr, type, errorThrown) {

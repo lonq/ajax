@@ -24,7 +24,7 @@ End Select
 '检查登录用户名
 Sub chkLoginUsersName()
 Set Rs=server.CreateObject("adodb.recordset")
-Sql="Select * from [LQ_Admin] where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'"
+Sql="Select * from [LQ_Users] where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'"
 Rs.Open Sql,conn,1,3
 If Rs.Eof and Rs.Bof Then
     Response.Write "false"
@@ -40,7 +40,7 @@ End Sub
 '检查注册用户名
 Sub chkUsersName()
 Set Rs=server.CreateObject("adodb.recordset")
-Sql="Select * from [LQ_Admin] where UsersName='"&UsersName&"'"
+Sql="Select * from [LQ_Users] where UsersName='"&UsersName&"'"
 Rs.Open Sql,conn,1,3
 If Rs.Eof and Rs.Bof Then
     Response.Write "true"
@@ -56,18 +56,18 @@ End Sub
 '检查登录
 Sub chkLogin()
 Set Rs=server.CreateObject("adodb.recordset")
-Sql="Select * from [LQ_Admin] where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'"
+Sql="Select * from [LQ_Users] where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'"
 Rs.Open Sql,conn,1,3
 If Rs.Eof and Rs.Bof Then
     Response.Write 0
     Exit Sub
 Else
     If md5(Replace(Trim(Request.form("LoginPassword")),"'",""))<>Trim(Rs("Password")) Then
-        Conn.ExeCute("UpDate [LQ_Admin] set LoginDate=Now(),LoginIP='"&getIP&"',ErrLoginTimes=ErrLoginTimes+1 where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'")
+        Conn.ExeCute("UpDate [LQ_Users] set LoginDate=Now(),LoginIP='"&getIP&"',ErrLoginTimes=ErrLoginTimes+1 where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'")
         response.write 2
         Exit Sub
     Else
-        If IsAdminVariable=1 Then
+        If IsUsersVariable=1 Then
             '设置cookie
             Response.Cookies("LQCookies")("UsersID")=Int(Rs("UsersID"))
             Response.Cookies("LQCookies")("UsersName")=Trim(Rs("UsersName"))
@@ -90,7 +90,7 @@ Else
             Session("UsersFlag")=Trim(Rs("UsersFlag"))
         End If
         '更新管理员信息
-        Conn.ExeCute("UpDate [LQ_Admin] set LoginDate=Now(),LoginTimes=LoginTimes+1,ErrLoginTimes=0,LoginIP='"&getIP&"' where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'")
+        Conn.ExeCute("UpDate [LQ_Users] set LoginDate=Now(),LoginTimes=LoginTimes+1,ErrLoginTimes=0,LoginIP='"&getIP&"' where UsersName='"&Replace(Trim(Request.form("LoginUsersName")),"'","")&"'")
         response.write 1
         Exit Sub
     End If
@@ -102,7 +102,7 @@ End Sub
 '检查注册
 Sub chkRegister()
 Set Rs=server.CreateObject("adodb.recordset")
-Sql="Select * from [LQ_Admin] where UsersName='"&UsersName&"'"
+Sql="Select * from [LQ_Users] where UsersName='"&UsersName&"'"
 Rs.Open Sql,conn,1,3
 If Not(Rs.Eof and Rs.Bof) Then
     response.write 0

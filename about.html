@@ -47,7 +47,7 @@
         <div class="about-logo">
             <img class="center-block img-responsive" src="images/logo.png">
         </div>
-        <p class="text-muted margin-top">网站名称&nbsp;当前版本： V1.00</p>
+        <p class="text-muted margin-top"><span class="js-websitename">-</span>&nbsp;当前版本： V1.00</p>
         <div id="websiteQrcode" class="about-qrcode margin-top-lg"></div>
         <p class="text-muted margin-top">扫描二维码，访问网站</p>
     </div>
@@ -68,9 +68,7 @@
     </div>
 
     <footer>
-        <div class="copyright padding-vertical-lg text-xs text-muted text-center">
-            Copyright&nbsp;&copy;&nbsp;2018-2019<br>Lonq&nbsp;版权所有
-        </div>
+        <div class="js-copyright copyright padding-vertical-lg text-xs text-muted text-center">-</div>
     </footer>
 
     <script src="js/zepto.min.js"></script>
@@ -83,10 +81,12 @@
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/qrcodejs-master/qrcode.min.js"></script>
     <script src="js/common.js"></script>
+    <script src="js/config.js"></script>
 
     <script type="text/javascript">
         //<![CDATA[
-        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
+        var usersname = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
+        
         $(function () {
             // 插入正文
             getContent();
@@ -106,7 +106,7 @@
                 type: 'GET',
                 url: 'getUser.asp?Action=content',
                 data: {
-                    UsersName: adminName
+                    UsersName: usersname
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -118,28 +118,30 @@
                         noData('default', '什么也没找到~');
                     } else {
                         // 有数据
-                        var username = reponse.adminname;
-                        var userPetname = reponse.adminpetname;
-                        var userSignature = reponse.adminsignature;
-                        var userFace = reponse.adminface;
-                        if (userFace) {
-                            userFace = userFace;
+                        var usersname = reponse.usersname;
+                        var userspetname = reponse.userspetname;
+                        var userssignature = reponse.userssignature;
+                        var usersface = reponse.usersface;
+                        if (usersface) {
+                            usersface = usersface;
                         } else {
-                            userFace = 'images/placeholder-avatar.jpg';
+                            usersface = 'images/placeholder-avatar.jpg';
                         }
-                        if (userPetname) {
-                            userPetname = userPetname;
+                        if (userspetname) {
+                            userspetname = userspetname;
                         } else {
-                            userPetname = username;
+                            userspetname = usersname;
                         }
-                        if (userSignature) {
-                            userSignature = userSignature;
+                        if (userssignature) {
+                            userssignature = userssignature;
                         } else {
-                            userSignature = '他很懒，什么都没留下。';
+                            userssignature = '他很懒，什么都没留下。';
                         }
-                        $('.js-userPetname').html(userPetname);
-                        $('.js-userAutograph').html(userSignature);
-                        $('.js-userface').html('<img src="' + userFace + '">');
+                        $('.js-userspetname').html(userspetname);
+                        $('.js-usersautograph').html(userssignature);
+                        $('.js-userface').html('<img src="' + usersface + '">');
+                        $('.js-copyright').html(_gcopyright);
+                        $('.js-websitename').html(_gwebsitename);
                     }
                 },
                 error: function (xhr, type, errorThrown) {

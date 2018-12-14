@@ -1,6 +1,6 @@
 <%
 '定义管理员级别名称
-Sub Admin_Des()
+Sub Users_Des()
 If MyV_IsSuperUsers=1 Then
 Response.write "超级管理员"
 ElseIf MyV_IsSuperUsers=0 Then

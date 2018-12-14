@@ -82,7 +82,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
+        var usersname = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
         $(function () {
             // 插入正文
             getContent();
@@ -113,7 +113,7 @@
                 type: 'GET',
                 url: 'getUser.asp?Action=content',
                 data: {
-                    UsersName: adminName
+                    UsersName: usersname
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -126,32 +126,32 @@
                     } else {
                         // 有数据
                         var str = '';
-                        var username = reponse.adminname;
-                        var userPetname = reponse.adminpetname;
-                        var userSignature = reponse.adminsignature;
-                        var userFace = reponse.adminface;
+                        var usersname = reponse.usersname;
+                        var userspetname = reponse.userspetname;
+                        var userssignature = reponse.userssignature;
+                        var usersface = reponse.usersface;
                         var userCode = '测试';
-                        if (userFace) {
-                            userFace = userFace;
+                        if (usersface) {
+                            usersface = usersface;
                         } else {
-                            userFace = 'images/placeholder-avatar.jpg';
+                            usersface = 'images/placeholder-avatar.jpg';
                         }
-                        if (userPetname) {
-                            userPetname = userPetname;
+                        if (userspetname) {
+                            userspetname = userspetname;
                         } else {
-                            userPetname = username;
+                            userspetname = usersname;
                         }
-                        if (userSignature) {
-                            userSignature = userSignature;
+                        if (userssignature) {
+                            userssignature = userssignature;
                         } else {
-                            userSignature = '他很懒，什么都没留下。';
+                            userssignature = '他很懒，什么都没留下。';
                         }
                         str += '<div class="list clear-border user-qrcode-wrap">' +
                             '<div class="item item-avatar vertical-center">' +
-                            '<div class="avatar"><img src="' + userFace + '"></div>' +
+                            '<div class="avatar"><img src="' + usersface + '"></div>' +
                             '<div class="item-body overflow-hidden space-top">' +
-                            '<h4 class="title text-ellipsis">' + userPetname + '</h4>' +
-                            '<p class="text-muted text-xs text-ellipsis-2">' + userSignature + '</p>' +
+                            '<h4 class="title text-ellipsis">' + userspetname + '</h4>' +
+                            '<p class="text-muted text-xs text-ellipsis-2">' + userssignature + '</p>' +
                             '</div>' +
                             '</div>' +
                             '<div class="item horizontal-center">' +

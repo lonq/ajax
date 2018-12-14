@@ -2,7 +2,7 @@
 '************************
 '定义Config里的变量
 '************************
-Dim WebSiteName,WebSiteUrl,Tel,MobileTel,Fax,Qq,Msn,WebSiteEmail,Address,PostCode,WebSiteMaster,WebSiteMasterEmail,WebSiteAdmin,WebSiteAdminEmail,Technology,TechnologyEmail,CopyRight,ICP,SiteStatistics,ScriptTimeout,SessionTimeout,PostTimeLimit,FinalDatabackupTime,CloseSiteContent,IsCloseSite,IsAdminVariable,IsShow,IsComment,IsShowComment,IsPreDown,IsFriendLink,IsRecommend,IsCorrelation,IsOnLineService,IsKeywords,IsSqlLog,IsqrCode,IsHtmlEdit,IsHtmlMode,OthersListNums,ProductsListNums,ArticlesListNums,NewsListNums,MessListNums,MailAddress,MailName,MailSendEmail,MailUserName,MailUserPassword,ForbiddenWords,SqlInword,BadWords,LockIP,SetUploadFiles,sSingleSize,sMaxSize,sExe,WebTitleName,IndexKeyword,IndexDescription,IndexCompanyIntroduction,CompanyIntroduction
+Dim WebSiteName,WebSiteUrl,Tel,MobileTel,Fax,Qq,Msn,WebSiteEmail,Address,PostCode,WebSiteMaster,WebSiteMasterEmail,WebSiteUsers,WebSiteUsersEmail,Technology,TechnologyEmail,CopyRight,ICP,SiteStatistics,ScriptTimeout,SessionTimeout,PostTimeLimit,FinalDatabackupTime,CloseSiteContent,IsCloseSite,IsUsersVariable,IsShow,IsComment,IsShowComment,IsPreDown,IsFriendLink,IsRecommend,IsCorrelation,IsOnLineService,IsKeywords,IsSqlLog,IsqrCode,IsHtmlEdit,IsHtmlMode,OthersListNums,ProductsListNums,ArticlesListNums,NewsListNums,MessListNums,MailAddress,MailName,MailSendEmail,MailUserName,MailUserPassword,ForbiddenWords,SqlInword,BadWords,LockIP,SetUploadFiles,sSingleSize,sMaxSize,sExe,WebTitleName,IndexKeyword,IndexDescription,IndexCompanyIntroduction,CompanyIntroduction
 set Rs=server.CreateObject("adodb.recordset")
 Sql="select * from LQ_Config"
 Rs.Open Sql,conn,1,1
@@ -18,8 +18,8 @@ Address=					Trim(Rs("Address"))
 PostCode=					Trim(Rs("PostCode"))
 WebSiteMaster=				Trim(Rs("WebSiteMaster"))
 WebSiteMasterEmail=			Trim(Rs("WebSiteMasterEmail"))
-WebSiteAdmin=				Trim(Rs("WebSiteAdmin"))
-WebSiteAdminEmail=			Trim(Rs("WebSiteAdminEmail"))
+WebSiteUsers=				Trim(Rs("WebSiteUsers"))
+WebSiteUsersEmail=			Trim(Rs("WebSiteUsersEmail"))
 Technology=					Trim(Rs("Technology"))
 TechnologyEmail=			Trim(Rs("TechnologyEmail"))
 CopyRight=					Trim(Rs("CopyRight"))
@@ -31,7 +31,7 @@ PostTimeLimit=				Trim(Rs("PostTimeLimit"))
 FinalDatabackupTime=		Trim(Rs("FinalDatabackupTime"))
 CloseSiteContent=			Trim(Rs("CloseSiteContent"))
 IsCloseSite=				ChkNumeric(Rs("IsCloseSite"))
-IsAdminVariable=			ChkNumeric(Rs("IsAdminVariable"))
+IsUsersVariable=			ChkNumeric(Rs("IsUsersVariable"))
 IsShow=						ChkNumeric(Rs("IsShow"))
 IsComment=					ChkNumeric(Rs("IsComment"))
 IsShowComment=				ChkNumeric(Rs("IsShowComment"))
@@ -74,9 +74,9 @@ Call RsClose(Rs)
 '************************
 '定义cookie或session的变量名
 '************************
-Dim MyAdmin
+Dim MyUsers
 Dim MyV_UsersID,MyV_UsersName,MyV_Password,MyV_UsersPetName,MyV_IsSuperUsers,MyV_ListFlag,MyV_UsersFlag
-If IsAdminVariable=1 Then															'0为Session，1为Cookie
+If IsUsersVariable=1 Then															'0为Session，1为Cookie
 'cookies
 MyV_UsersID					= Request.Cookies("LQCookies")("UsersID")
 MyV_UsersName				= Request.Cookies("LQCookies")("UsersName")

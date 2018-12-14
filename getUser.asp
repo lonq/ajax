@@ -23,21 +23,21 @@ End Select
 '正文
 Public Function content()
 Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from [LQ_Admin] where UsersName = '"&UsersName&"'"
+Sql = "Select * from [LQ_Users] where UsersName = '"&UsersName&"'"
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
     Response.Write (0)
     Response.End
 Else
     ReturnStr = ReturnStr & "{" & vbCrLf
-    ReturnStr = ReturnStr & """adminid"": " & Rs("UsersID") & "," & vbCrLf
+    ReturnStr = ReturnStr & """usersid"": " & Rs("UsersID") & "," & vbCrLf
     ReturnStr = ReturnStr & """orders"": " & Rs("Orders") & "," & vbCrLf
-    ReturnStr = ReturnStr & """adminname"": """& Rs("UsersName") & """," & vbCrLf
-    ReturnStr = ReturnStr & """adminemail"": """& Rs("UsersEMail") & """," & vbCrLf
-    ReturnStr = ReturnStr & """adminpetname"": """& Rs("UsersPetName") & """," & vbCrLf
-    ReturnStr = ReturnStr & """adminface"": """& Rs("UsersFace") & """," & vbCrLf
+    ReturnStr = ReturnStr & """usersname"": """& Rs("UsersName") & """," & vbCrLf
+    ReturnStr = ReturnStr & """usersemail"": """& Rs("UsersEMail") & """," & vbCrLf
+    ReturnStr = ReturnStr & """userspetname"": """& Rs("UsersPetName") & """," & vbCrLf
+    ReturnStr = ReturnStr & """usersface"": """& Rs("UsersFace") & """," & vbCrLf
     ReturnStr = ReturnStr & """iscookie"": " & Rs("IsCookie") & "," & vbCrLf
-    ReturnStr = ReturnStr & """adminsignature"": """& Rs("UsersSignature") & """," & vbCrLf
+    ReturnStr = ReturnStr & """userssignature"": """& Rs("UsersSignature") & """," & vbCrLf
     ReturnStr = ReturnStr & """isactive"": " & Rs("IsActive") & "," & vbCrLf
     ReturnStr = ReturnStr & """logindate"": """& Rs("LoginDate") & """," & vbCrLf
     ReturnStr = ReturnStr & """loginip"": """& Rs("LoginIP") & """," & vbCrLf

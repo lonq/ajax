@@ -1,13 +1,13 @@
 <!--#include file="conn.asp"-->
 <!--#include file="config.asp"-->
-<!--#include file="admin_check.asp" -->
+<!--#include file="users_check.asp" -->
 <!--#include file="function.asp"-->
 <!--#include file="sub_inc.asp" -->
 <!--#include file="power.asp"-->
 <%
 '屏蔽IP
 If IsForbidIP(LockIP,getIP) = True Then
-Response.Write "<div class='center'>您的IP：<span class='red'>"&getIP&" </span>已被限制登陆！<br />请联系管理员：<a href=""mailto:"&WebSiteAdminEmail&""">"&WebSiteAdminEmail&"</a>！"
+Response.Write "<div class='center'>您的IP：<span class='red'>"&getIP&" </span>已被限制登陆！<br />请联系管理员：<a href=""mailto:"&WebSiteUsersEmail&""">"&WebSiteUsersEmail&"</a>！"
 Response.Write "<br /><br />网站名称："&WebSiteName&"<br />网站地址："&WebSiteUrl&""
 Response.Write "<br /><br /><a href=""#"" onclick=""window.close();"">[关闭窗口]</a></div>"
 Response.End
