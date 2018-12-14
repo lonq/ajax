@@ -31,7 +31,7 @@
       <form id="mainForm" method="post" onsubmit="return false">
         <div class="form-group has-feedback">
           <span class="iconfont-user form-control-feedback"></span>
-          <input type="text" class="form-control" id="LoginAdminName" name="LoginAdminName" autocomplete="off"
+          <input type="text" class="form-control" id="LoginUsersName" name="LoginUsersName" autocomplete="off"
             placeholder="用户名">
         </div>
         <div class="form-group has-feedback">
@@ -78,10 +78,10 @@
     });
     //表单验证
     function loginForm() {
-      var LoginAdminName = $.trim($('#LoginAdminName').val());
+      var LoginUsersName = $.trim($('#LoginUsersName').val());
       var LoginPassword = $.trim($('#LoginPassword').val());
       var IsCookie = $.trim($('#IsCookie:checked').val());
-      if (LoginAdminName == '') {
+      if (LoginUsersName == '') {
         msg('请输入用户名');
         return false;
       } else if (LoginPassword == '') {
@@ -89,7 +89,7 @@
         return false;
       } else {
         var data = {
-          'LoginAdminName': LoginAdminName,
+          'LoginUsersName': LoginUsersName,
           'LoginPassword': LoginPassword,
           'IsCookie': IsCookie
         };

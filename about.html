@@ -86,7 +86,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'AdminName'); // 用户名
+        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
         $(function () {
             // 插入正文
             getContent();
@@ -106,7 +106,7 @@
                 type: 'GET',
                 url: 'getUser.asp?Action=content',
                 data: {
-                    AdminName: adminName
+                    UsersName: adminName
                 },
                 timeout: 15000,
                 dataType: 'json',

@@ -75,25 +75,25 @@ Call RsClose(Rs)
 '定义cookie或session的变量名
 '************************
 Dim MyAdmin
-Dim MyV_AdminID,MyV_AdminName,MyV_Password,MyV_AdminPetName,MyV_IsSuperAdmin,MyV_ListFlag,MyV_AdminFlag
+Dim MyV_UsersID,MyV_UsersName,MyV_Password,MyV_UsersPetName,MyV_IsSuperUsers,MyV_ListFlag,MyV_UsersFlag
 If IsAdminVariable=1 Then															'0为Session，1为Cookie
 'cookies
-MyV_AdminID					= Request.Cookies("LQCookies")("AdminID")
-MyV_AdminName				= Request.Cookies("LQCookies")("AdminName")
+MyV_UsersID					= Request.Cookies("LQCookies")("UsersID")
+MyV_UsersName				= Request.Cookies("LQCookies")("UsersName")
 MyV_Password				= Request.Cookies("LQCookies")("Password")
-MyV_AdminPetName			= Request.Cookies("LQCookies")("AdminPetName")
-MyV_IsSuperAdmin			= Request.Cookies("LQCookies")("IsSuperAdmin")
+MyV_UsersPetName			= Request.Cookies("LQCookies")("UsersPetName")
+MyV_IsSuperUsers			= Request.Cookies("LQCookies")("IsSuperUsers")
 MyV_ListFlag				= Request.Cookies("LQCookies")("ListFlag")
-MyV_AdminFlag				= Request.Cookies("LQCookies")("AdminFlag")
+MyV_UsersFlag				= Request.Cookies("LQCookies")("UsersFlag")
 Else
 'session
-MyV_AdminID					= session("AdminID")
-MyV_AdminName				= session("AdminName")
+MyV_UsersID					= session("UsersID")
+MyV_UsersName				= session("UsersName")
 MyV_Password				= session("Password")
-MyV_AdminPetName			= session("AdminPetName")
-MyV_IsSuperAdmin			= session("IsSuperAdmin")
+MyV_UsersPetName			= session("UsersPetName")
+MyV_IsSuperUsers			= session("IsSuperUsers")
 MyV_ListFlag				= session("ListFlag")
-MyV_AdminFlag				= session("AdminFlag")
+MyV_UsersFlag				= session("UsersFlag")
 End If
 '************************
 '普通变量
@@ -107,10 +107,10 @@ Dim Art_Info,t_CopyFrom,t_Author
 Art_Info					= 1														'0为系统默认未知，1为系统自定义的变量
 If Art_Info=1 Then
 t_CopyFrom					= WebSiteName
-If MyV_AdminPetName<>"" Then
-t_Author					= MyV_AdminPetName
+If MyV_UsersPetName<>"" Then
+t_Author					= MyV_UsersPetName
 Else
-t_Author					= MyV_AdminName
+t_Author					= MyV_UsersName
 End If
 Else
 t_CopyFrom					= "不详"

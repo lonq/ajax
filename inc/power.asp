@@ -1,9 +1,9 @@
 <%
 '定义管理员级别名称
 Sub Admin_Des()
-If MyV_IsSuperAdmin=1 Then
+If MyV_IsSuperUsers=1 Then
 Response.write "超级管理员"
-ElseIf MyV_IsSuperAdmin=0 Then
+ElseIf MyV_IsSuperUsers=0 Then
 Response.write "普通管理员"
 Else
 Response.write "非法操作"
@@ -39,33 +39,33 @@ ListFlag22	=ChkNumeric(ListFlag(22))
 ListFlag23	=ChkNumeric(ListFlag(23))
 ListFlag24	=ChkNumeric(ListFlag(24))
 '每个栏目下的具体权限
-Dim AdminFlag,AdminFlag0,AdminFlag1,AdminFlag2,AdminFlag3,AdminFlag4,AdminFlag5,AdminFlag6,AdminFlag7,AdminFlag8,AdminFlag9,AdminFlag10,AdminFlag11,AdminFlag12,AdminFlag13,AdminFlag14,AdminFlag15,AdminFlag16,AdminFlag17,AdminFlag18,AdminFlag19,AdminFlag20,AdminFlag21,AdminFlag22,AdminFlag23,AdminFlag24
-AdminFlag=split(MyV_AdminFlag,",")
-AdminFlag0	=ChkNumeric(AdminFlag(0))
-AdminFlag1	=ChkNumeric(AdminFlag(1))
-AdminFlag2	=ChkNumeric(AdminFlag(2))
-AdminFlag3	=ChkNumeric(AdminFlag(3))
-AdminFlag4	=ChkNumeric(AdminFlag(4))
-AdminFlag5	=ChkNumeric(AdminFlag(5))
-AdminFlag6	=ChkNumeric(AdminFlag(6))
-AdminFlag7	=ChkNumeric(AdminFlag(7))
-AdminFlag8	=ChkNumeric(AdminFlag(8))
-AdminFlag9	=ChkNumeric(AdminFlag(9))
-AdminFlag10	=ChkNumeric(AdminFlag(10))
-AdminFlag11	=ChkNumeric(AdminFlag(11))
-AdminFlag12	=ChkNumeric(AdminFlag(12))
-AdminFlag13	=ChkNumeric(AdminFlag(13))
-AdminFlag14	=ChkNumeric(AdminFlag(14))
-AdminFlag15	=ChkNumeric(AdminFlag(15))
-AdminFlag16	=ChkNumeric(AdminFlag(16))
-AdminFlag17	=ChkNumeric(AdminFlag(17))
-AdminFlag18	=ChkNumeric(AdminFlag(18))
-AdminFlag19	=ChkNumeric(AdminFlag(19))
-AdminFlag20	=ChkNumeric(AdminFlag(20))
-AdminFlag21	=ChkNumeric(AdminFlag(21))
-AdminFlag22	=ChkNumeric(AdminFlag(22))
-AdminFlag23	=ChkNumeric(AdminFlag(23))
-AdminFlag24	=ChkNumeric(AdminFlag(24))
+Dim UsersFlag,UsersFlag0,UsersFlag1,UsersFlag2,UsersFlag3,UsersFlag4,UsersFlag5,UsersFlag6,UsersFlag7,UsersFlag8,UsersFlag9,UsersFlag10,UsersFlag11,UsersFlag12,UsersFlag13,UsersFlag14,UsersFlag15,UsersFlag16,UsersFlag17,UsersFlag18,UsersFlag19,UsersFlag20,UsersFlag21,UsersFlag22,UsersFlag23,UsersFlag24
+UsersFlag=split(MyV_UsersFlag,",")
+UsersFlag0	=ChkNumeric(UsersFlag(0))
+UsersFlag1	=ChkNumeric(UsersFlag(1))
+UsersFlag2	=ChkNumeric(UsersFlag(2))
+UsersFlag3	=ChkNumeric(UsersFlag(3))
+UsersFlag4	=ChkNumeric(UsersFlag(4))
+UsersFlag5	=ChkNumeric(UsersFlag(5))
+UsersFlag6	=ChkNumeric(UsersFlag(6))
+UsersFlag7	=ChkNumeric(UsersFlag(7))
+UsersFlag8	=ChkNumeric(UsersFlag(8))
+UsersFlag9	=ChkNumeric(UsersFlag(9))
+UsersFlag10	=ChkNumeric(UsersFlag(10))
+UsersFlag11	=ChkNumeric(UsersFlag(11))
+UsersFlag12	=ChkNumeric(UsersFlag(12))
+UsersFlag13	=ChkNumeric(UsersFlag(13))
+UsersFlag14	=ChkNumeric(UsersFlag(14))
+UsersFlag15	=ChkNumeric(UsersFlag(15))
+UsersFlag16	=ChkNumeric(UsersFlag(16))
+UsersFlag17	=ChkNumeric(UsersFlag(17))
+UsersFlag18	=ChkNumeric(UsersFlag(18))
+UsersFlag19	=ChkNumeric(UsersFlag(19))
+UsersFlag20	=ChkNumeric(UsersFlag(20))
+UsersFlag21	=ChkNumeric(UsersFlag(21))
+UsersFlag22	=ChkNumeric(UsersFlag(22))
+UsersFlag23	=ChkNumeric(UsersFlag(23))
+UsersFlag24	=ChkNumeric(UsersFlag(24))
 '总权限2
 Sub ListFlagMsg()
 If FtListFlag <> 1 Then
@@ -85,22 +85,22 @@ End If
 End Sub
 '每个栏目下的具体权限
 'Add
-Sub AdminFlagMsg_Add()
-If FtAdminFlag > 3 Or FtAdminFlag = 0 Then
+Sub UsersFlagMsg_Add()
+If FtUsersFlag > 3 Or FtUsersFlag = 0 Then
 Call sError_Msg("您没有管理或添加“"&ItemName&"”的权限！")
 Response.End
 End If
 End Sub
 'Edit
-Sub AdminFlagMsg_Edit()
-If FtAdminFlag > 2 Or FtAdminFlag = 0 Then
+Sub UsersFlagMsg_Edit()
+If FtUsersFlag > 2 Or FtUsersFlag = 0 Then
 Call sError_Msg("您没有管理或修改“"&ItemName&"”的权限！")
 Response.End
 End If
 End Sub
 'Del
-Sub AdminFlagMsg_Del()
-If FtAdminFlag > 1 Or FtAdminFlag = 0 Then
+Sub UsersFlagMsg_Del()
+If FtUsersFlag > 1 Or FtUsersFlag = 0 Then
 Call sError_Msg("您没有管理或删除“"&ItemName&"”的权限！")
 Response.End
 End If

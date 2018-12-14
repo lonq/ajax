@@ -218,7 +218,7 @@
         var _footer = $('.footer');
         var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
         //<![CDATA[
-        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'AdminName'); // 用户名
+        var adminName = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
         var siderbarButton = $('#siderbarButton');
         var siderbar = $('.siderbar');
         $(function () {
@@ -297,7 +297,7 @@
                 type: 'GET',
                 url: 'getUser.asp?Action=content',
                 data: {
-                    AdminName: adminName
+                    UsersName: adminName
                 },
                 timeout: 15000,
                 dataType: 'json',
