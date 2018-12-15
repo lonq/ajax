@@ -13,7 +13,7 @@ Response.Write "<br /><br /><a href=""#"" onclick=""window.close();"">[关闭窗
 Response.End
 End If
 '防注入，针对个别
-If MyV_UsersID<>1 Or MyV_UsersName<>"lonq" Then
+If MyV_UsersID<>1 Or MyV_UsersName<>"Lonq" Then
 Call ChkSQLInWord()
 End If
 '删除7天前的非法事件纪录

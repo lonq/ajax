@@ -119,8 +119,9 @@
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
-    <script src="js/checkLogin.js"></script>
+    <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/checkLogin.js"></script>
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
@@ -130,7 +131,7 @@
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _offsetHeight; //滑动束缚容器的偏移高度
+        var _offsetHeight = 0; //滑动束缚容器的偏移高度
         var id = getUrlParam('ID');
         var type = getUrlParam('Type');
         var page = 1;

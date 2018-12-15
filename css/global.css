@@ -919,9 +919,13 @@ a.label:focus {
     vertical-align: middle;
     background-color: #777;
 }
-.badge:empty {
-    display: none;
+.badge-dot {
+    padding: .4em;
+    min-width: 0;
 }
+/* .badge:empty {
+    display: none;
+} */
 .btn .badge {
     position: relative;
     top: -1px;
@@ -1252,7 +1256,7 @@ a.badge:focus {
     content: "";
     width: .426667rem;
     height: .426667rem;
-    border: 1px solid #dcdcdc;
+    border: .026667rem solid #dcdcdc;
     border-radius: 50%;
 }
 .radio input:before {
@@ -1278,7 +1282,7 @@ a.badge:focus {
     content: "";
     width: .213333rem;
     height: .106667rem;
-    border: .053333rem solid #dcdcdc;
+    border: .08rem solid #dcdcdc;
     border-top: none;
     border-right: none;
     transform: rotate(-45deg);
@@ -1319,7 +1323,7 @@ a.badge:focus {
   z-index: 1050;
   display: none;
   float: left;
-  min-width: 4.266667rem;
+  min-width: 1.333333rem;
   padding: .133333rem 0;
   margin: .053333rem 0 0;
   list-style: none;
@@ -1390,7 +1394,7 @@ a.badge:focus {
   right: 0;
 }
 .dropdown-menu-left {
-  left: 0;
+  left: .266667rem;
   right: auto;
 }
 .dropdown-header {
@@ -1402,7 +1406,7 @@ a.badge:focus {
   white-space: nowrap;
 }
 .pull-right > .dropdown-menu {
-  right: 0;
+  right: .266667rem;
   left: auto;
 }
 .dropup .caret,
@@ -1839,7 +1843,6 @@ a.badge:focus {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0);
 }
 .modal-backdrop,
 .actionsheet-backdrop,

@@ -72,8 +72,9 @@
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
-    <script src="js/checkLogin.js"></script>
+    <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/checkLogin.js"></script>
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
@@ -82,7 +83,7 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        var usersname = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersName'); // 用户名
+        var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
         $(function () {
             // 插入正文
             getContent();
@@ -111,9 +112,9 @@
         function getContent() {
             $.ajax({
                 type: 'GET',
-                url: 'getUser.asp?Action=content',
+                url: 'getUsers.asp?Action=content',
                 data: {
-                    UsersName: usersname
+                    UsersID: usersid
                 },
                 timeout: 15000,
                 dataType: 'json',

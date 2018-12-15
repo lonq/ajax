@@ -210,6 +210,10 @@ body {
     transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 }
 
+.item.item-access.item-access-clear-flag .item-footer:after {
+    display: none;
+}
+
 /* 链接 */
 .item.item-link {
     font-size: .373333rem;
