@@ -2061,3 +2061,197 @@ ul.user-capability>li dl>dd:nth-child(3) {
     max-width: 100%;
     height: auto;
 }
+
+/*聊天列表*/
+.chatslist {
+    position: relative;
+    font-size: .4rem;
+    line-height: 1.47058824;
+}
+
+/* 列表组间隔 */
+.chatslist+.chatslist {
+    margin-top: .266667rem;
+}
+
+.chatsitem {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    padding: .333333rem .4rem;
+    color: #333;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.chatsitem {
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    padding: .333333rem .4rem;
+    color: #333;
+    text-decoration: none;
+    overflow: hidden;
+}
+
+.chatsitem-time {
+    margin-top: .4rem;
+    text-align: center;
+}
+
+.chatsitem-time small {
+    display: inline-block;
+    padding: .106667rem .2rem;
+    color: #999;
+    font-size: .32rem;
+    background-color: #e6e6e6;
+    border-radius: .08rem;
+}
+
+.chatsitem .chatsitem-body {
+    display: inline-block;
+    position: relative;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1;
+    flex: 1;
+    padding: .266667rem;
+    min-width: 0;
+    font-size: .4rem;
+    border-radius: .133333rem;
+}
+
+.chatsitem .chatsitem-body:before {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+    border-radius: .133333rem;
+}
+
+.chatsitem .chatsitem-body:after {
+    content: " ";
+    position: absolute;
+    top: .266667rem;
+    border: .133333rem solid transparent;
+}
+
+.chatsitem.fromchats .chatsitem-body:after {
+    right: 100%;
+}
+
+.chatsitem.tochats .chatsitem-body:after {
+    left: 100%;
+}
+
+.chatsitem.fromchats .chatsitem-body {
+    background-color: rgba(255, 255, 255, .7);
+}
+
+.chatsitem.fromchats .chatsitem-body:before {
+    border: 1px solid rgba(255, 255, 255, 1);
+    border-color: rgba(255, 255, 255, 1);
+}
+
+.chatsitem.fromchats .chatsitem-body:after {
+    border-right-color: rgba(255, 255, 255, 1);
+}
+
+.chatsitem.tochats .chatsitem-body {
+    background-color: rgba(27, 194, 160, .7);
+}
+
+.chatsitem.tochats .chatsitem-body:before {
+    border: 1px solid rgba(27, 194, 160, 1);
+    border-color: rgba(27, 194, 160, 1);
+}
+
+.chatsitem.tochats .chatsitem-body:after {
+    border-left-color: rgba(27, 194, 160, 1);
+}
+
+/* 激活效果 */
+.chatsitem.chatsitem-access .chatsitem-body {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.chatsitem.fromchats.chatsitem-access:active .chatsitem-body {
+    background-color: rgb(228, 228, 228);
+}
+
+.chatsitem.fromchats.chatsitem-access:active .chatsitem-body:after {
+    border-right-color: rgb(228, 228, 228);
+}
+
+.chatsitem.tochats.chatsitem-access:active .chatsitem-body {
+    background-color: rgba(27, 194, 160, 1);
+}
+
+.chatsitem.tochats.chatsitem-access:active .chatsitem-body:after {
+    border-left-color: rgba(27, 194, 160, 1);
+}
+
+.chatsitem .chatsitem-footer {
+    text-align: right;
+    color: #999;
+}
+
+.chatsitem.chatsitem-access .chatsitem-footer {
+    position: relative;
+    padding-right: .4rem;
+}
+
+.chatsitem.chatsitem-access .chatsitem-footer:after {
+    content: " ";
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    right: .053333rem;
+    margin-top: -0.133333rem;
+    width: .266667rem;
+    height: .266667rem;
+    border-width: 1px 1px 0 0;
+    border-color: #c8c8c8;
+    border-style: solid;
+    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+}
+
+.chatsitem:before {
+    top: 0;
+    border-top: 1px solid #dcdcdc;
+}
+
+/* 头像 */
+.chatsitem:before {
+    margin-left: 1.84rem;
+    width: calc(100vw - 1.333333rem);
+}
+
+.chatsitem .avatar {
+    width: .933333rem;
+    height: .933333rem;
+}
+
+.chatsitem.fromchats .avatar {
+    margin-right: .4rem;
+}
+
+.chatsitem.tochats .avatar {
+    margin-left: .4rem;
+}
+
+.chatsitem .avatar img {
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+    height: auto;
+    text-align: center;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}

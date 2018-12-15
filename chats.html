@@ -66,7 +66,21 @@
                         </ul>
                     </nav>
                 </header>
-                <div class="list main border-top"></div>
+                <div class="chatslist">
+                    <div class="chatsitem-time"><small>周三 20:45</small></div>
+                    <div class="chatsitem fromchats chatsitem-access">
+                        <div class="avatar"><img src="uploadfiles/avatars/avatar-02.jpg"></div>
+                        <div class="chatsitem-body">
+                            <p>他很懒，什么都没留下。</p>
+                        </div>
+                    </div>
+                    <div class="chatsitem tochats chatsitem-access">
+                        <div class="chatsitem-body">
+                            <p>他很懒，什么都没留下。他很懒，什么都没留下。他很懒，什么都没留下。</p>
+                        </div>
+                        <div class="avatar"><img src="uploadfiles/avatars/avatar-01.jpg"></div>
+                    </div>
+                </div>
                 <div class="pull-up">上拉加载更多</div>
             </div>
         </div>
@@ -109,20 +123,19 @@
             },
             on: {
                 touchEnd: function (event) {
-                    pullUpAction();
+                    // pullUpAction();
                     return false;
                 }
             }
         });
 
         $(function () {
-            console.log(1);
             // 屏蔽控制台消息
             // console.log = function () {
             //     return
             // };
             // 默认加载第一选项第一屏数据
-            getData(targetObj);
+            // getData(targetObj);
             // 修正容器高度
             fixedContainerH();
         });
