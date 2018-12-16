@@ -102,8 +102,8 @@
         //<![CDATA[
         var _container = $('.v-swiper');
         var _article = $('.article-wrap');
-        var _header = $('#header');
-        var _headerH = _header.children().height();
+        var _header = $('header>*');
+        var _headerH = _header.height();
         var _offsetHeight = _headerH; //滑动束缚容器的偏移高度
 
         var id = HtmlUtil.getUrlParms('ID');

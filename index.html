@@ -106,8 +106,9 @@
         //<![CDATA[
         var _container = $('.v-swiper');
         var _nav = $('.slide-picture');
-        var _footer = $('.footer');
-        var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
+        var _footer = $('footer>*');
+        var _footerH = _footer.height();
+        var _offsetHeight = _footerH; //滑动束缚容器的偏移高度
         var page = 1;
         var loadFlag = true;
         var loading;

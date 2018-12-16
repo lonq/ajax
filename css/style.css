@@ -2150,7 +2150,7 @@ ul.user-capability>li dl>dd:nth-child(3) {
 }
 
 .chatsitem.fromchats .chatsitem-body {
-    background-color: rgba(255, 255, 255, .7);
+    background-color: rgba(255, 255, 255, 1);
 }
 
 .chatsitem.fromchats .chatsitem-body:before {
@@ -2163,16 +2163,16 @@ ul.user-capability>li dl>dd:nth-child(3) {
 }
 
 .chatsitem.tochats .chatsitem-body {
-    background-color: rgba(27, 194, 160, .7);
+    background-color: #1edbb5;
 }
 
 .chatsitem.tochats .chatsitem-body:before {
-    border: 1px solid rgba(27, 194, 160, 1);
-    border-color: rgba(27, 194, 160, 1);
+    border: 1px solid #1edbb5;
+    border-color: #1edbb5;
 }
 
 .chatsitem.tochats .chatsitem-body:after {
-    border-left-color: rgba(27, 194, 160, 1);
+    border-left-color: #1edbb5;
 }
 
 /* 激活效果 */
@@ -2189,16 +2189,15 @@ ul.user-capability>li dl>dd:nth-child(3) {
 }
 
 .chatsitem.tochats.chatsitem-access:active .chatsitem-body {
-    background-color: rgba(27, 194, 160, 1);
+    background-color: #21bc9d;
 }
 
 .chatsitem.tochats.chatsitem-access:active .chatsitem-body:after {
-    border-left-color: rgba(27, 194, 160, 1);
+    border-left-color: #21bc9d;
 }
 
 .chatsitem .chatsitem-footer {
     text-align: right;
-    color: #999;
 }
 
 .chatsitem.chatsitem-access .chatsitem-footer {

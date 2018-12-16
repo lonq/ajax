@@ -54,20 +54,20 @@
 </head>
 
 <body>
+    <header>
+        <div class="list title border-top border-bottom">
+            <div class="item vertical-center">
+                <div class="item-body">
+                    <span>产品列表</span>
+                </div>
+                <div class="item-footer"><i class="iconfont-modeimage" id="changeViewMode"></i></div>
+            </div>
+        </div>
+    </header>
     <div class="v-swiper">
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
                 <div class="pull-down" style="display: none;">下拉更新</div>
-                <herder>
-                    <div class="list title border-top border-bottom">
-                        <div class="item vertical-center">
-                            <div class="item-body">
-                                <span>产品列表</span>
-                            </div>
-                            <div class="item-footer"><i class="iconfont-modeimage" id="changeViewMode"></i></div>
-                        </div>
-                    </div>
-                </herder>
                 <div class="list main" id="viewWrap"></div>
                 <div class="pull-up">上拉加载更多</div>
             </div>
@@ -112,8 +112,11 @@
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _header = $('.list.title');
-        var _offsetHeight = 0; //滑动束缚容器的偏移高度
+        var _header = $('header>*');
+        var _headerH = _header.height();
+        var _footer = $('footer>*');
+        var _footerH = _footer.height();
+        var _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
         var page = 1;
         var loadFlag = true;
         var pullUpFlag = true; //上拉标记
@@ -148,9 +151,9 @@
 
         $(function () {
             // 屏蔽控制台消息
-            console.log = function () {
-                return
-            };
+            // console.log = function () {
+            //     return
+            // };
             // 默认加载第一选项第一屏数据
             getData(targetObj);
             // 修正容器高度

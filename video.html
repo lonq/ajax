@@ -96,16 +96,16 @@
 </head>
 
 <body>
+    <header>
+        <nav class="navbar navbar-light">
+            <ul class="navbar-left">
+                <li><a href="articleList.html"><i class="iconfont-angleleft"></i></a></li>
+            </ul>
+        </nav>
+    </header>
     <div class="v-swiper">
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
-                <header>
-                    <nav class="navbar navbar-light">
-                        <ul class="navbar-left">
-                            <li><a href="articleList.html"><i class="iconfont-angleleft"></i></a></li>
-                        </ul>
-                    </nav>
-                </header>
                 <div class="pull-down" style="display: none;">下拉更新</div>
                 <div class="video-wrap"></div>
                 <div class="list border-top border-bottom">
@@ -131,7 +131,9 @@
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _offsetHeight = 0; //滑动束缚容器的偏移高度
+        var _header = $('header>*');
+        var _headerH = _header.height();
+        var _offsetHeight = _headerH; //滑动束缚容器的偏移高度
         var id = getUrlParam('ID');
         var type = getUrlParam('Type');
         var page = 1;
@@ -174,7 +176,7 @@
         });
         //修正容器高度
         function fixedContainerH() {
-            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh)');
+            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
         }
         //上拉加载
         function pullUpAction() {
