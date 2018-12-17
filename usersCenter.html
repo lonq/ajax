@@ -81,7 +81,7 @@
                         <h3 class="navbar-title">我</h3>
 
 
-                        
+
                         <ul class="navbar-right">
                             <li class="dropdown pull-right">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-bell"></i><span class="badge badge-dot badge-danger"></span></a>
@@ -91,7 +91,7 @@
                                     <li><a href="javascript:;">系统消息</a></li>
                                 </ul>
                             </li>
-                            <li><a href="userQrcode.html"><i class="iconfont-qrcode"></i></a></li>
+                            <li><a href="usersQrcode.html"><i class="iconfont-qrcode"></i></a></li>
                         </ul>
                     </nav>
                     <div class="user-wrap">
@@ -204,12 +204,13 @@
 
     <script type="text/javascript">
         var targetObj = $('.siderbar-swiper');
-        var _footer = $('footer>*');
-        var _offsetHeight = _footer.height(); //滑动束缚容器的偏移高度
-        //<![CDATA[
-        var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
+        var _headerH = 0;
+        var _footer, _footerH, _offsetHeight;
         var siderbarButton = $('#siderbarButton');
         var siderbar = $('.siderbar');
+
+        var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
+        //<![CDATA[
         $(function () {
             // 修正容器高度
             // fixedContainerH();
@@ -240,19 +241,19 @@
                             siderbar.css({
                                 'z-index': siderbarZindex
                             });
-                            _footer.hide();
+                            $('footer').hide();
                         } else {
                             backdropState($('.content'), 'siderbar-backdrop', 'off');
                             siderbar.css({
                                 'z-index': ''
                             });
-                            _footer.show();
+                            $('footer').show();
                         }
                     },
                 }
             });
             //插入底部菜单
-            getFooter('userCenter.html');
+            getFooter('usersCenter.html');
             // 插入正文
             getContent();
             // 插入用户功能

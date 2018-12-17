@@ -99,7 +99,7 @@
     <header>
         <nav class="navbar navbar-light">
             <ul class="navbar-left">
-                <li><a href="articleList.html"><i class="iconfont-angleleft"></i></a></li>
+                <li><a href="articlesList.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -134,8 +134,8 @@
         var _header = $('header>*');
         var _headerH = _header.height();
         var _offsetHeight = _headerH; //滑动束缚容器的偏移高度
-        var id = getUrlParam('ID');
-        var type = getUrlParam('Type');
+        var id = HtmlUtil.getUrlParms('ID');
+        var types = HtmlUtil.getUrlParms('types');
         var page = 1;
         var loadFlag = true;
         var pullUpFlag = true; //上拉标记
@@ -199,7 +199,7 @@
                 url: 'getArticles.asp?Action=content',
                 data: {
                     id: id,
-                    type: type
+                    types: types
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -212,7 +212,7 @@
                     } else {
                         // 有数据
                         var str = '';
-                        var type = reponse.type;
+                        var types = reponse.types;
                         var linkurl = reponse.linkurl;
                         if (linkurl != '') {
                             linkurl = linkurl;
@@ -254,7 +254,7 @@
                 data: {
                     id: id,
                     page: page,
-                    type: type
+                    types: types
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -278,7 +278,7 @@
                             pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
                         } else {
                             $.each(list, function (i, k) {
-                                str += '<a class="item item-thumb item-access" href="video.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                str += '<a class="item item-thumb item-access" href="videos.html?ID=' + k.id + '&types=' + k.types + '">' +
                                     '<div class="thumb thumb-sm">' +
                                     '<div class="v-play"></div>' +
                                     '<img src="' + k.pictures + '">' +
@@ -365,12 +365,6 @@
             } else {
                 return result = h + ":" + m + ":" + s;
             }
-        }
-        function getUrlParam(name) {
-            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-            var r = window.location.search.substr(1).match(reg); //匹配目标参数
-            if (r != null) return unescape(r[2]);
-            return null; //返回参数值
         }
         //]]>
     </script>

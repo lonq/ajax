@@ -70,7 +70,7 @@
     <header id="header">
         <nav class="navbar navbar-light affix affix-top">
             <ul class="navbar-left">
-                <li><a href="articleList.html"><i class="iconfont-angleleft"></i></a></li>
+                <li><a href="articlesList.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -107,7 +107,7 @@
         var _offsetHeight = _headerH; //滑动束缚容器的偏移高度
 
         var id = HtmlUtil.getUrlParms('ID');
-        var type = HtmlUtil.getUrlParms('type');
+        var types = HtmlUtil.getUrlParms('types');
         var page = 1;
         var loadFlag = true;
 
@@ -175,7 +175,7 @@
                 url: 'getArticles.asp?Action=content',
                 data: {
                     ID: id,
-                    type: type
+                    types: types
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -188,7 +188,7 @@
                     } else {
                         // 有数据
                         var str = '';
-                        var type = reponse.type;
+                        var types = reponse.types;
                         var linkurl = reponse.linkurl;
                         if (linkurl != '') {
                             linkurl = linkurl;
@@ -226,7 +226,7 @@
                 data: {
                     ID: id,
                     page: page,
-                    type: type
+                    types: types
                 },
                 timeout: 15000,
                 dataType: 'json',
@@ -250,12 +250,12 @@
                             loadFlag = false;
                         }
                         $.each(list, function (i, k) {
-                            var type = k.type;
+                            var types = k.types;
                             var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
                             var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
-                            switch (type) {
+                            switch (types) {
                                 case 0:
-                                    str += '<a class="item item-access" href="article.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                    str += '<a class="item item-access" href="articles.html?ID=' + k.id + '&Types=' + k.types + '">' +
                                         '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                         '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
                                         '<p class="text-ellipsis-2 text-xs text-muted">' + k.content + '</p>' +
@@ -263,7 +263,7 @@
                                         '</a>';
                                 break;
                                 case 1:
-                                    str += '<a class="item item-thumb item-access item-thumb-right" href="article.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                    str += '<a class="item item-thumb item-access item-thumb-right" href="articles.html?ID=' + k.id + '&Types=' + k.types + '">' +
                                         '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                         '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
                                         '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
@@ -277,7 +277,7 @@
                                         '</a>';
                                 break;
                                 case 2:
-                                    str += '<a class="item item-thumb item-access direction-column space-top" href="article.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                    str += '<a class="item item-thumb item-access direction-column space-top" href="articles.html?ID=' + k.id + '&Types=' + k.types + '">' +
                                         '<div class="thumb">' +
                                         '<img src="' + k.pictures + '" style="width: 9.2rem;height: 5.2rem;">' +
                                         '</div>' +
@@ -289,7 +289,7 @@
                                         '</a>';
                                 break;
                                 case 3:
-                                    str += '<a class="item item-thumb item-thumb-group item-access direction-column space-top" href="article.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                    str += '<a class="item item-thumb item-thumb-group item-access direction-column space-top" href="articles.html?ID=' + k.id + '&Types=' + k.types + '">' +
                                         '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
                                         '<ul class="thumb flex-wrap list-unstyled space-left">';
                                         $.each(k.pictures, function (ii, kk) {
@@ -303,7 +303,7 @@
                                         '</a>';
                                 break;
                                 case 4:
-                                str += '<a class="item item-thumb item-access direction-column space-top" href="video.html?ID=' + k.id + '&Type=' + k.type + '">' +
+                                str += '<a class="item item-thumb item-access direction-column space-top" href="videos.html?ID=' + k.id + '&Types=' + k.types + '">' +
                                         '<div class="thumb">' +
                                         '<div class="v-play"></div>' +
                                         '<div class="v-duration">' + secToTime(k.duration) + '</div>' +

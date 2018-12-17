@@ -91,9 +91,6 @@
         var _container = $('.v-swiper');
         var _header = $('header>*');
         var _headerH = _header.height();
-        var _footer = $('footer>*');
-        var _footerH = _footer.height();
-        var _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
         var page = 1;
         var loadFlag = true;
         var pullUpFlag = true; //上拉标记
@@ -132,7 +129,7 @@
             //     return
             // };
             //插入底部菜单
-            getFooter('productList.html');
+            getFooter('productsList.html');
             // 默认加载第一选项第一屏数据
             getData(targetObj);
             // 修正容器高度
@@ -233,7 +230,7 @@
                             if (linkurl != '') {
                                 linkurl = linkurl;
                             } else {
-                                linkurl = 'product.html?ID=' + k.id
+                                linkurl = 'products.html?ID=' + k.id
                             }
                             var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
                             var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
@@ -297,7 +294,7 @@
                             if (linkurl != '') {
                                 linkurl = linkurl;
                             } else {
-                                linkurl = 'product.html?ID=' + k.id
+                                linkurl = 'products.html?ID=' + k.id
                             }
                             var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
                             var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;

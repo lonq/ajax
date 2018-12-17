@@ -83,9 +83,8 @@
         //<![CDATA[
         var _container = $('.v-swiper');
         var _nav = $('.slide-picture');
-        var _footer = $('footer>*');
-        var _footerH = _footer.height();
-        var _offsetHeight = _footerH; //滑动束缚容器的偏移高度
+        var _headerH = 0;
+        var _footer, _footerH, _offsetHeight;
         var page = 1;
         var loadFlag = true;
         var loading;
@@ -255,7 +254,7 @@
                                 if (linkurl != '') {
                                     linkurl = linkurl;
                                 } else {
-                                    linkurl = 'product.html?ID=' + k.id
+                                    linkurl = 'products.html?ID=' + k.id
                                 }
                                 var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
                                 var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
@@ -323,7 +322,7 @@
                             if (linkurl != '') {
                                 linkurl = linkurl;
                             } else {
-                                linkurl = 'product.html?ID=' + k.id
+                                linkurl = 'products.html?ID=' + k.id
                             }
                             var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
                             var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;

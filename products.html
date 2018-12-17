@@ -95,7 +95,7 @@
     <header id="header">
         <nav class="navbar navbar-light affix affix-top">
             <ul class="navbar-left">
-                <li><a href="productList.html"><i class="iconfont-angleleft"></i></a></li>
+                <li><a href="productsList.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
         </nav>
     </header>
@@ -136,10 +136,10 @@
     <script type="text/javascript">
         //<![CDATA[
         var _container = $('.v-swiper');
-        var _nav = $('#nav');
-        var _navH = _nav.children().height();
-        var _header = $('#header');
-        var _headerH = _header.children().height();
+        var _nav = $('#nav>*');
+        var _navH = _nav.height();
+        var _header = $('#header>*');
+        var _headerH = _header.height();
         var _offsetHeight = _headerH + _navH; //滑动束缚容器的偏移高度
 
         var id = HtmlUtil.getUrlParms('ID');
@@ -157,12 +157,12 @@
         var targetObj = $('.swiper-slide.list'); //目标数据容器
         var pullDown = $('.pull-down');
         var pullUp = $('.pull-up');
-        // tab
+        // 选项卡
         var tabSwiper = new Swiper('.tab-swiper',{
             slidesPerView: 3,
             watchSlidesVisibility: true,
         });
-        //滑动切换选项卡
+        // 滑动切换选项卡
         var hSwiper = new Swiper('.h-swiper', {
             thumbs: {
                 swiper: tabSwiper,
@@ -176,7 +176,7 @@
                 },
             }
         });
-        //初始化垂直轴滚动
+        // 初始化垂直轴滚动
         var vSwiper = new Swiper('.v-swiper', {
             direction: 'vertical',
             slidesPerView: 'auto',
@@ -205,11 +205,11 @@
             // 默认加载第一选项第一屏数据
             getData(0);
         });
-        //修正容器高度
+        // 修正容器高度
         function fixedContainerH() {
             $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
         }
-        //通过滑动距离，判断滑动状态
+        // 通过滑动距离，判断滑动状态
         function positionJudge() {
             if (vSwiper.translate < 50 && vSwiper.translate > 0) {
                 pullDown.html('下拉更新').show();
@@ -217,7 +217,7 @@
                 pullDown.html('释放更新').show();
             }
         }
-        //下拉更新
+        // 下拉更新
         function pullDownAction() {
             if (vSwiper.translate >= 50) {
                 pullDown.html('<i class="iconfont-loading animation-spinner"></i> 更新中...').show();
@@ -228,14 +228,14 @@
                 pullDown.hide();
             }
         }
-        //上拉加载
+        // 上拉加载
         function pullUpAction() {
             var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlagArr[hSwiper.activeIndex]) {
                     pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
-                    //加载数据
+                    // 加载数据
                     pageArr[hSwiper.activeIndex]++;
                     getData(hSwiper.activeIndex);
                 }
@@ -423,7 +423,7 @@
             });
         };
 
-        //更新评论
+        // 更新评论
         function updateComments(target) {
             $.ajax({
                 type: 'GET',
@@ -501,7 +501,7 @@
                                 if (linkurl != '') {
                                     linkurl = linkurl;
                                 } else {
-                                    linkurl = 'product.html?ID=' + k.id
+                                    linkurl = 'products.html?ID=' + k.id
                                 }
                                 var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
                                 var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
@@ -545,7 +545,7 @@
             });
         };
 
-        //更新推荐
+        // 更新推荐
         function updateRecommendations(target) {
             $.ajax({
                 type: 'GET',
@@ -567,7 +567,7 @@
                             if (linkurl != '') {
                                 linkurl = linkurl;
                             } else {
-                                linkurl = 'product.html?ID=' + k.id
+                                linkurl = 'products.html?ID=' + k.id
                             }
                             var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
                             var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;

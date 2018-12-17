@@ -2,13 +2,13 @@
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"--><%
 '常用变量
-Dim Sql, Rs, RsMax, Action, searchKey, ID, GetType, GetMaxArticlesListsID, ReturnStr, OneRecord
+Dim Sql, Rs, RsMax, Action, searchKey, ID, GetTypes, GetMaxArticlesListsID, ReturnStr, OneRecord
 Dim Picture, arrPicture, P
 Action = Trim(Request("Action"))
 searchkey = Trim(Request("searchkey"))
 'If searchkey = "" Then searchkey = "undefined"
 ID = ChkNumeric(Request("ID"))
-GetType = ChkNumeric(Request("Type"))
+GetTypes = ChkNumeric(Request("types"))
 GetMaxArticlesListsID = ChkNumeric(Request("maxlistsid"))
 
 '翻页
@@ -80,7 +80,7 @@ Else
     For i = 1 To x
         OneRecord = "{" & vbCrLf
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-        OneRecord = OneRecord & """type"": " & Rs("Type") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
         If Instr(Rs("Picture"), ",") > 0 Then
             Picture = split(Rs("Picture"), ",")
@@ -167,7 +167,7 @@ Else
             OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-        OneRecord = OneRecord & """type"": " & Rs("Type") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
         OneRecord = OneRecord & """video"": """ & Rs("video") & """," & vbCrLf
         OneRecord = OneRecord & """duration"": " & Rs("duration") & "," & vbCrLf
@@ -220,7 +220,7 @@ Else
             OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-        OneRecord = OneRecord & """type"": " & Rs("Type") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
         OneRecord = OneRecord & """video"": """ & Rs("video") & """," & vbCrLf
         OneRecord = OneRecord & """duration"": " & Rs("duration") & "," & vbCrLf
@@ -256,7 +256,7 @@ If Rs.eof And Rs.bof Then
 Else
     OneRecord = "{" & vbCrLf
     OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-    OneRecord = OneRecord & """type"": " & Rs("Type") & "," & vbCrLf
+    OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
     OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
     If Instr(Rs("Picture"), ",") > 0 Then
         Picture = split(Rs("Picture"), ",")
@@ -290,10 +290,10 @@ End Function
 '相关
 Public Function related()
 Set Rs = server.CreateObject("adodb.recordset")
-If GetType = 4 Then
-    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Type = 4 and IsShow = 1 order by ID Desc"
+If GetTypes = 4 Then
+    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Types = 4 and IsShow = 1 order by ID Desc"
 Else
-    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Type <> 4 and IsShow = 1 order by ID Desc"
+    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Types <> 4 and IsShow = 1 order by ID Desc"
 End If
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
@@ -329,7 +329,7 @@ Else
     For i = 1 To x
         OneRecord = "{" & vbCrLf
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-        OneRecord = OneRecord & """type"": " & Rs("Type") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
         If Instr(Rs("Picture"), ",") > 0 Then
             Picture = split(Rs("Picture"), ",")
@@ -369,10 +369,10 @@ End Function
 '更新
 Public Function updaterelated()
 Set Rs = server.CreateObject("adodb.recordset")
-If GetType = 4 Then
-    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Type = 4 and IsShow = 1 order by ID Desc"
+If GetTypes = 4 Then
+    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Types = 4 and IsShow = 1 order by ID Desc"
 Else
-    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Type <> 4 and IsShow = 1 order by ID Desc"
+    Sql = "Select * from LQ_Articles where ID <> " & ID & " and Types <> 4 and IsShow = 1 order by ID Desc"
 End If
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
@@ -381,12 +381,12 @@ If Rs.eof And Rs.bof Then
 Else
     ReturnStr = "{" & vbCrLf
     ReturnStr = ReturnStr & """total"": " & Rs.RecordCount & "," & vbCrLf
-    ReturnStr = ReturnStr & """maxid"": " & MaxID("LQ_Articles where Type = " & GetType & " and ID > " & GetMaxArticlesListsID & " and") & "," & vbCrLf
+    ReturnStr = ReturnStr & """maxid"": " & MaxID("LQ_Articles where Types = " & GetTypes & " and ID > " & GetMaxArticlesListsID & " and") & "," & vbCrLf
     ReturnStr = ReturnStr & """rows"": ["
     Do While Not Rs.eof
         OneRecord = "{" & vbCrLf
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-        OneRecord = OneRecord & """type"": " & Rs("Type") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
         If Instr(Rs("Picture"), ",") > 0 Then
             Picture = split(Rs("Picture"), ",")

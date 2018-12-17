@@ -10,22 +10,26 @@ function getFooter(pageName) {
     '</a>' +
     '</li>' +
     '<li>' +
-    '<a class="btn btn-clear" href="productList.html">' +
+    '<a class="btn btn-clear" href="productsList.html">' +
     '<i class="icon"><span class="badge badge-danger">6</span></i><span class="tip">产品</span>' +
     '</a>' +
     '</li>' +
     '<li>' +
-    '<a class="btn btn-clear" href="articleList.html">' +
+    '<a class="btn btn-clear" href="articlesList.html">' +
     '<i class="icon"></i><span class="tip">文章</span>' +
     '</a>' +
     '</li>' +
     '<li>' +
-    '<a class="btn btn-clear" href="userCenter.html">' +
+    '<a class="btn btn-clear" href="usersCenter.html">' +
     '<i class="icon"></i><span class="tip">我</span>' +
     '</a>' +
     '</li>' +
     '</ul>';
     $('#footer').html(html);
+
+    _footer = $('footer>*');
+    _footerH = _footer.height();
+    _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
 
     $('ul.footer>li>a').each(function(i) {
         var _t1 = $(this);
