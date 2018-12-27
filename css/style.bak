@@ -1,7 +1,6 @@
 ﻿@charset "utf-8";
 
-html.fullpage,
-html.fullpage body {
+html,body {
     height: 100%;
     color: #333;
     background-color: #f5f5f5;
