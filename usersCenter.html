@@ -173,6 +173,8 @@
                     <div class="item-divider"></div>
                 </div>
 
+                <div class="fixed-bottom"></div>
+
             </div>
         </div>
     </div>
@@ -212,8 +214,6 @@
         var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
         //<![CDATA[
         $(function () {
-            // 修正容器高度
-            // fixedContainerH();
             // 侧滑菜单栏
             var siderbarSwiper = new Swiper('.siderbar-swiper', {
                 slidesPerView: 'auto',
@@ -262,7 +262,14 @@
             $('.js-userface').on('click', function () {
                 showActionSheet();
             });
+            // 修正容器高度
+            fixedContainerH();
         });
+        //修正容器高度
+        function fixedContainerH() {
+            $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
+            $('.fixed-bottom').css('padding-top', _offsetHeight); // 因swiper限制，需补足底部菜单栏高度
+        }
         // 显示actionsheet
         function showActionSheet() {
             var actionsheet = $('.actionsheet');
