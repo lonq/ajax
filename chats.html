@@ -6,6 +6,8 @@
     <meta name="renderer" content="webkit">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="screen-orientation" content="portrait">
     <meta name="x5-orientation" content="portrait">
@@ -65,7 +67,7 @@
     <div class="v-swiper">
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
-                <div class="pull-down" style="display: none;">下拉更新</div>
+                <div class="pull-down"></div>
                 <div class="chatslist">
                     <div class="chatsitem-time"><small>周三 20:45</small></div>
                     <div class="chatsitem fromchats chatsitem-access">
@@ -81,10 +83,21 @@
                         <div class="avatar"><img src="uploadfiles/avatars/avatar-01.jpg"></div>
                     </div>
                 </div>
-                <div class="pull-up">上拉加载更多</div>
+                <div class="pull-up"></div>
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="chatsinput-wrap border-top">
+            <div class="chatsinput-box flex-wrap vertical-center">
+                <input type="text" class="form-control flex-item" id="words" name="words">
+                <button type="button" class="btn btn-clear icon iconfont-laugh" id="laughBtn"></button>
+                <button type="button" class="btn btn-clear icon iconfont-add" id="addBtn"></button>
+                <button type="button" class="btn btn-success" id="sendBtn" style="display: none;">发送</button>
+            </div>
+        </div>
+    </footer>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
@@ -103,12 +116,14 @@
         var _container = $('.v-swiper');
         var _header = $('header>*');
         var _headerH = _header.height();
-        var _offsetHeight = _headerH; //滑动束缚容器的偏移高度
+        var _footer = $('footer>*');
+        var _footerH = _footer.height();
+        var _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
         var page = 1;
         var loadFlag = true;
         var loading;
 
-        var targetObj = $('.list.main'); //目标数据容器
+        var targetObj = $('.chatslist'); //目标数据容器
         var pullDown = $('.pull-down');
         var pullUp = $('.pull-up');
 
@@ -125,7 +140,7 @@
             },
             on: {
                 touchEnd: function (event) {
-                    // pullUpAction();
+                    pullUpAction();
                     return false;
                 }
             }
@@ -140,6 +155,11 @@
             // getData(targetObj);
             // 修正容器高度
             fixedContainerH();
+            // 输入
+            $('#words').on('keyup', function() {
+                var $t = $(this);
+                sendBtnStatus($t);
+            });
         });
         //修正容器高度
         function fixedContainerH() {
@@ -151,7 +171,7 @@
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i>').show();
                     //加载数据
                     page++;
                     getData(targetObj);
@@ -170,11 +190,6 @@
                 },
                 timeout: 150000,
                 dataType: 'json',
-                beforeSend: function () {
-                    if (loadFlag) {
-                        loadingMsg('加载中...');
-                    }
-                },
                 success: function (reponse) {
                     loading.close();
                     if (reponse == 0) {
@@ -191,7 +206,7 @@
                         var list = reponse.rows;
                         if (page > maxPageCount) {
                             loadFlag = false;
-                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+                            pullUp.html('').show();
                         } else {
                             $.each(list, function (i, k) {
                                 str += '<a class="item item-avatar vertical-center item-access item-access-clear-flag" href="charts.html?UsersID=' + k.usersid + '">' +
@@ -207,7 +222,7 @@
                                     // '</label>' +
                                     '</a>';
                             });
-                            pullUp.html('上拉加载更多').show();
+                            pullUp.html('').show();
                         }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
@@ -227,6 +242,19 @@
                 }
             });
         };
+        // 发送按钮状态
+        function sendBtnStatus(obj) {
+            var wordsLen = obj.val().length;
+            var $sendBtn = $('#sendBtn');
+            var $addBtn = $('#addBtn');
+            if (wordsLen > 0) {
+                $sendBtn.show();
+                $addBtn.hide();
+            } else {
+                $sendBtn.hide();
+                $addBtn.show();
+            }
+        }
         // 消息提示
         function loadingMsg(str) {
             loading = $(document).dialog({

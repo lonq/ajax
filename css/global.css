@@ -331,6 +331,23 @@ html input[disabled] {
 .border {
     border: 1px solid #dcdcdc;
 }
+.thin-border:before{
+    content: "";
+    display: block;
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    border: 1px solid #dcdcdc;
+    pointer-events: none; /* 防止点击触发 */
+    -webkit-transform: scale(0.5);
+    transform: scale(0.5);
+    -webkit-transform-origin: 0 0;
+    transform-origin: 0 0;
+}
 .border-right {
     border-right: 1px solid #dcdcdc;
 }
@@ -1140,7 +1157,7 @@ a.badge:focus {
     color: #555;
     background-color: #fff;
     background-image: none;
-    border: 1px solid #ccc;
+    border: 1px solid #dcdcdc;
     border-radius: .106667rem;
 }
 .form-control[disabled],

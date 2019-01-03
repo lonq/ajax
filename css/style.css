@@ -45,6 +45,48 @@ body {
     vertical-align: middle;
 }
 
+/*底部输入框*/
+.chatsinput-wrap {
+    padding: .266667rem .4rem;
+    width: 100%;
+    background-color: #fff;
+}
+
+.chatsinput-box {
+    height: .906667rem;
+    line-height: .906667rem;
+}
+
+.chatsinput-box .form-control,
+.chatsinput-box .btn {
+    padding-top: 0;
+    padding-bottom: 0;
+    height: .906667rem;
+    line-height: .906667rem;
+    vertical-align: middle;
+}
+
+.chatsinput-box .form-control {
+    line-height: 1.47058824;
+    border-color: rgba(220, 220, 220, .3);
+    border-radius: .453333rem;
+    white-space: normal;
+    word-wrap: break-word;
+    word-break: break-all;
+    background-color: #f5f5f5;
+}
+
+.chatsinput-box .btn {
+    margin-left: .266667rem;
+}
+
+.chatsinput-box .btn.icon {
+    padding-left: 0;
+    padding-right: 0;
+    font-size: .8rem;
+    color: #333;
+}
+
 /*左右带横线的文字*/
 .caption {
     text-align: center;
