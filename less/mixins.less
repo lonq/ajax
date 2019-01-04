@@ -2,39 +2,263 @@
 // --------------------------------------------------
 
 // Utilities
-@import "mixins/hide-text.less";
-@import "mixins/opacity.less";
-@import "mixins/image.less";
-@import "mixins/labels.less";
-@import "mixins/reset-filter.less";
-@import "mixins/resize.less";
-@import "mixins/responsive-visibility.less";
-@import "mixins/size.less";
-@import "mixins/tab-focus.less";
-@import "mixins/reset-text.less";
-@import "mixins/text-emphasis.less";
-@import "mixins/text-overflow.less";
-@import "mixins/vendor-prefixes.less";
 
+// Center-align a block level element
+
+.center-block() {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.clearfix() {
+    &:before,
+    &:after {
+        content: " "; // 1
+        display: table; // 2
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+.text-hide() {
+    font: ~"0/0" a;
+    color: transparent;
+    text-shadow: none;
+    background-color: transparent;
+    border: 0;
+}
+
+// Keep images from scaling beyond the width of their parents.
+.img-responsive(@display: block) {
+    display: @display;
+    max-width: 100%; // Part 1: Set a maximum relative to the parent
+    height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
+}
+
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+.button-variant(@color; @background; @border) {
+    color: @color;
+    background-color: @background;
+    border-color: @border;
+
+    &:focus,
+    &.focus {
+        color: @color;
+        background-color: darken(@background, 10%);
+        border-color: darken(@border, 25%);
+    }
+    &:hover {
+        color: @color;
+        background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+    }
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        color: @color;
+        background-color: darken(@background, 10%);
+        border-color: darken(@border, 12%);
+
+        &:hover,
+        &:focus,
+        &.focus {
+            color: @color;
+            background-color: darken(@background, 17%);
+            border-color: darken(@border, 25%);
+        }
+    }
+    &:active,
+    &.active,
+    .open > .dropdown-toggle& {
+        background-image: none;
+    }
+    &.disabled,
+    &[disabled],
+    fieldset[disabled] & {
+        &:hover,
+        &:focus,
+        &.focus {
+            background-color: @background;
+            border-color: @border;
+        }
+    }
+
+    .badge {
+        color: @background;
+        background-color: @color;
+    }
+}
+
+// Button sizes
+.button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
+    padding: @padding-vertical @padding-horizontal;
+    font-size: @font-size;
+    line-height: @line-height;
+    border-radius: @border-radius;
+}
+
+.box-shadow(@shadow) {
+    -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
+    box-shadow: @shadow;
+}
+
+// Box sizing
+.box-sizing(@boxmodel) {
+    -webkit-box-sizing: @boxmodel;
+    -moz-box-sizing: @boxmodel;
+    box-sizing: @boxmodel;
+}
+
+// Transformations
+.scale(@ratio) {
+    -webkit-transform: scale(@ratio);
+    -ms-transform: scale(@ratio); // IE9 only
+    -o-transform: scale(@ratio);
+    transform: scale(@ratio);
+}
+.scale(@ratioX; @ratioY) {
+    -webkit-transform: scale(@ratioX, @ratioY);
+    -ms-transform: scale(@ratioX, @ratioY); // IE9 only
+    -o-transform: scale(@ratioX, @ratioY);
+    transform: scale(@ratioX, @ratioY);
+}
+.scaleX(@ratio) {
+    -webkit-transform: scaleX(@ratio);
+    -ms-transform: scaleX(@ratio); // IE9 only
+    -o-transform: scaleX(@ratio);
+    transform: scaleX(@ratio);
+}
+.scaleY(@ratio) {
+    -webkit-transform: scaleY(@ratio);
+    -ms-transform: scaleY(@ratio); // IE9 only
+    -o-transform: scaleY(@ratio);
+    transform: scaleY(@ratio);
+}
+
+.translate(@x; @y) {
+    -webkit-transform: translate(@x, @y);
+    -ms-transform: translate(@x, @y); // IE9 only
+    -o-transform: translate(@x, @y);
+    transform: translate(@x, @y);
+}
+.translate3d(@x; @y; @z) {
+    -webkit-transform: translate3d(@x, @y, @z);
+    transform: translate3d(@x, @y, @z);
+}
+.rotate(@degrees) {
+    -webkit-transform: rotate(@degrees);
+    -ms-transform: rotate(@degrees); // IE9 only
+    -o-transform: rotate(@degrees);
+    transform: rotate(@degrees);
+}
+.rotateX(@degrees) {
+    -webkit-transform: rotateX(@degrees);
+    -ms-transform: rotateX(@degrees); // IE9 only
+    -o-transform: rotateX(@degrees);
+    transform: rotateX(@degrees);
+}
+.rotateY(@degrees) {
+    -webkit-transform: rotateY(@degrees);
+    -ms-transform: rotateY(@degrees); // IE9 only
+    -o-transform: rotateY(@degrees);
+    transform: rotateY(@degrees);
+}
+
+.transform-origin(@origin) {
+    -webkit-transform-origin: @origin;
+    -moz-transform-origin: @origin;
+    -ms-transform-origin: @origin; // IE9 only
+    transform-origin: @origin;
+}
+
+// Transitions
+
+.transition(@transition) {
+    -webkit-transition: @transition;
+    -o-transition: @transition;
+    transition: @transition;
+}
+.transition-property(@transition-property) {
+    -webkit-transition-property: @transition-property;
+    transition-property: @transition-property;
+}
+.transition-delay(@transition-delay) {
+    -webkit-transition-delay: @transition-delay;
+    transition-delay: @transition-delay;
+}
+.transition-duration(@transition-duration) {
+    -webkit-transition-duration: @transition-duration;
+    transition-duration: @transition-duration;
+}
+.transition-timing-function(@timing-function) {
+    -webkit-transition-timing-function: @timing-function;
+    transition-timing-function: @timing-function;
+}
+.transition-transform(@transition) {
+    -webkit-transition: -webkit-transform @transition;
+    -moz-transition: -moz-transform @transition;
+    -o-transition: -o-transform @transition;
+    transition: transform @transition;
+}
+
+// User select
+// For selecting text on the page
+
+.user-select(@select) {
+    -webkit-user-select: @select;
+    -moz-user-select: @select;
+    -ms-user-select: @select; // IE10+
+    user-select: @select;
+}
+
+.text-overflow() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+// Tables
+
+.table-row-variant(@state; @background) {
+    // Exact selectors below required to override `.table-striped` and prevent
+    // inheritance to nested tables.
+    .table > thead > tr,
+    .table > tbody > tr,
+    .table > tfoot > tr {
+        > td.@{state},
+        > th.@{state},
+        &.@{state} > td,
+        &.@{state} > th {
+            background-color: @background;
+        }
+    }
+
+    // Hover states for `.table-hover`
+    // Note: this is not available for cells or rows within `thead` or `tfoot`.
+    .table-hover > tbody > tr {
+        > td.@{state}:hover,
+        > th.@{state}:hover,
+        &.@{state}:hover > td,
+        &:hover > .@{state},
+        &.@{state}:hover > th {
+            background-color: darken(@background, 5%);
+        }
+    }
+}
+
+// Sizing shortcuts
+.size(@width; @height) {
+    width: @width;
+    height: @height;
+}
 // Components
-@import "mixins/alerts.less";
-@import "mixins/buttons.less";
-@import "mixins/panels.less";
-@import "mixins/pagination.less";
-@import "mixins/list-group.less";
-@import "mixins/nav-divider.less";
-@import "mixins/forms.less";
-@import "mixins/progress-bar.less";
-@import "mixins/table-row.less";
 
 // Skins
-@import "mixins/background-variant.less";
-@import "mixins/border-radius.less";
-@import "mixins/gradients.less";
 
 // Layout
-@import "mixins/clearfix.less";
-@import "mixins/center-block.less";
-@import "mixins/nav-vertical-align.less";
-@import "mixins/grid-framework.less";
-@import "mixins/grid.less";
