@@ -1,6 +1,6 @@
 /* 元素指定的任何内边距和边框都将在已设定的宽度和高度内进行绘制 */
 /* PS：元素层级规范
-/* default:           2;
+/* base:           2;
 /* navbar:            1000;
 /* popover:           1060;
 /* tooltip:           1070;
@@ -11,8 +11,7 @@
 */
 * {
     font-family: @font-family-base;
-    -webkit-box-sizing: border-box;
-    box-sizing: border-box;
+    .box-sizing("border-box");
     outline: none;
 }
 html,
@@ -84,19 +83,8 @@ html input[disabled] {
 .text-center {
     text-align: center;
 }
-.center-block {
-    display: block;
-    margin-right: auto;
-    margin-left: auto;
-}
 .text-justify {
     text-align: justify;
-}
-.pull-right {
-    float: right !important;
-}
-.pull-left {
-    float: left !important;
 }
 
 // Floats
@@ -117,30 +105,11 @@ html input[disabled] {
 
 /*省略号*/
 .text-ellipsis {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    .text-ellipsis();
 }
-.text-ellipsis-2,
-.text-ellipsis-3,
-.text-ellipsis-4,
-.text-ellipsis-5 {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    word-break: break-all;
-    overflow: hidden;
-}
-.text-ellipsis-2 {
-    -webkit-line-clamp: 2;
-}
-.text-ellipsis-3 {
-    -webkit-line-clamp: 3;
-}
-.text-ellipsis-4 {
-    -webkit-line-clamp: 4;
-}
-.text-ellipsis-5 {
-    -webkit-line-clamp: 5;
+
+.mtext-ellipsis {
+    .mtext-ellipsis();
 }
 /*显示、隐藏*/
 .invisible {
@@ -342,9 +311,7 @@ html input[disabled] {
 /* 响应式图片 */
 .img-responsive img,
 .img-responsive {
-    display: block;
-    max-width: 100%;
-    height: auto;
+    .img-responsive();
 }
 /* 列表类 */
 .list-unstyled {
@@ -353,19 +320,16 @@ html input[disabled] {
     padding-left: 0;
     list-style: none;
 }
+// Inline turns list items into inline-block
 .list-inline {
-    margin-bottom: -0.133333rem;
+    .list-unstyled();
     margin-left: -0.133333rem;
-    padding-left: 0;
-    list-style: none;
-    font-size: 0;
-}
-.list-inline > li {
-    display: inline-block;
-    margin-bottom: 0.133333rem;
-    margin-left: 0.133333rem;
-    padding-right: 0.133333rem;
-    padding-left: 0.133333rem;
+
+    > li {
+        display: inline-block;
+        padding-left: 0.133333rem;
+        padding-right: 0.133333rem;
+    }
 }
 .list-pills {
     margin-left: -0.133333rem;
@@ -1554,11 +1518,15 @@ a.badge:focus {
     border-radius: 0;
 }
 .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child,
-.btn-group-vertical > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
+.btn-group-vertical
+    > .btn-group:first-child:not(:last-child)
+    > .dropdown-toggle {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child {
+.btn-group-vertical
+    > .btn-group:last-child:not(:first-child)
+    > .btn:first-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }

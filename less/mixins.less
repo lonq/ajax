@@ -3,6 +3,37 @@
 
 // Utilities
 
+// 弹性盒子显示
+.display-flex {
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+}
+
+.box-flex(@width: 1) {
+    -webkit-box-flex: @width;
+    -webkit-flex: @width;
+    flex: @width;
+    min-width: 0;
+}
+
+/* 弹性盒子纵向排列 */
+.direction-column {
+    -webkit-flex-direction: column;
+    flex-direction: column;
+}
+
+/* 垂直对齐 */
+.vertical-center {
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+/* 水平对齐 */
+.horizontal-center {
+    -webkit-justify-content: center;
+    justify-content: center;
+}
 // Center-align a block level element
 
 .center-block() {
@@ -21,13 +52,33 @@
         clear: both;
     }
 }
-
+// 隐藏文字
 .text-hide() {
     font: ~"0/0" a;
     color: transparent;
     text-shadow: none;
     background-color: transparent;
     border: 0;
+}
+
+// 省略号
+.text-ellipsis() {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mtext-ellipsis(@rows: 2) {
+    .display-flex();
+    -webkit-box-orient: vertical;
+    word-break: break-all;
+    overflow: hidden;
+    -webkit-line-clamp: @rows;
+}
+// 清除列表自带样式
+.list-unstyled {
+    padding-left: 0;
+    list-style: none;
 }
 
 // Keep images from scaling beyond the width of their parents.
@@ -39,6 +90,8 @@
 
 // Button variants
 //
+
+
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
 
@@ -168,6 +221,12 @@
     -ms-transform: rotateY(@degrees); // IE9 only
     -o-transform: rotateY(@degrees);
     transform: rotateY(@degrees);
+}
+.matrix(@n1; @n2; @n3; @n4; @n5; @n6) {
+    -webkit-transform: matrix(@n1, @n2, @n3, @n4, @n5, @n6);
+    -ms-transform: matrix(@n1, @n2, @n3, @n4, @n5, @n6);
+    -o-transform: matrix(@n1, @n2, @n3, @n4, @n5, @n6);
+    transform: matrix(@n1, @n2, @n3, @n4, @n5, @n6);
 }
 
 .transform-origin(@origin) {

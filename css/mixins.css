@@ -1,0 +1,24 @@
+.display-flex {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+}
+/* 弹性盒子纵向排列 */
+.direction-column {
+  -webkit-flex-direction: column;
+  flex-direction: column;
+}
+/* 垂直对齐 */
+.vertical-center {
+  -webkit-align-items: center;
+  align-items: center;
+}
+/* 水平对齐 */
+.horizontal-center {
+  -webkit-justify-content: center;
+  justify-content: center;
+}
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
