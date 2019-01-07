@@ -32,11 +32,50 @@
             .transform-origin(0 100%);
         }
     }
+    &.card {
+        // 卡片样式
+        .item {
+            &:after {
+                content: " ";
+                position: absolute;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                height: 1px;
+                border-bottom: 1px solid @border-color;
+                .scaleY(0.5);
+                .transform-origin(0 100%);
+            }
+            &:before,
+            &:after {
+                margin-left: 0;
+                margin-right: 0;
+                width: calc(100vw);
+            }
+        }
+        & + .item {
+            margin-top: 0.266667rem;
+        }
+    }
+    &.clear-border {
+        // 清除border
+        .item {
+            &:before {
+                display: none;
+            }
+        }
+    }
     font-size: @font-size-base;
     line-height: @line-height-base;
     small {
         // 小字号
         line-height: @line-height-computed;
+    }
+    .item-note {
+        // 右边文字
+        float: right;
+        color: @gray-light;
+        font-size: 82.35%;
     }
 }
 
@@ -48,6 +87,30 @@
     text-decoration: none;
     background-color: rgb(255, 255, 255);
     overflow: hidden;
+    &:first-child {
+        &:before {
+            display: none;
+        }
+    }
+    &:last-child {
+        &:after {
+            display: none;
+        }
+    }
+    &:before {
+        content: " ";
+        position: absolute;
+        left: 0;
+        right: 0;
+        margin-left: @padding-base-horizontal;
+        margin-right: 0;
+        width: calc(100vw - @padding-base-horizontal);
+        height: 1px;
+        top: 0;
+        border-top: 1px solid @border-color;
+        .scaleY(0.5);
+        .transform-origin(0 0);
+    }
     &.direction-column {
         // 垂直排列
         .direction-column();
@@ -60,9 +123,23 @@
         // 垂直居中
         .vertical-center();
     }
-    &.item-link { // 链接
+    &.item-link {
+        // 链接
         font-size: @font-size-base;
         color: @link-color;
+        &:first-child {
+            &:before {
+                display: block;
+            }
+        }
+    }
+    &.item-button-right {
+        // 右边按钮
+        padding: 0.186667rem 0.4rem;
+        .btn {
+            margin-left: 0.266667rem;
+            padding: 0.106667rem 0.266667rem;
+        }
     }
     &.item-access {
         // 激活效果
@@ -90,7 +167,8 @@
                 .matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
             }
         }
-        &.item-access-clear-flag { // 清除右箭头
+        &.item-access-clear-flag {
+            // 清除右箭头
             .item-footer {
                 &:after {
                     display: none;
@@ -98,104 +176,146 @@
             }
         }
     }
-
+    .item-header {
+        // 头
+        .icon {
+            margin-right: @padding-small-horizontal;
+        }
+    }
     .item-body {
+        // 正文
         .box-flex();
         font-size: @font-size-base;
     }
 
     .item-footer {
+        // 尾
         text-align: right;
         color: @gray-light;
     }
+    .badge {
+        // 徽章
+        background-color: @brand-danger;
+    }
+    .text {
+        // 文本
+        .box-flex();
+    }
+    h4 {
+        font-size: 0.4rem;
+    }
+    h5 {
+        font-size: 0.373333rem;
+    }
+    .text-lg {
+        font-size: 0.453333rem !important;
+    }
+    .text-muted {
+        color: #999;
+    }
+    .desc {
+        font-size: 0.373333rem;
+        .mtext-ellipsis(2);
+    }
 }
 
-.item:before,
-.list.card .item:after {
-    content: " ";
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin-left: 0.4rem;
-    margin-right: 0;
-    width: calc(100vw - 0.4rem);
-    height: 1px;
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
-    -webkit-transform: scaleY(0.5);
-    transform: scaleY(0.5);
+.item {
+    // 缩略图
+    &.item-thumb {
+        &:before {
+            margin-left: 0;
+            margin-right: 0;
+            width: calc(100vw);
+        }
+        .thumb {
+            position: relative;
+            margin: 0 0.4rem 0 0;
+            &.thumb-xs {
+                width: 30%;
+            }
+            &.thumb-sm {
+                width: 35%;
+            }
+            &.thumb-md {
+                width: 40%;
+            }
+            &.thumb-lg {
+                width: 45%;
+            }
+            &.thumb-right {
+                margin: 0 0 0 0.4rem !important;
+            }
+            .badge {
+                position: absolute;
+                top: -0.4em;
+                right: -0.4em;
+                z-index: 2;
+            }
+            img,
+            video {
+                .img-responsive();
+            }
+        }
+    }
+    &.item-thumb-right {
+        // 图片右对齐
+        .thumb {
+            margin: 0 0 0 0.4rem;
+            img {
+                .img-responsive();
+            }
+        }
+    }
 }
 
-.list.clear-border .item:before {
-    display: none;
+.item {
+    // 缩略图组
+    &.item-thumb-group {
+        .thumb {
+            .display-flex();
+            margin-right: 0;
+            > * {
+                .box-flex(1);
+                & + * {
+                    margin-left: 0.133333rem;
+                }
+            }
+            img,
+            video {
+                .img-responsive();
+            }
+        }
+    }
 }
 
-.item.item-link:first-child:before {
-    display: block;
-}
-
-.item:first-child:before {
-    display: none;
-}
-
-.item:last-child:after {
-    display: none;
-}
-
-.item:before {
-    top: 0;
-    border-top: 1px solid #dcdcdc;
-}
-
-/* 左滑事件 */
-.item.item-swiped {
-    display: block;
-    padding: 0;
-}
-
-.item.item-swiped > .item-footer {
-    position: absolute;
-    right: 0;
-    top: 0;
-    bottom: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    color: #fff;
-}
-
-.swiped-btn {
-    display: block;
-    padding: 0.266667rem 1em;
-    line-height: 1.47058824;
-    color: inherit;
-}
-
-.swiped-btn-default {
-    background-color: #999;
-}
-
-.swiped-btn-warning {
-    background-color: #ee3f24;
-}
-
-/* 徽章 */
-.item .badge {
-    background-color: #ee3f24;
-}
-
-/* 右边按钮 */
-.item.item-button-right {
-    padding: 0.186667rem 0.4rem;
-}
-
-.item.item-button-right .btn {
-    margin-left: 0.266667rem;
-    padding: 0.106667rem 0.266667rem;
+.item {
+    // 头像
+    &.item-avatar {
+        &:before {
+            margin-left: 1.84rem;
+            width: calc(100vw - 2.24rem);
+        }
+        .avatar {
+            margin: 0 0.4rem 0 0;
+            width: 1.2rem;
+            height: 1.2rem;
+            img {
+                .img-responsive();
+                border-radius: 50%;
+            }
+            .badge {
+                position: absolute;
+                top: -0.4em;
+                right: -0.4em;
+                z-index: 2;
+            }
+        }
+    }
 }
 
 .item-title,
 .item-divider {
+    // 标题和间隔
     margin-top: 0.77em;
     margin-bottom: 0.3em;
     padding-left: 0.4rem;
@@ -204,165 +324,38 @@
     font-size: 0.373333rem;
 }
 
-/* 右边文字 */
-.item-note {
-    float: right;
-    color: #999;
-    font-size: 82.35%;
+.item {
+    // item开关
+    &.item-toggle {
+        padding: 0.266667rem 0.4rem;
+        pointer-events: none;
+    }
 }
 
-/*卡片列表*/
-.list.card .item + .item {
-    margin-top: 0.266667rem;
-}
-
-/* 缩略图 */
-.item.item-thumb .thumb {
-    position: relative;
-    width: 100%;
-}
-
-/* 缩略图组 */
-.item.item-thumb-group .thumb > * + * {
-    margin-left: 0.133333rem;
-}
-
-.item.item-thumb:before,
-.item.item-thumb-group:before {
-    margin-left: 0;
-    margin-right: 0;
-    width: calc(100vw);
-}
-
-.item.item-thumb .thumb .badge,
-.item.item-avatar .avatar .badge {
-    position: absolute;
-    top: -0.4em;
-    right: -0.4em;
-    z-index: 2;
-}
-
-.item.item-thumb .thumb.thumb-right {
-    margin: 0 0 0 0.4rem !important;
-}
-
-.item.item-thumb .thumb.thumb-xs {
-    margin: 0 0.4rem 0 0;
-    width: 30%;
-}
-
-.item.item-thumb .thumb.thumb-sm {
-    margin: 0 0.4rem 0 0;
-    width: 35%;
-}
-
-.item.item-thumb .thumb.thumb-md {
-    margin: 0 0.4rem 0 0;
-    width: 40%;
-}
-
-.item.item-thumb .thumb.thumb-lg {
-    margin: 0 0.4rem 0 0;
-    width: 45%;
-}
-
-.item.item-thumb.item-thumb-right .thumb {
-    margin: 0 0 0 0.4rem;
-}
-
-.item.item-thumb-group .thumb img,
-.item.item-thumb .thumb img,
-.item.item-thumb .thumb video {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-}
-
-/* 头像 */
-.item.item-avatar:before {
-    margin-left: 1.84rem;
-    width: calc(100vw - 2.24rem);
-}
-
-.item.item-avatar .avatar {
-    margin: 0 0.4rem 0 0;
-    width: 1.2rem;
-    height: 1.2rem;
-}
-
-.item.item-avatar .avatar img {
-    margin: 0 auto;
-    display: block;
-    max-width: 100%;
-    height: auto;
-    text-align: center;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
-}
-
-/* 文本 */
-.item .text {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    -ms-flex: 1;
-    flex: 1;
-    min-width: 0;
-}
-
-.item h4 {
-    font-size: 0.4rem;
-    font-weight: 400;
-}
-
-.item h5 {
-    font-size: 0.373333rem;
-    font-weight: 400;
-}
-
-.item .text-lg {
-    font-size: 0.453333rem !important;
-}
-
-.item .text-muted {
-    color: #999;
-}
-
-.item .text .desc {
-    font-size: 0.373333rem;
-}
-
-/*开关*/
-.item.item-toggle {
-    padding: 0.266667rem 0.4rem;
-}
-
-.item-toggle {
-    pointer-events: none;
-}
-
-.toggle {
+.toggle { // 开关
     position: relative;
     display: inline-block;
     pointer-events: auto;
     font-size: 0;
+    input {
+        -webkit-appearance: none;
+        position: absolute;
+        z-index: 2;
+        width: 1.066667rem;
+        height: 0.64rem;
+        border: none;
+        outline: 0;
+        border-radius: 0.373333rem;
+        &:checked {
+            &+.track {
+                border-color: #1edbb5;
+                background-color: #1edbb5;
+            }
+        }
+    }
 }
 
-.toggle input:checked + .track {
-    border-color: #1edbb5;
-    background-color: #1edbb5;
-}
 
-.toggle input {
-    -webkit-appearance: none;
-    position: absolute;
-    z-index: 2;
-    width: 1.066667rem;
-    height: 0.64rem;
-    border: none;
-    outline: 0;
-    border-radius: 0.373333rem;
-}
 
 .toggle .track {
     -webkit-transition-timing-function: ease-in-out;
@@ -396,8 +389,7 @@
     background-color: #fff;
     top: 0.053333rem;
     left: 0.053333rem;
-    box-shadow: 0 1px 0.053333rem rgba(0, 0, 0, 0.35),
-        0 0rem 0.053333rem rgba(0, 0, 0, 0.15);
+    box-shadow: 0 1px 0.053333rem rgba(0, 0, 0, 0.35), 0 0rem 0.053333rem rgba(0, 0, 0, 0.15);
 }
 
 .toggle input:checked + .track .handle {
