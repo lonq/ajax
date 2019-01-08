@@ -4,44 +4,45 @@
 // Utilities
 
 // 弹性盒子显示
-.display-flex {
+.display-flex() {
     display: -webkit-box;
     display: -webkit-flex;
     display: flex;
 }
-
+// 子元素空间分配
 .box-flex(@width: 1) {
     -webkit-box-flex: @width;
     -webkit-flex: @width;
     flex: @width;
     min-width: 0;
 }
-
-/* 弹性盒子纵向排列 */
-.direction-column {
-    -webkit-flex-direction: column;
-    flex-direction: column;
+// 排列方式
+.flex-direction(@mode: row) {
+    -webkit-flex-direction: @mode;
+    flex-direction: @mode;
 }
-
-/* 垂直对齐 */
-.vertical-center {
-    -webkit-align-items: center;
-    align-items: center;
+// 水平对齐
+.justify-content(@mode: center) {
+    -webkit-justify-content: @mode;
+    justify-content: @mode;
 }
-
-/* 水平对齐 */
-.horizontal-center {
-    -webkit-justify-content: center;
-    justify-content: center;
+// 垂直对齐，单行无效
+.align-content(@mode: center) {
+    -webkit-align-content: @mode;
+    align-content: @mode;
 }
-// Center-align a block level element
-
+// 垂直对齐，单行多行有效
+.align-items(@mode: center) {
+    -webkit-align-items: @mode;
+    align-items: @mode;
+}
+// 块级元素居中
 .center-block() {
     display: block;
     margin-left: auto;
     margin-right: auto;
 }
-
+// 清除浮动
 .clearfix() {
     &:before,
     &:after {
@@ -60,14 +61,14 @@
     background-color: transparent;
     border: 0;
 }
-
-// 省略号
+// 单行溢出隐藏显示省略号
 .text-ellipsis() {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
+// 多行溢出隐藏显示省略号
 .mtext-ellipsis(@rows: 2) {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -75,19 +76,43 @@
     overflow: hidden;
     -webkit-line-clamp: @rows;
 }
+
+// 细线
+.border-top(@color) {
+    content: " ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    height: 1px;
+    border-top: 1px solid @color;
+    color: @color;
+    .transform-origin(0 0);
+    .scaleY(0.5);
+}
+.border-bottom(@color) {
+    content: " ";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    height: 1px;
+    border-bottom: 1px solid @color;
+    color: @color;
+    .transform-origin(0 100%);
+    .scaleY(0.5);
+}
 // 清除列表自带样式
-.list-unstyled {
+.list-unstyled() {
     padding-left: 0;
     list-style: none;
 }
-
 // Keep images from scaling beyond the width of their parents.
 .img-responsive(@display: block) {
     display: @display;
     max-width: 100%; // Part 1: Set a maximum relative to the parent
     height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
 }
-
 // Button variants
 //
 
@@ -99,7 +124,6 @@
     color: @color;
     background-color: @background;
     border-color: @border;
-
     &:focus,
     &.focus {
         color: @color;
@@ -117,7 +141,6 @@
         color: @color;
         background-color: darken(@background, 10%);
         border-color: darken(@border, 12%);
-
         &:hover,
         &:focus,
         &.focus {
@@ -141,7 +164,6 @@
             border-color: @border;
         }
     }
-
     .badge {
         color: @background;
         background-color: @color;
@@ -276,12 +298,6 @@
     user-select: @select;
 }
 
-.text-overflow() {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-}
-
 // Tables
 
 .table-row-variant(@state; @background) {
@@ -321,3 +337,6 @@
 // Skins
 
 // Layout
+
+
+
