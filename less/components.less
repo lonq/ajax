@@ -79,7 +79,60 @@
     }
 }
 
+.list {
+    // 纵向排列视图
+    .view-horizontal {
+        .display-flex();
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        &:before,
+        &:after {
+            display: none;
+        }
+        .border-top {
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+        .item {
+            .box-flex();
+            -webkit-flex-basis: 48%;
+            flex-basis: 48%;
+            max-width: 49.4%;
+            background-color: #fff;
+            overflow: hidden;
+            .direction-column();
+            &:before {
+                display: none;
+            }
+            &:nth-child(2n) {
+                margin-bottom: 0.133333rem;
+            }
+            &:nth-child(2n-1) {
+                margin-right: 0.133333rem;
+                margin-bottom: 0.133333rem;
+            }
+            &.vertical-center {
+                -webkit-align-items: normal;
+                align-items: normal;
+            }
+            .thumb {
+                margin: 0 0 0.266667rem 0;
+                width: auto;
+            }
+            &.item-thumb-right {
+                .thumb {
+                    margin: 0.266667rem 0 0 0;
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+
 .item {
+    // 列表下面的对象
     position: relative;
     .display-flex();
     padding: @padding-base-horizontal;
@@ -313,30 +366,57 @@
     }
 }
 
-.item-title,
-.item-divider {
-    // 标题和间隔
-    margin-top: 0.77em;
-    margin-bottom: 0.3em;
-    padding-left: 0.4rem;
-    padding-right: 0.4rem;
-    color: #999;
-    font-size: 0.373333rem;
-}
-
 .item {
     // item开关
     &.item-toggle {
         padding: 0.266667rem 0.4rem;
         pointer-events: none;
+        &.active {
+            box-shadow: none;
+        }
+        .toggle {
+            text-align: right;
+            color: #888;
+        }
     }
 }
 
-.toggle { // 开关
+.toggle {
+    // 开关
     position: relative;
     display: inline-block;
     pointer-events: auto;
     font-size: 0;
+    .active {
+        box-shadow: none;
+    }
+    .track {
+        display: inline-block;
+        content: " ";
+        cursor: pointer;
+        pointer-events: none;
+        width: 1.066667rem;
+        height: 0.64rem;
+        border: solid 0.053333rem #dcdcdc;
+        border-radius: 0.373333rem;
+        background-color: #dcdcdc;
+        .transition-timing-function(ease-in-out);
+        .transition-duration(0.3s);
+        .transition-property(background-color);
+        .box-sizing(border-box);
+        .handle {
+            position: absolute;
+            display: block;
+            width: 0.533333rem;
+            height: 0.533333rem;
+            border-radius: 0.346667rem;
+            background-color: #fff;
+            top: 0.053333rem;
+            left: 0.053333rem;
+            .box-shadow(0 1px 0.053333rem rgba(0, 0, 0, 0.35));
+            .transition(0.3s cubic-bezier(0, 1.1, 1, 1.1));
+        }
+    }
     input {
         -webkit-appearance: none;
         position: absolute;
@@ -347,167 +427,70 @@
         outline: 0;
         border-radius: 0.373333rem;
         &:checked {
-            &+.track {
+            & + .track {
                 border-color: #1edbb5;
                 background-color: #1edbb5;
+                .handle {
+                    .translate3d(0.4rem, 0, 0);
+                    background-color: #fff;
+                }
+            }
+        }
+        &:disabled {
+            & + .track {
+                opacity: 0.6;
             }
         }
     }
 }
 
-
-
-.toggle .track {
-    -webkit-transition-timing-function: ease-in-out;
-    transition-timing-function: ease-in-out;
-    -webkit-transition-duration: 0.3s;
-    transition-duration: 0.3s;
-    -webkit-transition-property: background-color, border;
-    transition-property: background-color, border;
-    display: inline-block;
-    box-sizing: border-box;
-    width: 1.066667rem;
-    height: 0.64rem;
-    border: solid 0.053333rem #dcdcdc;
-    border-radius: 0.373333rem;
-    background-color: #dcdcdc;
-    content: " ";
-    cursor: pointer;
-    pointer-events: none;
+.item {
+    // 选择框
+    &.item-radio {
+        padding-left: 1.173333rem;
+        .radio {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0.4rem;
+            .display-flex();
+            .vertical-center();
+        }
+    }
+    &.item-checkbox {
+        padding-left: 1.173333rem;
+        .checkbox {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0.4rem;
+            .display-flex();
+            .vertical-center();
+        }
+        &.item-checkbox-right {
+            padding-right: 0.4rem;
+            padding-left: 0.4rem;
+            .checkbox {
+                input {
+                    position: absolute;
+                    top: 50%;
+                    right: 0.4rem;
+                    margin-top: -0.24rem;
+                }
+            }
+        }
+    }
 }
 
-.toggle .handle {
-    -webkit-transition: 0.3s cubic-bezier(0, 1.1, 1, 1.1);
-    transition: 0.3s cubic-bezier(0, 1.1, 1, 1.1);
-    -webkit-transition-property: background-color, transform;
-    transition-property: background-color, transform;
-    position: absolute;
-    display: block;
-    width: 0.533333rem;
-    height: 0.533333rem;
-    border-radius: 0.346667rem;
-    background-color: #fff;
-    top: 0.053333rem;
-    left: 0.053333rem;
-    box-shadow: 0 1px 0.053333rem rgba(0, 0, 0, 0.35), 0 0rem 0.053333rem rgba(0, 0, 0, 0.15);
-}
-
-.toggle input:checked + .track .handle {
-    -webkit-transform: translate3d(0.4rem, 0, 0);
-    transform: translate3d(0.4rem, 0, 0);
-    background-color: #fff;
-}
-
-.item-toggle.active {
-    box-shadow: none;
-}
-
-.item-toggle .toggle {
-    text-align: right;
-    color: #888;
-}
-
-.toggle input:disabled + .track {
-    opacity: 0.6;
-}
-
-/* 选择框 */
-.item.item-radio,
-.item.item-checkbox {
-    padding-left: 1.173333rem;
-}
-
-.item-radio .radio,
-.item-checkbox .checkbox {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -moz-box;
-    display: -moz-flex;
-    display: -ms-flexbox;
-    display: flex;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    -moz-align-items: center;
-    align-items: center;
-}
-
-.item-radio .radio,
-.item-checkbox .checkbox {
-    position: absolute;
-    left: 0.4rem;
-}
-
-.item-checkbox.item-checkbox-right {
-    padding-right: 0.4rem;
+.item-title,
+.item-divider {
+    // 标题和间隔
+    margin-top: 0.77em;
+    margin-bottom: 0.3em;
     padding-left: 0.4rem;
-}
-
-.item-checkbox-right .checkbox input {
-    position: absolute;
-    top: 50%;
-    right: 0.4rem;
-    margin-top: -0.24rem;
-}
-
-/* 纵向排列视图 */
-.list.view-horizontal {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-flex-wrap: wrap;
-    flex-wrap: wrap;
-}
-
-.list.view-horizontal .border-top:before,
-.list.view-horizontal:before,
-.list.view-horizontal .border-top:after,
-.list.view-horizontal:after {
-    display: none;
-}
-
-.list.view-horizontal .item {
-    -webkit-box-flex: 1;
-    -webkit-flex: 1;
-    flex: 1;
-    -webkit-flex-basis: 48%;
-    flex-basis: 48%;
-    max-width: 49.4%;
-    background-color: #fff;
-    overflow: hidden;
-    flex-direction: column;
-}
-
-.list.view-horizontal .item.vertical-center {
-    -ms-flex-align: normal;
-    -webkit-align-items: normal;
-    -moz-align-items: normal;
-    align-items: normal;
-}
-
-.list.view-horizontal .item .thumb {
-    margin: 0 0 0.266667rem 0;
-    width: auto;
-}
-
-.list.view-horizontal .item.item-thumb-right .thumb {
-    margin: 0.266667rem 0 0 0;
-    width: auto;
-}
-
-.list.view-horizontal .item:before {
-    display: none;
-}
-
-.list.view-horizontal .item:nth-child(2n) {
-    margin-bottom: 0.133333rem;
-}
-
-.list.view-horizontal .item:nth-child(2n-1) {
-    margin-right: 0.133333rem;
-    margin-bottom: 0.133333rem;
+    padding-right: 0.4rem;
+    color: #999;
+    font-size: 0.373333rem;
 }
