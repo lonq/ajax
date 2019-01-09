@@ -317,6 +317,9 @@ html input[disabled] {
     height: 100% !important;
 }
 /* 响应式图片 */
+img {
+    vertical-align: middle;
+}
 .img-responsive img,
 .img-responsive {
     .img-responsive();
@@ -519,7 +522,7 @@ a.text-dark:active {
     display: inline-block;
     padding: 0 0.32rem;
     margin-bottom: 0;
-    font-size: 0.373333rem;
+    font-size: @font-size-base;
     font-weight: normal;
     line-height: 2.3;
     text-align: center;
@@ -1519,15 +1522,11 @@ a.badge:focus {
     border-radius: 0;
 }
 .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child,
-.btn-group-vertical
-    > .btn-group:first-child:not(:last-child)
-    > .dropdown-toggle {
+.btn-group-vertical > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.btn-group-vertical
-    > .btn-group:last-child:not(:first-child)
-    > .btn:first-child {
+.btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
@@ -1993,10 +1992,10 @@ table {
     align-items: center;
 }
 .space-top > * + * {
-    margin-top: 0.266667rem;
+    margin-top: 0.133333rem;
 }
 .space-left > * + * {
-    margin-left: 0.266667rem;
+    margin-left: 0.133333rem;
 }
 .flex-wrap > .flex-item {
     -webkit-box-flex: 1;
