@@ -3096,11 +3096,11 @@ footer#footer {
   font-size: 0.32rem;
   line-height: 1;
 }
-/*底部弹出列表*/
 .actionsheet {
   position: fixed;
-  left: 0;
+  right: 0;
   bottom: 0;
+  left: 0;
   -webkit-transform: translate(0, 100%);
   transform: translate(0, 100%);
   -webkit-backface-visibility: hidden;
@@ -3211,6 +3211,9 @@ footer#footer {
   text-align: center;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+.actionsheet ul.actionsheet-menu > li:active {
+  background-color: #eee;
+}
 .actionsheet ul.actionsheet-menu > li > dl {
   margin-top: 0;
   margin-bottom: 0;
@@ -3231,24 +3234,24 @@ footer#footer {
   color: #999;
 }
 .actionsheet ul.actionsheet-menu > li:nth-child(1) > dl > dt {
-  background-color: #fda05c;
+  background-color: #f0ad4e;
 }
 .actionsheet ul.actionsheet-menu > li:nth-child(2) > dl > dt {
-  background-color: #80cc3f;
+  background-color: #5cb85c;
 }
 .actionsheet ul.actionsheet-menu > li:nth-child(3) > dl > dt {
-  background-color: #fa5e78;
+  background-color: #ee3f24;
 }
 .actionsheet ul.actionsheet-menu > li:nth-child(4) > dl > dt {
-  background-color: #4da1fc;
+  background-color: #5baade;
 }
 .actionsheet ul.actionsheet-menu > li:nth-child(5) > dl > dt {
-  background-color: #999;
+  background-color: #999999;
 }
 .actionsheet .close {
   position: absolute;
   top: 0.266667rem;
-  right: 0.266667rem;
+  right: 0;
   z-index: 1051;
   color: #bbb;
 }
