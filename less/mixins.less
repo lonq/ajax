@@ -16,6 +16,11 @@
     flex: @width;
     min-width: 0;
 }
+// 折行
+.flex-wrap(@mode: wrap) {
+    -webkit-flex-wrap: @mode;
+    flex-wrap: @mode;
+}
 // 排列方式
 .flex-direction(@mode: row) {
     -webkit-flex-direction: @mode;
@@ -190,6 +195,13 @@
     box-sizing: @boxmodel;
 }
 
+// 隐藏被旋转元素的背面
+.backface-visibility(@state: visible) {
+    -webkit-backface-visibility: @state;
+    -ms-backface-visibility: @state; // IE9 only
+    -o-backface-visibility: @state;
+    backface-visibility: @state;
+}
 // Transformations
 .scale(@ratio) {
     -webkit-transform: scale(@ratio);
