@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="fullpage">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content="lonq">
+    <title>设置</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <script src="js/flexible.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <nav class="navbar navbar-light">
+            <ul class="navbar-left">
+                <li><a href="usersCenter.html"><i class="iconfont-angleleft"></i></a></li>
+            </ul>
+            <h3 class="navbar-title">设置</h3>
+        </nav>
+    </header>
+
+    <div class="list border-top border-bottom">
+        <div class="item vertical-center" href="javascript:;">
+            <div class="item-body">
+                <span>设置一</span>
+            </div>
+            <label class="toggle">
+                <input type="checkbox" value="on" />
+                <div class="track"><div class="handle"></div></div>
+            </label>
+        </div>
+        <a class="item vertical item-radio">
+            <label class="radio">
+                <input type="radio" name="r1">
+            </label>
+            <h3>单选一</h3>
+        </a>
+        <a class="item vertical item-radio">
+            <label class="radio">
+                <input type="radio" name="r1">
+            </label>单选二
+        </a>
+        <a class="item vertical item-checkbox item-checkbox-right">
+            <label class="checkbox">
+                <input type="checkbox">
+            </label>多选一
+        </a>
+        <a class="item vertical item-checkbox item-checkbox-right">
+            <label class="checkbox">
+                <input type="radio" name="r11">
+            </label>单选二
+        </a>
+        <a class="item vertical item-checkbox item-checkbox-right">
+            <label class="checkbox">
+                <input type="radio" name="r11">
+            </label>单选二
+        </a>
+    </div>
+
+    <footer>
+        <div class="js-copyright copyright padding-vertical-lg text-xs text-muted text-center">-</div>
+    </footer>
+
+    <script src="js/zepto.min.js"></script>
+    <script src="js/touch.min.js"></script>
+    <script src="js/htmlutil.js"></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/checkLogin.js"></script>
+    <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/common.js"></script>
+    <script src="js/config.js"></script>
+
+    <script type="text/javascript">
+        //<![CDATA[
+        $(function () {
+        });
+        // 消息提示
+        function msg(str) {
+            $(document).dialog({
+                type: 'notice',
+                infoText: str,
+                autoClose: 1500,
+                position: 'bottom'
+            });
+        }
+        // 消息提示
+        function noData(type, text) {
+            var color, icon;
+            switch (type) {
+                case 'primary':
+                    color = 'msg msg-primary';
+                    icon = 'icon iconfont-correctcircle';
+                    break;
+                default:
+                    color = 'msg msg-default';
+                    icon = 'icon iconfont-infocircle';
+            }
+            var str = '';
+            str += '<div class="' + color + '">';
+            str += '<h1><i class="' + icon + '"></i></h1>' +
+                '<h3 class="text-center">' + text + '</h3>' +
+                '</div>';
+            targetObj.html(str);
+        }
+        //]]>
+    </script>
+</body>
+
+</html>

@@ -66,6 +66,13 @@
     background-color: transparent;
     border: 0;
 }
+// opacity
+.opacity(@opacity) {
+    opacity: @opacity;
+    // IE8 filter
+    @opacity-ie: (@opacity * 100);
+    filter: ~"alpha(opacity=@{opacity-ie})";
+}
 // 单行溢出隐藏显示省略号
 .text-ellipsis() {
     overflow: hidden;
@@ -109,6 +116,8 @@
 }
 // 清除列表自带样式
 .list-unstyled() {
+    margin-top: 0;
+    margin-bottom: 0;
     padding-left: 0;
     list-style: none;
 }
@@ -118,6 +127,12 @@
     max-width: 100%; // Part 1: Set a maximum relative to the parent
     height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
 }
+
+// Progress bars
+.progress-bar-variant(@color) {
+    background-color: @color;
+  }
+
 // Button variants
 //
 
@@ -175,6 +190,49 @@
     }
 }
 
+// animations
+.animation(@animation) {
+    -webkit-animation: @animation;
+    -o-animation: @animation;
+    animation: @animation;
+}
+.animation-name(@name) {
+    -webkit-animation-name: @name;
+    animation-name: @name;
+}
+.animation-duration(@duration) {
+    -webkit-animation-duration: @duration;
+    animation-duration: @duration;
+}
+.animation-timing-function(@timing-function) {
+    -webkit-animation-timing-function: @timing-function;
+    animation-timing-function: @timing-function;
+}
+.animation-delay(@delay) {
+    -webkit-animation-delay: @delay;
+    animation-delay: @delay;
+}
+.animation-iteration-count(@iteration-count) {
+    -webkit-animation-iteration-count: @iteration-count;
+    animation-iteration-count: @iteration-count;
+}
+.animation-direction(@direction) {
+    -webkit-animation-direction: @direction;
+    animation-direction: @direction;
+}
+.animation-fill-mode(@fill-mode) {
+    -webkit-animation-fill-mode: @fill-mode;
+    animation-fill-mode: @fill-mode;
+}
+
+// 隐藏被旋转元素的背面
+
+.backface-visibility(@visibility) {
+    -webkit-backface-visibility: @visibility;
+    -moz-backface-visibility: @visibility;
+    backface-visibility: @visibility;
+}
+
 // Button sizes
 .button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
     padding: @padding-vertical @padding-horizontal;
@@ -195,13 +253,6 @@
     box-sizing: @boxmodel;
 }
 
-// 隐藏被旋转元素的背面
-.backface-visibility(@state: visible) {
-    -webkit-backface-visibility: @state;
-    -ms-backface-visibility: @state; // IE9 only
-    -o-backface-visibility: @state;
-    backface-visibility: @state;
-}
 // Transformations
 .scale(@ratio) {
     -webkit-transform: scale(@ratio);
@@ -310,6 +361,13 @@
     user-select: @select;
 }
 
+.touch-action(@action) {
+    -webkit-touch-action: @action;
+    -moz-touch-action: @action;
+    -ms-touch-action: @action; // IE10+
+    touch-action: @action;
+}
+
 // Tables
 
 .table-row-variant(@state; @background) {
@@ -344,11 +402,17 @@
     width: @width;
     height: @height;
 }
+
+// WebKit-style focus
+.tab-focus() {
+    // WebKit-specific. Other browsers will keep their default outline style.
+    // (Initially tried to also force default via `outline: initial`,
+    // but that seems to erroneously remove the outline in Firefox altogether.)
+    outline: 5px auto -webkit-focus-ring-color;
+    outline-offset: -2px;
+}
 // Components
 
 // Skins
 
 // Layout
-
-
-

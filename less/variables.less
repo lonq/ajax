@@ -49,20 +49,20 @@
 @font-family-base:        @font-family-sans-serif;
 
 @font-size-base:          .4rem; // 0.4rem 30px
-@font-size-large:         ceil((@font-size-base * 1.133333)); // ~0.453333rem 34px
-@font-size-small:         ceil((@font-size-base * 0.8)); // 0.32rem 24px
+@font-size-large:         (@font-size-base * 1.133333); // ~0.453333rem 34px
+@font-size-small:         (@font-size-base * 0.8); // 0.32rem 24px
 
-@font-size-h1:            floor((@font-size-base * 1.866667)); // ~0.746667rem 56px
-@font-size-h2:            floor((@font-size-base * 1.6)); // 0.64rem 48px
-@font-size-h3:            ceil((@font-size-base * 1.333333)); // ~0.533333rem 40px
-@font-size-h4:            ceil((@font-size-base * 1.133333)); // ~0.453333rem 34px
+@font-size-h1:            (@font-size-base * 1.866667); // ~0.746667rem 56px
+@font-size-h2:            (@font-size-base * 1.6); // 0.64rem 48px
+@font-size-h3:            (@font-size-base * 1.333333); // ~0.533333rem 40px
+@font-size-h4:            (@font-size-base * 1.133333); // ~0.453333rem 34px
 @font-size-h5:            @font-size-base; // 0.4rem 30px
-@font-size-h6:            ceil((@font-size-base * 0.8)); // 0.32rem 24px
+@font-size-h6:            (@font-size-base * 0.8); // 0.32rem 24px
 
 //** Unit-less `line-height` for use in components like buttons.
 @line-height-base:        1.428571429; // 20/14
 //** Computed "line-height" (`font-size` * `line-height`) for use with `margin`, `padding`, etc.
-@line-height-computed:    floor((@font-size-base * @line-height-base)); // ~.533333rem
+@line-height-computed:    (@font-size-base * @line-height-base); // ~.533333rem
 
 //** By default, this inherits from the `<body>`.
 @headings-font-family:    inherit;
@@ -204,9 +204,9 @@
 //** Default `.form-control` height
 @input-height-base:              (@line-height-computed + (@padding-base-vertical * 2) + 2);
 //** Large `.form-control` height
-@input-height-large:             (ceil(@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2);
+@input-height-large:             (@font-size-large * @line-height-large) + (@padding-large-vertical * 2) + 2;
 //** Small `.form-control` height
-@input-height-small:             (floor(@font-size-small * @line-height-small) + (@padding-small-vertical * 2) + 2);
+@input-height-small:             (@font-size-small * @line-height-small) + (@padding-small-vertical * 2) + 2;
 
 //** `.form-group` margin
 @form-group-margin-bottom:       .4rem;
@@ -480,7 +480,7 @@
 //** Badge background color in active nav link
 @badge-active-bg:             #fff;
 
-@badge-font-weight:           bold;
+@badge-font-weight:           normal;
 @badge-line-height:           1;
 @badge-border-radius:         .266667rem;
 
