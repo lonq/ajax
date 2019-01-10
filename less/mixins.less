@@ -131,7 +131,7 @@
 // Progress bars
 .progress-bar-variant(@color) {
     background-color: @color;
-  }
+}
 
 // Button variants
 //
@@ -231,14 +231,6 @@
     -webkit-backface-visibility: @visibility;
     -moz-backface-visibility: @visibility;
     backface-visibility: @visibility;
-}
-
-// Button sizes
-.button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
-    padding: @padding-vertical @padding-horizontal;
-    font-size: @font-size;
-    line-height: @line-height;
-    border-radius: @border-radius;
 }
 
 .box-shadow(@shadow) {
@@ -352,8 +344,6 @@
 }
 
 // User select
-// For selecting text on the page
-
 .user-select(@select) {
     -webkit-user-select: @select;
     -moz-user-select: @select;
@@ -369,7 +359,6 @@
 }
 
 // Tables
-
 .table-row-variant(@state; @background) {
     // Exact selectors below required to override `.table-striped` and prevent
     // inheritance to nested tables.
@@ -397,6 +386,14 @@
     }
 }
 
+// Button sizes
+.button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
+    padding: @padding-vertical @padding-horizontal;
+    font-size: @font-size;
+    line-height: @line-height;
+    border-radius: @border-radius;
+}
+
 // Sizing shortcuts
 .size(@width; @height) {
     width: @width;
@@ -411,6 +408,66 @@
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
 }
+
+// 文字颜色
+.text-emphasis-variant(@color) {
+    color: @color;
+    a {
+        color: @color;
+        &:hover,
+        &:focus {
+            color: darken(@color, 10%);
+        }
+    }
+    a&:hover,
+    a&:focus {
+        color: darken(@color, 10%);
+    }
+}
+
+// 字号
+.text-size-variant(@font-size) {
+    font-size: @font-size;
+    &.list-inline {
+        > li {
+            font-size: @font-size;
+        }
+    }
+}
+
+// Contextual backgrounds
+.bg-variant(@color) {
+    background-color: @color;
+    a&:hover,
+    a&:focus {
+        background-color: darken(@color, 10%);
+    }
+}
+
+// label-border
+.label-border-variant(@color) {
+    color: @color;
+    &:before {
+        border-color: @color;
+    }
+    a&:hover,
+    a&:focus {
+        color: @color;
+        text-decoration: none;
+        &:before {
+            border-color: @color;
+        }
+    }
+}
+// Dividers (basically an hr) within dropdowns and nav lists
+
+.nav-divider(@color: #e5e5e5) {
+    height: 1px;
+    margin: ((@line-height-computed / 3) - .013333) 0;
+    overflow: hidden;
+    background-color: @color;
+}
+
 // Components
 
 // Skins
