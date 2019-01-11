@@ -348,10 +348,16 @@ ul.user-capability > li dl > dd:nth-child(3) {
 .about-wrap .about-logo img {
   width: 1.6rem;
 }
+.about-wrap .about-qrcode {
+  margin-left: auto;
+  margin-right: auto;
+  width: 4rem;
+  height: 4rem;
+}
 .about-wrap .about-qrcode img {
   display: block;
   margin: 0 auto;
-  width: 4rem;
+  max-width: 100%;
   height: auto;
 }
 .user-qrcode-wrap .user-qrcode img {

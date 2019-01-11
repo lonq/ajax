@@ -425,16 +425,6 @@
     }
 }
 
-// 字号
-.text-size-variant(@font-size) {
-    font-size: @font-size;
-    &.list-inline {
-        > li {
-            font-size: @font-size;
-        }
-    }
-}
-
 // Contextual backgrounds
 .bg-variant(@color) {
     background-color: @color;
@@ -447,14 +437,14 @@
 // label-border
 .label-border-variant(@color) {
     color: @color;
-    &:before {
+    &:after {
         border-color: @color;
     }
     a&:hover,
     a&:focus {
         color: @color;
         text-decoration: none;
-        &:before {
+        &:after {
             border-color: @color;
         }
     }

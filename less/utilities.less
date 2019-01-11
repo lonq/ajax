@@ -365,17 +365,21 @@ img {
     font-style: normal;
     font-weight: normal;
 }
-.text-xs {
-    .text-size-variant(@font-size-small) !important;
+.text-xs,
+.text-xs.list-inline > li {
+    font-size: @font-size-small !important;
 }
-.text-sm {
-    .text-size-variant(@font-size-base) !important;
+.text-sm,
+.text-sm.list-inline > li {
+    font-size: @font-size-base !important;
 }
-.text-md {
-    .text-size-variant(@font-size-large) !important;
+.text-md,
+.text-md.list-inline > li {
+    font-size: @font-size-large !important;
 }
-.text-lg {
-    .text-size-variant(@font-size-h3) !important;
+.text-lg,
+.text-lg.list-inline > li {
+    font-size: @font-size-h3 !important;
 }
 .text-title {
     font-size: @font-size-h2 !important;
@@ -419,10 +423,7 @@ img {
     background-image: none; // Reset unusual Firefox-on-Android default style; see https://github.com/necolas/normalize.css/issues/214
     border: 1px solid transparent;
     white-space: nowrap;
-    .button-size(
-        @padding-base-vertical; @padding-base-horizontal; @font-size-base;
-            @line-height-base; @btn-border-radius-base
-    );
+    .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @btn-border-radius-base);
     .user-select(none);
 
     &,
@@ -568,23 +569,14 @@ img {
 
 .btn-lg {
     // line-height: ensure even-numbered height of button next to large input
-    .button-size(
-        @padding-base-vertical; @padding-base-horizontal; @font-size-large;
-            @line-height-large; @btn-border-radius-large
-    );
+    .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-large; @line-height-large; @btn-border-radius-large);
 }
 .btn-sm {
     // line-height: ensure proper height of button next to small input
-    .button-size(
-        @padding-base-vertical; @padding-base-horizontal; @font-size-base;
-            @line-height-base; @btn-border-radius-base
-    );
+    .button-size(@padding-base-vertical; @padding-base-horizontal; @font-size-base; @line-height-base; @btn-border-radius-base);
 }
 .btn-xs {
-    .button-size(
-        @padding-small-vertical; @padding-small-horizontal; @font-size-small;
-            @line-height-small; @btn-border-radius-small
-    );
+    .button-size(@padding-small-vertical; @padding-small-horizontal; @font-size-small; @line-height-small; @btn-border-radius-small);
 }
 
 // Block button
@@ -665,18 +657,17 @@ input[type="button"].btn-fill {
     background-color: #fff;
     white-space: nowrap;
     vertical-align: middle;
-    &:before {
-        content: "";
-        display: block;
+    &:after {
+        content: " ";
+        width: 200%;
+        height: 200%;
         position: absolute;
         top: 0;
-        bottom: 0;
         left: 0;
-        right: 0;
-        border: 1px solid #999;
-        border-color: #999;
-        border-radius: 0.106667rem;
-        pointer-events: none;
+        border: 1px solid @gray-light;
+        .scale(0.5);
+        .transform-origin(0 0);
+        border-radius: @border-radius-base;
     }
     &:empty {
         display: none;
@@ -701,95 +692,53 @@ input[type="button"].btn-fill {
     position: relative;
     top: -1px;
 }
-@media only screen and (-webkit-min-device-pixel-ratio: 2) {
-    .label:before {
-        .transform-origin(0 0);
-        .scaleY(0.5);
-        bottom: -100%;
-        right: -100%;
-    }
-}
+
 /*徽章*/
 .badge {
     display: inline-block;
-    padding: 0.15em 0.4em;
-    min-width: 0.266667rem;
-    border-radius: 0.266667rem;
-    font-size: 0.32rem;
-    font-weight: 400;
-    font-style: normal;
-    line-height: 1.2;
-    color: #fff;
-    text-align: center;
-    white-space: nowrap;
+    min-width: 0.133333rem;
+    padding: 0.04rem 0.093333rem;
+    font-size: @font-size-small;
+    font-weight: @badge-font-weight;
+    color: @badge-color;
+    line-height: @badge-line-height;
     vertical-align: middle;
-    background-color: #777;
+    white-space: nowrap;
+    text-align: center;
+    background-color: @badge-bg;
+    border-radius: @badge-border-radius;
+
+    // Empty badges collapse automatically (not available in IE8)
+    &:empty {
+        display: none;
+    }
     &.badge-dot {
         padding: 0.4em;
         min-width: 0;
     }
+    // Quick fix for badges in buttons
+    .btn & {
+        position: relative;
+        top: -0.013333rem;
+    }
+
+    .btn-xs &,
+    .btn-group-xs > .btn & {
+        top: 0;
+        padding: 0.013333rem 0.066667rem;
+    }
+
+    // Hover state, but only for links
+    a& {
+        &:hover,
+        &:focus {
+            color: @badge-link-hover-color;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    }
 }
-.btn .badge {
-    position: relative;
-    top: -1px;
-}
-.btn-xs .badge,
-.btn-group-xs > .btn .badge {
-    top: 0;
-    padding: 1px 0.133333rem;
-}
-a.badge:hover,
-a.badge:focus {
-    color: #fff;
-    text-decoration: none;
-    cursor: pointer;
-}
-.badge-default {
-    background-color: #999;
-}
-.badge-primary {
-    background-color: #1edbb5;
-}
-.badge-success {
-    background-color: @brand-success;
-}
-.badge-info {
-    background-color: #5bc0de;
-}
-.badge-warning {
-    background-color: #ec971f;
-}
-.badge-danger {
-    background-color: #ee3f24;
-}
-.badge-default-line {
-    color: #999;
-    border: 1px solid #999;
-}
-.badge-primary-line {
-    color: #1edbb5;
-    border: 1px solid #1edbb5;
-}
-.badge-success-line {
-    color: @brand-success;
-    border: 1px solid @brand-success;
-}
-.badge-info-line {
-    color: #5bc0de;
-    border: 1px solid #5bc0de;
-}
-.badge-warning-line {
-    color: #ec971f;
-    border: 1px solid #ec971f;
-}
-.badge-danger-line {
-    color: #ee3f24;
-    border: 1px solid #ee3f24;
-}
-.btn-danger .badge {
-    color: #ee3f24;
-    background-color: #fff;
-}
+
 /*表单*/
 .form-inline .form-group {
     display: inline-block;
@@ -965,83 +914,64 @@ a.badge:focus {
 .form-vertical .form-group label {
     display: block;
 }
-/*选择框*/
-.radio input:before,
-.checkbox input:before {
-    color: #999;
-    border-color: #dcdcdc;
-}
-.radio input:disabled:before,
-.checkbox input:disabled:before {
-    border-color: #dcdcdc;
-}
-.radio input:disabled:checked:before .checkbox input:disabled:checked:before {
-    background: #dcdcdc;
-}
-.radio.radio-input-hidden input .checkbox.checkbox-input-hidden input {
-    display: none !important;
-}
-.radio input,
-.checkbox input {
-    position: relative;
-    width: 0.48rem;
-    height: 0.48rem;
-    display: inline-block;
-    border: 0;
-    vertical-align: text-bottom;
-    background: transparent;
-    cursor: pointer;
-    -webkit-appearance: none;
-}
-.radio input:after,
-.checkbox input:after {
-    position: absolute;
-    top: 0;
-    left: 0;
-    content: "";
-    width: 0.426667rem;
-    height: 0.426667rem;
-    border: 0.026667rem solid #dcdcdc;
-    border-radius: 50%;
-}
-.radio input:before {
-    position: absolute;
-    top: 0.133333rem;
-    left: 0.133333rem;
-    content: "";
-    width: 0.213333rem;
-    height: 0.213333rem;
-    border-radius: 50%;
-    background-color: #dcdcdc;
-}
-.radio input:checked:before {
-    background-color: #1edbb5;
-}
-.radio input:checked:after {
-    border: 1px solid #1edbb5;
-}
-.checkbox input:before {
-    position: absolute;
-    top: 0.133333rem;
-    left: 0.106667rem;
-    content: "";
-    width: 0.213333rem;
-    height: 0.106667rem;
-    border: 0.08rem solid #dcdcdc;
-    border-top: none;
-    border-right: none;
-    transform: rotate(-45deg);
-    -webkit-transform: rotate(-45deg);
-}
-.checkbox input:checked:before {
-    border: 0.053333rem solid #1edbb5;
-    border-top: none;
-    border-right: none;
-}
-.checkbox input:checked:after {
-    border: 1px solid #1edbb5;
-}
 
+/*选择框*/
+.radio,
+.checkbox {
+    input {
+        position: relative;
+        width: @font-size-large;
+        height: @font-size-large;
+        display: inline-block;
+        border: 0;
+        vertical-align: text-bottom;
+        background: transparent;
+        cursor: pointer;
+        -webkit-appearance: none;
+        font-family: "iconfont" !important;
+        font-style: normal;
+        font-size: @font-size-large;
+        line-height: 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        -webkit-text-stroke-width: 0.005333rem;
+        &:before {
+            color: darken(@gray-lighter, 10%);
+            .transition(color 0.2s);
+        }
+        &:checked {
+            &:before {
+                color: @brand-primary;
+            }
+        }
+        &:disabled {
+            &:before {
+                color: lighten(@gray-lighter, 6%);
+            }
+        }
+        &:disabled {
+            &:checked {
+                &:before {
+                    color: lighten(@brand-primary, 40%);
+                }
+            }
+        }
+    }
+}
+.radio {
+    input {
+        &:before {
+            content: "\e800";
+        }
+    }
+}
+.checkbox {
+    input {
+        &:before {
+            content: "\e801";
+        }
+    }
+}
 
 /*按钮组*/
 .btn-group,
@@ -1168,15 +1098,11 @@ a.badge:focus {
     border-radius: 0;
 }
 .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child,
-.btn-group-vertical
-    > .btn-group:first-child:not(:last-child)
-    > .dropdown-toggle {
+.btn-group-vertical > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
     border-bottom-right-radius: 0;
     border-bottom-left-radius: 0;
 }
-.btn-group-vertical
-    > .btn-group:last-child:not(:first-child)
-    > .btn:first-child {
+.btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child {
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
