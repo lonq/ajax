@@ -3,4 +3,5 @@
     "workbench.iconTheme": "material-icon-theme",
     // root font-size (unit: px), default: 16
     "cssrem.rootFontSize": 75,
+    "editor.fontSize": 18,
 }

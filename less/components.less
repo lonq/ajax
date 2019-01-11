@@ -13,7 +13,7 @@
             top: 50%;
             width: 100%;
             height: 1px;
-            background-color: @gray-lighter;
+            background-color: lighten(@gray-light, 20%);
         }
         &:before {
             right: 100%;
@@ -25,7 +25,6 @@
         }
     }
 }
-
 // 2.搜索
 .search-wrap {
     padding: @padding-base-vertical @padding-base-horizontal;
@@ -49,7 +48,6 @@
         vertical-align: middle;
     }
 }
-
 // 3.通用列表
 // 基本设置
 .list {
@@ -78,7 +76,6 @@
             border-top: 1px solid @border-color;
             .transform-origin(0 0);
         }
-
         &:after {
             bottom: 0;
             border-bottom: 1px solid @border-color;
@@ -130,7 +127,6 @@
         color: @gray-light;
     }
 }
-
 // 列表下面的对象
 .item {
     position: relative;
@@ -239,7 +235,6 @@
         .box-flex();
         font-size: @font-size-base;
     }
-
     // 尾
     .item-footer {
         text-align: right;
@@ -270,7 +265,6 @@
         .mtext-ellipsis(2);
     }
 }
-
 // 缩略图
 .item {
     &.item-thumb {
@@ -317,7 +311,6 @@
         }
     }
 }
-
 // 缩略图组
 .item {
     &.item-thumb-group {
@@ -337,7 +330,6 @@
         }
     }
 }
-
 // 头像
 .item {
     &.item-avatar {
@@ -363,7 +355,6 @@
         }
     }
 }
-
 // item开关
 .item {
     &.item-toggle {
@@ -378,7 +369,6 @@
         }
     }
 }
-
 // 开关
 .toggle {
     position: relative;
@@ -441,7 +431,6 @@
         }
     }
 }
-
 // 选择框
 .item {
     &.item-radio {
@@ -481,7 +470,6 @@
         }
     }
 }
-
 // 水平排列视图
 .list {
     &.view-horizontal {
@@ -543,7 +531,6 @@
     color: @gray-light;
     font-size: 0.373333rem;
 }
-
 // 面板
 .panel {
     position: relative;
@@ -591,7 +578,6 @@
         }
     }
 }
-
 // 表单预览
 .form-preview {
     position: relative;
@@ -677,14 +663,12 @@
         }
     }
 }
-
 // 顶部悬浮
 header {
     &#header {
         padding-top: 1.173333rem;
     }
 }
-
 // 底部悬浮
 footer {
     &#footer {
@@ -811,9 +795,12 @@ footer {
         }
     }
 }
-
 // 底部弹出列表
 .actionsheet {
+    // 分享
+    &.share-actionsheet {
+        background-color: #fff;
+    }
     .actionsheet();
 }
 .actionsheet() {
@@ -830,7 +817,6 @@ footer {
     .transition(-webkit-transform 0.3s);
     .transition(transform 0.3s);
     transition: transform 0.3s, -webkit-transform 0.3s;
-
     &.actionsheet-toggle {
         .translate(0, 0);
     }
@@ -969,7 +955,6 @@ footer {
         }
     }
 }
-
 // 模态框
 .modal-open {
     overflow: hidden;
@@ -1114,13 +1099,11 @@ button.close {
     height: 1.333333rem;
     overflow: scroll;
 }
-
 //
 
 
 // Tables
 // --------------------------------------------------
-
 table {
     background-color: @table-bg;
 }
@@ -1133,9 +1116,7 @@ caption {
 th {
     text-align: left;
 }
-
 // Baseline styles
-
 .table {
     width: 100%;
     max-width: 100%;
@@ -1174,15 +1155,12 @@ th {
     > tbody + tbody {
         border-top: 2px solid @table-border-color;
     }
-
     // Nesting
     .table {
         background-color: @body-bg;
     }
 }
-
 // Condensed table w/ half padding
-
 .table-condensed {
     > thead,
     > tbody,
@@ -1195,13 +1173,11 @@ th {
         }
     }
 }
-
 // Bordered version
 //
 
 
 // Add borders all around the table and between all the columns.
-
 .table-bordered {
     border: 1px solid @table-border-color;
     > thead,
@@ -1221,37 +1197,31 @@ th {
         }
     }
 }
-
 // Zebra-striping
 //
 
 
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
-
 .table-striped {
     > tbody > tr:nth-of-type(odd) {
         background-color: @table-bg-accent;
     }
 }
-
 // Hover effect
 //
 
 
 // Placed here since it has to come after the potential zebra striping
-
 .table-hover {
     > tbody > tr:hover {
         background-color: @table-bg-hover;
     }
 }
-
 // Table cell sizing
 //
 
 
 // Reset default table behavior
-
 table col[class*="col-"] {
     position: static; // Prevent border hiding in Firefox and IE9-11 (see https://github.com/twbs/bootstrap/issues/11623)
     float: none;
@@ -1267,21 +1237,18 @@ table {
         }
     }
 }
-
 // Table backgrounds
 //
 
 
 // Exact selectors below required to override `.table-striped` and prevent
 // inheritance to nested tables.
-
 // Generate the contextual variants
 .table-row-variant(active; @table-bg-active);
 .table-row-variant(success; @state-success-bg);
 .table-row-variant(info; @state-info-bg);
 .table-row-variant(warning; @state-warning-bg);
 .table-row-variant(danger; @state-danger-bg);
-
 // Responsive tables
 //
 
@@ -1289,22 +1256,18 @@ table {
 // Wrap your tables in `.table-responsive` and we'll make them mobile friendly
 // by enabling horizontal scrolling. Only applies <768px. Everything above that
 // will display normally.
-
 .table-responsive {
     overflow-x: auto;
     min-height: 0.01%; // Workaround for IE9 bug (see https://github.com/twbs/bootstrap/issues/14837)
-
     @media screen and (max-width: 479px) {
         width: 100%;
         margin-bottom: (@line-height-computed * 0.75);
         overflow-y: hidden;
         -ms-overflow-style: -ms-autohiding-scrollbar;
         border: 1px solid @table-border-color;
-
         // Tighten up spacing
         > .table {
             margin-bottom: 0;
-
             // Ensure the content doesn't wrap
             > thead,
             > tbody,
@@ -1317,11 +1280,9 @@ table {
                 }
             }
         }
-
         // Special overrides for the bordered tables
         > .table-bordered {
             border: 0;
-
             // Nuke the appropriate borders so that the parent can handle them
             > thead,
             > tbody,
@@ -1337,7 +1298,6 @@ table {
                     }
                 }
             }
-
             // Only nuke the last row's bottom-border in `tbody` and `tfoot` since
             // chances are there will be only one `tr` in a `thead` and that would
             // remove the border altogether.
@@ -1353,16 +1313,13 @@ table {
         }
     }
 }
-
 //
 
 
 // Progress bars
 // --------------------------------------------------
-
 // Bar animations
 // -------------------------
-
 // WebKit
 @-webkit-keyframes progress-bar-stripes {
     from {
@@ -1372,7 +1329,6 @@ table {
         background-position: 0 0;
     }
 }
-
 // Spec and IE10+
 @keyframes progress-bar-stripes {
     from {
@@ -1382,10 +1338,8 @@ table {
         background-position: 0 0;
     }
 }
-
 // Bar itself
 // -------------------------
-
 // Outer container
 .progress {
     overflow: hidden;
@@ -1395,7 +1349,6 @@ table {
     border-radius: @progress-border-radius;
     .box-shadow(inset 0 1px 2px rgba(0, 0, 0, 0.1));
 }
-
 // Bar of progress
 .progress-bar {
     float: left;
@@ -1409,7 +1362,6 @@ table {
     .box-shadow(inset 0 -1px 0 rgba(0, 0, 0, 0.15));
     .transition(width 0.6s ease);
 }
-
 // Call animation for the active one
 //
 
@@ -1420,110 +1372,57 @@ table {
 .progress-bar.active {
     .animation(progress-bar-stripes 2s linear infinite);
 }
-
 // Variations
 // -------------------------
-
 .progress-bar-success {
     .progress-bar-variant(@progress-bar-success-bg);
 }
-
 .progress-bar-info {
     .progress-bar-variant(@progress-bar-info-bg);
 }
-
 .progress-bar-warning {
     .progress-bar-variant(@progress-bar-warning-bg);
 }
-
 .progress-bar-danger {
     .progress-bar-variant(@progress-bar-danger-bg);
 }
-
 /*404*/
-.wrap.msg {
-    padding-top: 10%;
-    height: 100%;
-    text-align: center;
+.wrap {
+    .msg {
+        padding-top: 10%;
+        height: 100%;
+        text-align: center;
+        .msg-content {
+            background-color: #fff;
+            .pic {
+                padding-bottom: 0.4rem;
+                img {
+                    display: block;
+                    margin: 0 auto;
+                    max-width: 100%;
+                    height: auto;
+                }
+            }
+            .topic {
+                margin: 0 auto;
+                padding: 10% 0;
+                .title {
+                    display: inline-block;
+                    font-weight: 600;
+                    line-height: 1.2rem;
+                    font-size: 1.066667rem;
+                }
+                .des {
+                    display: inline-block;
+                    font-weight: 600;
+                    line-height: 0.533333rem;
+                    font-size: 0.4rem;
+                    color: #666;
+                }
+            }
+        }
+    }
 }
-
-.wrap .ads-bottom {
-    display: block;
-    padding: 0.266667rem 0.4rem;
-    width: 100%;
-}
-
-.msg-content {
-    background-color: #fff;
-}
-
-.msg-content .pic {
-    padding-bottom: 0.4rem;
-}
-
-.wrap .ads-bottom img,
-.msg-content .pic img {
-    display: block;
-    margin: 0 auto;
-    max-width: 100%;
-    height: auto;
-}
-
-.msg-content .topic {
-    margin: 0 auto;
-    padding: 10% 0;
-}
-
-.msg-content .topic .title,
-.msg-content .topic .des {
-    display: inline-block;
-    font-weight: 600;
-}
-
-.msg-content .topic .title {
-    line-height: 1.2rem;
-    font-size: 1.066667rem;
-}
-
-.msg-content .topic .des {
-    line-height: 0.533333rem;
-    font-size: 0.4rem;
-    color: #666;
-}
-
-/*折叠*/
-.collapse {
-    display: none;
-}
-
-.collapse.in {
-    display: block;
-}
-
-.tablist .item.item-access .caret:before,
-.tablist .item.item-access.collapsed .caret:before {
-    content: " ";
-    display: inline-block;
-    height: 0.213333rem;
-    width: 0.213333rem;
-    border-width: 0 0 1px 1px;
-    border-color: #c8c8cd;
-    border-style: solid;
-    margin-left: 0.3em;
-}
-
-.tablist .item.item-access.collapsed .caret:before {
-    -webkit-transform-origin: 0 0;
-    transform-origin: 0 0;
-    -webkit-transform: rotate(-45deg);
-    transform: rotate(-45deg);
-}
-
-.tablist .item.item-access .caret:before {
-    -webkit-transform: rotate(135deg);
-    transform: rotate(135deg);
-}
-
 /* 导航 */
 .navbar {
     position: relative;
@@ -1535,76 +1434,64 @@ table {
     align-items: center;
     width: 100%;
     height: 1.173333rem;
+    &.affix {
+        position: fixed;
+    }
+    &.navbar-light {
+        background-color: #fff;
+    }
+    &.navbar-dark {
+        color: #fff;
+        background-color: #333;
+    }
+    .navbar-left,
+    .navbar-right {
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-align-items: center;
+        align-items: center;
+    }
+    .navbar-title {
+        position: absolute;
+        left: 50%;
+        top: 0;
+        z-index: 2;
+        margin-left: -3.5em;
+        width: 7em;
+        height: 1.173333rem;
+        line-height: 1.173333rem;
+        font-size: 0.453333rem;
+        text-align: center;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+    }
+    > ul {
+        .list-unstyled();
+        > li {
+            > a {
+                position: relative;
+                display: block;
+                padding: 0 0.266667rem;
+                min-width: 1.306667rem;
+                height: 1.173333rem;
+                line-height: 1.173333rem;
+                text-align: center;
+                font-size: 0.453333rem;
+                -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+                .badge {
+                    position: absolute;
+                    top: 0.2rem;
+                    right: 0.133333rem;
+                    font-size: 0.24rem;
+                    color: #fff !important;
+                }
+            }
+        }
+    }
 }
-.navbar.affix {
-    position: fixed;
-}
-
-.navbar.navbar-light {
-    background-color: #fff;
-}
-
-.navbar.navbar-dark {
-    color: #fff;
-    background-color: #333;
-}
-
-.navbar > ul,
-.navbar > ul > li {
-    margin: 0;
-    padding: 0;
-    list-style: none;
-}
-
-.navbar > ul > li > a {
-    position: relative;
-    display: block;
-    padding: 0 0.266667rem;
-    min-width: 1.306667rem;
-    height: 1.173333rem;
-    line-height: 1.173333rem;
-    text-align: center;
-    font-size: 0.453333rem;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-
-.navbar > ul > li > a .badge {
-    position: absolute;
-    top: 0.2rem;
-    right: 0.133333rem;
-    font-size: 0.24rem;
-    color: #fff !important;
-}
-
-.navbar .navbar-left,
-.navbar .navbar-right {
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-align-items: center;
-    align-items: center;
-}
-
-.navbar .navbar-title {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    z-index: 2;
-    margin-left: -3.5em;
-    width: 7em;
-    height: 1.173333rem;
-    line-height: 1.173333rem;
-    font-size: 0.453333rem;
-    text-align: center;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-}
-//
-
 // Dropdown menus
-// --------------------------------------------------
-
 // Dropdown arrow/caret
 .caret {
     display: inline-block;
@@ -1617,18 +1504,15 @@ table {
     border-right: @caret-width-base solid transparent;
     border-left: @caret-width-base solid transparent;
 }
-
 // The dropdown wrapper (div)
 .dropup,
 .dropdown {
     position: relative;
 }
-
 // Prevent the focus on the dropdown toggle when closing dropdowns
 .dropdown-toggle:focus {
     outline: 0;
 }
-
 // The dropdown menu (ul)
 .dropdown-menu {
     position: absolute;
@@ -1649,21 +1533,16 @@ table {
     border-radius: @border-radius-base;
     .box-shadow(0 0.08rem 0.16rem rgba(0, 0, 0, 0.175));
     background-clip: padding-box;
-
     // Aligns the dropdown menu to right
-    //
-
     // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
     &.pull-right {
         right: 0;
         left: auto;
     }
-
     // Dividers (basically an hr) within the dropdown
     .divider {
         .nav-divider(@dropdown-divider-bg);
     }
-
     // Links within the dropdown menu
     > li > a {
         display: block;
@@ -1675,7 +1554,6 @@ table {
         white-space: nowrap; // prevent links from randomly breaking onto new lines
     }
 }
-
 // Hover/Focus state
 .dropdown-menu > li > a {
     &:hover,
@@ -1685,7 +1563,6 @@ table {
         background-color: @dropdown-link-hover-bg;
     }
 }
-
 // Active state
 .dropdown-menu > .active > a {
     &,
@@ -1697,19 +1574,14 @@ table {
         background-color: @dropdown-link-active-bg;
     }
 }
-
 // Disabled state
-//
-
 // Gray out text and ensure the hover/focus state remains gray
-
 .dropdown-menu > .disabled > a {
     &,
     &:hover,
     &:focus {
         color: @dropdown-link-disabled-color;
     }
-
     // Nuke hover/focus effects
     &:hover,
     &:focus {
@@ -1719,41 +1591,27 @@ table {
         cursor: @cursor-disabled;
     }
 }
-
 // Open state for the dropdown
 .open {
     // Show the menu
     > .dropdown-menu {
         display: block;
     }
-
     // Remove the outline when :focus is triggered
     > a {
         outline: 0;
     }
 }
-
 // Menu positioning
-//
-
-// Add extra class to `.dropdown-menu` to flip the alignment of the dropdown
 // menu with the parent.
 .dropdown-menu-right {
     left: auto; // Reset the default from `.dropdown-menu`
     right: 0;
 }
-// With v3, we enabled auto-flipping if you have a dropdown within a right
-// aligned nav component. To enable the undoing of that, we provide an override
-// to restore the default dropdown menu alignment.
-//
-
-// This is only for left-aligning a dropdown menu within a `.navbar-right` or
-// `.pull-right` nav component.
 .dropdown-menu-left {
-    left: .133333rem;
+    left: 0.133333rem;
     right: auto;
 }
-
 // Dropdown section headers
 .dropdown-header {
     display: block;
@@ -1763,7 +1621,6 @@ table {
     color: @dropdown-header-color;
     white-space: nowrap; // as with > li > a
 }
-
 // Backdrop to catch body clicks on mobile, etc.
 .dropdown-backdrop {
     position: fixed;
@@ -1773,19 +1630,12 @@ table {
     top: 0;
     z-index: (@zindex-dropdown - 10);
 }
-
 // Right aligned dropdowns
 .pull-right > .dropdown-menu {
-    right: .133333rem;
+    right: 0.133333rem;
     left: auto;
 }
-
 // Allow for dropdowns to go bottom up (aka, dropup-menu)
-//
-
-// Just add .dropup after the standard .dropdown class and you're set, bro.
-// TODO: abstract this so that the navbar fixed styles are not placed here?
-
 .dropup,
 .navbar-fixed-bottom .dropdown {
     // Reverse the caret
@@ -1802,12 +1652,8 @@ table {
         margin-bottom: 0.026667rem;
     }
 }
-
 // Component alignment
-//
-
 // Reiterate per navbar.less and the modified component alignment there.
-
 @media (min-width: 768px) {
     .navbar-right {
         .dropdown-menu {

@@ -1,8 +1,6 @@
 // Mixins
 // --------------------------------------------------
-
 // Utilities
-
 // 弹性盒子显示
 .display-flex() {
     display: -webkit-box;
@@ -79,7 +77,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
 }
-
 // 多行溢出隐藏显示省略号
 .mtext-ellipsis(@rows: 2) {
     display: -webkit-box;
@@ -88,7 +85,6 @@
     overflow: hidden;
     -webkit-line-clamp: @rows;
 }
-
 // 细线
 .border-top(@color) {
     content: " ";
@@ -114,6 +110,23 @@
     .transform-origin(0 100%);
     .scaleY(0.5);
 }
+// Single side border-radius
+.border-top-radius(@radius) {
+  border-top-right-radius: @radius;
+   border-top-left-radius: @radius;
+}
+.border-right-radius(@radius) {
+  border-bottom-right-radius: @radius;
+     border-top-right-radius: @radius;
+}
+.border-bottom-radius(@radius) {
+  border-bottom-right-radius: @radius;
+   border-bottom-left-radius: @radius;
+}
+.border-left-radius(@radius) {
+  border-bottom-left-radius: @radius;
+     border-top-left-radius: @radius;
+}
 // 清除列表自带样式
 .list-unstyled() {
     margin-top: 0;
@@ -127,19 +140,14 @@
     max-width: 100%; // Part 1: Set a maximum relative to the parent
     height: auto; // Part 2: Scale the height according to the width, otherwise you get stretching
 }
-
 // Progress bars
 .progress-bar-variant(@color) {
     background-color: @color;
 }
-
 // Button variants
 //
-
-
 // Easily pump out default styles, as well as :hover, :focus, :active,
 // and disabled options for all buttons
-
 .button-variant(@color; @background; @border) {
     color: @color;
     background-color: @background;
@@ -189,7 +197,6 @@
         background-color: @color;
     }
 }
-
 // animations
 .animation(@animation) {
     -webkit-animation: @animation;
@@ -224,27 +231,22 @@
     -webkit-animation-fill-mode: @fill-mode;
     animation-fill-mode: @fill-mode;
 }
-
 // 隐藏被旋转元素的背面
-
 .backface-visibility(@visibility) {
     -webkit-backface-visibility: @visibility;
     -moz-backface-visibility: @visibility;
     backface-visibility: @visibility;
 }
-
 .box-shadow(@shadow) {
     -webkit-box-shadow: @shadow; // iOS <4.3 & Android <4.1
     box-shadow: @shadow;
 }
-
 // Box sizing
 .box-sizing(@boxmodel) {
     -webkit-box-sizing: @boxmodel;
     -moz-box-sizing: @boxmodel;
     box-sizing: @boxmodel;
 }
-
 // Transformations
 .scale(@ratio) {
     -webkit-transform: scale(@ratio);
@@ -270,7 +272,6 @@
     -o-transform: scaleY(@ratio);
     transform: scaleY(@ratio);
 }
-
 .translate(@x; @y) {
     -webkit-transform: translate(@x, @y);
     -ms-transform: translate(@x, @y); // IE9 only
@@ -305,16 +306,13 @@
     -o-transform: matrix(@n1, @n2, @n3, @n4, @n5, @n6);
     transform: matrix(@n1, @n2, @n3, @n4, @n5, @n6);
 }
-
 .transform-origin(@origin) {
     -webkit-transform-origin: @origin;
     -moz-transform-origin: @origin;
     -ms-transform-origin: @origin; // IE9 only
     transform-origin: @origin;
 }
-
 // Transitions
-
 .transition(@transition) {
     -webkit-transition: @transition;
     -o-transition: @transition;
@@ -342,7 +340,6 @@
     -o-transition: -o-transform @transition;
     transition: transform @transition;
 }
-
 // User select
 .user-select(@select) {
     -webkit-user-select: @select;
@@ -350,14 +347,12 @@
     -ms-user-select: @select; // IE10+
     user-select: @select;
 }
-
 .touch-action(@action) {
     -webkit-touch-action: @action;
     -moz-touch-action: @action;
     -ms-touch-action: @action; // IE10+
     touch-action: @action;
 }
-
 // Tables
 .table-row-variant(@state; @background) {
     // Exact selectors below required to override `.table-striped` and prevent
@@ -372,7 +367,6 @@
             background-color: @background;
         }
     }
-
     // Hover states for `.table-hover`
     // Note: this is not available for cells or rows within `thead` or `tfoot`.
     .table-hover > tbody > tr {
@@ -385,7 +379,6 @@
         }
     }
 }
-
 // Button sizes
 .button-size(@padding-vertical; @padding-horizontal; @font-size; @line-height; @border-radius) {
     padding: @padding-vertical @padding-horizontal;
@@ -393,13 +386,11 @@
     line-height: @line-height;
     border-radius: @border-radius;
 }
-
 // Sizing shortcuts
 .size(@width; @height) {
     width: @width;
     height: @height;
 }
-
 // WebKit-style focus
 .tab-focus() {
     // WebKit-specific. Other browsers will keep their default outline style.
@@ -408,7 +399,6 @@
     outline: 5px auto -webkit-focus-ring-color;
     outline-offset: -2px;
 }
-
 // 文字颜色
 .text-emphasis-variant(@color) {
     color: @color;
@@ -424,7 +414,6 @@
         color: darken(@color, 10%);
     }
 }
-
 // Contextual backgrounds
 .bg-variant(@color) {
     background-color: @color;
@@ -433,7 +422,6 @@
         background-color: darken(@color, 10%);
     }
 }
-
 // label-border
 .label-border-variant(@color) {
     color: @color;
@@ -450,16 +438,12 @@
     }
 }
 // Dividers (basically an hr) within dropdowns and nav lists
-
 .nav-divider(@color: #e5e5e5) {
     height: 1px;
-    margin: ((@line-height-computed / 3) - .013333) 0;
+    margin: ((@line-height-computed / 3) - 0.013333) 0;
     overflow: hidden;
     background-color: @color;
 }
-
 // Components
-
 // Skins
-
 // Layout

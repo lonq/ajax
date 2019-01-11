@@ -258,7 +258,7 @@
                             var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
                             switch (types) {
                                 case 0:
-                                    str += '<a class="item item-access" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                    str += '<a class="item item-thumb item-access" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
                                         '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                         '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
                                         '<p class="text-ellipsis-2 text-xs text-muted">' + k.content + '</p>' +
