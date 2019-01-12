@@ -85,8 +85,6 @@
                         </ul>
                         <h3 class="navbar-title">我</h3>
 
-
-
                         <ul class="navbar-right">
                             <li class="dropdown pull-right">
                                 <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-bell"></i><span class="badge badge-dot badge-danger"></span></a>
@@ -173,7 +171,7 @@
                         <div class="item-body">
                             <span>钱包</span>
                         </div>
-                        <div class="item-footer item-note">余额：&yen;&nbsp;<span class="text-md text-danger">320.00</span></div>
+                        <div class="item-footer item-note"><small>余额：&yen;&nbsp;</small><span class="text-md text-danger">320.00</span></div>
                     </a>
                     <div class="item-divider"></div>
                 </div>
@@ -354,7 +352,7 @@
                         var str = '';
                         var list = reponse;
                         str += '<div class="item-divider">相关功能</div>' +
-                            '<ul class="user-capability list-unstyled border-top border-bottom padding-vertical bg-white">';
+                            '<ul class="user-capability border-top border-bottom padding-vertical bg-white">';
                         $.each(list, function (i, k) {
                             var linkurl = k.linkurl;
                             if (linkurl != '') {

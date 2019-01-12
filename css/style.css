@@ -3801,69 +3801,65 @@ table th[class*="col-"] {
 /*详情*/
 .detail-picture {
   position: relative;
+  -webkit-box-shadow: 0 0.133333rem 0.133333rem rgba(0, 0, 0, 0.05);
   box-shadow: 0 0.133333rem 0.133333rem rgba(0, 0, 0, 0.05);
 }
-.detail-picture .center-block {
-  display: block;
-  margin: 0 auto;
-}
 .detail-box {
-  font-size: .373333rem;
-  line-height: 1.47058824;
+  font-size: 0.4533332rem;
+  line-height: 1.42857143;
   background-color: #fff;
 }
 .detail-box h1 {
-  margin-top: .266667rem;
-  font-size: .453333rem;
-  font-weight: 500;
+  margin-top: 0.266667rem;
+  font-size: inherit;
 }
 .detail-box .tip {
-  margin-top: .266667rem;
-  font-size: .32rem;
-  color: #999;
+  margin-top: 0.266667rem;
+  font-size: 0.32rem;
+  color: #999999;
 }
 .detail-box .content {
-  line-height: 1.47058824;
-  /*  color: #999;*/
+  line-height: inherit;
 }
 .detail-box .content img {
-  display: block;
-  margin: 0 auto;
-  width: 100%;
+  max-width: 100%;
   height: auto;
-  border: 0;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 .detail-box p {
-  font-size: .373333rem;
+  font-size: inherit;
 }
 .detail-box p + p {
-  margin-top: .133333rem;
+  margin-top: 0.133333rem;
 }
 .detail-box .margin-top {
-  margin-top: .133333rem;
+  margin-top: 0.133333rem;
 }
 .detail-box .margin-bottom {
-  margin-bottom: .133333rem;
+  margin-bottom: 0.133333rem;
 }
 /* 文章 */
 .article-header h1 {
-  font-size: .64rem;
+  font-size: 0.64rem;
 }
 .article-header .article-info {
-  font-size: .32rem;
+  font-size: 0.32rem;
 }
 .article-content {
-  font-size: .426667rem;
+  font-size: 0.426667rem;
 }
 .article-content p {
-  margin-top: .133333rem;
-  margin-bottom: .266667rem;
+  margin-top: 0.133333rem;
+  margin-bottom: 0.266667rem;
 }
 .article-content img {
-  display: block;
-  margin: 0 auto;
   max-width: 100%;
   height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 /* 登录和注册 */
 .login-wrap,
@@ -3878,13 +3874,13 @@ table th[class*="col-"] {
   width: 100%;
   height: 1.6rem;
   line-height: 1.6rem;
-  font-size: .32rem;
+  font-size: 0.32rem;
   color: #fff;
   text-align: center;
 }
 .login-logo,
 .register-logo {
-  font-size: .453333rem;
+  font-size: 0.453333rem;
   text-align: center;
   font-weight: 300;
   color: #fff;
@@ -3898,26 +3894,26 @@ table th[class*="col-"] {
 .register-box {
   margin: 0 auto;
   padding: 10% 0;
-  font-size: .4rem;
+  font-size: 0.4rem;
 }
 @media (max-width: 20.48rem) {
   .login-box,
   .register-box {
     width: 90%;
     margin-top: 0;
-    padding-top: .533333rem;
+    padding-top: 0.533333rem;
   }
 }
 .login-box-body,
 .register-box-body {
-  padding: .533333rem 1.066667rem;
+  padding: 0.533333rem 1.066667rem;
   border-top: 0;
   color: #fff;
 }
 .login-box-body .form-group,
 .register-box-body .form-group {
   position: relative;
-  margin-bottom: .666667rem;
+  margin-bottom: 0.666667rem;
 }
 .login-box-body .form-group .form-control,
 .register-box-body .form-group .form-control {
@@ -3925,17 +3921,17 @@ table th[class*="col-"] {
   height: 1.333333rem;
   color: #333;
   border: 0;
-  border-radius: .666667rem;
+  border-radius: 0.666667rem;
   -webkit-box-shadow: inset 0 0.08rem 0.266667rem rgba(0, 0, 0, 0.08);
   box-shadow: inset 0 0.08rem 0.266667rem rgba(0, 0, 0, 0.08);
 }
 .login-box-body .has-feedback .form-control,
 .register-box-body .has-feedback .form-control {
   padding-left: 1.333333rem;
-  padding-right: .8rem;
+  padding-right: 0.8rem;
 }
 .login-box-body .toggle .track {
-  border: solid .053333rem #21bc9d;
+  border: solid 0.053333rem #21bc9d;
   background-color: #21bc9d;
   -webkit-box-shadow: inset 0.066667rem 0.066667rem 0.133333rem rgba(0, 0, 0, 0.08);
   box-shadow: inset 0.066667rem 0.066667rem 0.133333rem rgba(0, 0, 0, 0.08);
@@ -3962,13 +3958,13 @@ table th[class*="col-"] {
 .register-box-body .form-group-footer [type="submit"] {
   width: 100%;
   height: 1.333333rem;
-  font-size: .453333rem;
+  font-size: 0.453333rem;
   color: #fff;
-  border-width: .053333rem;
+  border-width: 0.053333rem;
   border-color: #fff;
-  letter-spacing: .133333rem;
+  letter-spacing: 0.133333rem;
   background-color: transparent;
-  border-radius: .666667rem;
+  border-radius: 0.666667rem;
   -webkit-box-shadow: 0 0 0.133333rem rgba(0, 0, 0, 0.125);
   box-shadow: 0 0 0.133333rem rgba(0, 0, 0, 0.125);
 }
@@ -3984,7 +3980,7 @@ table th[class*="col-"] {
 /* 用户中心 */
 .user-header {
   min-height: 5.333333rem;
-  background-color: #444;
+  background-color: #333333;
   background-position: center bottom;
   background-repeat: no-repeat;
   background-size: cover;
@@ -3996,7 +3992,7 @@ table th[class*="col-"] {
   background-color: rgba(0, 0, 0, 0.175);
 }
 .user-face {
-  margin: .266667rem auto;
+  margin: 0.266667rem auto;
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -4008,36 +4004,35 @@ table th[class*="col-"] {
   width: 1.6rem;
   height: 1.6rem;
   border: 0.066667rem solid rgba(255, 255, 255, 0.5);
-  border-radius: .8rem;
+  border-radius: 0.8rem;
 }
 .user-name {
-  margin-bottom: .266667rem;
-  padding: 0 .4rem;
-  font-size: .453333rem;
+  margin-bottom: 0.266667rem;
+  padding: 0 0.4rem;
+  font-size: 0.4533332rem;
   text-align: center;
   color: inherit;
 }
 .user-autograph {
-  margin-bottom: .266667rem;
-  padding: 0 .4rem;
-  font-size: .32rem;
+  margin-bottom: 0.266667rem;
+  padding: 0 0.4rem;
+  font-size: 0.32rem;
   text-align: center;
   color: inherit;
 }
-ul.user-info,
-ul.user-info > li {
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
 ul.user-info {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
+  -webkit-justify-content: space-between;
   justify-content: space-between;
   -webkit-align-items: center;
   align-items: center;
-  padding: .4rem 0;
+  padding: 0.266667rem 0;
 }
 ul.user-info > li {
   position: relative;
@@ -4055,32 +4050,44 @@ ul.user-info > li:before {
   left: 0;
   width: 1px;
   border-left: 1px solid rgba(255, 255, 255, 0.5);
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.5);
   -webkit-transform-origin: 100% 0;
+  -moz-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
   transform-origin: 100% 0;
   -webkit-transform: scaleX(0.5);
+  -ms-transform: scaleX(0.5);
+  -o-transform: scaleX(0.5);
   transform: scaleX(0.5);
 }
 ul.user-info > li:first-child:before {
   display: none;
 }
-ul.user-info > li > dl,
-ul.user-info > li > dl > dt,
-ul.user-info > li > dl > dd {
-  margin: 0;
-  padding: 0 .133333rem;
+ul.user-info > li dl {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+ul.user-info > li dl dt,
+ul.user-info > li dl dd {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
   line-height: 1;
   text-align: center;
 }
-ul.user-info > li > dl > dt {
-  font-size: .453333rem;
+ul.user-info > li dl dt {
+  font-size: 0.4533332rem;
 }
-ul.user-info > li > dl > dd {
-  margin-top: .2rem;
-  font-size: .32rem;
+ul.user-info > li dl dd {
+  margin-top: 0.266667rem;
+  margin-left: 0;
+  font-size: 0.32rem;
 }
 /* 用户中心图文组 */
 ul.user-capability {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-left: 0;
+  list-style: none;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
@@ -4096,53 +4103,65 @@ ul.user-capability > li {
 }
 ul.user-capability > li > a {
   display: block;
-  padding: .266667rem .133333rem;
+  padding: 0.266667rem 0.4rem;
   background-color: #fff;
 }
 ul.user-capability > li > a:active {
-  background-color: #eee;
+  background-color: #ebebeb;
 }
-ul.user-capability.space-left > li:before {
+ul.user-capability > li dl {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+ul.user-capability > li dl dt,
+ul.user-capability > li dl dd {
+  padding-left: 0.2rem;
+  padding-right: 0.2rem;
+  line-height: 1;
+  text-align: center;
+}
+ul.user-capability > li dl dt {
+  font-size: 0.4533332rem;
+}
+ul.user-capability > li dl dt img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 1.066667rem;
+  height: 1.066667rem;
+}
+ul.user-capability > li dl dd {
+  margin-top: 0.266667rem;
+  margin-left: 0;
+  font-size: 0.32rem;
+}
+ul.user-capability > li dl dd:nth-child(3) {
+  margin-top: 0.133333rem;
+  color: #999999;
+}
+ul.user-capability.space-left {
+  position: relative;
+}
+ul.user-capability.space-left > li + li {
+  margin-left: 0;
+}
+ul.user-capability.space-left > li + li:before {
   content: " ";
   position: absolute;
   top: 0;
   bottom: 0;
   left: 0;
   width: 1px;
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  color: rgba(255, 255, 255, 0.3);
+  border-left: 1px solid #ebebeb;
+  color: #ebebeb;
   -webkit-transform-origin: 100% 0;
+  -moz-transform-origin: 100% 0;
+  -ms-transform-origin: 100% 0;
   transform-origin: 100% 0;
   -webkit-transform: scaleX(0.5);
+  -ms-transform: scaleX(0.5);
+  -o-transform: scaleX(0.5);
   transform: scaleX(0.5);
-}
-ul.user-capability.space-left > li:first-child:before {
-  display: none;
-}
-ul.user-capability > li dl,
-ul.user-capability > li dl > dt,
-ul.user-capability > li dl > dd {
-  margin: 0;
-  padding: 0 .133333rem;
-  line-height: 1;
-  text-align: center;
-}
-ul.user-capability > li dl > dt {
-  font-size: .6rem;
-}
-ul.user-capability > li dl > dt img {
-  display: block;
-  margin: 0 auto;
-  width: 1.066667rem;
-  height: 1.066667rem;
-}
-ul.user-capability > li dl > dd {
-  margin-top: .266667rem;
-  font-size: .32rem;
-}
-ul.user-capability > li dl > dd:nth-child(3) {
-  margin-top: .066667rem;
-  color: #999;
 }
 /* 关于 */
 .about-wrap .about-logo img {
@@ -4155,16 +4174,11 @@ ul.user-capability > li dl > dd:nth-child(3) {
   height: 4rem;
 }
 .about-wrap .about-qrcode img {
-  display: block;
-  margin: 0 auto;
   max-width: 100%;
   height: auto;
-}
-.user-qrcode-wrap .user-qrcode img {
   display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 /* 用户名片 */
 .user-qrcode-wrap {
@@ -4175,6 +4189,13 @@ ul.user-capability > li dl > dd:nth-child(3) {
   width: 5.333333rem;
   height: 5.333333rem;
 }
+.user-qrcode-wrap .user-qrcode img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
 .user-qrcode-wrap .user-qrcode .icon {
   display: block;
   position: absolute;
@@ -4182,70 +4203,72 @@ ul.user-capability > li dl > dd:nth-child(3) {
   left: 50%;
   z-index: 2;
   margin: -0.426667rem 0 0 -0.426667rem;
-  width: .853333rem;
-  height: .853333rem;
-  border: .133333rem solid #fff;
-}
-.user-qrcode-wrap .user-qrcode img {
-  display: block;
-  margin: 0 auto;
-  max-width: 100%;
-  height: auto;
+  width: 0.853333rem;
+  height: 0.853333rem;
+  border: 0.133333rem solid #fff;
 }
 /*聊天列表*/
 .chatslist {
   position: relative;
-  font-size: .4rem;
+  font-size: 0.4rem;
   line-height: 1.47058824;
+  /* 列表组间隔 */
+  /* 时间 */
 }
-/* 列表组间隔 */
 .chatslist + .chatslist {
-  margin-top: .266667rem;
+  margin-top: 0.266667rem;
 }
-.chatsitem {
+.chatslist .chatsitem {
   position: relative;
   display: -webkit-box;
   display: -webkit-flex;
   display: flex;
-  padding: .333333rem .4rem;
+  padding: 0.333333rem 0.4rem;
   color: #333;
   text-decoration: none;
   overflow: hidden;
+  /* 头像 */
+  /* 正文 */
+  /* 尾 */
+  /* 激活效果 */
 }
-.chatsitem {
-  position: relative;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: flex;
-  padding: .333333rem .4rem;
-  color: #333;
-  text-decoration: none;
-  overflow: hidden;
+.chatslist .chatsitem:before {
+  top: 0;
+  border-top: 1px solid #dcdcdc;
+  margin-left: 1.84rem;
+  width: calc(98.666667vw);
 }
-.chatsitem-time {
-  margin-top: .4rem;
+.chatslist .chatsitem .avatar {
+  width: 0.933333rem;
+  height: 0.933333rem;
+}
+.chatslist .chatsitem .avatar img {
+  margin: 0 auto;
+  display: block;
+  max-width: 100%;
+  height: auto;
   text-align: center;
+  -webkit-border-radius: 50%;
+  border-radius: 50%;
 }
-.chatsitem-time small {
-  display: inline-block;
-  padding: .106667rem .2rem;
-  color: #999;
-  font-size: .32rem;
-  background-color: #e6e6e6;
-  border-radius: .08rem;
+.chatslist .chatsitem.fromchats .avatar {
+  margin-right: 0.4rem;
 }
-.chatsitem .chatsitem-body {
+.chatslist .chatsitem.tochats .avatar {
+  margin-left: 0.4rem;
+}
+.chatslist .chatsitem .chatsitem-body {
   display: inline-block;
   position: relative;
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
-  padding: .266667rem;
+  padding: 0.266667rem;
   min-width: 0;
-  font-size: .4rem;
-  border-radius: .133333rem;
+  font-size: 0.4rem;
+  border-radius: 0.133333rem;
 }
-.chatsitem .chatsitem-body:before {
+.chatslist .chatsitem .chatsitem-body:before {
   content: "";
   display: block;
   position: absolute;
@@ -4254,105 +4277,84 @@ ul.user-capability > li dl > dd:nth-child(3) {
   left: 0;
   right: 0;
   pointer-events: none;
-  border-radius: .133333rem;
+  border-radius: 0.133333rem;
 }
-.chatsitem .chatsitem-body:after {
+.chatslist .chatsitem .chatsitem-body:after {
   content: " ";
   position: absolute;
-  top: .266667rem;
-  border: .133333rem solid transparent;
+  top: 0.266667rem;
+  border: 0.133333rem solid transparent;
 }
-.chatsitem.fromchats .chatsitem-body:after {
-  right: 100%;
-}
-.chatsitem.tochats .chatsitem-body:after {
-  left: 100%;
-}
-.chatsitem.fromchats .chatsitem-body {
+.chatslist .chatsitem.fromchats .chatsitem-body {
   background-color: #ffffff;
 }
-.chatsitem.fromchats .chatsitem-body:before {
+.chatslist .chatsitem.fromchats .chatsitem-body:before {
   border: 1px solid #ffffff;
   border-color: #ffffff;
 }
-.chatsitem.fromchats .chatsitem-body:after {
+.chatslist .chatsitem.fromchats .chatsitem-body:after {
+  right: 100%;
   border-right-color: #ffffff;
 }
-.chatsitem.tochats .chatsitem-body {
+.chatslist .chatsitem.tochats .chatsitem-body {
   background-color: #1edbb5;
 }
-.chatsitem.tochats .chatsitem-body:before {
+.chatslist .chatsitem.tochats .chatsitem-body:before {
   border: 1px solid #1edbb5;
   border-color: #1edbb5;
 }
-.chatsitem.tochats .chatsitem-body:after {
+.chatslist .chatsitem.tochats .chatsitem-body:after {
+  left: 100%;
   border-left-color: #1edbb5;
 }
-/* 激活效果 */
-.chatsitem.chatsitem-access .chatsitem-body {
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-}
-.chatsitem.fromchats.chatsitem-access:active .chatsitem-body {
-  background-color: #e4e4e4;
-}
-.chatsitem.fromchats.chatsitem-access:active .chatsitem-body:after {
-  border-right-color: #e4e4e4;
-}
-.chatsitem.tochats.chatsitem-access:active .chatsitem-body {
-  background-color: #21bc9d;
-}
-.chatsitem.tochats.chatsitem-access:active .chatsitem-body:after {
-  border-left-color: #21bc9d;
-}
-.chatsitem .chatsitem-footer {
+.chatslist .chatsitem .chatsitem-footer {
   text-align: right;
 }
-.chatsitem.chatsitem-access .chatsitem-footer {
-  position: relative;
-  padding-right: .4rem;
+.chatslist .chatsitem.chatsitem-access .chatsitem-body {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.chatsitem.chatsitem-access .chatsitem-footer:after {
+.chatslist .chatsitem.chatsitem-access:active.fromchats .chatsitem-body {
+  background-color: #e4e4e4;
+}
+.chatslist .chatsitem.chatsitem-access:active.fromchats .chatsitem-body:after {
+  border-right-color: #e4e4e4;
+}
+.chatslist .chatsitem.chatsitem-access:active.tochats .chatsitem-body {
+  background-color: #21bc9d;
+}
+.chatslist .chatsitem.chatsitem-access:active.tochats .chatsitem-body:after {
+  border-left-color: #21bc9d;
+}
+.chatslist .chatsitem.chatsitem-access .chatsitem-footer {
+  position: relative;
+  padding-right: 0.4rem;
+}
+.chatslist .chatsitem.chatsitem-access .chatsitem-footer:after {
   content: " ";
   display: inline-block;
   position: absolute;
   top: 50%;
-  right: .053333rem;
+  right: 0.053333rem;
   margin-top: -0.133333rem;
-  width: .266667rem;
-  height: .266667rem;
+  width: 0.266667rem;
+  height: 0.266667rem;
   border-width: 1px 1px 0 0;
   border-color: #c8c8c8;
   border-style: solid;
   -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
   transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
 }
-.chatsitem:before {
-  top: 0;
-  border-top: 1px solid #dcdcdc;
-}
-/* 头像 */
-.chatsitem:before {
-  margin-left: 1.84rem;
-  width: calc(98.666667vw);
-}
-.chatsitem .avatar {
-  width: .933333rem;
-  height: .933333rem;
-}
-.chatsitem.fromchats .avatar {
-  margin-right: .4rem;
-}
-.chatsitem.tochats .avatar {
-  margin-left: .4rem;
-}
-.chatsitem .avatar img {
-  margin: 0 auto;
-  display: block;
-  max-width: 100%;
-  height: auto;
+.chatslist .chatsitem-time {
+  margin-top: 0.4rem;
   text-align: center;
-  -webkit-border-radius: 50%;
-  border-radius: 50%;
+}
+.chatslist .chatsitem-time small {
+  display: inline-block;
+  padding: 0.106667rem 0.2rem;
+  color: #999999;
+  font-size: 0.32rem;
+  background-color: #e6e6e6;
+  border-radius: 0.08rem;
 }
 @font-face {
   font-family: "iconfont";
