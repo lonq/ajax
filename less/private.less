@@ -1,4 +1,4 @@
-/*详情*/
+// /*详情*/
 .detail-picture {
     position: relative;
     .box-shadow(0 0.133333rem 0.133333rem rgba(0, 0, 0, 0.05));
@@ -36,7 +36,7 @@
         margin-bottom: @padding-small-vertical;
     }
 }
-/* 文章 */
+// 文章
 .article-header {
     h1 {
         font-size: 0.64rem;
@@ -56,10 +56,10 @@
         .center-block();
     }
 }
-/* 登录和注册 */
+// 登录和注册
 .login-wrap,
 .register-wrap {
-    background-color: #1edbb5 !important;
+    background-color: @brand-primary !important;
     background: url("../images/login-bg.jpg");
     background-repeat: no-repeat;
     background-size: 100%;
@@ -75,105 +75,107 @@
 }
 .login-logo,
 .register-logo {
-    font-size: 0.453333rem;
+    font-size: @font-size-h4;
     text-align: center;
-    font-weight: 300;
+    font-weight: @headings-font-weight;
     color: #fff;
 }
-.login-logo img,
-.register-logo img {
-    width: 1.6rem;
-    height: 1.6rem;
+.login-logo,
+.register-logo {
+    img {
+        .center-block();
+        .img-responsive(block);
+        width: 1.6rem;
+    }
 }
 .login-box,
 .register-box {
     margin: 0 auto;
     padding: 10% 0;
-    font-size: 0.4rem;
+    font-size: @font-size-base;
 }
 @media (max-width: 20.48rem) {
     .login-box,
     .register-box {
         width: 90%;
         margin-top: 0;
-        padding-top: 0.533333rem;
+        padding-top: @padding-large-vertical;
     }
 }
 .login-box-body,
 .register-box-body {
-    padding: 0.533333rem 1.066667rem;
+    padding: @padding-large-vertical @padding-large-horizontal;
     border-top: 0;
     color: #fff;
+    .form-group {
+        .form-group-variant(1.333333rem);
+    }
+    .form-group-variant(@height) {
+        position: relative;
+        margin-bottom: @padding-large-vertical;
+        .form-control {
+            font-size: inherit;
+            height: @height;
+            color: @gray-dark;
+            border: 0;
+            border-radius: @height / 2;
+            .box-shadow(inset 0 0.08rem 0.266667rem rgba(0, 0, 0, 0.08));
+        }
+        &.has-feedback {
+            .form-control-feedback {
+                left: 0;
+                width: @height;
+                height: @height;
+                line-height: @height;
+                color: rgba(0, 0, 0, 0.3);
+            }
+            .form-control {
+                padding-left: @height;
+                padding-right: @padding-large-horizontal;
+            }
+        }
+        .toggle {
+            input:checked {
+                + .track {
+                    border-color: darken(@brand-primary, 3%);
+                    background-color: darken(@brand-primary, 3%);
+                    .handle {
+                        background-color: #fff;
+                    }
+                }
+            }
+            .track {
+                border: 0.053333rem solid darken(@brand-primary, 3%);
+                background-color: darken(@brand-primary, 3%);
+                -webkit-box-shadow: inset 0.066667rem 0.066667rem 0.133333rem
+                    rgba(0, 0, 0, 0.08);
+                box-shadow: inset 0.066667rem 0.066667rem 0.133333rem
+                    rgba(0, 0, 0, 0.08);
+                .handle {
+                    background-color: #1edbb5;
+                }
+            }
+        }
+        &.form-group-footer [type="submit"] {
+            width: 100%;
+            height: @height;
+            font-size: @font-size-large;
+            color: #fff;
+            border-width: 0.053333rem;
+            border-color: #fff;
+            letter-spacing: 0.133333rem;
+            background-color: transparent;
+            border-radius: 0.666667rem;
+            .box-shadow(0 0 0.133333rem rgba(0, 0, 0, 0.125));
+            &:active,
+            &.active,
+            &.activated {
+                .box-shadow(inset 0 0.08rem 0.133333rem rgba(0, 0, 0, 0.125));
+            }
+        }
+    }
 }
-.login-box-body .form-group,
-.register-box-body .form-group {
-    position: relative;
-    margin-bottom: 0.666667rem;
-}
-.login-box-body .form-group .form-control,
-.register-box-body .form-group .form-control {
-    font-size: inherit;
-    height: 1.333333rem;
-    color: #333;
-    border: 0;
-    border-radius: 0.666667rem;
-    -webkit-box-shadow: inset 0 0.08rem 0.266667rem rgba(0, 0, 0, 0.08);
-    box-shadow: inset 0 0.08rem 0.266667rem rgba(0, 0, 0, 0.08);
-}
-.login-box-body .has-feedback .form-control,
-.register-box-body .has-feedback .form-control {
-    padding-left: 1.333333rem;
-    padding-right: 0.8rem;
-}
-.login-box-body .toggle .track {
-    border: solid 0.053333rem #21bc9d;
-    background-color: #21bc9d;
-    -webkit-box-shadow: inset 0.066667rem 0.066667rem 0.133333rem
-        rgba(0, 0, 0, 0.08);
-    box-shadow: inset 0.066667rem 0.066667rem 0.133333rem rgba(0, 0, 0, 0.08);
-}
-.login-box-body .toggle .handle {
-    background-color: #1edbb5;
-}
-.login-box-body .toggle input:checked + .track {
-    border-color: #21bc9d;
-    background-color: #21bc9d;
-}
-.login-box-body .toggle input:checked + .track .handle {
-    background-color: #fff;
-}
-.login-box-body .form-control-feedback,
-.register-box-body .form-control-feedback {
-    left: 0;
-    width: 1.333333rem;
-    height: 1.333333rem;
-    line-height: 1.333333rem;
-    color: rgba(0, 0, 0, 0.3);
-}
-.login-box-body .form-group-footer [type="submit"],
-.register-box-body .form-group-footer [type="submit"] {
-    width: 100%;
-    height: 1.333333rem;
-    font-size: 0.453333rem;
-    color: #fff;
-    border-width: 0.053333rem;
-    border-color: #fff;
-    letter-spacing: 0.133333rem;
-    background-color: transparent;
-    border-radius: 0.666667rem;
-    -webkit-box-shadow: 0 0 0.133333rem rgba(0, 0, 0, 0.125);
-    box-shadow: 0 0 0.133333rem rgba(0, 0, 0, 0.125);
-}
-.login-box-body .form-group-footer [type="submit"]:active,
-.register-box-body .form-group-footer [type="submit"]:active,
-.login-box-body .form-group-footer [type="submit"].active,
-.register-box-body .form-group-footer [type="submit"].active,
-.login-box-body .form-group-footer [type="submit"].activated,
-.register-box-body .form-group-footer [type="submit"].activated {
-    -webkit-box-shadow: inset 0 0.08rem 0.133333rem rgba(0, 0, 0, 0.125);
-    box-shadow: inset 0 0.08rem 0.133333rem rgba(0, 0, 0, 0.125);
-}
-/* 用户中心 */
+// 用户中心
 .user-header {
     min-height: 5.333333rem;
     background-color: @gray-dark;
@@ -188,9 +190,9 @@
     }
 }
 .user-face {
-    .user-face(1.6rem; 1.6rem);
+    .user-face-variant(1.6rem; 1.6rem);
 }
-.user-face(@width; @height) {
+.user-face-variant(@width; @height) {
     margin: @padding-base-vertical auto;
     width: @width;
     height: @height;
@@ -265,7 +267,7 @@ ul.user-info {
         }
     }
 }
-/* 用户中心图文组 */
+// 用户中心图文组
 ul.user-capability {
     .list-unstyled();
     .display-flex();
@@ -331,7 +333,7 @@ ul.user-capability {
         }
     }
 }
-/* 关于 */
+// 关于
 .about-wrap {
     .about-logo {
         img {
@@ -349,7 +351,7 @@ ul.user-capability {
         }
     }
 }
-/* 用户名片 */
+// 用户名片
 .user-qrcode-wrap {
     background-color: #fff;
     .user-qrcode {
@@ -373,12 +375,12 @@ ul.user-capability {
         }
     }
 }
-/*聊天列表*/
+// 聊天列表
 .chatslist {
     position: relative;
     font-size: 0.4rem;
     line-height: 1.47058824;
-    /* 列表组间隔 */
+    // 列表组间隔
     + .chatslist {
         margin-top: @padding-base-vertical;
     }
@@ -391,8 +393,7 @@ ul.user-capability {
         color: #333;
         text-decoration: none;
         overflow: hidden;
-        /* 头像 */
-        &:before {
+        头像 &:before {
             top: 0;
             border-top: 1px solid #dcdcdc;
             margin-left: 1.84rem;
@@ -421,7 +422,7 @@ ul.user-capability {
                 margin-left: 0.4rem;
             }
         }
-        /* 正文 */
+        // 正文
         .chatsitem-body {
             display: inline-block;
             position: relative;
@@ -476,11 +477,11 @@ ul.user-capability {
                 }
             }
         }
-        /* 尾 */
+        // 尾
         .chatsitem-footer {
             text-align: right;
         }
-        /* 激活效果 */
+        // 激活效果
         &.chatsitem-access {
             .chatsitem-body {
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -498,9 +499,9 @@ ul.user-capability {
             &:active {
                 &.tochats {
                     .chatsitem-body {
-                        background-color: #21bc9d;
+                        background-color: @brand-primary;
                         &:after {
-                            border-left-color: #21bc9d;
+                            border-left-color: @brand-primary;
                         }
                     }
                 }
@@ -526,7 +527,7 @@ ul.user-capability {
             }
         }
     }
-    /* 时间 */
+    // 时间
     .chatsitem-time {
         margin-top: 0.4rem;
         text-align: center;
