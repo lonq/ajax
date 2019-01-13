@@ -66,7 +66,7 @@
             <div class="swiper-slide d">
                 <div class="pull-down"></div>
                 <div class="chatslist">
-                    <div class="chatsitem-time"><small>周三 20:45</small></div>
+                    <!-- <div class="chatsitem-time"><small>周三 20:45</small></div>
                     <div class="chatsitem fromchats chatsitem-access">
                         <div class="avatar"><img src="uploadfiles/avatars/avatar-02.jpg"></div>
                         <div class="chatsitem-body">
@@ -78,7 +78,7 @@
                             <p>他很懒，什么都没留下。他很懒，什么都没留下。他很懒，什么都没留下。</p>
                         </div>
                         <div class="avatar"><img src="uploadfiles/avatars/avatar-01.jpg"></div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="pull-up"></div>
             </div>
@@ -86,15 +86,18 @@
     </div>
 
     <footer>
-        <div class="chatsinput-wrap border-top">
-            <div class="chatsinput-box flex-wrap vertical-center">
-                <input type="text" class="form-control flex-item" id="words" name="words">
-                <button type="button" class="btn btn-clear icon iconfont-laugh" id="laughBtn"></button>
-                <button type="button" class="btn btn-clear icon iconfont-add" id="addBtn"></button>
+        <div class="chats-panel">
+            <div class="chats-input-panel">
+                <div class="editor-container">
+                    <div class="editor-text" contenteditable="true"></div>
+                </div>
+                <span class="icon iconfont-laugh js-emotions-btn" id="emotionsBtn"></span>
+                <span class="icon iconfont-add js-file-btn"></span>
                 <button type="button" class="btn btn-success" id="sendBtn" style="display: none;">发送</button>
             </div>
+            <div class="chats-emotions-panel" style="display: none;"></div>
         </div>
-    </footer>
+    </footer>    
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
@@ -114,8 +117,8 @@
         var _header = $('header>*');
         var _headerH = _header.height();
         var _footer = $('footer>*');
-        var _footerH = _footer.height();
-        var _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
+        var _footerH = 0;
+        var _offsetHeight = 0; //滑动束缚容器的偏移高度
         var page = 1;
         var loadFlag = true;
         var loading;
@@ -149,18 +152,91 @@
             //     return
             // };
             // 默认加载第一选项第一屏数据
-            // getData(targetObj);
-            // 修正容器高度
-            fixedContainerH();
+            getData(targetObj);
             // 输入
-            $('#words').on('keyup', function() {
+            $('.editor-text').on('focus', function(e) {
+                if ($('#emotionsBtn').hasClass('iconfont-keyboard')) {
+                    document.activeElement.blur();
+                    console.log($t);
+                }
+                _footerH = _footer.height();
+                _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
+                fixedContainerH();
+            });
+            $('.editor-text').on('keyup', function () {
                 var $t = $(this);
                 sendBtnStatus($t);
+                _footerH = _footer.height();
+                _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
+                fixedContainerH();
+            });
+            //底部弹出菜单
+            $('.chats-emotions-panel').html(emotions);
+            $('#emotionsBtn').on('click', function () {
+                var $t = $(this);
+                showEmotions($t, $('.chats-emotions-panel'));
+                _footerH = _footer.height();
+                _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
+                fixedContainerH();
             });
         });
+        var emotions = '';
+        emotions += '<div class="emotions-container padding">' +
+                '<ul class="emotions-menu flex-wrap row-wrap">' +
+                '<li><img src="images/emotions/doubt.gif"></li>' +
+                '<li><img src="images/emotions/dribble.gif"></li>' +
+                '<li><img src="images/emotions/embarrassed.gif"></li>' +
+                '<li><img src="images/emotions/extreme_sexy_girl.gif"></li>' +
+                '<li><img src="images/emotions/feel_good.gif"></li>' +
+                '<li><img src="images/emotions/go.gif"></li>' +
+                '<li><img src="images/emotions/haha.gif"></li>' +
+                '<li><img src="images/emotions/hell_boy.gif"></li>' +
+                '<li><img src="images/emotions/hungry.gif"></li>' +
+                '<li><img src="images/emotions/look_down.gif"></li>' +
+                '<li><img src="images/emotions/matrix.gif"></li>' +
+                '<li><img src="images/emotions/misdoubt.gif"></li>' +
+                '<li><img src="images/emotions/nosebleed.gif"></li>' +
+                '<li><img src="images/emotions/oh.gif"></li>' +
+                '<li><img src="images/emotions/ops.gif"></li>' +
+                '<li><img src="images/emotions/pudency.gif"></li>' +
+                '<li><img src="images/emotions/rap.gif"></li>' +
+                '<li><img src="images/emotions/sad.gif"></li>' +
+                '<li><img src="images/emotions/sexy_girl.gif"></li>' +
+                '<li><img src="images/emotions/shame.gif"></li>' +
+                '<li class="del"><img src="images/delete.svg"></li>' +
+                '</ul>' +
+                '</div>';
         //修正容器高度
         function fixedContainerH() {
             $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
+        }
+        function showEmotions($btn, $obj) {
+            $('.editor-text').focus();
+            if ($obj[0].style.display == "none") {
+                $obj.css('display', 'block');
+                $btn.attr('class', 'icon iconfont-keyboard');
+                document.activeElement.blur();
+            }
+            else {
+                $obj.css('display', 'none');
+                $btn.attr('class', 'icon iconfont-laugh');
+            }
+        }
+        // 显示actionsheet
+        function showActionSheet() {
+            var actionsheet = $('.actionsheet');
+            actionsheet.before('<div class="backdrop actionsheet-backdrop"></div>');
+            var mask = $('.backdrop.actionsheet-backdrop');
+            var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
+            mask.on('click', hideActionSheet);
+            actionsheetCancel.on('click', hideActionSheet);
+            actionsheet.addClass('actionsheet-toggle');
+        }
+        // 关闭actionsheet
+        function hideActionSheet() {
+            var actionsheet = $('.actionsheet');
+            actionsheet.removeClass('actionsheet-toggle');
+            $('.backdrop.actionsheet-backdrop').remove();
         }
         //上拉加载
         function pullUpAction() {
@@ -188,7 +264,6 @@
                 timeout: 150000,
                 dataType: 'json',
                 success: function (reponse) {
-                    loading.close();
                     if (reponse == 0) {
                         // 无数据
                         page = 1;
@@ -206,18 +281,12 @@
                             pullUp.html('').show();
                         } else {
                             $.each(list, function (i, k) {
-                                str += '<a class="item item-avatar vertical-center item-access item-access-clear-flag" href="charts.html?UsersID=' + k.usersid + '">' +
-                                    '<div class="avatar">' +
-                                    '<img src="' + k.usersface + '">' +
+                                str += '<div class="chatsitem fromchats chatsitem-access">' +
+                                    '<div class="avatar"><img src="uploadfiles/avatars/avatar-02.jpg"></div>' +
+                                    '<div class="chatsitem-body">' +
+                                    '<p>' + k.chatscontent + '</p>' +
                                     '</div>' +
-                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h5 class="text-ellipsis clearfix"><span class="margin-left pull-right text-xs text-muted">3天前</span>' + k.userspetName + '</h5>' +
-                                    '<p class="desc text-muted text-xs"><span class="badge margin-left pull-right">3</span>' + k.userssignature + '</p>' +
-                                    '</div>' +
-                                    // '<label class="checkbox margin-left">' +
-                                    // '<input type="checkbox" name="r11">' +
-                                    // '</label>' +
-                                    '</a>';
+                                    '</div>';
                             });
                             pullUp.html('').show();
                         }
@@ -232,6 +301,10 @@
                             }
                         }
                     }
+                    // 修正容器高度
+                    _footerH = _footer.height();
+                    _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
+                    fixedContainerH();
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {
@@ -241,9 +314,9 @@
         };
         // 发送按钮状态
         function sendBtnStatus(obj) {
-            var wordsLen = obj.val().length;
+            var wordsLen = obj.html().length;
             var $sendBtn = $('#sendBtn');
-            var $addBtn = $('#addBtn');
+            var $addBtn = $('.icon.iconfont-add');
             if (wordsLen > 0) {
                 $sendBtn.show();
                 $addBtn.hide();

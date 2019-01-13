@@ -152,7 +152,7 @@
                 box-shadow: inset 0.066667rem 0.066667rem 0.133333rem
                     rgba(0, 0, 0, 0.08);
                 .handle {
-                    background-color: #1edbb5;
+                    background-color: @brand-primary;
                 }
             }
         }
@@ -378,24 +378,23 @@ ul.user-capability {
 // 聊天列表
 .chatslist {
     position: relative;
-    font-size: 0.4rem;
-    line-height: 1.47058824;
+    font-size: @font-size-base;
+    line-height: @line-height-base;
     // 列表组间隔
     + .chatslist {
         margin-top: @padding-base-vertical;
     }
     .chatsitem {
         position: relative;
-        display: -webkit-box;
-        display: -webkit-flex;
-        display: flex;
-        padding: 0.333333rem 0.4rem;
-        color: #333;
+        .display-flex();
+        padding: @padding-base-vertical @padding-base-horizontal;
+        color: @gray-dark;
         text-decoration: none;
         overflow: hidden;
-        头像 &:before {
+        // 头像
+        &:before {
             top: 0;
-            border-top: 1px solid #dcdcdc;
+            border-top: 1px solid @gray-lighter;
             margin-left: 1.84rem;
             width: calc(100vw - 1.333333rem);
         }
@@ -403,36 +402,30 @@ ul.user-capability {
             width: 0.933333rem;
             height: 0.933333rem;
             img {
-                margin: 0 auto;
-                display: block;
-                max-width: 100%;
-                height: auto;
-                text-align: center;
-                -webkit-border-radius: 50%;
+                .center-block();
+                .img-responsive(block);
                 border-radius: 50%;
             }
         }
         &.fromchats {
             .avatar {
-                margin-right: 0.4rem;
+                margin-right: @padding-base-horizontal;
             }
         }
         &.tochats {
             .avatar {
-                margin-left: 0.4rem;
+                margin-left: @padding-base-horizontal;
             }
         }
         // 正文
         .chatsitem-body {
             display: inline-block;
             position: relative;
-            -webkit-box-flex: 1;
-            -webkit-flex: 1;
-            flex: 1;
+            .box-flex(1);
             padding: @padding-base-vertical;
             min-width: 0;
-            font-size: 0.4rem;
-            border-radius: 0.133333rem;
+            font-size: @font-size-base;
+            border-radius: @border-radius-base;
             &:before {
                 content: "";
                 display: block;
@@ -442,38 +435,38 @@ ul.user-capability {
                 left: 0;
                 right: 0;
                 pointer-events: none;
-                border-radius: 0.133333rem;
+                border-radius: @border-radius-base;
             }
             &:after {
                 content: " ";
                 position: absolute;
                 top: @padding-base-vertical;
-                border: 0.133333rem solid transparent;
+                border: @caret-width-base solid transparent;
             }
         }
         &.fromchats {
             .chatsitem-body {
-                background-color: rgba(255, 255, 255, 1);
+                background-color: #fff;
                 &:before {
-                    border: 1px solid rgba(255, 255, 255, 1);
-                    border-color: rgba(255, 255, 255, 1);
+                    border: 1px solid #fff;
+                    border-color: #fff;
                 }
                 &:after {
                     right: 100%;
-                    border-right-color: rgba(255, 255, 255, 1);
+                    border-right-color: #fff;
                 }
             }
         }
         &.tochats {
             .chatsitem-body {
-                background-color: #1edbb5;
+                background-color: @brand-primary;
                 &:before {
-                    border: 1px solid #1edbb5;
-                    border-color: #1edbb5;
+                    border: 1px solid @brand-primary;
+                    border-color: @brand-primary;
                 }
                 &:after {
                     left: 100%;
-                    border-left-color: #1edbb5;
+                    border-left-color: @brand-primary;
                 }
             }
         }
@@ -489,9 +482,9 @@ ul.user-capability {
             &:active {
                 &.fromchats {
                     .chatsitem-body {
-                        background-color: rgb(228, 228, 228);
+                        background-color: darken(#fff, 2%);
                         &:after {
-                            border-right-color: rgb(228, 228, 228);
+                            border-right-color: darken(#fff, 2%);
                         }
                     }
                 }
@@ -499,16 +492,16 @@ ul.user-capability {
             &:active {
                 &.tochats {
                     .chatsitem-body {
-                        background-color: @brand-primary;
+                        background-color: darken(@brand-primary, 2%);
                         &:after {
-                            border-left-color: @brand-primary;
+                            border-left-color: darken(@brand-primary, 2%);
                         }
                     }
                 }
             }
             .chatsitem-footer {
                 position: relative;
-                padding-right: 0.4rem;
+                padding-right: @padding-base-horizontal;
                 &:after {
                     content: " ";
                     display: inline-block;
@@ -521,23 +514,90 @@ ul.user-capability {
                     border-width: 1px 1px 0 0;
                     border-color: #c8c8c8;
                     border-style: solid;
-                    -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
-                    transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
+                    .matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
                 }
             }
         }
     }
     // 时间
     .chatsitem-time {
-        margin-top: 0.4rem;
+        margin-top: @padding-base-vertical;
         text-align: center;
         small {
             display: inline-block;
-            padding: 0.106667rem 0.2rem;
+            padding: @padding-small-vertical @padding-small-horizontal;
             color: @gray-light;
             font-size: @font-size-small;
-            background-color: #e6e6e6;
-            border-radius: 0.08rem;
+            background-color: @gray-lighter;
+            border-radius: @border-radius-small;
+        }
+    }
+}
+// 聊天输入框面板
+.chats-input-panel {
+    .display-flex();
+    .justify-content(space-between);
+    .align-items(flex-end);
+    padding: @padding-base-vertical @padding-base-horizontal;
+    background-color: #fff;
+    > * {
+        min-width: 1.226667rem;
+        height: inherit;
+    }
+    // 编辑区域
+    .editor-container {
+        .box-flex(1);
+        .editor-text {
+            position: relative;
+            padding: @padding-small-vertical @padding-small-horizontal;
+            min-height: 1.44rem - (@padding-base-vertical * 2);
+            max-height: 1.44rem * 2;
+            font-size: @font-size-base;
+            line-height: inherit;
+            background-color: darken(@gray-lighter, 5%);
+            border-radius: @border-radius-base;
+            word-wrap: break-word;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-user-modify: read-write-plaintext-only;
+            &:after {
+                .border(@gray-lighter; @border-radius-base);
+            }
+            &::-webkit-scrollbar {
+                display: none;
+            }
+        }
+    }
+    // 图标
+    .icon {
+        font-size: @font-size-large;
+        color: @gray-dark;
+        line-height: 1.44rem - (@padding-base-vertical * 2);
+        text-align: center;
+    }
+    // 按钮
+    .btn {
+        padding: 0 @padding-small-horizontal;
+        font-size: @font-size-base;
+        line-height: 1.44rem - (@padding-base-vertical * 2);
+    }
+}
+
+// 聊天底部弹出菜单
+.emotions-container {
+    ul.emotions-menu {
+        .list-unstyled();
+        > li {
+            margin-bottom: @padding-small-horizontal;
+            padding-top: @padding-small-vertical;
+            padding-bottom: @padding-small-vertical;
+            width: 14.285714%;
+            > img {
+                .img-responsive(block);
+                .center-block();
+                width: .64rem;
+                height: .64rem;
+            }
         }
     }
 }
