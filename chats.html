@@ -113,6 +113,7 @@
     <script type="text/javascript">
         //<![CDATA[
         var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
+        var fromid = HtmlUtil.getUrlParms('FromID'); // 用户名
         var _container = $('.v-swiper');
         var _header = $('header>*');
         var _headerH = _header.height();
@@ -259,7 +260,7 @@
                 url: 'getChats.asp?Action=lists',
                 data: {
                     page: page,
-                    UsersID: usersid
+                    FromID: fromid
                 },
                 timeout: 150000,
                 dataType: 'json',
@@ -281,12 +282,21 @@
                             pullUp.html('').show();
                         } else {
                             $.each(list, function (i, k) {
-                                str += '<div class="chatsitem fromchats chatsitem-access">' +
-                                    '<div class="avatar"><img src="uploadfiles/avatars/avatar-02.jpg"></div>' +
-                                    '<div class="chatsitem-body">' +
-                                    '<p>' + k.chatscontent + '</p>' +
-                                    '</div>' +
-                                    '</div>';
+                                if(usersid == k.toid) {
+                                    str += '<div class="chatsitem tochats chatsitem-access">' +
+                                        '<div class="chatsitem-body">' +
+                                        '<p>' + k.chatscontent + '</p>' +
+                                        '</div>' +
+                                        '<div class="avatar"><img src="uploadfiles/avatars/avatar-01.jpg"></div>' +
+                                        '</div>';
+                                } else {
+                                    str += '<div class="chatsitem fromchats chatsitem-access">' +
+                                        '<div class="avatar"><img src="uploadfiles/avatars/avatar-02.jpg"></div>' +
+                                        '<div class="chatsitem-body">' +
+                                        '<p>' + k.chatscontent + '</p>' +
+                                        '</div>' +
+                                        '</div>';
+                                }
                             });
                             pullUp.html('').show();
                         }

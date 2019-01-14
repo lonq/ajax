@@ -2,11 +2,11 @@
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"--><%
 '常用变量
-Dim Sql, Rs, RsMax, Action, ID, GetMaxChatsID, ReturnStr, OneRecord
+Dim Sql, Rs, RsMax, Action, ID, FromID, GetMaxChatsID, ReturnStr, OneRecord
 Dim Picture, arrPicture, P
 Action = Trim(Request("Action"))
 searchkey = Trim(Request("searchkey"))
-ID = ChkNumeric(Request("UsersID"))
+FromID = ChkNumeric(Request("FromID"))
 GetChatsMaxID = ChkNumeric(Request("maxChatsid"))
 
 '翻页
@@ -37,7 +37,7 @@ End Select
 '记录
 Public Function lists()
 Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from LQ_Chats where BuddyID = " & ID & " and IsShow = 1 order by ID Desc"
+Sql = "Select * from LQ_Chats where (OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ") and IsShow = 1 order by ID Asc"
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
     Response.Write (0)
@@ -71,10 +71,10 @@ Else
     ReturnStr = ReturnStr & """rows"": ["
     For i = 1 To x
         OneRecord = "{" & vbCrLf
-        OneRecord = OneRecord & """id"": """ & ID & """," & vbCrLf
-        OneRecord = OneRecord & """ownerid"": """ & Rs("OwnerID") & """," & vbCrLf
-        OneRecord = OneRecord & """buddyid"": """ & Rs("BuddyID") & """," & vbCrLf
-        OneRecord = OneRecord & """types"": """ & Rs("Types") & """," & vbCrLf
+        OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
+        OneRecord = OneRecord & """toid"": " & Rs("OwnerID") & "," & vbCrLf
+        OneRecord = OneRecord & """fromid"": " & Rs("BuddyID") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """chatscontent"": """ & Rs("ChatsContent") & """," & vbCrLf
         OneRecord = OneRecord & """addtime"": """ & Rs("AddTime") & """," & vbCrLf
         OneRecord = OneRecord & """isshow"": " & Rs("IsShow") & "" & vbCrLf
@@ -95,7 +95,7 @@ End Function
 '更新记录
 Public Function updatelists()
 Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from LQ_Chats where ID > " & GetChatsMaxID & " and BuddyID = " & ID & " and IsShow = 1 order by ID Desc"
+Sql = "Select * from LQ_Chats where ID > " & GetChatsMaxID & " and BuddyID = " & ID & " and IsShow = 1 order by ID Asc"
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
     Response.Write (0)

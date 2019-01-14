@@ -57,44 +57,21 @@
     }
     position: relative;
     // 顶部底部细线
-    &.border-top,
-    &.border-bottom {
-        position: relative;
-        &:before,
-        &:after {
-            content: " ";
-            position: absolute;
-            left: 0;
-            right: 0;
-            height: 1px;
-            color: @border-color;
-            .scaleY(0.5);
-            z-index: @zindex-base;
-        }
+    &.border-top {
         &:before {
-            top: 0;
-            border-top: 1px solid @border-color;
-            .transform-origin(0 0);
+            .border-top(@border-color);
         }
+    }
+    &.border-bottom {
         &:after {
-            bottom: 0;
-            border-bottom: 1px solid @border-color;
-            .transform-origin(0 100%);
+            .border-bottom(@border-color);
         }
     }
     // 卡片样式
     &.card {
         .item {
             &:after {
-                content: " ";
-                position: absolute;
-                left: 0;
-                right: 0;
-                bottom: 0;
-                height: 1px;
-                border-bottom: 1px solid @border-color;
-                .scaleY(0.5);
-                .transform-origin(0 100%);
+                .border-bottom(@border-color);
             }
             &:before,
             &:after {
@@ -210,7 +187,7 @@
                 width: @padding-base-vertical;
                 height: @padding-base-vertical;
                 border-width: 1px 1px 0 0;
-                border-color: @gray-lighter;
+                border-color: @border-color;
                 border-style: solid;
                 .matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
             }
@@ -344,7 +321,7 @@
             img {
                 margin: 0 auto;
                 .img-responsive();
-                border-radius: 50%;
+                border-radius: @border-radius-base;
             }
             .badge {
                 position: absolute;
@@ -385,7 +362,7 @@
         pointer-events: none;
         width: 1.066667rem;
         height: 0.64rem;
-        border: 0.053333rem solid @gray-lighter;
+        border: 0.053333rem solid @border-color;
         border-radius: 0.373333rem;
         background-color: @gray-lighter;
         .transition-timing-function(ease-in-out);
@@ -540,24 +517,11 @@
     &:first-child {
         margin-top: 0;
     }
-    &:before,
-    &:after {
-        content: " ";
-        position: absolute;
-        left: 0;
-        right: 0;
-        height: 1px;
-        color: @gray-lighter;
-        border-top: 1px solid @gray-lighter;
-        .scaleY(0.5);
-    }
     &:before {
-        top: 0;
-        .transform-origin(0 0);
+        .border-top(@border-color);
     }
     &:after {
-        bottom: 0;
-        .transform-origin(0 100%);
+        .border-bottom(@border-color);
     }
     .panel-header {
         position: relative;
@@ -565,16 +529,7 @@
         color: @gray-light;
         font-size: 0.373333rem;
         &:after {
-            content: " ";
-            position: absolute;
-            left: @padding-base-horizontal;
-            bottom: 0;
-            right: 0;
-            height: 1px;
-            color: @gray-lighter;
-            border-bottom: 1px solid @gray-lighter;
-            .transform-origin(0 100%);
-            .scaleY(0.5);
+            .border-bottom(@border-color);
         }
     }
 }
@@ -583,10 +538,10 @@
     position: relative;
     background-color: #fff;
     &:before {
-        .border-top(@gray-lighter);
+        .border-top(@border-color);
     }
     &:after {
-        .border-bottom(@gray-lighter);
+        .border-bottom(@border-color);
     }
     .form-preview-header {
         position: relative;
@@ -594,7 +549,7 @@
         text-align: right;
         line-height: 2.5em;
         &:after {
-            .border-bottom(@gray-lighter);
+            .border-bottom(@border-color);
             left: @padding-base-horizontal;
         }
         .form-preview-value {
@@ -612,7 +567,7 @@
         line-height: 1.333333rem;
         .display-flex();
         &:before {
-            .border-top(@gray-lighter);
+            .border-top(@border-color);
         }
     }
     .form-preview-item {
@@ -647,7 +602,7 @@
                 background-color: @gray-lighter;
             }
             &:after {
-                .border-bottom(@gray-lighter);
+                .border-bottom(@border-color);
             }
             &:first-child {
                 &:after {
@@ -688,7 +643,7 @@ footer {
     .justify-content();
     .list-unstyled();
     &:before {
-        .border-top(@gray-lighter);
+        .border-top(@border-color);
     }
     .item-fill {
         .button-size(0; @padding-base-horizontal; @font-size-base; @height; 0);
@@ -710,10 +665,7 @@ footer {
         .badge {
             position: absolute;
             top: -0.066667rem;
-            right: -0.2rem;
-            font-size: 0.24rem;
-            color: #fff !important;
-            background-color: @brand-danger;
+            right: -0.3rem;
         }
     }
     .tip {
@@ -869,7 +821,7 @@ footer {
                 display: inline-block;
                 .box-flex(unset);
                 &:before {
-                    .border-top(@gray-lighter);
+                    .border-top(@border-color);
                 }
                 // &:first-child:before {
                 //     display: none;
@@ -990,7 +942,7 @@ button.close {
     line-height: 1 !important;
     color: @gray-dark;
     text-shadow: 0 1px 0 #fff;
-    .opacity(0.1);
+    .opacity(0.2);
     &:hover,
     &:focus {
         color: @gray-dark;
@@ -1015,7 +967,6 @@ button.close {
     background-color: #fff;
     -webkit-background-clip: padding-box;
     background-clip: padding-box;
-    border: 1px solid #999;
     border: 1px solid rgba(0, 0, 0, 0.2);
     /*border-radius: .16rem;*/
     outline: 0;
@@ -1038,7 +989,7 @@ button.close {
 .modal-header {
     min-height: 0.438095rem;
     padding: 0.266667rem 0.4rem;
-    border-bottom: 1px solid #dcdcdc;
+    border-bottom: 1px solid @border-color;
     .close {
         margin-top: -0.053333rem;
     }
@@ -1059,7 +1010,7 @@ button.close {
 .modal-footer {
     padding: 0.266667rem 0.4rem;
     text-align: right;
-    border-top: 1px solid #dcdcdc;
+    border-top: 1px solid @border-color;
     .btn + .btn {
         margin-bottom: 0;
         margin-left: 0.133333rem;
@@ -1080,7 +1031,7 @@ button.close {
             display: inline-block;
             width: 50%;
             height: auto;
-            border-left: 1px solid #dcdcdc;
+            border-left: 1px solid @border-color;
             &:first-child {
                 border-left: 1px solid transparent;
             }
@@ -1456,7 +1407,7 @@ table {
         position: absolute;
         left: 50%;
         top: 0;
-        z-index: 2;
+        z-index: @zindex-base;
         margin-left: -3.5em;
         width: 7em;
         height: 1.173333rem;
