@@ -570,7 +570,7 @@ ul.user-capability {
     }
     // 图标
     .icon {
-        font-size: @font-size-large;
+        font-size: @font-size-h2;
         color: @gray-dark;
         line-height: 1.44rem - (@padding-base-vertical * 2);
         text-align: center;
@@ -584,7 +584,13 @@ ul.user-capability {
 }
 
 // 聊天底部弹出菜单
+.chats-emotions-panel {
+    .swiper-pagination-bullet-active {
+        background: @gray;
+    }
+}
 .emotions-container {
+    padding: (@padding-large-vertical * 2) @padding-base-horizontal;
     ul.emotions-menu {
         .list-unstyled();
         > li {

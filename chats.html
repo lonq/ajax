@@ -95,9 +95,27 @@
                 <span class="icon iconfont-add js-file-btn"></span>
                 <button type="button" class="btn btn-success" id="sendBtn" style="display: none;">发送</button>
             </div>
-            <div class="chats-emotions-panel" style="display: none;"></div>
+            <div class="chats-emotions-panel swiper-container" style="display: none;">
+                <div class="swiper-wrapper"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
         </div>
-    </footer>    
+    </footer>
+    
+    <div class="actionsheet user-file-actionsheet">
+        <div class="actionsheet-title padding-horizontal">
+            <i class="close iconfont-wrong"></i>
+            <p class="text-center">选择文件</p>
+        </div>
+        <ul class="actionsheet-menu direction-column text-center">
+            <li>图库
+                <!-- <input type="file" accept="image/*" multiple> -->
+            </li>
+            <li>照相机</li>
+        </ul>
+        <div class="actionsheet-cancel">取消</div>
+    </div>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
@@ -114,6 +132,10 @@
         //<![CDATA[
         var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
         var fromid = HtmlUtil.getUrlParms('FromID'); // 用户名
+
+        var userFileActionsheet = $('.user-file-actionsheet');
+        var emotions = '';
+
         var _container = $('.v-swiper');
         var _header = $('header>*');
         var _headerH = _header.height();
@@ -146,6 +168,14 @@
                 }
             }
         });
+        // 表情
+        var swiper = new Swiper('.chats-emotions-panel', {
+            observer: true,
+            observeParents: true,
+            pagination: {
+                el: '.swiper-pagination',
+            },
+        });
 
         $(function () {
             // 屏蔽控制台消息
@@ -154,16 +184,6 @@
             // };
             // 默认加载第一选项第一屏数据
             getData(targetObj);
-            // 输入
-            $('.editor-text').on('focus', function(e) {
-                if ($('#emotionsBtn').hasClass('iconfont-keyboard')) {
-                    document.activeElement.blur();
-                    console.log($t);
-                }
-                _footerH = _footer.height();
-                _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
-                fixedContainerH();
-            });
             $('.editor-text').on('keyup', function () {
                 var $t = $(this);
                 sendBtnStatus($t);
@@ -171,18 +191,8 @@
                 _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
                 fixedContainerH();
             });
-            //底部弹出菜单
-            $('.chats-emotions-panel').html(emotions);
-            $('#emotionsBtn').on('click', function () {
-                var $t = $(this);
-                showEmotions($t, $('.chats-emotions-panel'));
-                _footerH = _footer.height();
-                _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
-                fixedContainerH();
-            });
-        });
-        var emotions = '';
-        emotions += '<div class="emotions-container padding">' +
+            // 底部弹出菜单
+            emotions += '<div class="emotions-container swiper-slide padding">' +
                 '<ul class="emotions-menu flex-wrap row-wrap">' +
                 '<li><img src="images/emotions/doubt.gif"></li>' +
                 '<li><img src="images/emotions/dribble.gif"></li>' +
@@ -207,8 +217,30 @@
                 '<li class="del"><img src="images/delete.svg"></li>' +
                 '</ul>' +
                 '</div>';
+            $('.chats-emotions-panel .swiper-wrapper').html(emotions);
+            $('#emotionsBtn').on('click', function (e) {
+                e.stopPropagation();
+                var $t = $(this);
+                showEmotions($t, $('.chats-emotions-panel'));
+                fixedContainerH();
+            });
+            $(document).on('click', function (e) {
+                var $emotionsPanel = $('.chats-panel');
+                if ($emotionsPanel.has(e.target).length === 0) {
+                    $('.chats-emotions-panel').css('display', 'none');
+                    $('#emotionsBtn').attr('class', 'icon iconfont-laugh');
+                    fixedContainerH();
+                }
+            });
+            // 底部弹出文件菜单
+            $('.js-file-btn').on('click', function () {
+                showActionSheet(userFileActionsheet);
+            });            
+        });
         //修正容器高度
         function fixedContainerH() {
+            _footerH = _footer.height();
+            _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
             $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
         }
         function showEmotions($btn, $obj) {
@@ -224,8 +256,7 @@
             }
         }
         // 显示actionsheet
-        function showActionSheet() {
-            var actionsheet = $('.actionsheet');
+        function showActionSheet(actionsheet) {
             actionsheet.before('<div class="backdrop actionsheet-backdrop"></div>');
             var mask = $('.backdrop.actionsheet-backdrop');
             var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
@@ -312,8 +343,6 @@
                         }
                     }
                     // 修正容器高度
-                    _footerH = _footer.height();
-                    _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
                     fixedContainerH();
                     vSwiper.update(); // 更新容器尺寸
                 },
