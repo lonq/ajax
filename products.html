@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="fullpage">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
@@ -19,74 +19,6 @@
     <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
-    <style type="text/css">
-        #nav {
-            padding-top: 1.28rem;
-            width: 100%;
-            height: 1.28rem;
-            background-color: #fff;
-        }
-        #footer {
-            padding-bottom: 1.44rem;
-            width: 100%;
-            height: 1.44rem;
-        }
-        .tab-swiper {
-            position: fixed;
-            top: 1.173333rem;;
-            left: 0;
-            z-index: 1000;
-            list-style: none;
-            margin: 0;
-            padding: 0;
-            height: 1.28rem;
-            line-height: 1.28rem;
-            width: 100%;
-            background-color: #fff;
-        }
-        .tab-swiper .swiper-slide {
-            text-align: center;
-        }
-        .tab-swiper .swiper-slide a {
-            display: inline-block;
-            height: 1.28rem;
-            line-height: 1.28rem;
-            color: #666;
-            font-size: .32rem;
-        }
-        .tab-swiper .swiper-slide.swiper-slide-thumb-active a {
-            padding: 0 .133333rem;
-            border-bottom: 2px solid #1edbb5;
-            color: #1edbb5;
-        }
-        .pull-down,
-        .pull-up {
-            padding: .266667rem;
-            font-size: .32rem;
-            text-align: center;
-            color: #999;
-        }
-        .v-swiper {
-            overflow: auto;
-        }
-        .v-swiper,
-        .w {
-            -webkit-box-sizing: border-box;
-            box-sizing: border-box;
-        }
-        .detail-picture img {
-            display: block;
-            margin: 0 auto;
-            width: 100%;
-            height: auto;
-        }
-        .swiper-slide {
-            height: auto;
-        }
-        .swiper-slide.list+.list {
-            margin-top: 0;
-        }
-    </style>
 </head>
 
 <body>
@@ -302,15 +234,15 @@
                             str += '<img src="' + reponse.pictures + '">';
                         }
                         str += '</div>' +
-                        '<div class="detail-box padding flex-wrap direction-column justify-content-space-between border-bottom relative">' +
-                        '<div class="flex-wrap justify-content-space-between vertical-center space-top">' +
+                        '<div class="detail-box flex-wrap direction-column justify-content-space-between border-bottom relative">' +
+                        '<div class="flex-wrap justify-content-space-between vertical-center">' +
                         '<h3 class="text-lg text-danger"><small>¥</small>' + reponse.price + '</h3>' +
                         '<ul class="list-unstyled list-inline text-xs">' +
                         '<li class="text-center clear-margin-bottom"><a class="text-muted" href="#"><i class="icon iconfont-share"></i><br>' + sharing + '</a></li>' +
                         '<li class="text-center clear-margin-bottom"><a class="text-muted" href="#"><i class="icon iconfont-commenting"></i><br>' + comments + '</a></li>' +
                         '</ul>' +
                         '</div>' +
-                        '<h1 class="title padding-top">' + reponse.title + '</h1>' +
+                        '<h1 class="title">' + reponse.title + '</h1>' +
                         '<p class="margin-top">' + reponse.description + '</p>' +
                         '</div>' +
                         '<div class="list border-top border-bottom margin-top">' +

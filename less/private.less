@@ -4,12 +4,12 @@
     .box-shadow(0 0.133333rem 0.133333rem rgba(0, 0, 0, 0.05));
 }
 .detail-box {
-    font-size: @font-size-large;
+    padding: (@padding-base-vertical * 2) @padding-base-horizontal;
     line-height: @line-height-base;
     background-color: #fff;
     h1 {
         margin-top: @padding-base-vertical;
-        font-size: inherit;
+        font-size: @font-size-large;
     }
     .tip {
         margin-top: @padding-base-vertical;
@@ -24,7 +24,7 @@
         }
     }
     p {
-        font-size: inherit;
+        font-size: @font-size-base;
         + p {
             margin-top: @padding-small-vertical;
         }
@@ -147,8 +147,10 @@
             .track {
                 border: 0.053333rem solid darken(@brand-primary, 3%);
                 background-color: darken(@brand-primary, 3%);
-                -webkit-box-shadow: inset 0.066667rem 0.066667rem 0.133333rem rgba(0, 0, 0, 0.08);
-                box-shadow: inset 0.066667rem 0.066667rem 0.133333rem rgba(0, 0, 0, 0.08);
+                -webkit-box-shadow: inset 0.066667rem 0.066667rem 0.133333rem
+                    rgba(0, 0, 0, 0.08);
+                box-shadow: inset 0.066667rem 0.066667rem 0.133333rem
+                    rgba(0, 0, 0, 0.08);
                 .handle {
                     background-color: @brand-primary;
                 }
@@ -400,8 +402,10 @@ ul.user-capability {
         }
         .avatar {
             display: inline-block;
-            width: (@padding-base-vertical * 2) + (@font-size-base * @line-height-base);
-            height: (@padding-base-vertical * 2) + (@font-size-base * @line-height-base);
+            width: (@padding-base-vertical * 2) +
+                (@font-size-base * @line-height-base);
+            height: (@padding-base-vertical * 2) +
+                (@font-size-base * @line-height-base);
             img {
                 .img-responsive(inline-block);
                 border-radius: @border-radius-base;
@@ -563,7 +567,7 @@ ul.user-capability {
             overflow-y: auto;
             -webkit-user-modify: read-write-plaintext-only;
             &:after {
-                .border(darken(@border-color, 5%); @border-radius-base);
+                .border(darken(@border-color, 5%) ; @border-radius-base);
             }
             &::-webkit-scrollbar {
                 display: none;
@@ -608,4 +612,181 @@ ul.user-capability {
             }
         }
     }
+}
+
+// swiper相关
+.pull-down,
+.pull-up {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    font-size: @font-size-small;
+    text-align: center;
+    color: lighten(@gray-light, 20%);
+}
+.v-swiper,
+.w {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.v-swiper {
+    overflow: auto;
+    .list + .list {
+        margin-top: 0;
+    }
+}
+.swiper-slide.d {
+    height: auto;
+}
+.swiper-slide {
+    > img {
+        .center-block();
+        .img-responsive(block);
+        width: 100%;
+    }
+    > a {
+        &:not(.item) {
+            display: block;
+        }
+        > img {
+            .center-block();
+            .img-responsive(block);
+            width: 100%;
+        }
+    }
+}
+// 选项卡
+#nav {
+    padding-top: 1.28rem;
+    width: 100%;
+    height: 1.28rem;
+    background-color: #fff;
+}
+#footer {
+    padding-bottom: 1.44rem;
+    width: 100%;
+    height: 1.44rem;
+}
+.tab-swiper {
+    position: fixed;
+    top: 1.173333rem;
+    left: 0;
+    z-index: @zindex-navbar;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    height: 1.28rem;
+    line-height: 1.28rem;
+    width: 100%;
+    background-color: #fff;
+    .swiper-slide {
+        text-align: center;
+        a {
+            display: inline-block;
+            height: 1.28rem;
+            line-height: 1.28rem;
+            color: @gray;
+            font-size: 0.32rem;
+        }
+        &.swiper-slide-thumb-active {
+            a {
+                padding: 0 0.133333rem;
+                border-bottom: .026667rem solid @brand-primary;
+                color: @brand-primary;
+            }
+        }
+    }
+}
+// 画廊
+.gallery-swiper-wrap {
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: @zindex-modal-background;
+    width: 100%;
+    height: 100%;
+    background-color: @gray-base;
+    .gallery-swiper {
+        width: 100%;
+        height: 100%;
+        .swiper-slide {
+            text-align: center;
+            font-size: @font-size-base;
+            overflow: hidden;
+            h4 {
+                text-align: left;
+                font-size: @font-size-h4;
+            }
+            p {
+                text-align: left;
+                font-size: @font-size-base;
+            }
+        }
+    }
+}
+// 播放器按钮
+.v-play {
+    .v-play-variant(1.333333rem);
+}
+.v-play-variant(@size) {
+    display: block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: @zindex-base;
+    margin: -(@size / 2) 0 0 -(@size / 2) !important;
+    width: @size !important;
+    height: @size !important;
+    background-image:url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4NCjwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAyMi4wLjIsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiA2LjAwIEJ1aWxkIDApICAtLT4NCjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0i5Zu+5bGCXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgMTAwIDEwMCIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgMTAwIDEwMDsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHN0eWxlIHR5cGU9InRleHQvY3NzIj4NCgkuc3Qwe29wYWNpdHk6MC41O30NCgkuc3Qxe2ZpbGw6I0ZGRkZGRjt9DQo8L3N0eWxlPg0KPGNpcmNsZSBjbGFzcz0ic3QwIiBjeD0iNTAiIGN5PSI1MCIgcj0iNDkiLz4NCjxwYXRoIGNsYXNzPSJzdDEiIGQ9Ik0zNi43LDc5bDM4LjctMjlMMzYuNywyMVY3OXogTTQxLjksMzEuNUw2Ni42LDUwTDQxLjksNjguNVYzMS41eiIvPg0KPC9zdmc+DQo=');
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+}
+.video-js .vjs-big-play-button {
+    font-size: 2.5em;
+    line-height: 2.3em;
+    height: 2.5em;
+    width: 2.5em;
+    -webkit-border-radius: 2.5em;
+    -moz-border-radius: 2.5em;
+    border-radius: 2.5em;
+    background-color: #73859f;
+    background-color: rgba(115,133,159,.5);
+    border-width: 0.15em;
+    margin-top: -1.25em;
+    margin-left: -1.75em;
+}
+// 中间的播放箭头
+.vjs-big-play-button .vjs-icon-placeholder {
+    font-size: 1.63em;
+}
+// 加载圆圈
+.vjs-loading-spinner {
+    font-size: 2.5em;
+    width: 2em;
+    height: 2em;
+    border-radius: 1em;
+    margin-top: -1em;
+    margin-left: -1.5em;
+}
+.video-js.vjs-playing .vjs-tech {
+    pointer-events: auto;
+}
+// 播放器时间
+.v-duration {
+    .v-duration-variant(0.133333rem; 0.133333rem);
+}
+.v-duration-variant(@x; @y) {
+    display: block;
+    position: absolute;
+    right: @x;
+    bottom: @y;
+    z-index: @zindex-base;
+    padding: 0 @x;
+    height: @y * 4;
+    line-height: @y * 4;
+    font-size: 0.32rem;
+    color: #fff;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: @border-radius-base;
 }
