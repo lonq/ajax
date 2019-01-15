@@ -117,7 +117,6 @@
         });
 
         $(function () {
-            console.log(1);
             // 屏蔽控制台消息
             // console.log = function () {
             //     return
@@ -180,13 +179,14 @@
                             pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
                         } else {
                             $.each(list, function (i, k) {
-                                str += '<a class="item item-avatar vertical-center item-access item-access-clear-flag" href="chats.html?FromID=' + k.usersid + '">' +
+                                str += '<a class="item item-avatar item-access item-access-clear-flag" href="chats.html?FromID=' + k.usersid + '">' +
                                     '<div class="avatar">' +
                                     '<img src="' + k.usersface + '">' +
+                                    '<span class="badge">3</span>' +
                                     '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                     '<h5 class="text-ellipsis clearfix"><span class="margin-left pull-right text-xs text-muted">3天前</span>' + k.userspetName + '</h5>' +
-                                    '<p class="desc text-muted text-xs"><span class="badge margin-left pull-right">3</span>' + k.userssignature + '</p>' +
+                                    '<p class="desc text-muted text-xs">' + k.userssignature + '</p>' +
                                     '</div>' +
                                     // '<label class="checkbox margin-left">' +
                                     // '<input type="checkbox" name="r11">' +

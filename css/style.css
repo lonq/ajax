@@ -2318,6 +2318,7 @@ a.badge:focus {
   width: calc(97.76vw);
 }
 .item.item-avatar .avatar {
+  position: relative;
   margin: 0 0.4rem 0 0;
   width: 1.2rem;
   height: 1.2rem;
@@ -4065,10 +4066,15 @@ table th[class*="col-"] {
 }
 .user-autograph {
   margin-bottom: 0.266667rem;
-  padding: 0 0.4rem;
+  padding: 0 0.8rem;
   font-size: 0.32rem;
   text-align: center;
   color: inherit;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  overflow: hidden;
+  -webkit-line-clamp: 2;
 }
 ul.user-info {
   margin-top: 0;

@@ -130,7 +130,7 @@
         <script type="text/javascript">
             //<![CDATA[
             var usersid = HtmlUtil.getCookie($.fn.cookie("LQCookies"), "UsersID"); // 用户名
-            var fromid = HtmlUtil.getUrlParms("FromID"); // 用户名
+            var fromid = HtmlUtil.getUrlParms("FromID"); // 好友ID
 
             var emotions = "";
 
@@ -180,6 +180,8 @@
                 // console.log = function () {
                 //     return
                 // };
+                // 插入正文
+                getContent();
                 // 默认加载第一选项第一屏数据
                 getData(targetObj);
                 $(".editor-text").on("keyup", function() {
@@ -290,7 +292,33 @@
                     }
                 }
             }
-
+            // 正文
+            function getContent() {
+                $.ajax({
+                    type: 'GET',
+                    url: 'getChats.asp?Action=content',
+                    data: {
+                        FromID: fromid
+                    },
+                    timeout: 15000,
+                    dataType: 'json',
+                    success: function (reponse) {
+                        // 有数据
+                        var fromusersname = reponse.fromusersname;
+                        var fromuserspetname = reponse.fromuserspetname;
+                        var fromusersface = reponse.fromusersface;
+                        if (fromuserspetname) {
+                            fromuserspetname = fromuserspetname;
+                        } else {
+                            fromuserspetname = fromusersname;
+                        }
+                        $('.js-navbar-title').html(fromuserspetname);
+                    },
+                    error: function (xhr, type, errorThrown) {
+                        pullUp.html('加载失败！');
+                    }
+                });
+            }
             // 列表
             function getData(target) {
                 $.ajax({
@@ -309,7 +337,7 @@
                             loadFlag = false;
                             pullUp.hide();
                             pullDown.hide();
-                            noData("default", "什么也没找到~");
+                            noData("default", "现在可以开始聊天了~");
                         } else {
                             // 有数据
                             var str = "";
@@ -324,7 +352,7 @@
                                 pullUp.html("").show();
                             } else {
                                 $.each(list, function(i, k) {
-                                    str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
+                                    // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
                                     if (usersid == k.toid) {
                                         str += '<div class="chatsitem tochats chatsitem-access" data-time="' + k.addtime + '">' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + '<div class="avatar"><img src="' + tousersface + '"></div>' + "</div>";
                                     } else {
@@ -343,8 +371,6 @@
                                     $(str).appendTo(target);
                                 }
                             }
-                            // 插入数据
-                            $(".js-navbar-title").html(fromuserspetname);
                         }
                         timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                         // 修正容器高度

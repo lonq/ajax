@@ -56,9 +56,31 @@ Case "lists"
     Call lists()
 Case "updatelists"
     Call updatelists()
+Case "content"
+    Call content()
 Case Else
     Call lists()
 End Select
+
+'正文
+Public Function content()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from [LQ_Users] where UsersID = " & FromID & ""
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = ReturnStr & "{" & vbCrLf
+    ReturnStr = ReturnStr & """fromusersname"": """& Rs("UsersName") & """," & vbCrLf
+    ReturnStr = ReturnStr & """fromuserspetname"": """& Rs("UsersPetName") & """," & vbCrLf
+    ReturnStr = ReturnStr & """fromusersface"": """& Rs("UsersFace") & """" & vbCrLf
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+content = ReturnStr
+Response.Write (content)
+End Function
 
 '记录
 Public Function lists()
