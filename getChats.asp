@@ -9,6 +9,32 @@ searchkey = Trim(Request("searchkey"))
 FromID = ChkNumeric(Request("FromID"))
 GetChatsMaxID = ChkNumeric(Request("maxChatsid"))
 
+'获取Buddy
+Dim RsFrom, FromUsersName, FromUsersPetName, FromUsersFace
+Set RsFrom = server.CreateObject("adodb.recordset")
+Sql = "Select * from LQ_Users where UsersID = " & FromID & ""
+RsFrom.Open Sql,Conn,1,1
+If Not(RsFrom.eof And RsFrom.bof) Then
+    FromUsersName = RsFrom("UsersName")
+    FromUsersPetName = RsFrom("UsersPetName")
+    If FromUsersPetName = "" Then FromUsersPetName = FromUsersName
+    FromUsersFace = RsFrom("UsersFace")
+End If
+Call RsClose(RsFrom)
+
+'获取Owner
+Dim RsTo, ToUsersName, ToUsersPetName, ToUsersFace
+Set RsTo = server.CreateObject("adodb.recordset")
+Sql = "Select * from LQ_Users where UsersID = " & MyV_UsersID & ""
+RsTo.Open Sql,Conn,1,1
+If Not(RsTo.eof And RsTo.bof) Then
+    ToUsersName = RsTo("UsersName")
+    ToUsersPetName = RsTo("UsersPetName")
+    If ToUsersPetName = "" Then ToUsersPetName = ToUsersName
+    ToUsersFace = RsTo("UsersFace")
+End If
+Call RsClose(RsTo)
+
 '翻页
 Dim page, PageN, CurrPage, pageCount
 PageN = 6
@@ -68,6 +94,10 @@ Else
     ReturnStr = ReturnStr & """total"": " & Rs.RecordCount & "," & vbCrLf
     ReturnStr = ReturnStr & """pagecount"": " & Rs.PageCount & "," & vbCrLf
     ReturnStr = ReturnStr & """maxchatsid"": " & MaxID("LQ_Chats where") & "," & vbCrLf
+    ReturnStr = ReturnStr & """fromusersface"": """ & FromUsersFace & """," & vbCrLf
+    ReturnStr = ReturnStr & """fromuserspetname"": """ & FromUsersPetName & """," & vbCrLf
+    ReturnStr = ReturnStr & """tousersface"": """ & ToUsersFace & """," & vbCrLf
+    ReturnStr = ReturnStr & """touserspetname"": """ & ToUsersPetName & """," & vbCrLf
     ReturnStr = ReturnStr & """rows"": ["
     For i = 1 To x
         OneRecord = "{" & vbCrLf

@@ -124,18 +124,10 @@
         }
     }
     &:before {
-        content: " ";
-        position: absolute;
-        left: 0;
-        right: 0;
+        .border-top(@border-color);
         margin-left: @padding-base-horizontal;
         margin-right: 0;
         width: calc(100vw - @padding-base-horizontal);
-        height: 1px;
-        top: 0;
-        border-top: 1px solid @border-color;
-        .scaleY(0.5);
-        .transform-origin(0 0);
     }
     // 垂直排列
     &.direction-column {
@@ -187,7 +179,7 @@
                 width: @padding-base-vertical;
                 height: @padding-base-vertical;
                 border-width: 1px 1px 0 0;
-                border-color: @border-color;
+                border-color: @gray-light;
                 border-style: solid;
                 .matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
             }
@@ -980,15 +972,15 @@ button.close {
         margin-bottom: 0.266667rem;
     }
 }
-.modal-backdrop {
-    position: fixed;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    left: 0;
-    z-index: 1040;
-    background-color: rgba(0, 0, 0, 0.6);
-}
+// .modal-backdrop {
+//     position: fixed;
+//     top: 0;
+//     right: 0;
+//     bottom: 0;
+//     left: 0;
+//     z-index: 1040;
+//     background-color: rgba(0, 0, 0, 0.6);
+// }
 .modal-header {
     min-height: 0.438095rem;
     padding: 0.266667rem 0.4rem;
@@ -1462,10 +1454,43 @@ table {
 .dropup,
 .dropdown {
     position: relative;
-}
-// Prevent the focus on the dropdown toggle when closing dropdowns
-.dropdown-toggle:focus {
-    outline: 0;
+    &.dropdown-dark {
+        .dropdown-menu {
+            background-color: @gray-dark;
+            .divider {
+                background-color: lighten(@gray-dark, 5%);
+            }
+            // Links within the dropdown menu
+            > li > a {
+                color: #fff;
+                &:hover,
+                &:focus {
+                    color: #fff;
+                    background-color: darken(@gray-dark, 5%);
+                }
+            }
+        }
+        &.open {
+            .dropdown-toggle {
+                &:after {
+                    content: " ";
+                    position: absolute;
+                    bottom: -@caret-width-large;
+                    left: 50%;
+                    z-index: @zindex-dropdown;
+                    display: block;
+                    width: 0;
+                    height: 0;
+                    margin-left: -@caret-width-large;
+                    border-bottom: @caret-width-large dashed;
+                    border-bottom: @caret-width-large solid ~"\9"; // IE8
+                    border-bottom-color: darken(@gray-dark, 5%);
+                    border-right: @caret-width-large solid transparent;
+                    border-left: @caret-width-large solid transparent;
+                }
+            }
+        }
+    }
 }
 // The dropdown menu (ul)
 .dropdown-menu {
@@ -1477,7 +1502,7 @@ table {
     float: left;
     min-width: 2.133333rem;
     padding: 0.066667rem 0;
-    margin: 0.026667rem 0 0; // override default ul
+    margin: (@caret-width-large - .013333rem) 0 0; // override default ul
     list-style: none;
     font-size: @font-size-base;
     text-align: left; // Ensures proper alignment if parent has it changed (e.g., modal footer)
@@ -1486,7 +1511,7 @@ table {
     border: 1px solid @dropdown-border;
     border-radius: @border-radius-base;
     .box-shadow(0 0.08rem 0.16rem rgba(0, 0, 0, 0.175));
-    background-clip: padding-box;
+    // background-clip: padding-box;
     // Aligns the dropdown menu to right
     // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
     &.pull-right {
@@ -1511,21 +1536,6 @@ table {
             text-decoration: none;
             color: @dropdown-link-hover-color;
             background-color: @dropdown-link-hover-bg;
-        }
-    }
-    &.dropdown-menu-dark {
-        background-color: @gray-dark;
-        .divider {
-            background-color: lighten(@gray-dark, 5%);
-        }
-        // Links within the dropdown menu
-        > li > a {
-            color: #fff;
-            &:hover,
-            &:focus {
-                color: #fff;
-                background-color: darken(@gray-dark, 5%);
-            }
         }
     }
     &.has-icons {
@@ -1607,14 +1617,14 @@ table {
     white-space: nowrap; // as with > li > a
 }
 // Backdrop to catch body clicks on mobile, etc.
-.dropdown-backdrop {
-    position: fixed;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    top: 0;
-    z-index: (@zindex-dropdown - 10);
-}
+// .dropdown-backdrop {
+//     position: fixed;
+//     left: 0;
+//     right: 0;
+//     bottom: 0;
+//     top: 0;
+//     z-index: (@zindex-dropdown - 10);
+// }
 // Right aligned dropdowns
 .pull-right > .dropdown-menu {
     right: 0.133333rem;

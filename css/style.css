@@ -1607,15 +1607,19 @@ a.badge:focus {
 .form-classics .form-group.divider:before {
   content: " ";
   position: absolute;
-  top: 0;
   left: 0;
-  width: 100%;
+  top: 0;
+  right: 0;
   height: 1px;
-  color: #e6e6e6;
   border-top: 1px solid #e6e6e6;
+  color: #e6e6e6;
   -webkit-transform-origin: 0 0;
+  -moz-transform-origin: 0 0;
+  -ms-transform-origin: 0 0;
   transform-origin: 0 0;
   -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  -o-transform: scaleY(0.5);
   transform: scaleY(0.5);
 }
 .form-classics .form-group.divider :first-child:before {
@@ -1626,7 +1630,7 @@ a.badge:focus {
 }
 .form-classics .form-group .form-control {
   min-width: 100%;
-  font-size: 0.373333rem;
+  font-size: 0.4rem;
   line-height: 1.47058824;
   color: #555;
   border: none;
@@ -1773,11 +1777,11 @@ a.badge:focus {
   margin-left: 0;
 }
 .btn-lg .caret {
-  border-width: 0.133333rem 0.133333rem 0;
+  border-width: 0.213333rem 0.213333rem 0;
   border-bottom-width: 0;
 }
 .dropup .btn-lg .caret {
-  border-width: 0 0.133333rem 0.133333rem;
+  border-width: 0 0.213333rem 0.213333rem;
 }
 .btn-group-vertical > .btn,
 .btn-group-vertical > .btn-group,
@@ -1907,8 +1911,6 @@ a.badge:focus {
   right: 0;
   bottom: 0;
   left: 0;
-  width: 100%;
-  height: 100%;
 }
 .backdrop.modal-backdrop,
 .backdrop.actionsheet-backdrop,
@@ -2122,21 +2124,22 @@ a.badge:focus {
   content: " ";
   position: absolute;
   left: 0;
-  right: 0;
-  margin-left: 0.4rem;
-  margin-right: 0;
-  width: calc(99.6vw);
-  height: 1px;
   top: 0;
+  right: 0;
+  height: 1px;
   border-top: 1px solid #e6e6e6;
-  -webkit-transform: scaleY(0.5);
-  -ms-transform: scaleY(0.5);
-  -o-transform: scaleY(0.5);
-  transform: scaleY(0.5);
+  color: #e6e6e6;
   -webkit-transform-origin: 0 0;
   -moz-transform-origin: 0 0;
   -ms-transform-origin: 0 0;
   transform-origin: 0 0;
+  -webkit-transform: scaleY(0.5);
+  -ms-transform: scaleY(0.5);
+  -o-transform: scaleY(0.5);
+  transform: scaleY(0.5);
+  margin-left: 0.4rem;
+  margin-right: 0;
+  width: calc(99.6vw);
 }
 .item.direction-column {
   -webkit-flex-direction: column;
@@ -2185,7 +2188,7 @@ a.badge:focus {
   width: 0.266667rem;
   height: 0.266667rem;
   border-width: 1px 1px 0 0;
-  border-color: #e6e6e6;
+  border-color: #999999;
   border-style: solid;
   -webkit-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
   -ms-transform: matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
@@ -3196,15 +3199,6 @@ button.close {
 .modal-content p {
   margin-bottom: 0.266667rem;
 }
-.modal-backdrop {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 1040;
-  background-color: rgba(0, 0, 0, 0.6);
-}
 .modal-header {
   min-height: 0.438095rem;
   padding: 0.266667rem 0.4rem;
@@ -3684,8 +3678,41 @@ table th[class*="col-"] {
 .dropdown {
   position: relative;
 }
-.dropdown-toggle:focus {
-  outline: 0;
+.dropup.dropdown-dark .dropdown-menu,
+.dropdown.dropdown-dark .dropdown-menu {
+  background-color: #333333;
+}
+.dropup.dropdown-dark .dropdown-menu .divider,
+.dropdown.dropdown-dark .dropdown-menu .divider {
+  background-color: #404040;
+}
+.dropup.dropdown-dark .dropdown-menu > li > a,
+.dropdown.dropdown-dark .dropdown-menu > li > a {
+  color: #fff;
+}
+.dropup.dropdown-dark .dropdown-menu > li > a:hover,
+.dropdown.dropdown-dark .dropdown-menu > li > a:hover,
+.dropup.dropdown-dark .dropdown-menu > li > a:focus,
+.dropdown.dropdown-dark .dropdown-menu > li > a:focus {
+  color: #fff;
+  background-color: #262626;
+}
+.dropup.dropdown-dark.open .dropdown-toggle:after,
+.dropdown.dropdown-dark.open .dropdown-toggle:after {
+  content: " ";
+  position: absolute;
+  bottom: -0.213333rem;
+  left: 50%;
+  z-index: 1000;
+  display: block;
+  width: 0;
+  height: 0;
+  margin-left: -0.213333rem;
+  border-bottom: 0.213333rem dashed;
+  border-bottom: 0.213333rem solid \9;
+  border-bottom-color: #262626;
+  border-right: 0.213333rem solid transparent;
+  border-left: 0.213333rem solid transparent;
 }
 .dropdown-menu {
   position: absolute;
@@ -3696,7 +3723,7 @@ table th[class*="col-"] {
   float: left;
   min-width: 2.133333rem;
   padding: 0.066667rem 0;
-  margin: 0.026667rem 0 0;
+  margin: 0.2rem 0 0;
   list-style: none;
   font-size: 0.4rem;
   text-align: left;
@@ -3706,7 +3733,6 @@ table th[class*="col-"] {
   border-radius: 0.106667rem;
   -webkit-box-shadow: 0 0.08rem 0.16rem rgba(0, 0, 0, 0.175);
   box-shadow: 0 0.08rem 0.16rem rgba(0, 0, 0, 0.175);
-  background-clip: padding-box;
 }
 .dropdown-menu.pull-right {
   right: 0;
@@ -3732,20 +3758,6 @@ table th[class*="col-"] {
   text-decoration: none;
   color: #262626;
   background-color: #f5f5f5;
-}
-.dropdown-menu.dropdown-menu-dark {
-  background-color: #333333;
-}
-.dropdown-menu.dropdown-menu-dark .divider {
-  background-color: #404040;
-}
-.dropdown-menu.dropdown-menu-dark > li > a {
-  color: #fff;
-}
-.dropdown-menu.dropdown-menu-dark > li > a:hover,
-.dropdown-menu.dropdown-menu-dark > li > a:focus {
-  color: #fff;
-  background-color: #262626;
 }
 .dropdown-menu.has-icons .divider {
   margin-left: 1.16190571rem;
@@ -3804,14 +3816,6 @@ table th[class*="col-"] {
   line-height: 1.42857143;
   color: #999999;
   white-space: nowrap;
-}
-.dropdown-backdrop {
-  position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  top: 0;
-  z-index: 990;
 }
 .pull-right > .dropdown-menu {
   right: 0.133333rem;
@@ -4320,7 +4324,7 @@ ul.user-capability.space-left > li + li:before {
   content: " ";
   position: absolute;
   top: 0.266667rem;
-  border: 0.106667rem solid transparent;
+  border: 0.213333rem solid transparent;
 }
 .chatslist .chatsitem.fromchats .chatsitem-body {
   background-color: #fff;
@@ -4331,7 +4335,7 @@ ul.user-capability.space-left > li + li:before {
 }
 .chatslist .chatsitem.fromchats .chatsitem-body:after {
   right: 100%;
-  border-right-color: #e6e6e6;
+  border-right-color: #fff;
 }
 .chatslist .chatsitem.tochats .chatsitem-body {
   background-color: #21d9b4;
@@ -4385,6 +4389,7 @@ ul.user-capability.space-left > li + li:before {
 }
 .chatslist .chatsitem-time {
   margin-top: 0.266667rem;
+  margin-bottom: 0.266667rem;
   text-align: center;
 }
 .chatslist .chatsitem-time small {

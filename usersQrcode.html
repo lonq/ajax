@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="zh-CN" class="fullpage">
+<html lang="zh-CN">
 
 <head>
     <meta charset="utf-8">
@@ -37,11 +37,11 @@
 
     <div class="js-content flex-wrap vertical-center margin-horizontal-lg fill-height"></div>
 
-    <div class="actionsheet share-actionsheet padding-horizontal padding-bottom">
+    <div class="actionsheet share-actionsheet padding-bottom">
         <div class="actionsheet-title">
             <i class="close iconfont-wrong"></i>
         </div>
-        <ul class="actionsheet-menu row-wrap">
+        <ul class="actionsheet-menu row-wrap margin-horizontal">
             <li>
                 <dl>
                     <dt class="iconfont-qzone"></dt>
@@ -88,24 +88,24 @@
             getContent();
             //底部弹出菜单
             $('.js-share-btn').on('click', function () {
-                showActionSheet();
+                showActionSheet($('.share-actionsheet'));
             });
         });
         // 显示actionsheet
-        function showActionSheet() {
-            var actionsheet = $('.actionsheet');
+        function showActionSheet(actionsheet) {
             actionsheet.before('<div class="backdrop actionsheet-backdrop"></div>');
-            var mask = $('.backdrop.actionsheet-backdrop');
+            var backdrop = $('.backdrop');
             var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
-            mask.on('click', hideActionSheet);
+            backdrop.on('click', hideActionSheet);
             actionsheetCancel.on('click', hideActionSheet);
             actionsheet.addClass('actionsheet-toggle');
         }
         // 关闭actionsheet
         function hideActionSheet() {
             var actionsheet = $('.actionsheet');
+            var backdrop = $('.backdrop');
             actionsheet.removeClass('actionsheet-toggle');
-            $('.backdrop.actionsheet-backdrop').remove();
+            backdrop.remove();
         }
         // 文章正文
         function getContent() {

@@ -441,7 +441,7 @@ ul.user-capability {
                 content: " ";
                 position: absolute;
                 top: @padding-base-vertical;
-                border: @caret-width-base solid transparent;
+                border: @caret-width-large solid transparent;
             }
         }
         &.fromchats {
@@ -453,7 +453,7 @@ ul.user-capability {
                 }
                 &:after {
                     right: 100%;
-                    border-right-color: @border-color;
+                    border-right-color: #fff;
                 }
             }
         }
@@ -522,6 +522,7 @@ ul.user-capability {
     // 时间
     .chatsitem-time {
         margin-top: @padding-base-vertical;
+        margin-bottom: @padding-base-vertical;
         text-align: center;
         small {
             display: inline-block;

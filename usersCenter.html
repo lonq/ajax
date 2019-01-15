@@ -32,6 +32,10 @@
         .content {
             width: 100%;
         }
+        /* 修正增加边栏后遮罩层的宽度 */
+        .dropdown .backdrop {
+            width: 200%;
+        }
     </style>
 </head>
 
@@ -88,8 +92,8 @@
                         <h3 class="navbar-title">我</h3>
 
                         <ul class="navbar-right">
-                            <li class="dropdown pull-right">
-                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-bell"></i><span class="badge badge-dot badge-danger"></span></a>
+                            <li class="dropdown dropdown-dark pull-right">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="iconfont-bell"></i><span class="badge badge-dot badge-danger"></span></a>
                                 <ul class="dropdown-menu dropdown-menu-dark has-icons">
                                     <li><i class="iconfont-crowds"></i><a href="javascript:;">好友消息</a></li>
                                     <li class="divider"></li>
@@ -174,6 +178,13 @@
                             <span>钱包</span>
                         </div>
                         <div class="item-footer item-note"><small>余额：&yen;&nbsp;</small><span class="text-md text-danger">320.00</span></div>
+                    </a>
+                    <a class="item vertical-center item-access" href="javascript:;">
+                        <div class="item-header"><i class="icon iconfont-edit text-muted"></i></div>
+                        <div class="item-body">
+                            <span>功能反馈</span>
+                        </div>
+                        <div class="item-footer"></div>
                     </a>
                     <div class="item-divider"></div>
                 </div>
@@ -264,8 +275,8 @@
             // 插入用户功能
             getUserCapability($('.js-user-capability'));
             //底部弹出菜单
-            $('.js-userface').on('click', function () {
-                showActionSheet();
+            $('.js-userface').on('click', function (e) {
+                showActionSheet($('.user-face-actionsheet'));
             });
             // 修正容器高度
             fixedContainerH();
@@ -276,20 +287,20 @@
             $('.fixed-bottom').css('padding-top', _offsetHeight); // 因swiper限制，需补足底部菜单栏高度
         }
         // 显示actionsheet
-        function showActionSheet() {
-            var actionsheet = $('.actionsheet');
+        function showActionSheet(actionsheet) {
             actionsheet.before('<div class="backdrop actionsheet-backdrop"></div>');
-            var mask = $('.backdrop.actionsheet-backdrop');
+            var backdrop = $('.backdrop');
             var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
-            mask.on('click', hideActionSheet);
+            backdrop.on('click', hideActionSheet);
             actionsheetCancel.on('click', hideActionSheet);
             actionsheet.addClass('actionsheet-toggle');
         }
         // 关闭actionsheet
         function hideActionSheet() {
             var actionsheet = $('.actionsheet');
+            var backdrop = $('.backdrop');
             actionsheet.removeClass('actionsheet-toggle');
-            $('.backdrop.actionsheet-backdrop').remove();
+            backdrop.remove();
         }
         // 文章正文
         function getContent() {
