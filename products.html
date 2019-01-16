@@ -137,7 +137,6 @@
                     $('.v-swiper>.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)');
                     $('.h-swiper>.swiper-wrapper>.swiper-slide-active').css('height', 'auto').siblings('.swiper-slide').css('height', '0px');
                     getData(hSwiper.activeIndex);
-                    console.log(loadFlagArr[hSwiper.activeIndex]);
                 },
             }
         });
@@ -157,7 +156,6 @@
                     positionJudge();
                 },
                 touchEnd: function(event){
-                    console.log(loadFlagArr[hSwiper.activeIndex]);
                     pullDownAction();
                     pullUpAction();
                     return false;
@@ -277,7 +275,7 @@
                     } else {
                         content = '<p class="padding text-center">暂无详情</p>';
                     }
-                    str += '<div class="detail-picture">';
+                    str += '<div class="detail-picture border-bottom">';
                         if (reponse.pictures.constructor === Array) {
                             str += '<div class="swiper-wrapper">';
                             $.each(reponse.pictures, function (i, k) {
