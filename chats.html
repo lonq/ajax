@@ -316,10 +316,10 @@
                             loadFlag = false;
                             pullUp.hide();
                             pullDown.hide();
-                            noData("default", "现在可以开始聊天了~");
+                            noData('default', '现在可以开始聊天了~');
                         } else {
                             // 有数据
-                            var str = "";
+                            var str = '';
                             var maxPageCount = reponse.pagecount;
                             var fromusersface = reponse.fromusersface;
                             var fromuserspetname = reponse.fromuserspetname;
@@ -328,14 +328,20 @@
                             var list = reponse.rows;
                             if (page > maxPageCount) {
                                 loadFlag = false;
-                                pullUp.html("").show();
+                                pullUp.html('').show();
                             } else {
                                 $.each(list, function(i, k) {
                                     // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
                                     if (usersid == k.toid) {
-                                        str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + '<div class="avatar"><img src="' + tousersface + '"></div>' + "</div>";
+                                        str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
+                                        '<div class="chatsitem-body">' + "<p>" + k.chatscontent + '"</p></div>' +
+                                        '<div class="avatar"><img src="' + tousersface + '"></div>' +
+                                        '</div>';
                                     } else {
-                                        str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' + '<div class="avatar"><img src="' + fromusersface + '"></div>' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + "</div>";
+                                        str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
+                                        '<div class="avatar"><img src="' + fromusersface + '"></div>' +
+                                        '<div class="chatsitem-body"><p>"' + k.chatscontent + '"</p></div>' +
+                                        '</div>';
                                     }
                                 });
                                 pullUp.html("").show();
@@ -357,15 +363,15 @@
                         vSwiper.update(); // 更新容器尺寸
                     },
                     error: function(xhr, type, errorThrown) {
-                        pullUp.html("加载失败！");
+                        pullUp.html('加载失败！');
                     }
                 });
             }
             // 发送按钮状态
             function sendBtnStatus($obj) {
                 var wordsLen = $obj.html().length;
-                var $sendBtn = $("#sendBtn");
-                var $addBtn = $(".icon.iconfont-add");
+                var $sendBtn = $('#sendBtn');
+                var $addBtn = $('.icon.iconfont-add');
                 if (wordsLen > 0) {
                     $sendBtn.show();
                     $addBtn.hide();
@@ -377,8 +383,8 @@
             // 逐条删除消息
             function delChats($obj) {
                 var wordsLen = $obj.html().length;
-                var $sendBtn = $("#sendBtn");
-                var $addBtn = $(".icon.iconfont-add");
+                var $sendBtn = $('#sendBtn');
+                var $addBtn = $('.icon.iconfont-add');
                 if (wordsLen > 0) {
                     $sendBtn.show();
                     $addBtn.hide();
@@ -390,33 +396,33 @@
             // 消息提示
             function loadingMsg(str) {
                 loading = $(document).dialog({
-                    type: "toast",
-                    infoIcon: "js/dialog2-master/dist/images/icon/loading.gif",
+                    type: 'toast',
+                    infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
                     infoText: str
                 });
             }
             // 消息提示
             function msg(str) {
                 $(document).dialog({
-                    type: "notice",
+                    type: 'notice',
                     infoText: str,
                     autoClose: 1500,
-                    position: "bottom"
+                    position: 'bottom'
                 });
             }
             // 消息提示
             function noData(type, text) {
                 var color, icon;
                 switch (type) {
-                    case "primary":
-                        color = "msg msg-primary";
-                        icon = "icon iconfont-correctcircle";
+                    case 'primary':
+                        color = 'msg msg-primary';
+                        icon = 'icon iconfont-correctcircle';
                         break;
                     default:
-                        color = "msg msg-default";
-                        icon = "icon iconfont-infocircle";
+                        color = 'msg msg-default';
+                        icon = 'icon iconfont-infocircle';
                 }
-                var str = "";
+                var str = '';
                 str += '<div class="' + color + '">';
                 str += '<h1><i class="' + icon + '"></i></h1>' + '<h3 class="text-center">' + text + "</h3>" + "</div>";
                 targetObj.html(str);
