@@ -145,15 +145,10 @@
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
-                } else {
-                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
-                }
-                //加载数据
-                page++;
-                getData(targetObj);
-                if (loadFlag) {
-                    pullUp.html('上拉加载更多');
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
+                    //加载数据
+                    page++;
+                    getData(targetObj);
                 }
             }
         }
@@ -168,13 +163,7 @@
                 },
                 timeout: 150000,
                 dataType: 'json',
-                beforeSend: function () {
-                    if (loadFlag) {
-                        loadingMsg('加载中...');
-                    }
-                },
                 success: function (reponse) {
-                    loading.close();
                     // 无数据
                     if (reponse == 0) {
                         page = 1;
@@ -191,37 +180,39 @@
                         localStorage.setItem('oldProductListsID', maxlistsid);
                         var list = reponse.rows;
                         if (page > maxPageCount) {
-                            page = maxPageCount;
                             loadFlag = false;
+                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+                        } else {
+                            $.each(list, function (i, k) {
+                                var linkurl = k.linkurl;
+                                if (linkurl != '') {
+                                    linkurl = linkurl;
+                                } else {
+                                    linkurl = 'products.html?ID=' + k.id
+                                }
+                                var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
+                                var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
+                                str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
+                                    '<div class="thumb thumb-md">';
+                                if (k.pictures.constructor === Array) {
+                                    str += '<img src="' + k.pictures[0] + '">';
+                                } else {
+                                    str += '<img src="' + k.pictures + '">';
+                                }
+                                str += '</div>' +
+                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                    '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
+                                    '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
+                                    '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
+                                    '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                    '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
+                                    '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
+                                    '</ul>' +
+                                    '</div>' +
+                                    '</a>';
+                            });
+                            pullUp.html('上拉加载更多').show();
                         }
-                        $.each(list, function (i, k) {
-                            var linkurl = k.linkurl;
-                            if (linkurl != '') {
-                                linkurl = linkurl;
-                            } else {
-                                linkurl = 'products.html?ID=' + k.id
-                            }
-                            var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
-                            var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
-                            str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
-                                '<div class="thumb thumb-md">';
-                            if (k.pictures.constructor === Array) {
-                                str += '<img src="' + k.pictures[0] + '">';
-                            } else {
-                                str += '<img src="' + k.pictures + '">';
-                            }
-                            str += '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
-                                '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
-                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
-                                '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
-                                '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
-                                '</ul>' +
-                                '</div>' +
-                                '</a>';
-                        });
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
                         //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
@@ -277,7 +268,7 @@
                             str += '</div>' +
                                 '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                 '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
+                                '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
                                 '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
                                 '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
                                 '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +

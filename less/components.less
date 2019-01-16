@@ -218,20 +218,19 @@
         .box-flex();
     }
     h4 {
-        font-size: @padding-base-horizontal;
+        font-size: @font-size-large;
     }
     h5 {
-        font-size: 0.373333rem;
+        font-size: @font-size-base;
     }
     .text-lg {
-        font-size: 0.453333rem !important;
+        font-size: @font-size-large !important;
     }
     .text-muted {
-        color: #999;
+        color: @gray-light;
     }
     .desc {
-        font-size: 0.373333rem;
-        .mtext-ellipsis(2);
+        font-size: @font-size-base;
     }
 }
 // 缩略图
@@ -1592,6 +1591,7 @@ table {
     // Show the menu
     > .dropdown-menu {
         display: block;
+        z-index: @zindex-dropdown + 1;
     }
     // Remove the outline when :focus is triggered
     > a {

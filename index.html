@@ -189,13 +189,7 @@
                 },
                 timeout: 150000,
                 dataType: 'json',
-                beforeSend: function () {
-                    if (loadFlag) {
-                        loadingMsg('加载中...');
-                    }
-                },
                 success: function (reponse) {
-                    loading.close();
                     if (reponse == 0) {
                         // 无数据
                         page = 1;
@@ -234,7 +228,7 @@
                                 str += '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                     '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                    '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
+                                    '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
                                     '<p class="text-lg text-danger"><small>&yen;</small>' + k.price +
                                     '</p>' +
                                     '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
@@ -302,7 +296,7 @@
                             str += '</div>' +
                                 '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
                                 '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                '<p class="desc text-ellipsis-2">' + k.description + '</p>' +
+                                '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
                                 '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
                                 '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
                                 '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +

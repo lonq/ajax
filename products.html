@@ -27,6 +27,9 @@
             <ul class="navbar-left">
                 <li><a href="productsList.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
+            <ul class="navbar-right">
+                <li class="js-share-btn"><a href="javascript:;"><i class="iconfont-share"></i></a></li>
+            </ul>
         </nav>
     </header>
     <div id="nav">
@@ -52,6 +55,38 @@
                 </div>
             </div>
         </div>
+    </div>
+    
+    <div class="actionsheet share-actionsheet padding-bottom">
+        <div class="actionsheet-title">
+            <i class="close iconfont-wrong"></i>
+        </div>
+        <ul class="actionsheet-menu row-wrap margin-horizontal">
+            <li>
+                <dl>
+                    <dt class="iconfont-qzone"></dt>
+                    <dd>QQ空间</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="iconfont-weibo"></dt>
+                    <dd>微博</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="iconfont-weixin"></dt>
+                    <dd>微信</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt class="iconfont-wxzone"></dt>
+                    <dd>微信朋友圈</dd>
+                </dl>
+            </li>
+        </ul>
     </div>
 
     <script src="js/zepto.min.js"></script>
@@ -134,10 +169,30 @@
             fixedContainerH();
             // 默认加载第一选项第一屏数据
             getData(0);
+            //底部弹出菜单
+            $('.js-share-btn').on('click', function () {
+                showActionSheet($('.share-actionsheet'));
+            });
         });
         // 修正容器高度
         function fixedContainerH() {
             $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
+        }
+        // 显示actionsheet
+        function showActionSheet(actionsheet) {
+            actionsheet.before('<div class="backdrop actionsheet-backdrop"></div>');
+            var backdrop = $('.backdrop');
+            var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
+            backdrop.on('click', hideActionSheet);
+            actionsheetCancel.on('click', hideActionSheet);
+            actionsheet.addClass('actionsheet-toggle');
+        }
+        // 关闭actionsheet
+        function hideActionSheet() {
+            var actionsheet = $('.actionsheet');
+            var backdrop = $('.backdrop');
+            actionsheet.removeClass('actionsheet-toggle');
+            backdrop.remove();
         }
         // 通过滑动距离，判断滑动状态
         function positionJudge() {
@@ -222,7 +277,7 @@
                     } else {
                         content = '<p class="padding text-center">暂无详情</p>';
                     }
-                    str += '<div class="detail-picture swiper-container">';
+                    str += '<div class="detail-picture">';
                         if (reponse.pictures.constructor === Array) {
                             str += '<div class="swiper-wrapper">';
                             $.each(reponse.pictures, function (i, k) {
@@ -234,12 +289,12 @@
                             str += '<img src="' + reponse.pictures + '">';
                         }
                         str += '</div>' +
-                        '<div class="detail-box flex-wrap direction-column justify-content-space-between border-bottom relative">' +
+                        '<div class="detail-box flex-wrap margin-top padding border-top border-bottom direction-column justify-content-space-between border-bottom relative">' +
                         '<div class="flex-wrap justify-content-space-between vertical-center">' +
                         '<h3 class="text-lg text-danger"><small>¥</small>' + reponse.price + '</h3>' +
-                        '<ul class="list-unstyled list-inline text-xs">' +
-                        '<li class="text-center clear-margin-bottom"><a class="text-muted" href="#"><i class="icon iconfont-share"></i><br>' + sharing + '</a></li>' +
-                        '<li class="text-center clear-margin-bottom"><a class="text-muted" href="#"><i class="icon iconfont-commenting"></i><br>' + comments + '</a></li>' +
+                        '<ul class="list-unstyled list-inline text-xs text-center">' +
+                        '<li><a class="text-muted" href="#"><i class="icon iconfont-share"></i><br>' + sharing + '</a></li>' +
+                        '<li><a class="text-muted" href="#"><i class="icon iconfont-commenting"></i><br>' + comments + '</a></li>' +
                         '</ul>' +
                         '</div>' +
                         '<h1 class="title">' + reponse.title + '</h1>' +
@@ -444,8 +499,8 @@
                                     }
                                     str += '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                    '<p class="desc text-muted text-ellipsis">' + k.description + '</p>' +
+                                    '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
+                                    '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
                                     '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
                                     '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
                                     '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +

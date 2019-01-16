@@ -144,15 +144,10 @@
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
                 if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...');
-                } else {
-                    pullUp.show().html('<div class="caption"><p class="title">我是有底线的</p></div>');
-                }
-                //加载数据
-                page++;
-                getData(targetObj);
-                if (loadFlag) {
-                    pullUp.html('上拉加载更多');
+                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
+                    //加载数据
+                    page++;
+                    getData(targetObj);
                 }
             }
         }
@@ -168,13 +163,7 @@
                 },
                 timeout: 15000,
                 dataType: 'json',
-                beforeSend: function () {
-                    if (loadFlag) {
-                        loadingMsg('加载中...');
-                    }
-                },
                 success: function (reponse) {
-                    loading.close();
                     // 无数据
                     if (reponse == 0) {
                         page = 1;
@@ -191,84 +180,86 @@
                         localStorage.setItem('oldArticleListsID', maxlistsid);
                         var list = reponse.rows;
                         if (page > maxPageCount) {
-                            page = maxPageCount;
                             loadFlag = false;
+                            pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+                        } else {
+                            $.each(list, function (i, k) {
+                                var types = k.types;
+                                var linkurl = k.linkurl;
+                                if (linkurl != '') {
+                                    linkurl = linkurl;
+                                } else {
+                                    linkurl = 'javascript:;'
+                                }
+                                var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
+                                var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
+                                switch (types) {
+                                    case 0:
+                                        str += '<a class="item item-thumb item-access" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                            '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                            '<h4 class="title mtext-ellipsis">' + k.title + '</h4>' +
+                                            '<p class="desc text-muted mtext-ellipsis">' + k.content + '</p>' +
+                                            '</div>' +
+                                            '</a>';
+                                        break;
+                                    case 1:
+                                        str += '<a class="item item-thumb item-access item-thumb-right" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                            '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
+                                            '<h4 class="title mtext-ellipsis">' + k.title + '</h4>' +
+                                            '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
+                                            '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
+                                            '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
+                                            '</ul>' +
+                                            '</div>' +
+                                            '<div class="thumb thumb-xs">' +
+                                            '<img src="' + k.pictures + '" style="width: 2.76rem;height: 2.066667rem;">' +
+                                            '</div>' +
+                                            '</a>';
+                                        break;
+                                    case 2:
+                                        str += '<a class="item item-thumb item-access direction-column space-top" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                            '<div class="thumb">' +
+                                            '<img src="' + k.pictures + '" style="width: 9.2rem;height: 5.2rem;">' +
+                                            '</div>' +
+                                            '<h5 class="title text-ellipsis">' + k.title + '</h5>' +
+                                            '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
+                                            '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
+                                            '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
+                                            '</ul>' +
+                                            '</a>';
+                                        break;
+                                    case 3:
+                                        str += '<a class="item item-thumb item-thumb-group item-access direction-column space-top" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                            '<h4 class="title mtext-ellipsis">' + k.title + '</h4>' +
+                                            '<ul class="thumb flex-wrap list-unstyled space-left">';
+                                        $.each(k.pictures, function (ii, kk) {
+                                            str += '<li><img src="' + k.pictures[ii] + '" style="width: 2.973333rem;height: 2.226667rem;"></li>';
+                                        });
+                                        str += '</ul>' +
+                                            '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
+                                            '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
+                                            '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
+                                            '</ul>' +
+                                            '</a>';
+                                        break;
+                                    case 4:
+                                        str += '<a class="item item-thumb item-access direction-column space-top" href="videos.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                            '<div class="thumb">' +
+                                            '<div class="v-play"></div>' +
+                                            '<div class="v-duration">' + secToTime(k.duration) + '</div>' +
+                                            '<img src="' + k.pictures + '" style="width: 9.2rem;height: 5.2rem;">' +
+                                            '</div>' +
+                                            '<h5 class="title text-ellipsis">' + k.title + '</h5>' +
+                                            '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
+                                            '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
+                                            '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
+                                            '</ul>' +
+                                            '</a>';
+                                        break;
+                                }
+                            });
+                            pullUp.html('上拉加载更多').show();
                         }
-                        $.each(list, function (i, k) {
-                            var types = k.types;
-                            var linkurl = k.linkurl;
-                            if (linkurl != '') {
-                                linkurl = linkurl;
-                            } else {
-                                linkurl = 'javascript:;'
-                            }
-                            var sharing = k.sharing > 9999 ? (k.sharing / 10000).toFixed(1) + "万" : k.sharing;
-                            var comments = k.comments > 9999 ? (k.comments / 10000).toFixed(1) + "万" : k.comments;
-                            switch (types) {
-                                case 0:
-                                    str += '<a class="item item-thumb item-access" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                        '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                        '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                        '<p class="text-ellipsis-2 text-xs text-muted">' + k.content + '</p>' +
-                                        '</div>' +
-                                        '</a>';
-                                    break;
-                                case 1:
-                                    str += '<a class="item item-thumb item-access item-thumb-right" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                        '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                        '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                        '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
-                                        '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
-                                        '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
-                                        '</ul>' +
-                                        '</div>' +
-                                        '<div class="thumb thumb-xs">' +
-                                        '<img src="' + k.pictures + '" style="width: 2.76rem;height: 2.066667rem;">' +
-                                        '</div>' +
-                                        '</a>';
-                                    break;
-                                case 2:
-                                    str += '<a class="item item-thumb item-access direction-column space-top" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                        '<div class="thumb">' +
-                                        '<img src="' + k.pictures + '" style="width: 9.2rem;height: 5.2rem;">' +
-                                        '</div>' +
-                                        '<h5 class="title text-ellipsis">' + k.title + '</h5>' +
-                                        '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
-                                        '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
-                                        '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
-                                        '</ul>' +
-                                        '</a>';
-                                    break;
-                                case 3:
-                                    str += '<a class="item item-thumb item-thumb-group item-access direction-column space-top" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                        '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                        '<ul class="thumb flex-wrap list-unstyled space-left">';
-                                    $.each(k.pictures, function (ii, kk) {
-                                        str += '<li><img src="' + k.pictures[ii] + '" style="width: 2.973333rem;height: 2.226667rem;"></li>';
-                                    });
-                                    str += '</ul>' +
-                                        '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
-                                        '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
-                                        '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
-                                        '</ul>' +
-                                        '</a>';
-                                    break;
-                                case 4:
-                                    str += '<a class="item item-thumb item-access direction-column space-top" href="videos.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                        '<div class="thumb">' +
-                                        '<div class="v-play"></div>' +
-                                        '<div class="v-duration">' + secToTime(k.duration) + '</div>' +
-                                        '<img src="' + k.pictures + '" style="width: 9.2rem;height: 5.2rem;">' +
-                                        '</div>' +
-                                        '<h5 class="title text-ellipsis">' + k.title + '</h5>' +
-                                        '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
-                                        '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
-                                        '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
-                                        '</ul>' +
-                                        '</a>';
-                                    break;
-                            }
-                        });
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
                         //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
@@ -319,15 +310,15 @@
                                 case 0:
                                     str += '<a class="item item-access" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
                                         '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                        '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                        '<p class="text-ellipsis-2 text-xs text-muted">' + k.content + '</p>' +
+                                        '<h4 class="title mtext-ellipsis">' + k.title + '</h4>' +
+                                        '<p class="desc text-muted mtext-ellipsis">' + k.content + '</p>' +
                                         '</div>' +
                                         '</a>';
                                     break;
                                 case 1:
                                     str += '<a class="item item-thumb item-access item-thumb-right" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
                                         '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                        '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                        '<h4 class="title mtext-ellipsis">' + k.title + '</h4>' +
                                         '<ul class="flex-wrap space-left list-unstyled text-xs text-muted">' +
                                         '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
                                         '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
@@ -352,7 +343,7 @@
                                     break;
                                 case 3:
                                     str += '<a class="item item-thumb item-thumb-group item-access direction-column space-top" href="articles.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                        '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
+                                        '<h4 class="title mtext-ellipsis">' + k.title + '</h4>' +
                                         '<ul class="thumb flex-wrap list-unstyled space-left">';
                                     $.each(k.pictures, function (ii, kk) {
                                         str += '<li><img src="' + k.pictures[ii] + '"></li>';

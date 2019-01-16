@@ -33,7 +33,7 @@
                     <li class="dropdown dropdown-dark pull-right">
                         <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-more"></i></a>
                         <ul class="dropdown-menu">
-                            <li><a href="javascript:;" class="empty-chat-record">清空聊天记录</a></li>
+                            <li><a href="javascript:;" class="empty-chat-btn">清空聊天记录</a></li>
                         </ul>
                     </li>
                 </ul>
@@ -101,7 +101,6 @@
         <script src="js/timeago.js-master/dist/timeago.min.js"></script>
         <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
         <script src="js/dropdown.js"></script>
-        <script src="js/modal.js"></script>
         <script src="js/common.js"></script>
 
         <script type="text/javascript">
@@ -161,38 +160,41 @@
                 getContent();
                 // 默认加载第一选项第一屏数据
                 getData(targetObj);
+                // 逐条删除消息
+                $(window).on('tap', '.chatsitem-body', function (e) {
+                    e.preventDefault();
+                    var $t = $(this);
+                    var $p = $t.parents('.chatsitem');
+                    var delGialog = $(document).dialog({
+                        dialogClass: 'dialog-content-bd-hide',
+                        type: 'confirm',
+                        style: 'ios',
+                        titleShow: false,
+                        content: '',
+                        overlayClose: true,
+                        buttonStyle: 'stacked',
+                        buttons: [
+                            {
+                                name: '删除消息',
+                                callback: function () {
+                                    $p.remove();
+                                }
+                            }
+                        ]
+                    });
+                });
+                // 清空消息
+                $(document).on('tap', '.empty-chat-btn', function (e) {
+                    e.preventDefault();
+                    var $obj = $('.chatslist').children();
+                    $obj.remove();
+                });
+                // 显示发送按钮
                 $(".editor-text").on("keyup", function() {
                     var $t = $(this);
                     sendBtnStatus($t);
                     fixedContainerH();
                 });
-                // 底部弹出菜单
-                emotions +=
-                    '<div class="emotions-container swiper-slide padding">' +
-                    '<ul class="emotions-menu flex-wrap row-wrap">' +
-                    '<li><img src="images/emotions/doubt.gif"></li>' +
-                    '<li><img src="images/emotions/dribble.gif"></li>' +
-                    '<li><img src="images/emotions/embarrassed.gif"></li>' +
-                    '<li><img src="images/emotions/extreme_sexy_girl.gif"></li>' +
-                    '<li><img src="images/emotions/feel_good.gif"></li>' +
-                    '<li><img src="images/emotions/go.gif"></li>' +
-                    '<li><img src="images/emotions/haha.gif"></li>' +
-                    '<li><img src="images/emotions/hell_boy.gif"></li>' +
-                    '<li><img src="images/emotions/hungry.gif"></li>' +
-                    '<li><img src="images/emotions/look_down.gif"></li>' +
-                    '<li><img src="images/emotions/matrix.gif"></li>' +
-                    '<li><img src="images/emotions/misdoubt.gif"></li>' +
-                    '<li><img src="images/emotions/nosebleed.gif"></li>' +
-                    '<li><img src="images/emotions/oh.gif"></li>' +
-                    '<li><img src="images/emotions/ops.gif"></li>' +
-                    '<li><img src="images/emotions/pudency.gif"></li>' +
-                    '<li><img src="images/emotions/rap.gif"></li>' +
-                    '<li><img src="images/emotions/sad.gif"></li>' +
-                    '<li><img src="images/emotions/sexy_girl.gif"></li>' +
-                    '<li><img src="images/emotions/shame.gif"></li>' +
-                    '<li class="del"><img src="images/delete.svg"></li>' +
-                    "</ul>" +
-                    "</div>";
                 // 底部弹出表情
                 $(".chats-emotions-panel .swiper-wrapper").html(emotions);
                 $("#emotionsBtn").on("click", function(e) {
@@ -289,7 +291,7 @@
                         } else {
                             fromuserspetname = fromusersname;
                         }
-                        $('.js-navbar-title').html(fromuserspetname);
+                        $('.js-navbar-title, title').html(fromuserspetname);
                     },
                     error: function (xhr, type, errorThrown) {
                         pullUp.html('加载失败！');
@@ -331,9 +333,9 @@
                                 $.each(list, function(i, k) {
                                     // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
                                     if (usersid == k.toid) {
-                                        str += '<div class="chatsitem tochats chatsitem-access" data-time="' + k.addtime + '">' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + '<div class="avatar"><img src="' + tousersface + '"></div>' + "</div>";
+                                        str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + '<div class="avatar"><img src="' + tousersface + '"></div>' + "</div>";
                                     } else {
-                                        str += '<div class="chatsitem fromchats chatsitem-access" data-time="' + k.addtime + '">' + '<div class="avatar"><img src="' + fromusersface + '"></div>' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + "</div>";
+                                        str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' + '<div class="avatar"><img src="' + fromusersface + '"></div>' + '<div class="chatsitem-body">' + "<p>" + k.chatscontent + "</p>" + "</div>" + "</div>";
                                     }
                                 });
                                 pullUp.html("").show();
@@ -360,8 +362,21 @@
                 });
             }
             // 发送按钮状态
-            function sendBtnStatus(obj) {
-                var wordsLen = obj.html().length;
+            function sendBtnStatus($obj) {
+                var wordsLen = $obj.html().length;
+                var $sendBtn = $("#sendBtn");
+                var $addBtn = $(".icon.iconfont-add");
+                if (wordsLen > 0) {
+                    $sendBtn.show();
+                    $addBtn.hide();
+                } else {
+                    $sendBtn.hide();
+                    $addBtn.show();
+                }
+            }
+            // 逐条删除消息
+            function delChats($obj) {
+                var wordsLen = $obj.html().length;
                 var $sendBtn = $("#sendBtn");
                 var $addBtn = $(".icon.iconfont-add");
                 if (wordsLen > 0) {
@@ -418,6 +433,36 @@
                 //     }
                 // });
             }
+            // 底部弹出菜单
+            emotions +=
+                '<div class="emotions-container swiper-slide padding">' +
+                '<ul class="emotions-menu flex-wrap row-wrap">' +
+                '<li><img src="images/emotions/doubt.gif"></li>' +
+                '<li><img src="images/emotions/dribble.gif"></li>' +
+                '<li><img src="images/emotions/embarrassed.gif"></li>' +
+                '<li><img src="images/emotions/extreme_sexy_girl.gif"></li>' +
+                '<li><img src="images/emotions/feel_good.gif"></li>' +
+                '<li><img src="images/emotions/go.gif"></li>' +
+                '<li><img src="images/emotions/haha.gif"></li>' +
+                '<li><img src="images/emotions/hell_boy.gif"></li>' +
+                '<li><img src="images/emotions/hungry.gif"></li>' +
+                '<li><img src="images/emotions/look_down.gif"></li>' +
+                '<li><img src="images/emotions/matrix.gif"></li>' +
+                '<li><img src="images/emotions/misdoubt.gif"></li>' +
+                '<li><img src="images/emotions/nosebleed.gif"></li>' +
+                '<li><img src="images/emotions/oh.gif"></li>' +
+                '<li><img src="images/emotions/ops.gif"></li>' +
+                '<li><img src="images/emotions/pudency.gif"></li>' +
+                '<li><img src="images/emotions/rap.gif"></li>' +
+                '<li><img src="images/emotions/sad.gif"></li>' +
+                '<li><img src="images/emotions/sexy_girl.gif"></li>' +
+                '<li><img src="images/emotions/shame.gif"></li>' +
+                '<li class="del"><img src="images/delete.svg"></li>' +
+                "</ul>" +
+                "</div>";
+                // 禁止默认事件
+                // window.ontouchstart = function (e) { e.preventDefault(); };
+                // document.addEventListener("touchmove", function (e) { e.preventDefault(); }, false);
             //]]>
         </script>
     </body>
