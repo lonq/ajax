@@ -13,7 +13,7 @@
   // DROPDOWN CLASS DEFINITION
   // =========================
 
-  var backdrop = '.backdrop.dropdown-backdrop'
+  var backdrop = '.dropdown-backdrop'
   var toggle   = '[data-toggle="dropdown"]'
   var Dropdown = function (element) {
     $(element).on('click.bs.dropdown', this.toggle)
@@ -69,7 +69,7 @@
       if ('ontouchstart' in document.documentElement && !$parent.closest('.navbar-nav').length) {
         // if mobile we use a backdrop because click events don't delegate
         $(document.createElement('div'))
-          .addClass('backdrop dropdown-backdrop')
+          .addClass('dropdown-backdrop')
           .insertAfter($(this))
           .on('click', clearMenus)
       }

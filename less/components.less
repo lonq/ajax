@@ -1426,9 +1426,12 @@ table {
                 .badge {
                     position: absolute;
                     top: 0.133333rem;
-                    right: 0.133333rem;
+                    right: -0.266667rem;
                     font-size: @font-size-small;
                     color: #fff !important;
+                    &:empty {
+                        display: block;
+                    }
                 }
             }
             i + span {
@@ -1463,7 +1466,7 @@ table {
                 position: absolute;
                 bottom: -@caret-width-large;
                 left: 50%;
-                z-index: @zindex-dropdown;
+                z-index: @zindex-dropdown + 1;
                 display: block;
                 width: 0;
                 height: 0;
@@ -1481,14 +1484,14 @@ table {
         &.open {
             .dropdown-toggle {
                 &:after {
-                    border-bottom-color: darken(@gray-dark, 5%);
+                    border-bottom-color: @gray-dark;
                 }
             }
         }
         .dropdown-menu {
             background-color: @gray-dark;
             .divider {
-                background-color: lighten(@gray-dark, 5%);
+                background-color: lighten(@gray-dark, 10%);
             }
             // Links within the dropdown menu
             > li {
@@ -1524,6 +1527,14 @@ table {
     border: 1px solid @dropdown-border;
     border-radius: @border-radius-base;
     .box-shadow(0 0.08rem 0.16rem rgba(0, 0, 0, 0.175));
+    &.text-center {
+    > li {
+        > span,
+        > a {
+                text-align: center;
+            }
+        }
+    }
     // background-clip: padding-box;
     // Aligns the dropdown menu to right
     // Deprecated as of 3.1.0 in favor of `.dropdown-menu-[dir]`
@@ -1566,7 +1577,7 @@ table {
                 position: absolute;
                 top: 0;
                 left: 0;
-                z-index: @zindex-dropdown + 1;
+                z-index: @zindex-dropdown ;
                 padding: @padding-base-vertical @padding-base-horizontal;
             }
             > span,
@@ -1609,7 +1620,7 @@ table {
     // Show the menu
     > .dropdown-menu {
         display: block;
-        z-index: @zindex-dropdown + 1;
+        z-index: @zindex-dropdown;
     }
     // Remove the outline when :focus is triggered
     > a {

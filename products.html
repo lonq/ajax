@@ -224,6 +224,14 @@
                 }
             }
         }
+        //上拉结束提示
+        function isEndTips(c1, c2) {
+            if (c1 == c2) {
+                pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+            } else {
+                pullUp.html('上拉加载更多').show();
+            }
+        }
         // 获取数据
         function getData(target) {
             switch (target) {
@@ -384,7 +392,8 @@
                                     '</div>' +
                                     '</div>';
                             });
-                            pullUp.html('上拉加载更多');
+                            // 上拉结束提示
+                            isEndTips(pageArr[target], maxPageCount);
                         }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
@@ -507,7 +516,8 @@
                                     '</div>' +
                                     '</a>';
                             });
-                            pullUp.html('上拉加载更多');
+                            // 上拉结束提示
+                            isEndTips(pageArr[target], maxPageCount);
                         }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据

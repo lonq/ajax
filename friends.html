@@ -119,7 +119,14 @@
                 }
             }
         }
-
+        //上拉结束提示
+        function isEndTips(c1, c2) {
+            if (c1 == c2) {
+                pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+            } else {
+                pullUp.html('上拉加载更多').show();
+            }
+        }
         // 列表
         function getData(target) {
             $.ajax({
@@ -163,7 +170,8 @@
                                     // '</label>' +
                                     '</a>';
                             });
-                            pullUp.html('上拉加载更多').show();
+                            // 上拉结束提示
+                            isEndTips(page, maxPageCount);
                         }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据

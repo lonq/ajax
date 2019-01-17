@@ -92,6 +92,7 @@
     left: 0;
     top: 0;
     right: 0;
+    z-index: @zindex-base;
     height: 1px;
     border-top: 1px solid @color;
     color: @color;
@@ -104,6 +105,7 @@
     top: 0;
     bottom: 0;
     left: 0;
+    z-index: @zindex-base;
     width: 1px;
     border-left: 1px solid @color;
     color: @color;
@@ -116,13 +118,13 @@
     left: 0;
     bottom: 0;
     right: 0;
+    z-index: @zindex-base;
     height: 1px;
     border-bottom: 1px solid @color;
     color: @color;
     .transform-origin(0 100%);
     .scaleY(0.5);
 }
-
 .border(@color; @border-radius) {
     content: " ";
     width: 200%;
@@ -130,6 +132,7 @@
     position: absolute;
     top: 0;
     left: 0;
+    z-index: @zindex-base;
     border: 1px solid @color;
     .scale(0.5);
     .transform-origin(0 0);

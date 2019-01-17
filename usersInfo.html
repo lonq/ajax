@@ -14,7 +14,7 @@
     <meta name="format-detection" content="telephone=no,email=no">
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
-    <title>设置</title>
+    <title>用户信息</title>
     <link href="css/style.css" rel="stylesheet">
     <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
@@ -28,55 +28,58 @@
             <ul class="navbar-left">
                 <li><a href="usersCenter.html"><i class="iconfont-angleleft"></i></a></li>
             </ul>
-            <h3 class="navbar-title">设置</h3>
+            <h3 class="navbar-title">用户信息</h3>
         </nav>
     </header>
 
     <div class="list border-top border-bottom">
-        <div class="item vertical-center">
+        <a class="item vertical-center item-avatar item-access" href="javascript:;">
             <div class="item-body">
-                <span>设置一</span>
+                <span>头像</span>
             </div>
-            <label class="toggle">
-                <input type="checkbox" value="on" />
-                <div class="track"><div class="handle"></div></div>
-            </label>
-        </div>
-        <div class="item vertical item-radio">
-            <label class="radio">
-                <input type="radio" name="r1">
-            </label>单选一
-        </div>
-        <div class="item vertical item-radio">
-            <label class="radio">
-                <input type="radio" name="r1">
-            </label>单选二
-        </div>
-        <div class="item vertical item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="checkbox">
-            </label>多选一
-        </div>
-        <div class="item vertical item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11">
-            </label>单选二
-        </div>
-        <div class="item vertical item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11">
-            </label>单选二
-        </div>
-        <div class="item vertical item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11" disabled>
-            </label>单选二
-        </div>
-        <div class="item vertical item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11" checked disabled>
-            </label>单选二
-        </div>
+            <div class="avatar clear-margin"></div>
+            <div class="item-footer"></div>
+        </a>
+        <a class="item vertical-center item-access item-access-clear-flag" href="javascript:;">
+            <div class="item-body">
+                <span>用户名</span>
+            </div>
+            <div class="item-footer item-note">
+                <span></span>
+            </div>
+        </a>
+        <a class="item vertical-center item-access" href="javascript:;">
+            <div class="item-body">
+                <span>昵称</span>
+            </div>
+            <div class="item-footer item-note">
+                <span></span>
+            </div>
+        </a>
+        <a class="item vertical-center item-access" href="javascript:;">
+            <div class="item-body">
+                <span>邮箱</span>
+            </div>
+            <div class="item-footer item-note">
+                <span></span>
+            </div>
+        </a>
+        <a class="item vertical-center item-access" href="javascript:;">
+            <div class="item-body">
+                <span>注册时间</span>
+            </div>
+            <div class="item-footer item-note">
+                <span></span>
+            </div>
+        </a>
+        <a class="item vertical-center item-access" href="javascript:;">
+            <div class="item-body">
+                <span>签名</span>
+            </div>
+            <div class="item-footer item-note">
+                <span></span>
+            </div>
+        </a>
     </div>
 
     <script src="js/zepto.min.js"></script>

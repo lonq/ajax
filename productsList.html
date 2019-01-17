@@ -61,7 +61,6 @@
         var _headerH = _header.height();
         var page = 1;
         var loadFlag = true;
-        var pullUpFlag = true; //上拉标记
         var loading;
 
         var targetObj = $('.list.main'); //目标数据容器
@@ -153,7 +152,14 @@
                 }
             }
         }
-
+        //上拉结束提示
+        function isEndTips(c1, c2) {
+            if (c1 == c2) {
+                pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
+            } else {
+                pullUp.html('上拉加载更多').show();
+            }
+        }
         // 产品列表
         function getData(target) {
             $.ajax({
@@ -165,15 +171,14 @@
                 timeout: 15000,
                 dataType: 'json',
                 success: function (reponse) {
-                    // 无数据
                     if (reponse == 0) {
+                        // 无数据
                         page = 1;
                         loadFlag = false;
-                        pullUp.hide().html();
+                        pullUp.hide();
                         pullDown.hide();
                         noData('default', '什么也没找到~');
                     } else {
-                        loadFlag = true;
                         // 有数据
                         var str = '';
                         var maxlistsid = reponse.maxid;
@@ -212,7 +217,8 @@
                                     '</div>' +
                                     '</a>';
                             });
-                            pullUp.html('上拉加载更多').show();
+                            // 上拉结束提示
+                            isEndTips(page, maxPageCount);
                         }
                         //有数据的时候要做判断
                         //如果当前是第一页，则把容器中的内容即为请求数据
