@@ -1899,27 +1899,24 @@ a.badge:focus {
   color: #ee3f24;
 }
 /*遮罩*/
-.backdrop {
-  display: none;
+.dropdown-backdrop,
+.modal-backdrop,
+.actionsheet-backdrop,
+.siderbar-backdrop {
   position: fixed;
   top: 0;
   right: 0;
   bottom: 0;
   left: 0;
-}
-.backdrop.modal-backdrop,
-.backdrop.actionsheet-backdrop,
-.backdrop.siderbar-backdrop {
-  display: block;
   z-index: 1040;
   background-color: rgba(0, 0, 0, 0.7);
   -webkit-transition: background-color 0.5s;
   -o-transition: background-color 0.5s;
   transition: background-color 0.5s;
 }
-.backdrop.dropdown-backdrop {
-  display: block;
+.dropdown-backdrop {
   z-index: 1000;
+  background-color: transparent;
 }
 /*弹性盒子*/
 .flex-wrap {
@@ -3637,10 +3634,18 @@ table th[class*="col-"] {
   padding-left: 0;
   list-style: none;
 }
+.navbar > ul > li {
+  padding-left: 0.4rem;
+  padding-right: 0.4rem;
+  min-width: 1.173333rem;
+  height: 1.173333rem;
+  line-height: 1.173333rem;
+  text-align: center;
+  font-size: 0.4533332rem;
+}
 .navbar > ul > li > a {
   position: relative;
   display: block;
-  min-width: 1.173333rem;
   height: 1.173333rem;
   line-height: 1.173333rem;
   text-align: center;
@@ -3653,6 +3658,10 @@ table th[class*="col-"] {
   right: 0.133333rem;
   font-size: 0.32rem;
   color: #fff !important;
+}
+.navbar > ul > li i + span {
+  display: inline-block;
+  margin-left: 0.2rem;
 }
 .caret {
   display: inline-block;
@@ -3668,28 +3677,10 @@ table th[class*="col-"] {
 .dropup,
 .dropdown {
   position: relative;
+  color: #333333;
 }
-.dropup.dropdown-dark .dropdown-menu,
-.dropdown.dropdown-dark .dropdown-menu {
-  background-color: #333333;
-}
-.dropup.dropdown-dark .dropdown-menu .divider,
-.dropdown.dropdown-dark .dropdown-menu .divider {
-  background-color: #404040;
-}
-.dropup.dropdown-dark .dropdown-menu > li > a,
-.dropdown.dropdown-dark .dropdown-menu > li > a {
-  color: #fff;
-}
-.dropup.dropdown-dark .dropdown-menu > li > a:hover,
-.dropdown.dropdown-dark .dropdown-menu > li > a:hover,
-.dropup.dropdown-dark .dropdown-menu > li > a:focus,
-.dropdown.dropdown-dark .dropdown-menu > li > a:focus {
-  color: #fff;
-  background-color: #262626;
-}
-.dropup.dropdown-dark.open .dropdown-toggle:after,
-.dropdown.dropdown-dark.open .dropdown-toggle:after {
+.dropup.open .dropdown-toggle:after,
+.dropdown.open .dropdown-toggle:after {
   content: " ";
   position: absolute;
   bottom: -0.213333rem;
@@ -3701,9 +3692,42 @@ table th[class*="col-"] {
   margin-left: -0.213333rem;
   border-bottom: 0.213333rem dashed;
   border-bottom: 0.213333rem solid \9;
-  border-bottom-color: #262626;
+  border-bottom-color: #fff;
   border-right: 0.213333rem solid transparent;
   border-left: 0.213333rem solid transparent;
+}
+.dropup.dropdown-dark,
+.dropdown.dropdown-dark {
+  color: #fff;
+}
+.dropup.dropdown-dark.open .dropdown-toggle:after,
+.dropdown.dropdown-dark.open .dropdown-toggle:after {
+  border-bottom-color: #262626;
+}
+.dropup.dropdown-dark .dropdown-menu,
+.dropdown.dropdown-dark .dropdown-menu {
+  background-color: #333333;
+}
+.dropup.dropdown-dark .dropdown-menu .divider,
+.dropdown.dropdown-dark .dropdown-menu .divider {
+  background-color: #404040;
+}
+.dropup.dropdown-dark .dropdown-menu > li > span,
+.dropdown.dropdown-dark .dropdown-menu > li > span,
+.dropup.dropdown-dark .dropdown-menu > li > a,
+.dropdown.dropdown-dark .dropdown-menu > li > a {
+  color: inherit;
+}
+.dropup.dropdown-dark .dropdown-menu > li > span:hover,
+.dropdown.dropdown-dark .dropdown-menu > li > span:hover,
+.dropup.dropdown-dark .dropdown-menu > li > a:hover,
+.dropdown.dropdown-dark .dropdown-menu > li > a:hover,
+.dropup.dropdown-dark .dropdown-menu > li > span:focus,
+.dropdown.dropdown-dark .dropdown-menu > li > span:focus,
+.dropup.dropdown-dark .dropdown-menu > li > a:focus,
+.dropdown.dropdown-dark .dropdown-menu > li > a:focus {
+  color: inherit;
+  background-color: #262626;
 }
 .dropdown-menu {
   position: absolute;
@@ -3735,16 +3759,22 @@ table th[class*="col-"] {
   overflow: hidden;
   background-color: #e5e5e5;
 }
+.dropdown-menu > li {
+  line-height: 1.42857143;
+}
+.dropdown-menu > li > span,
 .dropdown-menu > li > a {
   display: block;
   padding: 0.266667rem 0.4rem;
   clear: both;
   font-weight: normal;
-  line-height: 1.42857143;
+  line-height: inherit;
   color: #333333;
   white-space: nowrap;
 }
+.dropdown-menu > li > span:hover,
 .dropdown-menu > li > a:hover,
+.dropdown-menu > li > span:focus,
 .dropdown-menu > li > a:focus {
   text-decoration: none;
   color: #262626;
@@ -3763,6 +3793,7 @@ table th[class*="col-"] {
   z-index: 1001;
   padding: 0.266667rem 0.4rem;
 }
+.dropdown-menu.has-icons > li > span,
 .dropdown-menu.has-icons > li > a {
   padding-left: 1.16190571rem;
 }
@@ -4274,12 +4305,6 @@ ul.user-capability.space-left > li + li:before {
 .chatslist .chatsitem + .chatsitem {
   margin-top: 0.533333rem;
 }
-.chatslist .chatsitem:before {
-  top: 0;
-  border-top: 1px solid #e6e6e6;
-  margin-left: 1.84rem;
-  width: calc(98.666667vw);
-}
 .chatslist .chatsitem .avatar {
   display: inline-block;
   width: 1.10476257rem;
@@ -4310,43 +4335,33 @@ ul.user-capability.space-left > li + li:before {
   font-size: 0.4rem;
   border-radius: 0.106667rem;
 }
-.chatslist .chatsitem .chatsitem-body:before {
-  content: "";
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  pointer-events: none;
-  border-radius: 0.106667rem;
-}
 .chatslist .chatsitem .chatsitem-body:after {
   content: " ";
   position: absolute;
   top: 0.266667rem;
+  z-index: 2;
   border: 0.213333rem solid transparent;
 }
 .chatslist .chatsitem.fromchats .chatsitem-body {
   background-color: #fff;
 }
 .chatslist .chatsitem.fromchats .chatsitem-body:before {
-  border: 1px solid #e6e6e6;
-  border-color: #e6e6e6;
+  border: 1px solid #cccccc;
 }
 .chatslist .chatsitem.fromchats .chatsitem-body:after {
   right: 100%;
+  margin-right: -1px;
   border-right-color: #fff;
 }
 .chatslist .chatsitem.tochats .chatsitem-body {
   background-color: #21d9b4;
 }
 .chatslist .chatsitem.tochats .chatsitem-body:before {
-  border: 1px solid #20d5b0;
-  border-color: #20d5b0;
+  border: 1px solid #1aad8f;
 }
 .chatslist .chatsitem.tochats .chatsitem-body:after {
   left: 100%;
+  margin-left: -1px;
   border-left-color: #21d9b4;
 }
 .chatslist .chatsitem .chatsitem-footer {
@@ -4355,16 +4370,16 @@ ul.user-capability.space-left > li + li:before {
 .chatslist .chatsitem.chatsitem-access .chatsitem-body {
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-.chatslist .chatsitem.chatsitem-access:active.fromchats .chatsitem-body {
+.chatslist .chatsitem.chatsitem-access.fromchats .chatsitem-body:active {
   background-color: #fafafa;
 }
-.chatslist .chatsitem.chatsitem-access:active.fromchats .chatsitem-body:after {
+.chatslist .chatsitem.chatsitem-access.fromchats .chatsitem-body:active:after {
   border-right-color: #fafafa;
 }
-.chatslist .chatsitem.chatsitem-access:active.tochats .chatsitem-body {
+.chatslist .chatsitem.chatsitem-access.tochats .chatsitem-body:active {
   background-color: #20d0ad;
 }
-.chatslist .chatsitem.chatsitem-access:active.tochats .chatsitem-body:after {
+.chatslist .chatsitem.chatsitem-access.tochats .chatsitem-body:active:after {
   border-left-color: #20d0ad;
 }
 .chatslist .chatsitem.chatsitem-access .chatsitem-footer {

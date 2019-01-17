@@ -92,7 +92,7 @@
             <div class="actionsheet-cancel">取消</div>
         </div>
 
-        <script src="js/zepto.min.js"></script>
+        <script src="js/zepto.js"></script>
         <script src="js/touch.min.js"></script>
         <script src="js/htmlutil.js"></script>
         <script src="js/zepto.cookie.min.js"></script>
@@ -161,8 +161,9 @@
                 // 默认加载第一选项第一屏数据
                 getData(targetObj);
                 // 逐条删除消息
-                $(window).on('tap', '.chatsitem-body', function (e) {
-                    e.preventDefault();
+                $('.chatsitem-body').longPress(function (e) {
+                // $(window).on('longPress', '.chatsitem-body', function (e) {
+                    // e.preventDefault();
                     var $t = $(this);
                     var $p = $t.parents('.chatsitem');
                     var delGialog = $(document).dialog({
@@ -334,17 +335,17 @@
                                     // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
                                     if (usersid == k.toid) {
                                         str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
-                                        '<div class="chatsitem-body">' + "<p>" + k.chatscontent + '"</p></div>' +
+                                        '<div class="chatsitem-body"><p>' + k.chatscontent + '</p></div>' +
                                         '<div class="avatar"><img src="' + tousersface + '"></div>' +
                                         '</div>';
                                     } else {
                                         str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
                                         '<div class="avatar"><img src="' + fromusersface + '"></div>' +
-                                        '<div class="chatsitem-body"><p>"' + k.chatscontent + '"</p></div>' +
+                                        '<div class="chatsitem-body"><p>' + k.chatscontent + '</p></div>' +
                                         '</div>';
                                     }
                                 });
-                                pullUp.html("").show();
+                                pullUp.html('').show();
                             }
                             //有数据的时候要做判断
                             //如果当前是第一页，则把容器中的内容即为请求数据

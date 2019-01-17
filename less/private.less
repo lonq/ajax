@@ -395,19 +395,10 @@ ul.user-capability {
         color: @gray-dark;
         text-decoration: none;
         overflow: hidden;
-        // 头像
-        &:before {
-            top: 0;
-            border-top: 1px solid @border-color;
-            margin-left: 1.84rem;
-            width: calc(100vw - 1.333333rem);
-        }
         .avatar {
             display: inline-block;
-            width: (@padding-base-vertical * 2) +
-                (@font-size-base * @line-height-base);
-            height: (@padding-base-vertical * 2) +
-                (@font-size-base * @line-height-base);
+            width: (@padding-base-vertical * 2) + (@font-size-base * @line-height-base);
+            height: (@padding-base-vertical * 2) + (@font-size-base * @line-height-base);
             img {
                 .img-responsive(inline-block);
                 border-radius: @border-radius-base;
@@ -433,21 +424,11 @@ ul.user-capability {
             max-width: 6.933333rem;
             font-size: @font-size-base;
             border-radius: @border-radius-base;
-            &:before {
-                content: "";
-                display: block;
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                pointer-events: none;
-                border-radius: @border-radius-base;
-            }
             &:after {
                 content: " ";
                 position: absolute;
                 top: @padding-base-vertical;
+                z-index: @zindex-base;
                 border: @caret-width-large solid transparent;
             }
         }
@@ -455,11 +436,11 @@ ul.user-capability {
             .chatsitem-body {
                 background-color: #fff;
                 &:before {
-                    border: 1px solid @border-color;
-                    border-color: @border-color;
+                    border: 1px solid darken(@border-color, 10%);
                 }
                 &:after {
                     right: 100%;
+                    margin-right: -1px;
                     border-right-color: #fff;
                 }
             }
@@ -468,11 +449,11 @@ ul.user-capability {
             .chatsitem-body {
                 background-color: @brand-primary;
                 &:before {
-                    border: 1px solid darken(@brand-primary, 1%);
-                    border-color: darken(@brand-primary, 1%);
+                    border: 1px solid darken(@brand-primary, 10%);
                 }
                 &:after {
                     left: 100%;
+                    margin-left: -1px;
                     border-left-color: @brand-primary;
                 }
             }
@@ -486,23 +467,19 @@ ul.user-capability {
             .chatsitem-body {
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
             }
-            &:active {
-                &.fromchats {
-                    .chatsitem-body {
-                        background-color: darken(#fff, 2%);
-                        &:after {
-                            border-right-color: darken(#fff, 2%);
-                        }
+            &.fromchats {
+                .chatsitem-body:active {
+                    background-color: darken(#fff, 2%);
+                    &:after {
+                        border-right-color: darken(#fff, 2%);
                     }
                 }
             }
-            &:active {
-                &.tochats {
-                    .chatsitem-body {
-                        background-color: darken(@brand-primary, 2%);
-                        &:after {
-                            border-left-color: darken(@brand-primary, 2%);
-                        }
+            &.tochats {
+                .chatsitem-body:active {
+                    background-color: darken(@brand-primary, 2%);
+                    &:after {
+                        border-left-color: darken(@brand-primary, 2%);
                     }
                 }
             }

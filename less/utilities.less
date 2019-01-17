@@ -1193,25 +1193,22 @@ input[type="button"].btn-fill {
     }
 }
 /*遮罩*/
-.backdrop {
-    display: none;
+.dropdown-backdrop,
+.modal-backdrop,
+.actionsheet-backdrop,
+.siderbar-backdrop {
     position: fixed;
     top: 0;
     right: 0;
     bottom: 0;
     left: 0;
-    &.modal-backdrop,
-    &.actionsheet-backdrop,
-    &.siderbar-backdrop {
-        display: block;
-        z-index: @zindex-modal-background;
-        background-color: rgba(0, 0, 0, 0.7);
-        .transition(background-color 0.5s);
-    }
-    &.dropdown-backdrop {
-        display: block;
-        z-index: @zindex-dropdown;
-    }
+    z-index: @zindex-modal-background;
+    background-color: rgba(0, 0, 0, 0.7);
+    .transition(background-color 0.5s);
+}
+.dropdown-backdrop {
+    z-index: @zindex-dropdown;
+    background-color: transparent;
 }
 /*弹性盒子*/
 .flex-wrap {
