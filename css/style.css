@@ -1979,7 +1979,7 @@ a.badge:focus {
 }
 .caption .title:before,
 .caption .title:after {
-  content: "";
+  content: " ";
   position: absolute;
   top: 50%;
   width: 100%;
@@ -4555,7 +4555,7 @@ ul.user-capability.space-left > li + li:before {
   padding: 0.266667rem 0.4rem;
   font-size: 0.32rem;
   text-align: center;
-  color: #cccccc;
+  color: #999999;
 }
 .v-swiper,
 .w {

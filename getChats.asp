@@ -37,7 +37,7 @@ Call RsClose(RsTo)
 
 '翻页
 Dim page, PageN, CurrPage, pageCount
-PageN = 6
+PageN = 5
 
 '获取最大ID
 Public Function MaxID(Datasheet)
@@ -54,8 +54,6 @@ End Function
 Select Case Action
 Case "lists"
     Call lists()
-Case "updatelists"
-    Call updatelists()
 Case "content"
     Call content()
 Case Else
@@ -142,39 +140,5 @@ End If
 Call RsClose(Rs)
 lists = ReturnStr
 Response.Write (lists)
-End Function
-
-'更新记录
-Public Function updatelists()
-Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from LQ_Chats where ID > " & GetChatsMaxID & " and BuddyID = " & ID & " and IsShow = 1 order by ID Asc"
-Rs.Open Sql,Conn,1,1
-If Rs.eof And Rs.bof Then
-    Response.Write (0)
-    Response.End
-Else
-    ReturnStr = "{" & vbCrLf
-    ReturnStr = ReturnStr & """total"": " & Rs.RecordCount & "," & vbCrLf
-    ReturnStr = ReturnStr & """maxid"": " & MaxID("LQ_Chats where") & "," & vbCrLf
-    ReturnStr = ReturnStr & """rows"": ["
-    Do While Not Rs.eof
-        OneRecord = "{" & vbCrLf
-        OneRecord = OneRecord & """nickname"": """ & Rs("Nickname") & """," & vbCrLf
-        OneRecord = OneRecord & """avatar"": """ & Rs("Avatar") & """," & vbCrLf
-        OneRecord = OneRecord & """comment"": """ & Rs("Comment") & """," & vbCrLf
-        OneRecord = OneRecord & """addtime"": """ & Rs("AddTime") & """," & vbCrLf
-        OneRecord = OneRecord & """isshow"": " & Rs("IsShow") & "" & vbCrLf
-        OneRecord = OneRecord & "}"
-        OneRecord = OneRecord & "," & vbCrLf
-        ReturnStr = ReturnStr & OneRecord
-        Rs.MoveNext
-    Loop
-    ReturnStr = left(ReturnStr, InStrRev(ReturnStr, ",") - 1)
-    ReturnStr = ReturnStr & "]"
-    ReturnStr = ReturnStr & "}"
-End If
-Call RsClose(Rs)
-updatelists = ReturnStr
-Response.Write (updatelists)
 End Function
 %>

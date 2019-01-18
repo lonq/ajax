@@ -21,472 +21,440 @@
     <script src="js/flexible.js"></script>
 </head>
 
-    <body>
-        <header>
-            <nav class="navbar navbar-dark">
-                <ul class="navbar-left">
-                    <li>
-                        <a href="friends.html"><i class="iconfont-angleleft"></i></a>
-                    </li>
-                </ul>
-                <h3 class="navbar-title js-navbar-title">-</h3>
-                <ul class="navbar-left">
-                    <li class="dropdown dropdown-dark pull-right">
-                        <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-more"></i></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="javascript:;" class="empty-chat-btn">清空聊天记录</a></li>
-                        </ul>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <div class="v-swiper">
-            <div class="swiper-wrapper w">
-                <div class="swiper-slide d">
-                    <div class="pull-down"></div>
-                    <div class="chatslist">
-                        <!-- <div class="chatsitem-time"><small>周三 20:45</small></div>
-                    <div class="chatsitem fromchats chatsitem-access">
-                        <div class="avatar"><img src="uploadfiles/avatars/avatar-02.jpg"></div>
-                        <div class="chatsitem-body">
-                            <p>他很懒，什么都没留下。</p>
-                        </div>
-                    </div>
-                    <div class="chatsitem tochats chatsitem-access">
-                        <div class="chatsitem-body">
-                            <p>他很懒，什么都没留下。他很懒，什么都没留下。他很懒，什么都没留下。</p>
-                        </div>
-                        <div class="avatar"><img src="uploadfiles/avatars/avatar-01.jpg"></div>
-                    </div> -->
-                    </div>
-                    <div class="pull-up"></div>
-                </div>
-            </div>
-        </div>
-
-        <footer>
-            <div class="chats-panel">
-                <div class="chats-input-panel">
-                    <div class="editor-container"><div class="editor-text" contenteditable="true"></div></div>
-                    <span class="icon iconfont-laugh js-emotions-btn" id="emotionsBtn"></span> <span class="icon iconfont-add js-file-btn"></span> <button type="button" class="btn btn-success" id="sendBtn" style="display: none;">发送</button>
-                </div>
-                <div class="chats-emotions-panel swiper-container" style="display: none;">
-                    <div class="swiper-wrapper"></div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination"></div>
-                </div>
-            </div>
-        </footer>
-
-        <div class="actionsheet user-file-actionsheet">
-            <div class="actionsheet-title padding-horizontal">
-                <i class="close iconfont-wrong"></i>
-                <p class="text-center">选择文件</p>
-            </div>
-            <ul class="actionsheet-menu direction-column text-center">
+<body>
+    <header>
+        <nav class="navbar navbar-dark">
+            <ul class="navbar-left">
                 <li>
-                    图库
-                    <!-- <input type="file" accept="image/*" multiple> -->
+                    <a href="friends.html"><i class="iconfont-angleleft"></i></a>
                 </li>
-                <li>照相机</li>
             </ul>
-            <div class="actionsheet-cancel">取消</div>
+            <h3 class="navbar-title js-navbar-title">-</h3>
+            <ul class="navbar-left">
+                <li class="dropdown dropdown-dark pull-right">
+                    <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-more"></i></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:;" class="empty-chat-btn">清空聊天记录</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+    <div class="v-swiper">
+        <div class="swiper-wrapper w">
+            <div class="swiper-slide d">
+                <div class="pull-down"></div>
+                <div class="chatslist"></div>
+                <div class="pull-up"></div>
+            </div>
         </div>
+    </div>
 
-        <script src="js/zepto.js"></script>
-        <script src="js/touch.min.js"></script>
-        <script src="js/htmlutil.js"></script>
-        <script src="js/zepto.cookie.min.js"></script>
-        <script src="js/checkLogin.js"></script>
-        <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
-        <script src="js/timeago.js-master/dist/timeago.min.js"></script>
-        <script src="js/clipboard.js"></script>
-        <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
-        <script src="js/dropdown.js"></script>
-        <script src="js/common.js"></script>
+    <footer>
+        <div class="chats-panel">
+            <div class="chats-input-panel">
+                <div class="editor-container">
+                    <div class="editor-text" contenteditable="true"></div>
+                </div>
+                <span class="icon iconfont-laugh js-emotions-btn" id="emotionsBtn"></span> <span class="icon iconfont-add js-file-btn"></span>
+                <button type="button" class="btn btn-success" id="sendBtn" style="display: none;">发送</button>
+            </div>
+            <div class="chats-emotions-panel swiper-container" style="display: none;">
+                <div class="swiper-wrapper"></div>
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </footer>
 
-        <script type="text/javascript">
-            //<![CDATA[
-            var usersid = HtmlUtil.getCookie($.fn.cookie("LQCookies"), "UsersID"); // 用户名
-            var fromid = HtmlUtil.getUrlParms("FromID"); // 好友ID
+    <div class="actionsheet user-file-actionsheet">
+        <div class="actionsheet-title padding-horizontal">
+            <i class="close iconfont-wrong"></i>
+            <p class="text-center">选择文件</p>
+        </div>
+        <ul class="actionsheet-menu direction-column text-center">
+            <li>
+                图库
+                <!-- <input type="file" accept="image/*" multiple> -->
+            </li>
+            <li>照相机</li>
+        </ul>
+        <div class="actionsheet-cancel">取消</div>
+    </div>
 
-            var emotions = "";
+    <script src="js/zepto.js"></script>
+    <script src="js/touch.min.js"></script>
+    <script src="js/htmlutil.js"></script>
+    <script src="js/zepto.cookie.min.js"></script>
+    <script src="js/checkLogin.js"></script>
+    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/timeago.js-master/dist/timeago.min.js"></script>
+    <script src="js/clipboard.js"></script>
+    <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/dropdown.js"></script>
+    <script src="js/common.js"></script>
 
-            var _container = $(".v-swiper");
-            var _header = $("header>*");
-            var _headerH = _header.height();
-            var _footer = $("footer>*");
-            var _footerH = 0;
-            var _offsetHeight = 0; //滑动束缚容器的偏移高度
-            var page = 1;
-            var loadFlag = true;
-            var loading;
+    <script type="text/javascript">
+        //<![CDATA[
+        var usersid = HtmlUtil.getCookie($.fn.cookie("LQCookies"), "UsersID"); // 用户名
+        var fromid = HtmlUtil.getUrlParms("FromID"); // 好友ID
+        var page = HtmlUtil.getUrlParms("maxChatsPage"); // 好友ID
 
-            var targetObj = $(".chatslist"); //目标数据容器
-            var pullDown = $(".pull-down");
-            var pullUp = $(".pull-up");
+        var emotions = "";
 
-            //初始化y轴滚动
-            var vSwiper = new Swiper(".v-swiper", {
-                direction: "vertical",
-                slidesPerView: "auto",
-                mousewheelControl: true,
-                freeMode: true,
-                observer: true,
-                observeParents: true,
-                scrollbar: {
-                    el: ".v-swiper-scrollbar"
-                },
-                on: {
-                    touchEnd: function(event) {
-                        pullUpAction();
-                        return false;
-                    }
+        var _container = $(".v-swiper");
+        var _header = $("header>*");
+        var _headerH = _header.height();
+        var _footer = $("footer>*");
+        var _footerH = 0;
+        var _offsetHeight = 0; //滑动束缚容器的偏移高度
+        // var page;
+        var loadFlag = true;
+
+        var targetObj = $(".chatslist"); //目标数据容器
+        var pullDown = $(".pull-down");
+        var pullUp = $(".pull-up");
+
+        //初始化y轴滚动
+        var vSwiper = new Swiper(".v-swiper", {
+            direction: "vertical",
+            slidesPerView: "auto",
+            mousewheelControl: true,
+            freeMode: true,
+            observer: true,
+            observeParents: true,
+            scrollbar: {
+                el: ".v-swiper-scrollbar"
+            },
+            on: {
+                touchEnd: function (event) {
+                    pullDownAction();
+                    return false;
                 }
-            });
-            // 表情
-            var swiper = new Swiper(".chats-emotions-panel", {
-                observer: true,
-                observeParents: true,
-                pagination: {
-                    el: ".swiper-pagination"
-                }
-            });
+            }
+        });
+        // 表情
+        var swiper = new Swiper(".chats-emotions-panel", {
+            observer: true,
+            observeParents: true,
+            pagination: {
+                el: ".swiper-pagination"
+            }
+        });
 
-            $(function() {
-                // 屏蔽控制台消息
-                // console.log = function () {
-                //     return
-                // };
-                // 插入正文
-                getContent();
-                // 默认加载第一选项第一屏数据
-                getData(targetObj);
-                // 清空消息
-                $(document).on('tap', '.empty-chat-btn', function (e) {
-                    e.preventDefault();
-                    var $obj = $('.chatslist').children();
-                    $obj.remove();
-                });
-                // 显示发送按钮
-                $(".editor-text").on("keyup", function() {
-                    var $t = $(this);
-                    sendBtnStatus($t);
-                    fixedContainerH();
-                });
-                // 底部弹出表情
-                $(".chats-emotions-panel .swiper-wrapper").html(emotions);
-                $("#emotionsBtn").on("click", function(e) {
-                    e.stopPropagation();
-                    var $t = $(this);
-                    showEmotions($t, $(".chats-emotions-panel"));
-                    fixedContainerH();
-                });
-                // 关闭底部弹出
-                $(document).on("click", function(e) {
-                    var $emotionsPanel = $(".chats-panel");
-                    if ($emotionsPanel.has(e.target).length === 0) {
-                        hideEmotions($("#emotionsBtn"), $(".chats-emotions-panel"));
-                        fixedContainerH();
-                    }
-                });
-                // 底部弹出文件菜单
-                $(".js-file-btn").on("click", function(e) {
-                    e.stopPropagation();
-                    showActionSheet($(".user-file-actionsheet"));
-                    // 隐藏表情面板
+        $(function () {
+            // 屏蔽控制台消息
+            // console.log = function () {
+            //     return
+            // };
+            // 插入正文
+            getContent();
+            // 默认加载第一选项第一屏数据
+            getData(page, targetObj);
+            // 清空消息
+            $(document).on('tap', '.empty-chat-btn', function (e) {
+                e.preventDefault();
+                var $obj = $('.chatslist').children();
+                $obj.remove();
+            });
+            // 显示发送按钮
+            $(".editor-text").on("keyup", function () {
+                var $t = $(this);
+                sendBtnStatus($t);
+                fixedContainerH();
+            });
+            // 底部弹出表情
+            $(".chats-emotions-panel .swiper-wrapper").html(emotions);
+            $("#emotionsBtn").on("click", function (e) {
+                e.stopPropagation();
+                var $t = $(this);
+                showEmotions($t, $(".chats-emotions-panel"));
+                fixedContainerH();
+            });
+            // 关闭底部弹出
+            $(document).on("click", function (e) {
+                var $emotionsPanel = $(".chats-panel");
+                if ($emotionsPanel.has(e.target).length === 0) {
                     hideEmotions($("#emotionsBtn"), $(".chats-emotions-panel"));
                     fixedContainerH();
-                });
-                // 关闭底部ActionSheet
-                $(document).on("click", function(e) {
-                    var actionsheet = $(".actionsheet");
-                    if (actionsheet.has(e.target).length === 0) {
-                        hideActionSheet();
-                        fixedContainerH();
-                    }
-                });
-            });
-            //修正容器高度
-            function fixedContainerH() {
-                _footerH = _footer.height();
-                _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
-                $(".v-swiper, .v-swiper>.swiper-wrapper").css("height", "calc(100vh - " + _offsetHeight + "px)");
-            }
-            function showEmotions($btn, $obj) {
-                $(".editor-text").focus();
-                if ($obj[0].style.display == "none") {
-                    $obj.css("display", "block");
-                    $btn.attr("class", "icon iconfont-keyboard");
-                    document.activeElement.blur();
-                } else {
-                    $obj.css("display", "none");
-                    $btn.attr("class", "icon iconfont-laugh");
                 }
-            }
-            function hideEmotions($btn, $obj) {
+            });
+            // 底部弹出文件菜单
+            $(".js-file-btn").on("click", function (e) {
+                e.stopPropagation();
+                showActionSheet($(".user-file-actionsheet"));
+                // 隐藏表情面板
+                hideEmotions($("#emotionsBtn"), $(".chats-emotions-panel"));
+                fixedContainerH();
+            });
+            // 关闭底部ActionSheet
+            $(document).on("click", function (e) {
+                var actionsheet = $(".actionsheet");
+                if (actionsheet.has(e.target).length === 0) {
+                    hideActionSheet();
+                    fixedContainerH();
+                }
+            });
+        });
+        //修正容器高度
+        function fixedContainerH() {
+            _footerH = _footer.height();
+            _offsetHeight = _headerH + _footerH; //滑动束缚容器的偏移高度
+            $(".v-swiper, .v-swiper>.swiper-wrapper").css("height", "calc(100vh - " + _offsetHeight + "px)");
+        }
+        function showEmotions($btn, $obj) {
+            $(".editor-text").focus();
+            if ($obj[0].style.display == "none") {
+                $obj.css("display", "block");
+                $btn.attr("class", "icon iconfont-keyboard");
+                document.activeElement.blur();
+            } else {
                 $obj.css("display", "none");
                 $btn.attr("class", "icon iconfont-laugh");
             }
-            // 显示actionsheet
-            function showActionSheet(actionsheet) {
-                var actionsheetCancel = $(".actionsheet-cancel, .actionsheet .close");
-                actionsheetCancel.on("click", hideActionSheet);
-                actionsheet.addClass("actionsheet-toggle");
-            }
-            // 关闭actionsheet
-            function hideActionSheet() {
-                var actionsheet = $(".actionsheet");
-                actionsheet.removeClass("actionsheet-toggle");
-            }
-            //上拉加载
-            function pullUpAction() {
-                var _viewHeight = $(".v-swiper>.swiper-wrapper").get(0).offsetHeight;
-                var _contentHeight = $(".v-swiper>.swiper-wrapper>.swiper-slide").get(0).offsetHeight;
-                if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
-                    if (loadFlag) {
-                        pullUp.html('<i class="iconfont-loading animation-spinner"></i>').show();
-                        //加载数据
-                        page++;
-                        getData(targetObj);
-                    }
+        }
+        function hideEmotions($btn, $obj) {
+            $obj.css("display", "none");
+            $btn.attr("class", "icon iconfont-laugh");
+        }
+        // 显示actionsheet
+        function showActionSheet(actionsheet) {
+            var actionsheetCancel = $(".actionsheet-cancel, .actionsheet .close");
+            actionsheetCancel.on("click", hideActionSheet);
+            actionsheet.addClass("actionsheet-toggle");
+        }
+        // 关闭actionsheet
+        function hideActionSheet() {
+            var actionsheet = $(".actionsheet");
+            actionsheet.removeClass("actionsheet-toggle");
+        }
+        //下拉加载
+        function pullDownAction() {
+            if (vSwiper.translate >= 50) {
+                if (loadFlag) {
+                    pullDown.html('<i class="iconfont-loading animation-spinner"></i>').show();
+                    //加载数据
+                    page--;
+                    getData(page, targetObj);
                 }
             }
-            // 正文
-            function getContent() {
-                $.ajax({
-                    type: 'GET',
-                    url: 'getChats.asp?Action=content',
-                    data: {
-                        FromID: fromid
-                    },
-                    timeout: 15000,
-                    dataType: 'json',
-                    success: function (reponse) {
-                        // 有数据
-                        var fromusersname = reponse.fromusersname;
-                        var fromuserspetname = reponse.fromuserspetname;
-                        var fromusersface = reponse.fromusersface;
-                        if (fromuserspetname) {
-                            fromuserspetname = fromuserspetname;
-                        } else {
-                            fromuserspetname = fromusersname;
-                        }
-                        $('.js-navbar-title, title').html(fromuserspetname);
-                    },
-                    error: function (xhr, type, errorThrown) {
-                        pullUp.html('加载失败！');
+        }
+        // 正文
+        function getContent() {
+            $.ajax({
+                type: 'GET',
+                url: 'getChats.asp?Action=content',
+                data: {
+                    FromID: fromid
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    // 有数据
+                    var fromusersname = reponse.fromusersname;
+                    var fromuserspetname = reponse.fromuserspetname;
+                    var fromusersface = reponse.fromusersface;
+                    if (fromuserspetname) {
+                        fromuserspetname = fromuserspetname;
+                    } else {
+                        fromuserspetname = fromusersname;
                     }
-                });
-            }
-            // 列表
-            function getData(target) {
-                $.ajax({
-                    type: "GET",
-                    url: "getChats.asp?Action=lists",
-                    data: {
-                        page: page,
-                        FromID: fromid
-                    },
-                    timeout: 150000,
-                    dataType: "json",
-                    success: function(reponse) {
-                        if (reponse == 0) {
-                            // 无数据
+                    $('.js-navbar-title, title').html(fromuserspetname);
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        }
+        // 列表
+        function getData(page, target) {
+            $.ajax({
+                type: "GET",
+                url: "getChats.asp?Action=lists",
+                data: {
+                    page: page,
+                    FromID: fromid
+                },
+                timeout: 150000,
+                dataType: "json",
+                success: function (reponse) {
+                    if (reponse == 0) {
+                        // 无数据
+                        page = 1;
+                        loadFlag = false;
+                        pullUp.hide();
+                        pullDown.hide();
+                        noData('default', '现在可以开始聊天了~');
+                    } else {
+                        // 有数据
+                        var str = '';
+                        var maxPageCount = reponse.pagecount;
+                        var fromusersface = reponse.fromusersface;
+                        var fromuserspetname = reponse.fromuserspetname;
+                        var tousersface = reponse.tousersface;
+                        var touserspetname = reponse.touserspetname;
+                        var list = reponse.rows;
+                        if (page < 1) {
                             page = 1;
                             loadFlag = false;
-                            pullUp.hide();
-                            pullDown.hide();
-                            noData('default', '现在可以开始聊天了~');
+                            pullDown.html('').show();
                         } else {
-                            // 有数据
-                            var str = '';
-                            var maxPageCount = reponse.pagecount;
-                            var fromusersface = reponse.fromusersface;
-                            var fromuserspetname = reponse.fromuserspetname;
-                            var tousersface = reponse.tousersface;
-                            var touserspetname = reponse.touserspetname;
-                            var list = reponse.rows;
-                            if (page > maxPageCount) {
-                                loadFlag = false;
-                                pullUp.html('').show();
-                            } else {
-                                $.each(list, function(i, k) {
-                                    // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
-                                    if (usersid == k.toid) {
-                                        str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
+                            $.each(list, function (i, k) {
+                                // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
+                                if (usersid == k.toid) {
+                                    str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
                                         '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
                                         '<div class="avatar"><img src="' + tousersface + '"></div>' +
                                         '</div>';
-                                    } else {
-                                        str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
+                                } else {
+                                    str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
                                         '<div class="avatar"><img src="' + fromusersface + '"></div>' +
                                         '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
                                         '</div>';
-                                    }
-                                });
-                                pullUp.html('').show();
-                            }
-                            //有数据的时候要做判断
-                            //如果当前是第一页，则把容器中的内容即为请求数据
-                            //如果当前不是第一页，则容器内容为本次请求数据和之前请求数据的拼接，所以这里用appendTo追加
-                            if (loadFlag) {
-                                if (page == 1) {
-                                    target.html(str);
-                                } else {
-                                    $(str).appendTo(target);
                                 }
-                            }
-                            // 逐条删除消息
-                            $('.chatsitem-body').longPress(function () {
-                                var $t = $(this);
-                                var delGialog = $(document).dialog({
-                                    dialogClass: 'dialog-content-bd-hide',
-                                    type: 'confirm',
-                                    style: 'ios',
-                                    titleShow: false,
-                                    content: '',
-                                    overlayClose: true,
-                                    buttonStyle: 'stacked',
-                                    buttons: [
-                                        {
-                                            name: '复制',
-                                            callback: function () {
-                                                Clipboard.copy($t.html());
-                                            }
-                                        },
-                                        {
-                                            name: '删除消息',
-                                            callback: function () {
-                                                $t.parents('.chatsitem').remove();
-                                            }
-                                        }
-                                    ]
-                                });
                             });
+                            pullDown.html('').show();
                         }
-                        timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
-                        // 修正容器高度
-                        fixedContainerH();
-                        vSwiper.update(); // 更新容器尺寸
-                    },
-                    error: function(xhr, type, errorThrown) {
-                        pullUp.html('加载失败！');
+                        //有数据的时候要做判断
+                        if (loadFlag) {
+                            target.prepend(str);
+                        }
                     }
-                });
-            }
-            // 发送按钮状态
-            function sendBtnStatus($obj) {
-                var wordsLen = $obj.html().length;
-                var $sendBtn = $('#sendBtn');
-                var $addBtn = $('.icon.iconfont-add');
-                if (wordsLen > 0) {
-                    $sendBtn.show();
-                    $addBtn.hide();
-                } else {
-                    $sendBtn.hide();
-                    $addBtn.show();
+                    timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
+                    // 修正容器高度
+                    fixedContainerH();
+                    vSwiper.update(); // 更新容器尺寸
+                    
+                    // 逐条删除消息
+                    $(".chatsitem-body").longPress(function() {
+                        var $t = $(this);
+                        var delGialog = $(document).dialog({
+                            dialogClass: "dialog-content-bd-hide",
+                            type: "confirm",
+                            style: "ios",
+                            titleShow: false,
+                            content: "",
+                            overlayClose: true,
+                            buttonStyle: "stacked",
+                            buttons: [
+                                {
+                                    name: "复制",
+                                    callback: function (event) {
+                                        Clipboard.copy($t.html());
+                                    }
+                                },
+                                {
+                                    name: "删除消息",
+                                    callback: function (event) {
+                                        $t.parent(".chatsitem").remove();
+                                    }
+                                }
+                            ]
+                        });
+                    });
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
                 }
+            });
+        }
+        // 发送按钮状态
+        function sendBtnStatus($obj) {
+            var wordsLen = $obj.html().length;
+            var $sendBtn = $('#sendBtn');
+            var $addBtn = $('.icon.iconfont-add');
+            if (wordsLen > 0) {
+                $sendBtn.show();
+                $addBtn.hide();
+            } else {
+                $sendBtn.hide();
+                $addBtn.show();
             }
-            // 逐条删除消息
-            function delChats($obj) {
-                var wordsLen = $obj.html().length;
-                var $sendBtn = $('#sendBtn');
-                var $addBtn = $('.icon.iconfont-add');
-                if (wordsLen > 0) {
-                    $sendBtn.show();
-                    $addBtn.hide();
-                } else {
-                    $sendBtn.hide();
-                    $addBtn.show();
-                }
+        }
+        // 逐条删除消息
+        function delChats($obj) {
+            var wordsLen = $obj.html().length;
+            var $sendBtn = $('#sendBtn');
+            var $addBtn = $('.icon.iconfont-add');
+            if (wordsLen > 0) {
+                $sendBtn.show();
+                $addBtn.hide();
+            } else {
+                $sendBtn.hide();
+                $addBtn.show();
             }
-            // 消息提示
-            function loadingMsg(str) {
-                loading = $(document).dialog({
-                    type: 'toast',
-                    infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
-                    infoText: str
-                });
+        }
+        // 消息提示
+        function msg(str) {
+            $(document).dialog({
+                type: 'notice',
+                infoText: str,
+                autoClose: 1500,
+                position: 'bottom'
+            });
+        }
+        // 消息提示
+        function noData(type, text) {
+            var color, icon;
+            switch (type) {
+                case 'primary':
+                    color = 'msg msg-primary';
+                    icon = 'icon iconfont-correctcircle';
+                    break;
+                default:
+                    color = 'msg msg-default';
+                    icon = 'icon iconfont-infocircle';
             }
-            // 消息提示
-            function alert(str) {
-                $(document).dialog({
-                    type: 'notice',
-                    infoText: str,
-                    autoClose: 1500,
-                    position: 'bottom'
-                });
-            }
-            // 消息提示
-            function msg(str) {
-                $(document).dialog({
-                    type: 'notice',
-                    infoText: str,
-                    autoClose: 1500,
-                    position: 'bottom'
-                });
-            }
-            // 消息提示
-            function noData(type, text) {
-                var color, icon;
-                switch (type) {
-                    case 'primary':
-                        color = 'msg msg-primary';
-                        icon = 'icon iconfont-correctcircle';
-                        break;
-                    default:
-                        color = 'msg msg-default';
-                        icon = 'icon iconfont-infocircle';
-                }
-                var str = '';
-                str += '<div class="' + color + '">';
-                str += '<h1><i class="' + icon + '"></i></h1>' + '<h3 class="text-center">' + text + "</h3>" + "</div>";
-                targetObj.html(str);
-            }
-            // 相隔一天
-            function daysBetween(startTime, endTime) {
-                // startTime = Date.parse(new Date(startTime));
-                // endTime = Date.parse(new Date(endTime));
-                // newDay = Math.abs(parseInt((endTime - startTime) / 1000 / 3600 / 24));
-                // $('.chatslist .chatsitem').each(function(e){
-                //     var thisTime = $(this).data('time');
-                //     if (newDay == 1 && thisTime == startTime) {
-                //         $(this).before('<div class="chatsitem-time"><small>' + startTime + '</small></div>');
-                //     }
-                // });
-            }
-            // 底部弹出菜单
-            emotions +=
-                '<div class="emotions-container swiper-slide padding">' +
-                '<ul class="emotions-menu flex-wrap row-wrap">' +
-                '<li><img src="images/emotions/doubt.gif"></li>' +
-                '<li><img src="images/emotions/dribble.gif"></li>' +
-                '<li><img src="images/emotions/embarrassed.gif"></li>' +
-                '<li><img src="images/emotions/extreme_sexy_girl.gif"></li>' +
-                '<li><img src="images/emotions/feel_good.gif"></li>' +
-                '<li><img src="images/emotions/go.gif"></li>' +
-                '<li><img src="images/emotions/haha.gif"></li>' +
-                '<li><img src="images/emotions/hell_boy.gif"></li>' +
-                '<li><img src="images/emotions/hungry.gif"></li>' +
-                '<li><img src="images/emotions/look_down.gif"></li>' +
-                '<li><img src="images/emotions/matrix.gif"></li>' +
-                '<li><img src="images/emotions/misdoubt.gif"></li>' +
-                '<li><img src="images/emotions/nosebleed.gif"></li>' +
-                '<li><img src="images/emotions/oh.gif"></li>' +
-                '<li><img src="images/emotions/ops.gif"></li>' +
-                '<li><img src="images/emotions/pudency.gif"></li>' +
-                '<li><img src="images/emotions/rap.gif"></li>' +
-                '<li><img src="images/emotions/sad.gif"></li>' +
-                '<li><img src="images/emotions/sexy_girl.gif"></li>' +
-                '<li><img src="images/emotions/shame.gif"></li>' +
-                '<li class="del"><img src="images/delete.svg"></li>' +
-                "</ul>" +
-                "</div>";
+            var str = '';
+            str += '<div class="' + color + '">';
+            str += '<h3 class="text-center">' + text + '</h3>';
+            str += '</div>';
+            targetObj.html(str);
+        }
+        // 相隔一天
+        function daysBetween(startTime, endTime) {
+            // startTime = Date.parse(new Date(startTime));
+            // endTime = Date.parse(new Date(endTime));
+            // newDay = Math.abs(parseInt((endTime - startTime) / 1000 / 3600 / 24));
+            // $('.chatslist .chatsitem').each(function(e){
+            //     var thisTime = $(this).data('time');
+            //     if (newDay == 1 && thisTime == startTime) {
+            //         $(this).before('<div class="chatsitem-time"><small>' + startTime + '</small></div>');
+            //     }
+            // });
+        }
+        // 底部弹出菜单
+        emotions +=
+            '<div class="emotions-container swiper-slide padding">' +
+            '<ul class="emotions-menu flex-wrap row-wrap">' +
+            '<li><img src="images/emotions/doubt.gif"></li>' +
+            '<li><img src="images/emotions/dribble.gif"></li>' +
+            '<li><img src="images/emotions/embarrassed.gif"></li>' +
+            '<li><img src="images/emotions/extreme_sexy_girl.gif"></li>' +
+            '<li><img src="images/emotions/feel_good.gif"></li>' +
+            '<li><img src="images/emotions/go.gif"></li>' +
+            '<li><img src="images/emotions/haha.gif"></li>' +
+            '<li><img src="images/emotions/hell_boy.gif"></li>' +
+            '<li><img src="images/emotions/hungry.gif"></li>' +
+            '<li><img src="images/emotions/look_down.gif"></li>' +
+            '<li><img src="images/emotions/matrix.gif"></li>' +
+            '<li><img src="images/emotions/misdoubt.gif"></li>' +
+            '<li><img src="images/emotions/nosebleed.gif"></li>' +
+            '<li><img src="images/emotions/oh.gif"></li>' +
+            '<li><img src="images/emotions/ops.gif"></li>' +
+            '<li><img src="images/emotions/pudency.gif"></li>' +
+            '<li><img src="images/emotions/rap.gif"></li>' +
+            '<li><img src="images/emotions/sad.gif"></li>' +
+            '<li><img src="images/emotions/sexy_girl.gif"></li>' +
+            '<li><img src="images/emotions/shame.gif"></li>' +
+            '<li class="del"><img src="images/delete.svg"></li>' +
+            "</ul>" +
+            "</div>";
                 // 禁止默认事件
                 // window.ontouchstart = function (e) { e.preventDefault(); };
                 // document.addEventListener("touchmove", function (e) { e.preventDefault(); }, false);
             //]]>
-        </script>
-    </body>
+    </script>
+</body>
+
 </html>

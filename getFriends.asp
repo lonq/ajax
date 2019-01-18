@@ -2,7 +2,7 @@
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"--><%
 '常用变量
-Dim Sql, Rs, RsFriendsID, Action, searchKey, UsersID, ReturnStr, OneRecord
+Dim Sql, Rs, RsFriendsID, RsMaxs, Action, searchKey, UsersID, maxChatsPage, ReturnStr, OneRecord
 
 Action = Trim(Request("Action"))
 searchkey = Trim(Request("searchkey"))
@@ -69,17 +69,31 @@ Else
         Else
             x = iPageSize
         End If
+
         ReturnStr = "{" & vbCrLf
         ReturnStr = ReturnStr & """total"": " & Rs.RecordCount & "," & vbCrLf
         ReturnStr = ReturnStr & """pagecount"": " & Rs.PageCount & "," & vbCrLf
         ReturnStr = ReturnStr & """rows"": ["
         For i = 1 To x
 
+            '聊天记录
+            Set RsMaxs = server.CreateObject("adodb.recordset")
+            Sql = "Select * from LQ_Chats where (OwnerID = " & UsersID & " and BuddyID = " & Rs("BuddyID") & ") or (OwnerID = " & Rs("BuddyID") & " and BuddyID = " & UsersID & ") and IsShow = 1 order by ID Asc"
+            RsMaxs.Open Sql,Conn,1,1
+            If RsMaxs.eof And RsMaxs.bof Then
+                maxChatsPage = 1
+            Else
+                maxChatsPage = round((RsMaxs.RecordCount / 5) + 0.5)
+            End If
+            Call RsClose(RsMaxs)
+
             Set RsFriendsID = server.CreateObject("adodb.recordset")
             Sql = "Select * from [LQ_Users] where UsersID = " & Rs("BuddyID") & " and IsActive = 1 order by UsersID Asc"
             RsFriendsID.Open Sql,Conn,1,1
             If Not(RsFriendsID.eof And RsFriendsID.bof) Then
+                
                 OneRecord = "{" & vbCrLf
+                OneRecord = OneRecord & """maxchatspage"": " & maxChatsPage & "," & vbCrLf
                 OneRecord = OneRecord & """usersid"": " & RsFriendsID("UsersID") & "," & vbCrLf
                 OneRecord = OneRecord & """userspetName"": """ & RsFriendsID("UsersPetName") & """," & vbCrLf
                 OneRecord = OneRecord & """usersface"": """ & RsFriendsID("UsersFace") & """," & vbCrLf
