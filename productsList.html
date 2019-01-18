@@ -154,7 +154,7 @@
         }
         //上拉结束提示
         function isEndTips(c1, c2) {
-            if (c1 == c2) {
+            if (c1 >= c2) {
                 pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
             } else {
                 pullUp.html('上拉加载更多').show();
@@ -201,9 +201,9 @@
                                 str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
                                     '<div class="thumb thumb-md">';
                                 if (k.pictures.constructor === Array) {
-                                    str += '<img src="' + k.pictures[0] + '">';
+                                    str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
                                 } else {
-                                    str += '<img src="' + k.pictures + '">';
+                                    str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
                                 }
                                 str += '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
@@ -268,9 +268,9 @@
                             str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
                                 '<div class="thumb thumb-md">';
                             if (k.pictures.constructor === Array) {
-                                str += '<img src="' + k.pictures[0] + '">';
+                                str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
                             } else {
-                                str += '<img src="' + k.pictures + '">';
+                                str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
                             }
                             str += '</div>' +
                                 '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +

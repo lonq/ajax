@@ -1,6 +1,7 @@
 // /*详情*/
 .detail-picture {
     position: relative;
+    overflow: hidden;
     > img {
         .center-block();
         .img-responsive(block);
@@ -400,6 +401,8 @@ ul.user-capability {
     font-size: @font-size-base;
     line-height: @line-height-base;
     .chatsitem {
+        // .user-select(none);
+        // .touch-action(manipulation);
         // 列表组间隔
         + .chatsitem {
             margin-top: @padding-large-vertical;
@@ -797,13 +800,16 @@ ul.user-capability {
         border-radius: @border-radius-base;
         .dialog-content-ft {
             &.stacked {
-                :after {
+                &:after {
                     display: none;
                 }
                 .dialog-btn,
                 .dialog-btn-hl {
                     color: @gray-dark;
                     font-size: @font-size-base;
+                    &:first-child:after {
+                        display: none;
+                    }
                 }
                 
             }

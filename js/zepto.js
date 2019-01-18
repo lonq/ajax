@@ -279,7 +279,6 @@
             element.querySelectorAll(selector) // Or it's not simple, and we need to query all
         )
     }
-  
     function filtered(nodes, selector) {
       return selector == null ? $(nodes) : $(nodes).filter(selector)
     }
@@ -1055,7 +1054,6 @@
     $.fn.one = function(event, selector, data, callback){
       return this.on(event, selector, data, callback, 1)
     }
-  
     var returnTrue = function(){return true},
         returnFalse = function(){return false},
         ignoreProperties = /^([A-Z]|returnValue$|layer[XY]$|webkitMovement[XY]$)/,
@@ -1111,6 +1109,7 @@
       $(document.body).undelegate(this.selector, event, callback)
       return this
     }
+
   
     $.fn.on = function(event, selector, data, callback, one){
       var autoRemove, delegator, $this = this
@@ -1144,6 +1143,23 @@
   
         add(element, event, callback, data, selector, delegator || autoRemove)
       })
+    }
+    // longPress
+    $.fn.longPress = function(fn) {
+        var timeout = undefined;
+        var $this = this;
+        for (var i = 0; i < $this.length; i++) {
+            $this[i].addEventListener('touchstart', function(event) {
+                event.preventDefault();
+                // event.stopPropagation();
+                timeout = setTimeout(fn.bind($(this)), 800); //长按时间超过800ms，则执行传入的方法
+            }, false);
+            $this[i].addEventListener('touchend', function(event) {
+                event.preventDefault();
+                // event.stopPropagation();
+                clearTimeout(timeout); //长按时间少于800ms，不会执行传入的方法
+            }, false);
+        }
     }
     $.fn.off = function(event, selector, callback){
       var $this = this
@@ -1190,19 +1206,6 @@
         })
       })
       return result
-    }
-    // longPress
-    $.fn.longPress = function(fn) {
-        var timeout = undefined;
-        var $this = this;
-        for(var i = 0;i<$this.length;i++){
-            $this[i].addEventListener('touchstart', function(event) {
-                timeout = setTimeout(fn, 800);  //长按时间超过800ms，则执行传入的方法
-                }, false);
-            $this[i].addEventListener('touchend', function(event) {
-                clearTimeout(timeout);  //长按时间少于800ms，不会执行传入的方法
-                }, false);
-        }
     }
   
     // shortcut methods for `.bind(event, fn)` for each event type

@@ -1471,6 +1471,7 @@ table {
                 width: 0;
                 height: 0;
                 margin-left: -@caret-width-large;
+                margin-bottom: -2px;
                 border-bottom: @caret-width-large dashed;
                 border-bottom: @caret-width-large solid ~"\9"; // IE8
                 border-bottom-color: #fff;
@@ -1545,6 +1546,8 @@ table {
     // Dividers (basically an hr) within the dropdown
     .divider {
         .nav-divider(@dropdown-divider-bg);
+        margin-left: @padding-base-horizontal;
+        margin-right: @padding-base-horizontal;
     }
     // Links within the dropdown menu
     > li {

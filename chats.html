@@ -1,24 +1,25 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
-    <head>
-        <meta charset="utf-8" />
-        <meta name="renderer" content="webkit" />
-        <meta name="apple-mobile-web-app-capable" content="yes" />
-        <meta name="apple-touch-fullscreen" content="yes" />
-        <meta name="full-screen" content="yes" />
-        <meta name="x5-fullscreen" content="true" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-        <meta name="screen-orientation" content="portrait" />
-        <meta name="x5-orientation" content="portrait" />
-        <meta name="format-detection" content="telephone=no,email=no" />
-        <meta name="author" content="lonq" />
-        <meta name="copyright" content="lonq" />
-        <title>-</title>
-        <link href="css/style.css" rel="stylesheet" />
-        <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet" />
-        <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet" />
-        <script src="js/flexible.js"></script>
-    </head>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="renderer" content="webkit">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-touch-fullscreen" content="yes">
+    <meta name="full-screen" content="yes">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-orientation" content="portrait">
+    <meta name="format-detection" content="telephone=no,email=no">
+    <meta name="author" content="lonq">
+    <meta name="copyright" content="lonq">
+    <title>-</title>
+    <link href="css/style.css" rel="stylesheet">
+    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <script src="js/flexible.js"></script>
+</head>
 
     <body>
         <header>
@@ -99,6 +100,7 @@
         <script src="js/checkLogin.js"></script>
         <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
         <script src="js/timeago.js-master/dist/timeago.min.js"></script>
+        <script src="js/clipboard.js"></script>
         <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
         <script src="js/dropdown.js"></script>
         <script src="js/common.js"></script>
@@ -160,30 +162,6 @@
                 getContent();
                 // 默认加载第一选项第一屏数据
                 getData(targetObj);
-                // 逐条删除消息
-                $('.chatsitem-body').longPress(function (e) {
-                // $(window).on('longPress', '.chatsitem-body', function (e) {
-                    // e.preventDefault();
-                    var $t = $(this);
-                    var $p = $t.parents('.chatsitem');
-                    var delGialog = $(document).dialog({
-                        dialogClass: 'dialog-content-bd-hide',
-                        type: 'confirm',
-                        style: 'ios',
-                        titleShow: false,
-                        content: '',
-                        overlayClose: true,
-                        buttonStyle: 'stacked',
-                        buttons: [
-                            {
-                                name: '删除消息',
-                                callback: function () {
-                                    $p.remove();
-                                }
-                            }
-                        ]
-                    });
-                });
                 // 清空消息
                 $(document).on('tap', '.empty-chat-btn', function (e) {
                     e.preventDefault();
@@ -204,6 +182,7 @@
                     showEmotions($t, $(".chats-emotions-panel"));
                     fixedContainerH();
                 });
+                // 关闭底部弹出
                 $(document).on("click", function(e) {
                     var $emotionsPanel = $(".chats-panel");
                     if ($emotionsPanel.has(e.target).length === 0) {
@@ -219,6 +198,7 @@
                     hideEmotions($("#emotionsBtn"), $(".chats-emotions-panel"));
                     fixedContainerH();
                 });
+                // 关闭底部ActionSheet
                 $(document).on("click", function(e) {
                     var actionsheet = $(".actionsheet");
                     if (actionsheet.has(e.target).length === 0) {
@@ -335,13 +315,13 @@
                                     // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
                                     if (usersid == k.toid) {
                                         str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
-                                        '<div class="chatsitem-body"><p>' + k.chatscontent + '</p></div>' +
+                                        '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
                                         '<div class="avatar"><img src="' + tousersface + '"></div>' +
                                         '</div>';
                                     } else {
                                         str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
                                         '<div class="avatar"><img src="' + fromusersface + '"></div>' +
-                                        '<div class="chatsitem-body"><p>' + k.chatscontent + '</p></div>' +
+                                        '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
                                         '</div>';
                                     }
                                 });
@@ -357,6 +337,33 @@
                                     $(str).appendTo(target);
                                 }
                             }
+                            // 逐条删除消息
+                            $('.chatsitem-body').longPress(function () {
+                                var $t = $(this);
+                                var delGialog = $(document).dialog({
+                                    dialogClass: 'dialog-content-bd-hide',
+                                    type: 'confirm',
+                                    style: 'ios',
+                                    titleShow: false,
+                                    content: '',
+                                    overlayClose: true,
+                                    buttonStyle: 'stacked',
+                                    buttons: [
+                                        {
+                                            name: '复制',
+                                            callback: function () {
+                                                Clipboard.copy($t.html());
+                                            }
+                                        },
+                                        {
+                                            name: '删除消息',
+                                            callback: function () {
+                                                $t.parents('.chatsitem').remove();
+                                            }
+                                        }
+                                    ]
+                                });
+                            });
                         }
                         timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                         // 修正容器高度
@@ -400,6 +407,15 @@
                     type: 'toast',
                     infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
                     infoText: str
+                });
+            }
+            // 消息提示
+            function alert(str) {
+                $(document).dialog({
+                    type: 'notice',
+                    infoText: str,
+                    autoClose: 1500,
+                    position: 'bottom'
                 });
             }
             // 消息提示

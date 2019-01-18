@@ -121,7 +121,7 @@
         }
         //上拉结束提示
         function isEndTips(c1, c2) {
-            if (c1 == c2) {
+            if (c1 >= c2) {
                 pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
             } else {
                 pullUp.html('上拉加载更多').show();

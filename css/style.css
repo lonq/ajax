@@ -259,7 +259,6 @@ button[disabled],
 input[disabled] {
   cursor: default;
 }
-/*图文混排*/
 .text-word .img,
 .text-word img {
   display: inline-block !important;
@@ -372,9 +371,6 @@ input[disabled] {
 .margin-vertical-lg {
   margin-top: 0.533333rem;
   margin-bottom: 0.533333rem;
-}
-.clear-margin {
-  margin: 0 !important;
 }
 .margin-top {
   margin-top: 0.266667rem;
@@ -3710,6 +3706,7 @@ table th[class*="col-"] {
   width: 0;
   height: 0;
   margin-left: -0.213333rem;
+  margin-bottom: -2px;
   border-bottom: 0.213333rem dashed;
   border-bottom: 0.213333rem solid \9;
   border-bottom-color: #fff;
@@ -3782,6 +3779,8 @@ table th[class*="col-"] {
   margin: 0;
   overflow: hidden;
   background-color: #e5e5e5;
+  margin-left: 0.4rem;
+  margin-right: 0.4rem;
 }
 .dropdown-menu > li {
   line-height: 1.42857143;
@@ -3893,6 +3892,7 @@ table th[class*="col-"] {
 }
 .detail-picture {
   position: relative;
+  overflow: hidden;
 }
 .detail-picture > img {
   margin-left: auto;
@@ -4720,13 +4720,17 @@ ul.user-capability.space-left > li + li:before {
 .dialog .dialog-content {
   border-radius: 0.106667rem;
 }
-.dialog .dialog-content .dialog-content-ft.stacked :after {
+.dialog .dialog-content .dialog-content-ft.stacked:after {
   display: none;
 }
 .dialog .dialog-content .dialog-content-ft.stacked .dialog-btn,
 .dialog .dialog-content .dialog-content-ft.stacked .dialog-btn-hl {
   color: #333333;
   font-size: 0.4rem;
+}
+.dialog .dialog-content .dialog-content-ft.stacked .dialog-btn:first-child:after,
+.dialog .dialog-content .dialog-content-ft.stacked .dialog-btn-hl:first-child:after {
+  display: none;
 }
 @font-face {
   font-family: "iconfont";
