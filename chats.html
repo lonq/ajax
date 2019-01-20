@@ -23,7 +23,7 @@
 
 <body>
     <header>
-        <nav class="navbar navbar-dark">
+        <nav class="navbar">
             <ul class="navbar-left">
                 <li>
                     <a href="friends.html"><i class="iconfont-angleleft"></i></a>
@@ -31,7 +31,7 @@
             </ul>
             <h3 class="navbar-title js-navbar-title">-</h3>
             <ul class="navbar-left">
-                <li class="dropdown dropdown-dark pull-right">
+                <li class="dropdown pull-right">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-more"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:;" class="empty-chat-btn">清空聊天记录</a></li>
@@ -52,11 +52,16 @@
 
     <footer>
         <div class="chats-panel">
+            <form name="addForm" id="addForm" method="POST" action="">
+                <input type="hidden" name="Types" id="Types" value="0">
+                <input type="hidden" name="ChatsContent" id="ChatsContent">
+            </form>
             <div class="chats-input-panel">
                 <div class="editor-container">
                     <div class="editor-text" contenteditable="true"></div>
                 </div>
-                <span class="icon iconfont-laugh js-emotions-btn" id="emotionsBtn"></span> <span class="icon iconfont-add js-file-btn"></span>
+                <span class="icon iconfont-laugh js-emotions-btn" id="emotionsBtn"></span>
+                <span class="icon iconfont-add js-file-btn"></span>
                 <button type="button" class="btn btn-success" id="sendBtn" style="display: none;">发送</button>
             </div>
             <div class="chats-emotions-panel swiper-container" style="display: none;">
@@ -96,9 +101,9 @@
 
     <script type="text/javascript">
         //<![CDATA[
-        var usersid = HtmlUtil.getCookie($.fn.cookie("LQCookies"), "UsersID"); // 用户名
+        var usersid = HtmlUtil.getCookie($.fn.cookie("LQCookies"), "UsersID"); // 用户ID
         var fromid = HtmlUtil.getUrlParms("FromID"); // 好友ID
-        var page = HtmlUtil.getUrlParms("maxChatsPage"); // 好友ID
+        var page = HtmlUtil.getUrlParms("maxChatsPage"); // 最大页数
 
         var emotions = "";
 
@@ -151,6 +156,10 @@
             getContent();
             // 默认加载第一选项第一屏数据
             getData(page, targetObj);
+            // 添加
+            $("#sendBtn").on("click", function () {
+                addData(targetObj);
+            });
             // 清空消息
             $(document).on('tap', '.empty-chat-btn', function (e) {
                 e.preventDefault();
@@ -160,6 +169,7 @@
             // 显示发送按钮
             $(".editor-text").on("keyup", function () {
                 var $t = $(this);
+                $("#ChatsContent").val($t.html());
                 sendBtnStatus($t);
                 fixedContainerH();
             });
@@ -275,7 +285,7 @@
                     page: page,
                     FromID: fromid
                 },
-                timeout: 150000,
+                timeout: 15000,
                 dataType: "json",
                 success: function (reponse) {
                     if (reponse == 0) {
@@ -355,6 +365,102 @@
                 },
                 error: function (xhr, type, errorThrown) {
                     pullUp.html('加载失败！');
+                }
+            });
+        }
+        // 插入单条数据
+        function insertData(target) {
+            $.ajax({
+                type: "GET",
+                url: "getChats.asp?Action=insertData",
+                data: {
+                    page: page,
+                    FromID: fromid
+                },
+                timeout: 15000,
+                dataType: "json",
+                success: function (reponse) {
+                    // 有数据
+                    var str = '';
+                    var id = reponse.id,
+                        toid = reponse.toid,
+                        fromid = reponse.fromid,
+                        types = reponse.types,
+                        chatscontent = reponse.chatscontent,
+                        viewtime = reponse.viewtime,
+                        addtime = reponse.addtime,
+                        isshow = reponse.isshow;
+                    str += '<div class="chatsitem tochats chatsitem-access" data-id="' + id + '" data-time="' + addtime + '">' +
+                        '<div class="chatsitem-body">' + chatscontent + '</div>' +
+                        '<div class="avatar"><img src="uploadfiles/avatars/avatar-01.jpg"></div>' +
+                        '</div>';
+                    $(str).appendTo(target);
+
+                    timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
+                    // 修正容器高度
+                    fixedContainerH();
+                    vSwiper.update(); // 更新容器尺寸
+
+                    // 逐条删除消息
+                    $(".chatsitem-body").longPress(function () {
+                        var $t = $(this);
+                        var delGialog = $(document).dialog({
+                            dialogClass: "dialog-content-bd-hide",
+                            type: "confirm",
+                            style: "ios",
+                            titleShow: false,
+                            content: "",
+                            overlayClose: true,
+                            buttonStyle: "stacked",
+                            buttons: [
+                                {
+                                    name: "复制",
+                                    callback: function (event) {
+                                        Clipboard.copy($t.html());
+                                    }
+                                },
+                                {
+                                    name: "删除消息",
+                                    callback: function (event) {
+                                        $t.parent(".chatsitem").remove();
+                                    }
+                                }
+                            ]
+                        });
+                    });
+                },
+                error: function (xhr, type, errorThrown) {
+                    msg('添加失败！');
+                }
+            });
+        }
+        // 添加数据
+        function addData(target) {
+            var OwnerID = usersid,
+                BuddyID = fromid,
+                Types = $.trim($('#Types').val()),
+                ChatsContent = $.trim($('#ChatsContent').val());
+            $.ajax({
+                type: "POST",
+                url: "getChats.asp?Action=addData",
+                data: {
+                    "OwnerID": OwnerID,
+                    "BuddyID": BuddyID,
+                    "Types": Types,
+                    "ChatsContent": ChatsContent
+                },
+                timeout: 15000,
+                dataType: "json",
+                success: function (reponse) {
+                    insertData(target);
+                    $(".editor-text").html('');
+                    $("#ChatsContent").html('');
+                    sendBtnStatus($(".editor-text"));
+                    fixedContainerH();
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    msg('添加失败！');
                 }
             });
         }

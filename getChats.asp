@@ -9,6 +9,12 @@ searchkey = Trim(Request("searchkey"))
 FromID = ChkNumeric(Request("FromID"))
 GetChatsMaxID = ChkNumeric(Request("maxChatsid"))
 
+Dim OwnerID, BuddyID, Types, ChatsContent
+OwnerID = ChkNumeric(Request("OwnerID"))
+BuddyID = ChkNumeric(Request("BuddyID"))
+Types = ChkNumeric(Request("Types"))
+ChatsContent = Trim(Request("ChatsContent"))
+
 '获取Buddy
 Dim RsFrom, FromUsersName, FromUsersPetName, FromUsersFace
 Set RsFrom = server.CreateObject("adodb.recordset")
@@ -54,6 +60,12 @@ End Function
 Select Case Action
 Case "lists"
     Call lists()
+Case "addData"
+    Call addData()
+Case "insertData"
+    Call insertData()
+Case "delData"
+    Call delData()
 Case "content"
     Call content()
 Case Else
@@ -140,5 +152,51 @@ End If
 Call RsClose(Rs)
 lists = ReturnStr
 Response.Write (lists)
+End Function
+
+'添加记录
+Public Function addData()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from LQ_Chats"
+Rs.Open Sql,Conn,1,3
+Rs.AddNew
+
+Rs("OwnerID") = OwnerID
+Rs("BuddyID") = BuddyID
+Rs("Types") = Types
+Rs("ChatsContent") = ChatsContent
+Rs("ViewTime") = Now()
+Rs("AddTime") = Now()
+Rs("IsShow") = 1
+
+Rs.Update
+Call RsClose(Rs)
+Call ConnClose(Conn)
+End Function
+
+'立即显示添加的记录
+Public Function insertData()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from LQ_Chats where (OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ") and IsShow = 1 order by ID Desc"
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = "{" & vbCrLf
+    ReturnStr = ReturnStr & """id"": " & Rs("ID") & "," & vbCrLf
+    ReturnStr = ReturnStr & """toid"": " & Rs("OwnerID") & "," & vbCrLf
+    ReturnStr = ReturnStr & """fromid"": " & Rs("BuddyID") & "," & vbCrLf
+    ReturnStr = ReturnStr & """types"": " & Rs("Types") & "," & vbCrLf
+    ReturnStr = ReturnStr & """chatscontent"": """ & Rs("ChatsContent") & """," & vbCrLf
+    ReturnStr = ReturnStr & """viewtime"": """ & Rs("ViewTime") & """," & vbCrLf
+    ReturnStr = ReturnStr & """addtime"": """ & Rs("AddTime") & """," & vbCrLf
+    ReturnStr = ReturnStr & """isshow"": " & Rs("IsShow") & "" & vbCrLf
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+Call ConnClose(Conn)
+insertData = ReturnStr
+Response.Write (insertData)
 End Function
 %>
