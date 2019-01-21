@@ -43,7 +43,7 @@ Call RsClose(RsTo)
 
 '翻页
 Dim page, PageN, CurrPage, pageCount
-PageN = 5
+PageN = 10
 
 '获取最大ID
 Public Function MaxID(Datasheet)

@@ -133,7 +133,6 @@
             },
             on: {
                 touchEnd: function (event) {
-                    pullUpAction();
                     pullDownAction();
                     return false;
                 }
@@ -238,21 +237,6 @@
         function hideActionSheet() {
             var actionsheet = $(".actionsheet");
             actionsheet.removeClass("actionsheet-toggle");
-        }
-        //上拉更新
-        function pullUpAction() {
-            var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
-            var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
-            if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
-                if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 更新中...').show();
-                    loadFlag = true;
-                    //加载数据
-                    page++;
-                    // getData(targetObj);
-                    console.log('上拉');
-                }
-            }
         }
         //下拉加载
         function pullDownAction() {

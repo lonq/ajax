@@ -38,7 +38,7 @@ function getFooter(pageName) {
             _t1.addClass('active');
         }
     });
-    // 禁止底部主菜单激活后的行为
+    // 禁止底部主菜单激活后的事件
     $(document).on('click', 'ul.footer>li>a', function(e){
         var _t2 = $(this);
         if (_t2.hasClass('active')){
