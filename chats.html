@@ -417,7 +417,7 @@
                     maxlistsid: localStorage.getItem('oldChatsListsID')
                 },
                 success: function (reponse) {
-                    pullUp.hide();
+                    pullUp.html('');
                     if (reponse != 0) {
                         // 有数据
                         var str = '';
