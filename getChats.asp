@@ -2,12 +2,12 @@
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"--><%
 '常用变量
-Dim Sql, Rs, RsMax, Action, ID, FromID, GetMaxChatsID, ReturnStr, OneRecord
+Dim Sql, Rs, RsMax, Action, ID, FromID, GetMaxChatsListsID, ReturnStr, OneRecord
 Dim Picture, arrPicture, P
 Action = Trim(Request("Action"))
 searchkey = Trim(Request("searchkey"))
 FromID = ChkNumeric(Request("FromID"))
-GetChatsMaxID = ChkNumeric(Request("maxChatsid"))
+GetMaxChatsListsID = ChkNumeric(Request("maxlistsid"))
 
 Dim OwnerID, BuddyID, Types, ChatsContent
 OwnerID = ChkNumeric(Request("OwnerID"))
@@ -43,7 +43,7 @@ Call RsClose(RsTo)
 
 '翻页
 Dim page, PageN, CurrPage, pageCount
-PageN = 10
+PageN = 5
 
 '获取最大ID
 Public Function MaxID(Datasheet)
@@ -60,6 +60,10 @@ End Function
 Select Case Action
 Case "lists"
     Call lists()
+Case "updatelists"
+    Call updatelists()
+Case "maxPages"
+    Call maxPages()
 Case "addData"
     Call addData()
 Case "insertData"
@@ -92,10 +96,27 @@ content = ReturnStr
 Response.Write (content)
 End Function
 
+'得到page
+Public Function maxPages()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from LQ_Chats where ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and IsShow = 1 order by ID Asc"
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    Rs.PageSize = PageN '每页记录条数
+    ReturnStr = Rs.PageCount
+End If
+Call RsClose(Rs)
+maxPages = ReturnStr
+Response.Write (maxPages)
+End Function
+
 '记录
 Public Function lists()
 Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from LQ_Chats where (OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ") and IsShow = 1 order by ID Asc"
+Sql = "Select * from LQ_Chats where ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and IsShow = 1 order by ID Asc"
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
     Response.Write (0)
@@ -125,7 +146,7 @@ Else
     ReturnStr = "{" & vbCrLf
     ReturnStr = ReturnStr & """total"": " & Rs.RecordCount & "," & vbCrLf
     ReturnStr = ReturnStr & """pagecount"": " & Rs.PageCount & "," & vbCrLf
-    ReturnStr = ReturnStr & """maxchatsid"": " & MaxID("LQ_Chats where") & "," & vbCrLf
+    ReturnStr = ReturnStr & """maxid"": " & MaxID("LQ_Chats where ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and ") & "," & vbCrLf
     ReturnStr = ReturnStr & """fromusersface"": """ & FromUsersFace & """," & vbCrLf
     ReturnStr = ReturnStr & """fromuserspetname"": """ & FromUsersPetName & """," & vbCrLf
     ReturnStr = ReturnStr & """tousersface"": """ & ToUsersFace & """," & vbCrLf
@@ -154,6 +175,48 @@ lists = ReturnStr
 Response.Write (lists)
 End Function
 
+
+'更新
+Public Function updatelists()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from LQ_Chats where ID > " & GetMaxChatsListsID & " and ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and IsShow = 1 order by ID Desc"
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = "{" & vbCrLf
+    ReturnStr = ReturnStr & """total"": " & Rs.RecordCount & "," & vbCrLf
+    ReturnStr = ReturnStr & """pagecount"": " & Rs.PageCount & "," & vbCrLf
+    ReturnStr = ReturnStr & """maxid"": " & MaxID("LQ_Chats where ID > " & GetMaxChatsListsID & " and ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and ") & "," & vbCrLf
+    ReturnStr = ReturnStr & """fromusersface"": """ & FromUsersFace & """," & vbCrLf
+    ReturnStr = ReturnStr & """fromuserspetname"": """ & FromUsersPetName & """," & vbCrLf
+    ReturnStr = ReturnStr & """tousersface"": """ & ToUsersFace & """," & vbCrLf
+    ReturnStr = ReturnStr & """touserspetname"": """ & ToUsersPetName & """," & vbCrLf
+    ReturnStr = ReturnStr & """rows"": ["
+    Do While Not Rs.eof
+        OneRecord = "{" & vbCrLf
+        OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
+        OneRecord = OneRecord & """toid"": " & Rs("OwnerID") & "," & vbCrLf
+        OneRecord = OneRecord & """fromid"": " & Rs("BuddyID") & "," & vbCrLf
+        OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
+        OneRecord = OneRecord & """chatscontent"": """ & Rs("ChatsContent") & """," & vbCrLf
+        OneRecord = OneRecord & """addtime"": """ & Rs("AddTime") & """," & vbCrLf
+        OneRecord = OneRecord & """isshow"": " & Rs("IsShow") & "" & vbCrLf
+        OneRecord = OneRecord & "}"
+        OneRecord = OneRecord & "," & vbCrLf
+        ReturnStr = ReturnStr & OneRecord
+        Rs.Movenext
+    Loop
+    ReturnStr = left(ReturnStr, InStrRev(ReturnStr, ",") - 1)
+    ReturnStr = ReturnStr & "]"
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+updatelists = ReturnStr
+Response.Write (updatelists)
+End Function
+
 '添加记录
 Public Function addData()
 Set Rs = server.CreateObject("adodb.recordset")
@@ -177,7 +240,7 @@ End Function
 '立即显示添加的记录
 Public Function insertData()
 Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from LQ_Chats where (OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ") and IsShow = 1 order by ID Desc"
+Sql = "Select * from LQ_Chats where ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and IsShow = 1 order by ID Desc"
 Rs.Open Sql,Conn,1,1
 If Rs.eof And Rs.bof Then
     Response.Write (0)

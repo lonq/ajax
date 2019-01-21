@@ -103,7 +103,6 @@
         //<![CDATA[
         var usersid = HtmlUtil.getCookie($.fn.cookie("LQCookies"), "UsersID"); // 用户ID
         var fromid = HtmlUtil.getUrlParms("FromID"); // 好友ID
-        var page = HtmlUtil.getUrlParms("maxChatsPage"); // 最大页数
 
         var emotions = "";
 
@@ -113,7 +112,7 @@
         var _footer = $("footer>*");
         var _footerH = 0;
         var _offsetHeight = 0; //滑动束缚容器的偏移高度
-        // var page;
+        var page = getPage();
         var loadFlag = true;
 
         var targetObj = $(".chatslist"); //目标数据容器
@@ -247,9 +246,7 @@
                 if (loadFlag) {
                     pullUp.html('<i class="iconfont-loading animation-spinner"></i> 更新中...').show();
                     loadFlag = true;
-                    //加载数据
-                    page++;
-                    // getData(targetObj);
+                    updateData(targetObj);
                     console.log('上拉');
                 }
             }
@@ -260,6 +257,7 @@
                 if (loadFlag) {
                     pullDown.html('<i class="iconfont-loading animation-spinner"></i>').show();
                     //加载数据
+                    // page = getPage();
                     page--;
                     getData(page, targetObj);
                 }
@@ -292,6 +290,28 @@
                 }
             });
         }
+        // 得到最大page
+        function getPage() {
+            $.ajax({
+                type: 'GET',
+                url: "getChats.asp?Action=maxPages",
+                async: false,
+                cache: false,
+                data: {
+                    FromID: fromid
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    // 有数据
+                    page = reponse;
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+            return page;
+        }
         // 列表
         function getData(page, target) {
             $.ajax({
@@ -314,7 +334,9 @@
                     } else {
                         // 有数据
                         var str = '';
+                        var maxlistsid = reponse.maxid;
                         var maxPageCount = reponse.pagecount;
+                        localStorage.setItem('oldChatsListsID', maxlistsid);
                         var fromusersface = reponse.fromusersface;
                         var fromuserspetname = reponse.fromuserspetname;
                         var tousersface = reponse.tousersface;
@@ -350,9 +372,9 @@
                     // 修正容器高度
                     fixedContainerH();
                     vSwiper.update(); // 更新容器尺寸
-                    
+
                     // 逐条删除消息
-                    $(".chatsitem-body").longPress(function() {
+                    $(".chatsitem-body").longPress(function () {
                         var $t = $(this);
                         var delGialog = $(document).dialog({
                             dialogClass: "dialog-content-bd-hide",
@@ -384,6 +406,53 @@
                 }
             });
         }
+        //更新
+        function updateData(target) {
+            $.ajax({
+                type: 'GET',
+                url: 'getChats.asp?Action=updatelists',
+                timeout: 15000,
+                dataType: 'json',
+                data: {
+                    maxlistsid: localStorage.getItem('oldChatsListsID')
+                },
+                success: function (reponse) {
+                    pullUp.hide();
+                    if (reponse != 0) {
+                        // 有数据
+                        var str = '';
+                        var total = reponse.total;
+                        var listid = reponse.maxid;
+                        var fromusersface = reponse.fromusersface;
+                        var fromuserspetname = reponse.fromuserspetname;
+                        var tousersface = reponse.tousersface;
+                        var touserspetname = reponse.touserspetname;
+                        var list = reponse.rows;
+                        $.each(list, function (i, k) {
+                            // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
+                            // if (usersid == k.toid) {
+                            //     str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
+                            //         '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
+                            //         '<div class="avatar"><img src="' + tousersface + '"></div>' +
+                            //         '</div>';
+                            // } else {
+                                str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
+                                    '<div class="avatar"><img src="' + fromusersface + '"></div>' +
+                                    '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
+                                    '</div>';
+                            // }
+                        });
+                        target.append(str);
+                        localStorage.setItem('oldChatsListsID', listid);
+                        msg('更新了' + total + '条数据');
+                    }
+                    vSwiper.update(); // 更新容器尺寸
+                },
+                error: function (xhr, type, errorThrown) {
+                    pullUp.html('加载失败！');
+                }
+            });
+        };
         // 插入单条数据
         function insertData(target) {
             $.ajax({

@@ -184,7 +184,7 @@
                         var str = '';
                         var maxlistsid = reponse.maxid;
                         var maxPageCount = reponse.pagecount;
-                        localStorage.setItem('oldArticleListsID', maxlistsid);
+                        localStorage.setItem('oldArticlesListsID', maxlistsid);
                         var list = reponse.rows;
                         if (page > maxPageCount) {
                             loadFlag = false;
@@ -287,7 +287,7 @@
             });
         };
 
-        //更新推荐
+        //更新
         function updateData(target) {
             $.ajax({
                 type: 'GET',
@@ -295,7 +295,7 @@
                 timeout: 15000,
                 dataType: 'json',
                 data: {
-                    maxlistsid: localStorage.getItem('oldArticleListsID')
+                    maxlistsid: localStorage.getItem('oldArticlesListsID')
                 },
                 success: function (reponse) {
                     if (reponse != 0) {
@@ -380,7 +380,7 @@
                             }
                         });
                         target.prepend(str);
-                        localStorage.setItem('oldArticleListsID', listid);
+                        localStorage.setItem('oldArticlesListsID', listid);
                         msg('更新了' + total + '条数据');
                     }
                     vSwiper.update(); // 更新容器尺寸
