@@ -31,7 +31,7 @@
             <ul class="navbar-left">
                 <li class="dropdown dropdown-dark pull-right">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-more"></i></a>
-                    <ul class="dropdown-menu dropdown-menu-dark">
+                    <ul class="dropdown-menu">
                         <li><a href="javascript:;" class="batch-operation">批量操作</a></li>
                     </ul>
                 </li>
@@ -160,12 +160,12 @@
                                 str += '<a class="item item-avatar item-access item-access-clear-flag" href="chats.html?FromID=' + k.usersid + '">' +
                                     '<div class="avatar">' +
                                     '<img src="' + k.usersface + '">';
-                                if (k.chatsrecordcount > 0) {
-                                    str += '<span class="badge badge-dot">' + k.chatsrecordcount + '</span>';
+                                if (k.chatsrecordcount > 0 && k.chatsisview == 0) {
+                                    str += '<span class="badge">' + k.chatsrecordcount + '</span>';
                                 }
                                 str += '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h5 class="text-ellipsis clearfix"><small class="timeago pull-right text-muted" datetime="' + k.chatsaddtime + '"></small>' + k.userspetName + k.usersid + '</h5>' +
+                                    '<h5 class="text-ellipsis clearfix"><small class="timeago pull-right text-muted" datetime="' + k.chatsaddtime + '"></small>' + k.userspetName + '</h5>' +
                                     '<p class="desc text-muted text-xs">' + k.chatscontent + '</p>' +
                                     '</div>' +
                                     // '<label class="checkbox margin-left">' +

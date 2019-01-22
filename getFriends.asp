@@ -82,7 +82,7 @@ Else
             If Not(RsUsers.eof And RsUsers.bof) Then
             
                 Set RsChats = server.CreateObject("adodb.recordset")
-                Sql = "Select * from LQ_Chats where OwnerID = " & Rs("BuddyID") & " and IsShow = 1 order by ID Desc"
+                Sql = "Select * from LQ_Chats where (OwnerID = " & Rs("BuddyID") & " and BuddyID = " & MyV_UsersID & ") and IsShow = 1 order by ID Desc"
                 RsChats.Open Sql,Conn,1,1
                 
                     OneRecord = "{" & vbCrLf
@@ -94,6 +94,7 @@ Else
                     OneRecord = OneRecord & """chatscontent"": """ & RsChats("ChatsContent") & """," & vbCrLf
                     OneRecord = OneRecord & """chatsaddtime"": """ & RsChats("AddTime") & """," & vbCrLf
                     OneRecord = OneRecord & """chatsrecordcount"": " & RsChats.RecordCount & "," & vbCrLf
+                    OneRecord = OneRecord & """chatsisview"": " & RsChats("IsView") & "," & vbCrLf
                     OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
                     OneRecord = OneRecord & """ownerid"": " & Rs("OwnerID") & "," & vbCrLf
                     OneRecord = OneRecord & """buddyid"": " & Rs("BuddyID") & "," & vbCrLf

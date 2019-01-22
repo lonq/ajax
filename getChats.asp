@@ -115,6 +115,8 @@ End Function
 
 '记录
 Public Function lists()
+'设置预览过了
+Conn.ExeCute("UpDate LQ_Chats set IsView = 1")
 Set Rs = server.CreateObject("adodb.recordset")
 Sql = "Select * from LQ_Chats where ((OwnerID = " & FromID & " and BuddyID = " & MyV_UsersID & ") or (OwnerID = " & MyV_UsersID & " and BuddyID = " & FromID & ")) and IsShow = 1 order by ID Asc"
 Rs.Open Sql,Conn,1,1

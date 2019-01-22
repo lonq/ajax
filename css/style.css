@@ -3618,6 +3618,7 @@ table th[class*="col-"] {
   align-items: center;
   width: 100%;
   height: 1.173333rem;
+  color: #333333;
 }
 .navbar.affix {
   position: fixed;
@@ -3724,16 +3725,13 @@ table th[class*="col-"] {
   border-right: 0.213333rem solid transparent;
   border-left: 0.213333rem solid transparent;
 }
-.dropup.dropdown-dark,
-.dropdown.dropdown-dark {
-  color: #fff;
-}
 .dropup.dropdown-dark.open .dropdown-toggle:after,
 .dropdown.dropdown-dark.open .dropdown-toggle:after {
   border-bottom-color: #333333;
 }
 .dropup.dropdown-dark .dropdown-menu,
 .dropdown.dropdown-dark .dropdown-menu {
+  color: #fff;
   background-color: #333333;
 }
 .dropup.dropdown-dark .dropdown-menu .divider,

@@ -1377,6 +1377,7 @@ table {
     .align-items(center);
     width: 100%;
     height: @nav-height;
+    color: @gray-dark;
     &.affix {
         position: fixed;
     }
@@ -1481,7 +1482,6 @@ table {
         }
     }
     &.dropdown-dark {
-        color: #fff;
         &.open {
             .dropdown-toggle {
                 &:after {
@@ -1490,6 +1490,7 @@ table {
             }
         }
         .dropdown-menu {
+            color: #fff;
             background-color: @gray-dark;
             .divider {
                 background-color: lighten(@gray-dark, 10%);
