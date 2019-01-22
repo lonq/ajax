@@ -2,10 +2,11 @@
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"--><%
 '常用变量
-Dim Sql, Rs, RsMax, Action, ID, FromID, GetMaxChatsListsID, ReturnStr, OneRecord
+Dim Sql, Rs, RsMax, Action, ID, FromID, ChatsID, GetMaxChatsListsID, ReturnStr, OneRecord
 Dim Picture, arrPicture, P
 Action = Trim(Request("Action"))
 searchkey = Trim(Request("searchkey"))
+ChatsID = ChkNumeric(Request("ChatsID"))
 FromID = ChkNumeric(Request("FromID"))
 GetMaxChatsListsID = ChkNumeric(Request("maxlistsid"))
 
@@ -263,5 +264,12 @@ Call RsClose(Rs)
 Call ConnClose(Conn)
 insertData = ReturnStr
 Response.Write (insertData)
+End Function
+
+'删除记录
+Public Function delData()
+Conn.ExeCute("Delete from LQ_Chats where ID = " & ChatsID & " ")
+Call RsClose(Rs)
+Call ConnClose(Conn)
 End Function
 %>

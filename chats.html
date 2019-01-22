@@ -31,7 +31,7 @@
             </ul>
             <h3 class="navbar-title js-navbar-title">-</h3>
             <ul class="navbar-left">
-                <li class="dropdown pull-right">
+                <li class="dropdown dropdown-dark pull-right">
                     <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown"><i class="iconfont-more"></i></a>
                     <ul class="dropdown-menu">
                         <li><a href="javascript:;" class="empty-chat-btn">清空聊天记录</a></li>
@@ -206,9 +206,9 @@
                 }
             });
             // 逐条删除消息
-            $(document).on('longPress', '.chatsitem-body', function () {
-                delChats($(this));
-            });
+            // $(document).on('longPress', '.chatsitem-body', function () {
+            //     delChats($(this));
+            // });
         });
         //修正容器高度
         function fixedContainerH() {
@@ -247,12 +247,9 @@
             var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
-                if (loadFlag) {
-                    pullUp.html('<i class="iconfont-loading animation-spinner"></i> 更新中...').show();
-                    loadFlag = true;
-                    updateData(targetObj);
-                    console.log('上拉');
-                }
+                loadFlag = true;
+                pullUp.html('<i class="iconfont-loading animation-spinner"></i>').show();
+                updateData(targetObj);
             }
         }
         //下拉加载
@@ -261,7 +258,6 @@
                 if (loadFlag) {
                     pullDown.html('<i class="iconfont-loading animation-spinner"></i>').show();
                     //加载数据
-                    // page = getPage();
                     page--;
                     getData(page, targetObj);
                 }
@@ -375,6 +371,10 @@
                     timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                     // 修正容器高度
                     fixedContainerH();
+                    // 逐条删除消息
+                    $('.chatsitem-body').longPress(function () {
+                        delChats($(this));
+                    });
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {
@@ -390,6 +390,7 @@
                 timeout: 15000,
                 dataType: 'json',
                 data: {
+                    FromID: fromid,
                     maxlistsid: localStorage.getItem('oldChatsListsID')
                 },
                 success: function (reponse) {
@@ -406,17 +407,10 @@
                         var list = reponse.rows;
                         $.each(list, function (i, k) {
                             // str += '<div class="chatsitem-time"><small class="timeago" datetime="' + k.addtime + '"></small></div>';
-                            // if (usersid == k.toid) {
-                            //     str += '<div class="chatsitem tochats chatsitem-access" data-id="' + k.id + '" data-time="' + k.addtime + '">' +
-                            //         '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
-                            //         '<div class="avatar"><img src="' + tousersface + '"></div>' +
-                            //         '</div>';
-                            // } else {
-                                str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
-                                    '<div class="avatar"><img src="' + fromusersface + '"></div>' +
-                                    '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
-                                    '</div>';
-                            // }
+                            str += '<div class="chatsitem fromchats chatsitem-access" data-id="' + k.id + '"  data-time="' + k.addtime + '">' +
+                                '<div class="avatar"><img src="' + fromusersface + '"></div>' +
+                                '<div class="chatsitem-body">' + k.chatscontent + '</div>' +
+                                '</div>';
                         });
                         target.append(str);
                         localStorage.setItem('oldChatsListsID', listid);
@@ -477,10 +471,10 @@
                 type: "POST",
                 url: "getChats.asp?Action=addData",
                 data: {
-                    "OwnerID": OwnerID,
-                    "BuddyID": BuddyID,
-                    "Types": Types,
-                    "ChatsContent": ChatsContent
+                    OwnerID: OwnerID,
+                    BuddyID: BuddyID,
+                    Types: Types,
+                    ChatsContent: ChatsContent
                 },
                 timeout: 15000,
                 dataType: "json",
@@ -512,6 +506,8 @@
         }
         // 逐条删除消息
         function delChats($obj) {
+            var $p = $obj.parent('.chatsitem');
+            var ID = $p.data('id');
             var delGialog = $(document).dialog({
                 dialogClass: 'dialog-content-bd-hide',
                 type: 'confirm',
@@ -530,7 +526,24 @@
                     {
                         name: '删除消息',
                         callback: function (event) {
-                            $obj.parent('.chatsitem').remove();
+                            $.ajax({
+                                type: "POST",
+                                url: "getChats.asp?Action=delData",
+                                data: {
+                                    ChatsID: ID
+                                },
+                                timeout: 15000,
+                                dataType: "json",
+                                success: function (reponse) {
+                                    $p.remove();
+                                    msg('删除成功！');
+                                    fixedContainerH();
+                                    vSwiper.update(); // 更新容器尺寸
+                                },
+                                error: function (xhr, type, errorThrown) {
+                                    msg('错误！');
+                                }
+                            });
                         }
                     }
                 ]
