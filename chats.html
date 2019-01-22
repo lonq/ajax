@@ -21,7 +21,7 @@
     <script src="js/flexible.js"></script>
 </head>
 
-<body>
+<body class="flex-wrap direction-column justify-content-space-between">
     <header>
         <nav class="navbar">
             <ul class="navbar-left">
@@ -205,6 +205,10 @@
                     fixedContainerH();
                 }
             });
+            // 逐条删除消息
+            $(document).on('longPress', '.chatsitem-body', function () {
+                delChats($(this));
+            });
         });
         //修正容器高度
         function fixedContainerH() {
@@ -372,34 +376,6 @@
                     // 修正容器高度
                     fixedContainerH();
                     vSwiper.update(); // 更新容器尺寸
-
-                    // 逐条删除消息
-                    $(".chatsitem-body").longPress(function () {
-                        var $t = $(this);
-                        var delGialog = $(document).dialog({
-                            dialogClass: "dialog-content-bd-hide",
-                            type: "confirm",
-                            style: "ios",
-                            titleShow: false,
-                            content: "",
-                            overlayClose: true,
-                            buttonStyle: "stacked",
-                            buttons: [
-                                {
-                                    name: "复制",
-                                    callback: function (event) {
-                                        Clipboard.copy($t.html());
-                                    }
-                                },
-                                {
-                                    name: "删除消息",
-                                    callback: function (event) {
-                                        $t.parent(".chatsitem").remove();
-                                    }
-                                }
-                            ]
-                        });
-                    });
                 },
                 error: function (xhr, type, errorThrown) {
                     pullUp.html('加载失败！');
@@ -485,34 +461,6 @@
                     // 修正容器高度
                     fixedContainerH();
                     vSwiper.update(); // 更新容器尺寸
-
-                    // 逐条删除消息
-                    $(".chatsitem-body").longPress(function () {
-                        var $t = $(this);
-                        var delGialog = $(document).dialog({
-                            dialogClass: "dialog-content-bd-hide",
-                            type: "confirm",
-                            style: "ios",
-                            titleShow: false,
-                            content: "",
-                            overlayClose: true,
-                            buttonStyle: "stacked",
-                            buttons: [
-                                {
-                                    name: "复制",
-                                    callback: function (event) {
-                                        Clipboard.copy($t.html());
-                                    }
-                                },
-                                {
-                                    name: "删除消息",
-                                    callback: function (event) {
-                                        $t.parent(".chatsitem").remove();
-                                    }
-                                }
-                            ]
-                        });
-                    });
                 },
                 error: function (xhr, type, errorThrown) {
                     msg('添加失败！');
@@ -564,16 +512,29 @@
         }
         // 逐条删除消息
         function delChats($obj) {
-            var wordsLen = $obj.html().length;
-            var $sendBtn = $('#sendBtn');
-            var $addBtn = $('.icon.iconfont-add');
-            if (wordsLen > 0) {
-                $sendBtn.show();
-                $addBtn.hide();
-            } else {
-                $sendBtn.hide();
-                $addBtn.show();
-            }
+            var delGialog = $(document).dialog({
+                dialogClass: 'dialog-content-bd-hide',
+                type: 'confirm',
+                style: 'ios',
+                titleShow: false,
+                content: '',
+                overlayClose: true,
+                buttonStyle: 'stacked',
+                buttons: [
+                    {
+                        name: '复制',
+                        callback: function (event) {
+                            Clipboard.copy($obj.html());
+                        }
+                    },
+                    {
+                        name: '删除消息',
+                        callback: function (event) {
+                            $obj.parent('.chatsitem').remove();
+                        }
+                    }
+                ]
+            });
         }
         // 消息提示
         function msg(str) {

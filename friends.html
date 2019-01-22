@@ -54,6 +54,7 @@
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
     <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/dropdown.js"></script>
     <script src="js/common.js"></script>
@@ -158,12 +159,14 @@
                             $.each(list, function (i, k) {
                                 str += '<a class="item item-avatar item-access item-access-clear-flag" href="chats.html?FromID=' + k.usersid + '">' +
                                     '<div class="avatar">' +
-                                    '<img src="' + k.usersface + '">' +
-                                    '<span class="badge">3</span>' +
-                                    '</div>' +
+                                    '<img src="' + k.usersface + '">';
+                                if (k.chatsrecordcount > 0) {
+                                    str += '<span class="badge badge-dot">' + k.chatsrecordcount + '</span>';
+                                }
+                                str += '</div>' +
                                     '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h5 class="text-ellipsis clearfix"><span class="margin-left pull-right text-xs text-muted">3天前</span>' + k.userspetName + '</h5>' +
-                                    '<p class="desc text-muted text-xs">' + k.userssignature + '</p>' +
+                                    '<h5 class="text-ellipsis clearfix"><small class="timeago pull-right text-muted" datetime="' + k.chatsaddtime + '"></small>' + k.userspetName + k.usersid + '</h5>' +
+                                    '<p class="desc text-muted text-xs">' + k.chatscontent + '</p>' +
                                     '</div>' +
                                     // '<label class="checkbox margin-left">' +
                                     // '<input type="checkbox" name="r11">' +
@@ -184,6 +187,7 @@
                             }
                         }
                     }
+                    timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {

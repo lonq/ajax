@@ -1437,6 +1437,7 @@ a.label.label-danger:focus:after {
   display: none;
 }
 .badge.badge-dot {
+  display: inherit;
   padding: 0.4em;
   min-width: 0;
 }
@@ -1924,6 +1925,7 @@ a.badge:focus {
   display: flex;
   /*列*/
   /*换行，需要列宽*/
+  /*垂直两端对齐，单行无效*/
   /*垂直两端对齐*/
   /*水平两端对齐，需要容器带有宽度或高度*/
   /*水平居中*/
@@ -1940,6 +1942,10 @@ a.badge:focus {
 .flex-wrap.align-content-space-between {
   -webkit-align-content: space-between;
   align-content: space-between;
+}
+.flex-wrap.align-items-space-between {
+  -webkit-align-items: space-between;
+  align-items: space-between;
 }
 .flex-wrap.justify-content-space-between {
   -webkit-justify-content: space-between;
@@ -2959,6 +2965,7 @@ footer#footer {
   display: flex;
   /*列*/
   /*换行，需要列宽*/
+  /*垂直两端对齐，单行无效*/
   /*垂直两端对齐*/
   /*水平两端对齐，需要容器带有宽度或高度*/
   /*水平居中*/
@@ -2975,6 +2982,10 @@ footer#footer {
 .actionsheet ul.actionsheet-menu.row-wrap.align-content-space-between {
   -webkit-align-content: space-between;
   align-content: space-between;
+}
+.actionsheet ul.actionsheet-menu.row-wrap.align-items-space-between {
+  -webkit-align-items: space-between;
+  align-items: space-between;
 }
 .actionsheet ul.actionsheet-menu.row-wrap.justify-content-space-between {
   -webkit-justify-content: space-between;

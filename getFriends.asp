@@ -2,7 +2,7 @@
 <!--#include file="inc/config.asp"-->
 <!--#include file="inc/function.asp"--><%
 '常用变量
-Dim Sql, Rs, RsFriendsID, RsMaxs, Action, searchKey, UsersID, ReturnStr, OneRecord
+Dim Sql, Rs, RsMaxs, RsArrID, RsUsers, RsChats, Action, searchKey, UsersID, ReturnStr, OneRecord
 
 Action = Trim(Request("Action"))
 searchkey = Trim(Request("searchkey"))
@@ -19,22 +19,22 @@ Select Case Action
 Case "lists"
     Call lists()
 Case Else
-    Call getFriendsIDArr()
+    Call lists()
 End Select
 
 '获取好友ID组
 Public Function getFriendsIDArr()
-Set RsFriendsID = server.CreateObject("adodb.recordset")
+Set RsArrID = server.CreateObject("adodb.recordset")
 Sql = "Select * from LQ_Friends where OwnerID = " & UsersID & " and IsShow = 1 order by ID Asc"
-RsFriendsID.Open Sql,Conn,1,1
-If Not(RsFriendsID.eof And RsFriendsID.bof) Then
-Do While Not RsFriendsID.eof
-    ReturnStr = ReturnStr & RsFriendsID("BuddyID") & "," & vbCrLf
-    RsFriendsID.MoveNext
+RsArrID.Open Sql,Conn,1,1
+If Not(RsArrID.eof And RsArrID.bof) Then
+Do While Not RsArrID.eof
+    ReturnStr = ReturnStr & RsArrID("BuddyID") & "," & vbCrLf
+    RsArrID.MoveNext
     Loop
 End If
 ReturnStr = left(ReturnStr, InStrRev(ReturnStr, ",") - 1)
-Call RsClose(RsFriendsID)
+Call RsClose(RsArrID)
 getFriendsIDArr = ReturnStr
 Response.Write (getFriendsIDArr)
 End Function
@@ -76,29 +76,40 @@ Else
         ReturnStr = ReturnStr & """rows"": ["
         For i = 1 To x
 
-            Set RsFriendsID = server.CreateObject("adodb.recordset")
+            Set RsUsers = server.CreateObject("adodb.recordset")
             Sql = "Select * from [LQ_Users] where UsersID = " & Rs("BuddyID") & " and IsActive = 1 order by UsersID Asc"
-            RsFriendsID.Open Sql,Conn,1,1
-            If Not(RsFriendsID.eof And RsFriendsID.bof) Then
+            RsUsers.Open Sql,Conn,1,1
+            If Not(RsUsers.eof And RsUsers.bof) Then
+            
+                Set RsChats = server.CreateObject("adodb.recordset")
+                Sql = "Select * from LQ_Chats where OwnerID = " & Rs("BuddyID") & " and IsShow = 1 order by ID Desc"
+                RsChats.Open Sql,Conn,1,1
                 
-                OneRecord = "{" & vbCrLf
-                OneRecord = OneRecord & """usersid"": " & RsFriendsID("UsersID") & "," & vbCrLf
-                OneRecord = OneRecord & """userspetName"": """ & RsFriendsID("UsersPetName") & """," & vbCrLf
-                OneRecord = OneRecord & """usersface"": """ & RsFriendsID("UsersFace") & """," & vbCrLf
-                OneRecord = OneRecord & """userssignature"": """ & RsFriendsID("UsersSignature") & """," & vbCrLf
-                OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
-                OneRecord = OneRecord & """ownerid"": " & Rs("OwnerID") & "," & vbCrLf
-                OneRecord = OneRecord & """buddyid"": " & Rs("BuddyID") & "," & vbCrLf
-                OneRecord = OneRecord & """buddygroup"": " & Rs("BuddyGroup") & "," & vbCrLf
-                OneRecord = OneRecord & """description"": """ & Rs("Description") & """," & vbCrLf
-                OneRecord = OneRecord & """addtime"": """ & Rs("AddTime") & """," & vbCrLf
-                OneRecord = OneRecord & """isshow"": " & Rs("IsShow") & "" & vbCrLf
-                OneRecord = OneRecord & "}"
-                OneRecord = OneRecord & "," & vbCrLf
-                returnStr = returnStr & OneRecord
+                    OneRecord = "{" & vbCrLf
+                    OneRecord = OneRecord & """usersid"": " & RsUsers("UsersID") & "," & vbCrLf
+                    OneRecord = OneRecord & """userspetName"": """ & RsUsers("UsersPetName") & """," & vbCrLf
+                    OneRecord = OneRecord & """usersface"": """ & RsUsers("UsersFace") & """," & vbCrLf
+                    OneRecord = OneRecord & """userssignature"": """ & RsUsers("UsersSignature") & """," & vbCrLf
+                    OneRecord = OneRecord & """chatsid"": " & RsChats("ID") & "," & vbCrLf
+                    OneRecord = OneRecord & """chatscontent"": """ & RsChats("ChatsContent") & """," & vbCrLf
+                    OneRecord = OneRecord & """chatsaddtime"": """ & RsChats("AddTime") & """," & vbCrLf
+                    OneRecord = OneRecord & """chatsrecordcount"": " & RsChats.RecordCount & "," & vbCrLf
+                    OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
+                    OneRecord = OneRecord & """ownerid"": " & Rs("OwnerID") & "," & vbCrLf
+                    OneRecord = OneRecord & """buddyid"": " & Rs("BuddyID") & "," & vbCrLf
+                    OneRecord = OneRecord & """buddygroup"": " & Rs("BuddyGroup") & "," & vbCrLf
+                    OneRecord = OneRecord & """description"": """ & Rs("Description") & """," & vbCrLf
+                    OneRecord = OneRecord & """addtime"": """ & Rs("AddTime") & """," & vbCrLf
+                    OneRecord = OneRecord & """isshow"": " & Rs("IsShow") & "" & vbCrLf
+                    OneRecord = OneRecord & "}"
+                    OneRecord = OneRecord & "," & vbCrLf
+                    ReturnStr = ReturnStr & OneRecord
+
+                Call RsClose(RsChats)
+
             End If
-            Call RsClose(RsFriendsID)
-            Rs.Movenext
+            Call RsClose(RsUsers)
+        Rs.Movenext
         Next
         ReturnStr = left(ReturnStr, InStrRev(ReturnStr, ",") - 1)
         ReturnStr = ReturnStr & "]"

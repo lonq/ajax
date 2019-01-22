@@ -697,6 +697,7 @@ input[type="button"].btn-fill {
         display: none;
     }
     &.badge-dot {
+        display: inherit;
         padding: 0.4em;
         min-width: 0;
     }
@@ -1218,9 +1219,13 @@ input[type="button"].btn-fill {
     &.row-wrap {
         .flex-wrap(wrap);
     }
-    /*垂直两端对齐*/
+    /*垂直两端对齐，单行无效*/
     &.align-content-space-between {
         .align-content(space-between);
+    }
+    /*垂直两端对齐*/
+    &.align-items-space-between {
+        .align-items(space-between);
     }
     /*水平两端对齐，需要容器带有宽度或高度*/
     &.justify-content-space-between {
