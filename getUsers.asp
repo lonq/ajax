@@ -14,6 +14,8 @@ Case "lists"
     Call lists()
 Case "content"
     Call content()
+Case "usersInfo"
+    Call usersInfo()
 Case "usercapability"
     Call usercapability()
 Case Else
@@ -41,6 +43,7 @@ Else
     ReturnStr = ReturnStr & """isactive"": " & Rs("IsActive") & "," & vbCrLf
     ReturnStr = ReturnStr & """logindate"": """& Rs("LoginDate") & """," & vbCrLf
     ReturnStr = ReturnStr & """loginip"": """& Rs("LoginIP") & """," & vbCrLf
+    ReturnStr = ReturnStr & """addtime"": """& Rs("AddTime") & """," & vbCrLf
     ReturnStr = ReturnStr & """logintimes"": " & Rs("LoginTimes") & "" & vbCrLf
     ReturnStr = ReturnStr & "}"
 End If

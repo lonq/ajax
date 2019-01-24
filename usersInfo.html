@@ -33,53 +33,51 @@
     </header>
 
     <div class="list border-top border-bottom">
-        <a class="item vertical-center item-avatar item-access" href="javascript:;">
+        <a class="item vertical-center item-avatar item-access js-edit" href="javascript:;" data-eletype="input" data-eleName="userFace">
             <div class="item-body">
                 <span>头像</span>
             </div>
-            <div class="avatar clear-margin">
-                <img src="images/placeholder-avatar.jpg">
-            </div>
+            <div class="avatar clear-margin js-userface"></div>
             <div class="item-footer"></div>
         </a>
-        <a class="item vertical-center item-access-clear-flag" href="javascript:;">
+        <a class="item vertical-center" href="javascript:;">
             <div class="item-body">
                 <span>用户名</span>
             </div>
             <div class="item-footer item-note">
-                <span></span>
+                <span class="js-usersname"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access" href="javascript:;">
+        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="input" data-eleName="userPetName">
             <div class="item-body">
                 <span>昵称</span>
             </div>
             <div class="item-footer item-note">
-                <span></span>
+                <span class="js-userspetname"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access" href="javascript:;">
+        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="input" data-eleName="UsersEMail">
             <div class="item-body">
                 <span>邮箱</span>
             </div>
             <div class="item-footer item-note">
-                <span></span>
+                <span class="js-usersemail"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access" href="javascript:;">
+        <a class="item vertical-center" href="javascript:;">
             <div class="item-body">
                 <span>注册时间</span>
             </div>
             <div class="item-footer item-note">
-                <span></span>
+                <span class="js-addtime"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access" href="javascript:;">
+        <a class="item item-access js-edit" href="javascript:;" data-eletype="textarea" data-eleName="UsersSignature">
             <div class="item-body">
                 <span>签名</span>
             </div>
             <div class="item-footer item-note">
-                <span></span>
+                <span class="js-userssignature"></span>
             </div>
         </a>
     </div>
@@ -95,8 +93,96 @@
 
     <script type="text/javascript">
         //<![CDATA[
+        var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户ID
         $(function () {
+            // 插入正文
+            getContent();
+            //生成表单
+            $('.js-edit').on('click', function(){
+                var $t = $(this);
+                var eleType = $t.attr('data-eletype');
+                var eleName = $t.attr('data-eleName');
+                initForm($t, eleType, eleName);
+            });
+            $(document).on('click', '.js-close-btn', function(){
+                closeModal();
+            });
         });
+        // 表单
+        function initForm($ele, eleType, eleName) {
+            var title = $ele.find('.item-body>span').text();
+            var html = '';
+            html += '<div class="modal modal-form bg-gray" style="display: block;">' +
+                    '<form class="form-classics" id="stepForm" name="stepForm" method="post">' +
+                    '<header>' +
+                    '<nav class="navbar navbar-light">' +
+                    '<ul class="navbar-left">' +
+                    '<li class="js-close-btn" data-dismiss="modal"><a href="javascript:;"><i class="iconfont-angleleft"></i></a></li>' +
+                    '</ul>' +
+                    '<h3 class="navbar-title">修改' + title + '</h3>' +
+                    '<ul class="navbar-right">' +
+                    '<li id="ok"><span>确定</span></li>' +
+                    '</ul>' +
+                    '</nav>' +
+                    '</header>' +
+                    '<div class="form-group has-feedback direction-column vertical-center divider">' +
+                    '<input type="' + eleType + '" class="form-control" id="' + eleName + '" name="' + eleName + '" placeholder="请输入' + title + '" pattern="^1[3-9]\d{9}$" required="">' +
+                    '<i class="form-control-feedback iconfont-wrongcircle"></i>' +
+                    '<span class="help-block padding text-muted">提示</span>' +
+                    '</div>' +
+                    '</form>' +
+                    '</div>';
+            $('body').append(html);
+        }
+        // 文章正文
+        function getContent() {
+            $.ajax({
+                type: 'GET',
+                url: 'getUsers.asp?Action=content',
+                data: {
+                    UsersID: usersid
+                },
+                timeout: 15000,
+                dataType: 'json',
+                success: function (reponse) {
+                    // 有数据
+                    var usersname = reponse.usersname;
+                    var userspetname = reponse.userspetname;
+                    var userssignature = reponse.userssignature;
+                    var usersemail = reponse.usersemail;
+                    var usersface = reponse.usersface;
+                    var addtime = reponse.addtime;
+                    if (usersface) {
+                        usersface = usersface;
+                    } else {
+                        usersface = 'images/placeholder-avatar.jpg';
+                    }
+                    if (userspetname) {
+                        userspetname = userspetname;
+                    } else {
+                        userspetname = usersname;
+                    }
+                    if (userssignature) {
+                        userssignature = userssignature;
+                    } else {
+                        userssignature = '他很懒，什么都没留下。';
+                    }
+                    $('.js-userface').html('<img src="' + usersface + '">');
+                    $('.js-usersname').html(usersname);
+                    $('.js-userspetname').html(userspetname);
+                    $('.js-usersemail').html(usersemail);
+                    $('.js-addtime').html(addtime);
+                    $('.js-userssignature').html(userssignature);
+                },
+                error: function (xhr, type, errorThrown) {
+                    // 加载失败
+                }
+            });
+        }
+        // 消息提示
+        function closeModal() {
+            $('.modal').remove();
+        }
         // 消息提示
         function msg(str) {
             $(document).dialog({

@@ -813,16 +813,16 @@ input[type="button"].btn-fill {
 }
 .form-control {
     display: block;
-    padding: 0.16rem 0.32rem;
+    padding: @padding-base-horizontal;
     width: 100%;
-    height: 0.906667rem;
-    font-size: 0.373333rem;
-    line-height: 1.47058824;
-    color: #555;
+    // height: 0.906667rem;
+    line-height: @line-height-base;
+    font-size: @font-size-base;
+    color: @gray-dark;
     background-color: #fff;
     background-image: none;
     border: 1px solid @border-color;
-    border-radius: 0.106667rem;
+    border-radius: @border-radius-base;
     &[disabled],
     &[readonly] {
         background-color: #eee;
@@ -844,9 +844,10 @@ input[type="button"].btn-fill {
     right: 0;
     z-index: @zindex-base;
     display: block;
-    width: 0.906667rem;
-    height: 0.906667rem;
-    line-height: 0.906667rem;
+    padding: @padding-base-horizontal;
+    // width: 0.906667rem;
+    // height: 0.906667rem;
+    line-height: @line-height-base;
     text-align: center;
     pointer-events: none;
 }
@@ -861,14 +862,15 @@ input[type="button"].btn-fill {
                 display: none;
             }
         }
-        label {
+        label,
+        span {
             display: block;
         }
         .form-control {
             min-width: 100%;
             font-size: @font-size-base;
             line-height: 1.47058824;
-            color: #555;
+            color: @gray-dark;
             border: none;
             background-color: #fff;
             cursor: pointer;

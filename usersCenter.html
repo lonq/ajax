@@ -206,14 +206,14 @@
     <script src="js/common.js"></script>
 
     <script type="text/javascript">
+        //<![CDATA[
         var targetObj = $('.siderbar-swiper');
         var _headerH = 0;
         var _footer, _footerH, _offsetHeight;
         var siderbarButton = $('#siderbarButton');
         var siderbar = $('.siderbar');
 
-        var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户名
-        //<![CDATA[
+        var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户ID
         $(function () {
             // 侧滑菜单栏
             var siderbarSwiper = new Swiper('.siderbar-swiper', {
