@@ -4038,6 +4038,7 @@ table th[class*="col-"] {
 .login-box-body .form-group.has-feedback .form-control-feedback,
 .register-box-body .form-group.has-feedback .form-control-feedback {
   left: 0;
+  padding: 0;
   width: 1.333333rem;
   height: 1.333333rem;
   line-height: 1.333333rem;
