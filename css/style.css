@@ -1553,6 +1553,7 @@ a.badge:focus {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 .form-control {
   display: block;
@@ -2204,6 +2205,7 @@ a.badge:focus {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
   font-size: 0.4rem;
   min-width: 6em;
 }
@@ -2218,6 +2220,7 @@ a.badge:focus {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 .item h4 {
   font-size: 0.4533332rem;
@@ -2290,6 +2293,7 @@ a.badge:focus {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 .item.item-thumb-group .thumb > * + * {
   margin-left: 0.133333rem;
@@ -2470,6 +2474,7 @@ a.badge:focus {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
   -webkit-flex-basis: 48%;
   flex-basis: 48%;
   max-width: 49.4%;
@@ -2712,6 +2717,7 @@ a.badge:focus {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
   color: #333333;
   text-align: center;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
@@ -2826,11 +2832,13 @@ footer#footer {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 .footer.tabs > li {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 .footer.tabs > li .btn:active .icon,
 .footer.tabs > li .btn:active .tip,
@@ -3004,6 +3012,7 @@ footer#footer {
   -webkit-box-flex: unset;
   -webkit-flex: unset;
   flex: unset;
+  min-width: 0;
   width: 25%;
 }
 .actionsheet ul.actionsheet-menu.direction-column {
@@ -3031,6 +3040,7 @@ footer#footer {
   -webkit-box-flex: unset;
   -webkit-flex: unset;
   flex: unset;
+  min-width: 0;
 }
 .actionsheet ul.actionsheet-menu.direction-column > li:before {
   content: " ";
@@ -4163,6 +4173,7 @@ ul.user-info > li {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 ul.user-info > li:before {
   content: " ";
@@ -4476,6 +4487,7 @@ ul.user-capability.space-left > li + li:before {
   -webkit-box-flex: 1;
   -webkit-flex: 1;
   flex: 1;
+  min-width: 0;
 }
 .chats-input-panel .editor-container .editor-text {
   position: relative;
