@@ -203,6 +203,12 @@ body {
   height: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
+html.unset-height {
+  height: auto;
+}
+html.unset-height body {
+  height: auto;
+}
 body {
   color: #333333;
   line-height: 1.42857143;
@@ -779,15 +785,6 @@ a.text-dark:focus {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-.btn:focus,
-.btn:active:focus,
-.btn.active:focus,
-.btn.focus,
-.btn:active.focus,
-.btn.active.focus {
-  outline: 5px auto -webkit-focus-ring-color;
-  outline-offset: -2px;
 }
 .btn:hover,
 .btn:focus,
