@@ -33,7 +33,7 @@
     </header>
 
     <div class="list border-top border-bottom">
-        <a class="item vertical-center item-avatar item-access js-edit" href="javascript:;" data-eletype="input" data-eleName="userFace">
+        <a class="item vertical-center item-avatar item-access" href="javascript:;" data-eleName="userFace">
             <div class="item-body">
                 <span>头像</span>
             </div>
@@ -82,6 +82,18 @@
         </a>
     </div>
 
+    <div class="actionsheet user-face-actionsheet">
+        <div class="actionsheet-title padding-horizontal">
+            <i class="close iconfont-wrong"></i>
+            <p class="text-center">设置头像</p>
+        </div>
+        <ul class="actionsheet-menu direction-column text-center">
+            <li>图库<!-- <input type="file" accept="image/*" multiple> --></li>
+            <li>照相机</li>
+        </ul>
+        <div class="actionsheet-cancel">取消</div>
+    </div>
+
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
     <script src="js/htmlutil.js"></script>
@@ -97,7 +109,7 @@
         $(function () {
             // 插入正文
             getContent();
-            //生成表单
+            // 生成表单
             $('.js-edit').on('click', function(){
                 var $t = $(this);
                 var eleType = $t.attr('data-eletype');
@@ -106,6 +118,10 @@
             });
             $(document).on('click', '.js-close-btn', function(){
                 closeModal();
+            });
+            // 修改头像
+            $('a[data-eleName="userFace"]').on('click', function (e) {
+                showActionSheet($('.user-face-actionsheet'));
             });
         });
         // 表单
@@ -125,9 +141,13 @@
                     '</ul>' +
                     '</nav>' +
                     '</header>' +
-                    '<div class="form-group has-feedback direction-column vertical-center divider">' +
-                    '<input type="' + eleType + '" class="form-control" id="' + eleName + '" name="' + eleName + '" placeholder="请输入' + title + '" pattern="^1[3-9]\d{9}$" required="">' +
-                    '<i class="form-control-feedback iconfont-wrongcircle"></i>' +
+                    '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">';
+            if (eleType == 'textarea') {
+                html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '" autofocus></textarea>';
+            } else {
+                html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" placeholder="请输入' + title + '" autofocus>';
+            }
+            html += '<i class="form-control-feedback iconfont-wrongcircle"></i>';
                     '<span class="help-block padding text-muted">提示</span>' +
                     '</div>' +
                     '</form>' +
@@ -179,18 +199,40 @@
                 }
             });
         }
+        // 修改表单
+        function saveForm() {
+            $.ajax({
+                type: 'post',
+                dataType: 'json',
+                url: 'login.asp?Action=chkRegister',
+                data: $('#stepForm').serialize(),
+                success: function (data) {
+                    
+                },
+                error: function () {
+
+                }
+            });
+        }
+        // 显示actionsheet
+        function showActionSheet(actionsheet) {
+            actionsheet.before('<div class="actionsheet-backdrop"></div>');
+            var backdrop = $('.actionsheet-backdrop');
+            var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
+            backdrop.on('click', hideActionSheet);
+            actionsheetCancel.on('click', hideActionSheet);
+            actionsheet.addClass('actionsheet-toggle');
+        }
+        // 关闭actionsheet
+        function hideActionSheet() {
+            var actionsheet = $('.actionsheet');
+            var backdrop = $('.actionsheet-backdrop');
+            actionsheet.removeClass('actionsheet-toggle');
+            backdrop.remove();
+        }
         // 消息提示
         function closeModal() {
             $('.modal').remove();
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
         }
         // 消息提示
         function noData(type, text) {

@@ -14,12 +14,18 @@ Case "lists"
     Call lists()
 Case "content"
     Call content()
-Case "usersInfo"
-    Call usersInfo()
 Case "usercapability"
     Call usercapability()
 Case Else
     Call lists()
+End Select
+
+'保存表单及显示数据
+Select Case Action
+Case "updateUsersFace"
+    Call updateUsersFace()
+Case "setUsersFace"
+    Call setUsersFace()
 End Select
 
 '正文
@@ -82,5 +88,28 @@ ReturnStr = ReturnStr & "]"
 Call RsClose(Rs)
 usercapability = ReturnStr
 Response.Write (usercapability)
+End Function
+
+'用户头像
+Public Function updateUsersFace()
+Conn.ExeCute("Update [LQ_Users] set UsersFace='"&UsersFace&"' where UsersID = "&UsersID&"")
+Call ConnClose(Conn)
+End Function
+
+Public Function setUsersFace()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = ReturnStr & "{" & vbCrLf
+    ReturnStr = ReturnStr & """usersface"": " & Rs("UsersFace") & "" & vbCrLf
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+setUsersFace = ReturnStr
+Response.Write (setUsersFace)
 End Function
 %>

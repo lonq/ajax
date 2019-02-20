@@ -1629,6 +1629,10 @@ a.badge:focus {
   cursor: pointer;
   -webkit-appearance: none;
 }
+.form-classics .form-group .form-control-feedback {
+  font-size: 0.4rem;
+  line-height: 1.47058824;
+}
 /*选择框*/
 .radio input,
 .checkbox input {
