@@ -3,10 +3,13 @@
 <!--#include file="inc/function.asp"--><%
 '常用变量
 Dim Sql, Rs, Action, UsersID, UsersName, ReturnStr, OneRecord
+Dim UsersFace, UserPetName
 Dim Picture
 Action = Trim(Request("Action"))
 UsersID = ChkNumeric(Request("UsersID"))
 UsersName = Trim(Request("UsersName"))
+UsersFace = Trim(Request("UsersFace"))
+UserPetName = Trim(Request("UserPetName"))
 
 '执行
 Select Case Action
@@ -16,16 +19,18 @@ Case "content"
     Call content()
 Case "usercapability"
     Call usercapability()
-Case Else
-    Call lists()
-End Select
 
-'保存表单及显示数据
-Select Case Action
 Case "updateUsersFace"
     Call updateUsersFace()
 Case "setUsersFace"
     Call setUsersFace()
+Case "updateUserPetName"
+    Call updateUserPetName()
+Case "setUserPetName"
+    Call setUserPetName()
+
+Case Else
+    Call lists()
 End Select
 
 '正文
@@ -111,5 +116,28 @@ End If
 Call RsClose(Rs)
 setUsersFace = ReturnStr
 Response.Write (setUsersFace)
+End Function
+
+'用户昵称
+Public Function updateUserPetName()
+Conn.ExeCute("Update [LQ_Users] set UserPetName='"&UserPetName&"' where UsersID = "&UsersID&"")
+Call ConnClose(Conn)
+End Function
+
+Public Function setUserPetName()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = ReturnStr & "{" & vbCrLf
+    ReturnStr = ReturnStr & """userpetname"": " & Rs("UserPetName") & "" & vbCrLf
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+setUserPetName = ReturnStr
+Response.Write (setUserPetName)
 End Function
 %>
