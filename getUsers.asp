@@ -3,13 +3,15 @@
 <!--#include file="inc/function.asp"--><%
 '常用变量
 Dim Sql, Rs, Action, UsersID, UsersName, ReturnStr, OneRecord
-Dim UsersFace, UserPetName
+Dim UsersFace, UsersPetName, UsersEMail, UsersSignature
 Dim Picture
 Action = Trim(Request("Action"))
 UsersID = ChkNumeric(Request("UsersID"))
 UsersName = Trim(Request("UsersName"))
 UsersFace = Trim(Request("UsersFace"))
-UserPetName = Trim(Request("UserPetName"))
+UsersPetName = Trim(Request("UsersPetName"))
+UsersEMail = Trim(Request("UsersEMail"))
+UsersSignature = Trim(Request("UsersSignature"))
 
 '执行
 Select Case Action
@@ -24,11 +26,18 @@ Case "updateUsersFace"
     Call updateUsersFace()
 Case "setUsersFace"
     Call setUsersFace()
-Case "updateUserPetName"
-    Call updateUserPetName()
-Case "setUserPetName"
-    Call setUserPetName()
-
+Case "updateUsersPetName"
+    Call updateUsersPetName()
+Case "setUsersPetName"
+    Call setUsersPetName()
+Case "updateUsersEMail"
+    Call updateUsersEMail()
+Case "setUsersEMail"
+    Call setUsersEMail()
+Case "updateUsersSignature"
+    Call updateUsersSignature()
+Case "setUsersSignature"
+    Call setUsersSignature()
 Case Else
     Call lists()
 End Select
@@ -119,12 +128,12 @@ Response.Write (setUsersFace)
 End Function
 
 '用户昵称
-Public Function updateUserPetName()
-Conn.ExeCute("Update [LQ_Users] set UserPetName='"&UserPetName&"' where UsersID = "&UsersID&"")
+Public Function updateUsersPetName()
+Conn.ExeCute("UpDate [LQ_Users] set UsersPetName='"&UsersPetName&"' where UsersID = "&UsersID&"")
 Call ConnClose(Conn)
 End Function
 
-Public Function setUserPetName()
+Public Function setUsersPetName()
 Set Rs = server.CreateObject("adodb.recordset")
 Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
 Rs.Open Sql,Conn,1,1
@@ -133,11 +142,57 @@ If Rs.eof And Rs.bof Then
     Response.End
 Else
     ReturnStr = ReturnStr & "{" & vbCrLf
-    ReturnStr = ReturnStr & """userpetname"": " & Rs("UserPetName") & "" & vbCrLf
+    ReturnStr = ReturnStr & """userspetname"": " & Rs("UsersPetName") & "" & vbCrLf
     ReturnStr = ReturnStr & "}"
 End If
 Call RsClose(Rs)
-setUserPetName = ReturnStr
-Response.Write (setUserPetName)
+setUsersPetName = ReturnStr
+Response.Write (setUsersPetName)
+End Function
+
+'用户邮箱
+Public Function updateUsersEMail()
+Conn.ExeCute("UpDate [LQ_Users] set UsersEMail='"&UsersEMail&"' where UsersID = "&UsersID&"")
+Call ConnClose(Conn)
+End Function
+
+Public Function setUsersEMail()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = ReturnStr & "{" & vbCrLf
+    ReturnStr = ReturnStr & """usersemail"": " & Rs("UsersEMail") & "" & vbCrLf
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+setUsersEMail = ReturnStr
+Response.Write (setUsersEMail)
+End Function
+
+'用户签名
+Public Function updateUsersSignature()
+Conn.ExeCute("UpDate [LQ_Users] set UsersSignature='"&UsersSignature&"' where UsersID = "&UsersID&"")
+Call ConnClose(Conn)
+End Function
+
+Public Function setUsersSignature()
+Set Rs = server.CreateObject("adodb.recordset")
+Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
+Rs.Open Sql,Conn,1,1
+If Rs.eof And Rs.bof Then
+    Response.Write (0)
+    Response.End
+Else
+    ReturnStr = ReturnStr & "{" & vbCrLf
+    ReturnStr = ReturnStr & """userssignature"": " & Rs("UsersSignature") & "" & vbCrLf
+    ReturnStr = ReturnStr & "}"
+End If
+Call RsClose(Rs)
+setUsersSignature = ReturnStr
+Response.Write (setUsersSignature)
 End Function
 %>

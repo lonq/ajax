@@ -32,8 +32,6 @@
         </nav>
     </header>
 
-    <form class="form-classics" id="stepForm" name="stepForm" method="post"><header><nav class="navbar navbar-light"><ul class="navbar-left"><li class="js-close-btn" data-dismiss="modal"><a href="javascript:;"><i class="iconfont-angleleft"></i></a></li></ul><h3 class="navbar-title">修改昵称</h3><ul class="navbar-right"><li id="ok" onclick="saveForm(this)"><span>确定</span></li></ul></nav></header><div class="form-group has-feedback direction-column horizontal-center vertical-center divider"><input type="input" class="form-control" name="UserPetName" id="UserPetName" autofocus=""><i class="form-control-feedback iconfont-wrongcircle"></i></div></form>
-
     <div class="list border-top border-bottom">
         <a class="item vertical-center item-avatar item-access" href="javascript:;" data-eleName="userFace">
             <div class="item-body">
@@ -50,7 +48,7 @@
                 <span class="js-value js-usersname"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="input" data-eleName="UserPetName">
+        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersPetName">
             <div class="item-body">
                 <span>昵称</span>
             </div>
@@ -58,7 +56,7 @@
                 <span class="js-value js-userspetname"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="input" data-eleName="UsersEMail">
+        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersEMail">
             <div class="item-body">
                 <span>邮箱</span>
             </div>
@@ -72,6 +70,14 @@
             </div>
             <div class="item-footer item-note">
                 <span class="js-value js-addtime"></span>
+            </div>
+        </a>
+        <a class="item vertical-center" href="javascript:;">
+            <div class="item-body">
+                <span>最后一次登录</span>
+            </div>
+            <div class="item-footer item-note">
+                <span class="js-value js-logindate"></span>
             </div>
         </a>
         <a class="item item-access js-edit" href="javascript:;" data-eletype="textarea" data-eleName="UsersSignature">
@@ -121,6 +127,11 @@
             $(document).on('click', '.js-close-btn', function(){
                 closeModal();
             });
+            // 清除表单字符
+            $(document).on('click', '.form-control-feedback.iconfont-wrongcircle', function(){
+                var target = $(this).prev();
+                target.val('');
+            });
             // 修改头像
             $('a[data-eleName="userFace"]').on('click', function (e) {
                 showActionSheet($('.user-face-actionsheet'));
@@ -140,11 +151,12 @@
                     '</ul>' +
                     '<h3 class="navbar-title">修改' + title + '</h3>' +
                     '<ul class="navbar-right">' +
-                    '<li id="ok" onclick="saveForm()"><span>确定</span></li>' +
+                    '<li id="ok" onclick="saveForm(\'' + eleName + '\')"><span>确定</span></li>' +
                     '</ul>' +
                     '</nav>' +
                     '</header>' +
                     '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">';
+                    html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
             if (eleType == 'textarea') {
                 html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '" autofocus>' + value + '</textarea>';
             } else {
@@ -175,6 +187,7 @@
                     var usersemail = reponse.usersemail;
                     var usersface = reponse.usersface;
                     var addtime = reponse.addtime;
+                    var logindate = reponse.logindate;
                     if (usersface) {
                         usersface = usersface;
                     } else {
@@ -195,6 +208,7 @@
                     $('.js-userspetname').html(userspetname);
                     $('.js-usersemail').html(usersemail);
                     $('.js-addtime').html(addtime);
+                    $('.js-logindate').html(logindate);
                     $('.js-userssignature').html(userssignature);
                 },
                 error: function (xhr, type, errorThrown) {
@@ -202,20 +216,19 @@
                 }
             });
         }
-        // 修改表单
-        function saveForm() {
+        // 修改普通表单
+        function saveForm($ele) {
+            var data = $('#stepForm').serialize();
+            var value = $('#' + $ele).val();
             $.ajax({
-                type: 'post',
-                dataType: 'json',
-                url: 'getUsers.asp?Action=updateUserPetName',
-                // data: $('#stepForm').serialize(),
-                data: {
-                    UsersID: usersid,
-                    UserPetName: $('#UserPetName').val()
-                },
+                type: "POST",
+                url: 'getUsers.asp?Action=update' + $ele,
+                data: data,
+                timeout: 15000,
+                dataType: "json",
                 success: function (data) {
+                    $('.js-' + $ele.toLowerCase()).html(value);
                     closeModal();
-                    console.log($('#UserPetName').val());
                 },
                 error: function () {
                     HtmlUtil.msg('错误！');
