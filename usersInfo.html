@@ -89,7 +89,7 @@
             </div>
         </a>
     </div>
-
+    <!-- 上传头像 -->
     <div class="actionsheet user-face-actionsheet">
         <div class="actionsheet-title padding-horizontal">
             <i class="close iconfont-wrong"></i>
@@ -101,6 +101,30 @@
         </ul>
         <div class="actionsheet-cancel">取消</div>
     </div>
+    <!-- 表单 -->
+    <div class="modal modal-form bg-gray" style="display: none;">
+        <header>
+            <nav class="navbar navbar-light">
+                <ul class="navbar-left">
+                    <li class="js-close-btn" data-dismiss="modal">
+                        <a href="javascript:;"><i class="iconfont-angleleft"></i></a>
+                    </li>
+                </ul>
+                <h3 class="navbar-title">修改<span>昵称</span></h3>
+                <ul class="navbar-right">
+                    <li id="ok"><span>确定</span></li>
+                </ul>
+            </nav>
+        </header>
+        <form class="form-classics" id="stepForm" name="stepForm" method="post">
+            <div class="form-group has-feedback direction-column horizontal-center vertical-center divider">
+                <input type="hidden" name="UsersID" id="UsersID" value="1">
+                <input type="text" class="form-control" name="UsersPetName" id="UsersPetName" value="草原晨曲" placeholder="请输入昵称">
+                <i class="form-control-feedback iconfont-wrongcircle text-muted"></i>
+            </div>
+            <div class="help-block padding-horizontal text-muted">提示</div>
+        </form>
+    </div>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
@@ -108,6 +132,7 @@
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
+    <script src="js/focusEnd.js"></script>
     <script src="js/common.js"></script>
     <script src="js/config.js"></script>
 
@@ -119,18 +144,20 @@
             getContent();
             // 生成表单
             $('.js-edit').on('click', function(){
-                var $t = $(this);
-                var eleType = $t.attr('data-eletype');
-                var eleName = $t.attr('data-eleName');
-                initForm($t, eleType, eleName);
+                // var $t = $(this);
+                // var eleType = $t.attr('data-eletype');
+                // var eleName = $t.attr('data-eleName');
+                // initForm($t, eleType, eleName);
+                $('.modal').show();
             });
+            // 关闭表单
             $(document).on('click', '.js-close-btn', function(){
                 closeModal();
             });
             // 清除表单字符
             $(document).on('click', '.form-control-feedback.iconfont-wrongcircle', function(){
                 var target = $(this).prev();
-                target.val('');
+                target.val('').focus();
             });
             // 修改头像
             $('a[data-eleName="userFace"]').on('click', function (e) {
@@ -142,32 +169,18 @@
             var title = $ele.find('.item-body>span').text();
             var value = $ele.find('.item-footer>span').html();
             var html = '';
-            html += '<div class="modal modal-form bg-gray" style="display: block;">' +
-                    '<form class="form-classics" id="stepForm" name="stepForm" method="post">' +
-                    '<header>' +
-                    '<nav class="navbar navbar-light">' +
-                    '<ul class="navbar-left">' +
-                    '<li class="js-close-btn" data-dismiss="modal"><a href="javascript:;"><i class="iconfont-angleleft"></i></a></li>' +
-                    '</ul>' +
-                    '<h3 class="navbar-title">修改' + title + '</h3>' +
-                    '<ul class="navbar-right">' +
-                    '<li id="ok" onclick="saveForm(\'' + eleName + '\')"><span>确定</span></li>' +
-                    '</ul>' +
-                    '</nav>' +
-                    '</header>' +
-                    '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">';
-                    html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
-            if (eleType == 'textarea') {
-                html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '" autofocus>' + value + '</textarea>';
-            } else {
-                html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '" autofocus>';
-            }
-            html += '<i class="form-control-feedback iconfont-wrongcircle"></i>';
-                    '<span class="help-block padding text-muted">提示</span>' +
+            html += '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">' +
+                    '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
+                if (eleType == 'textarea') {
+                    html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
+                } else {
+                    html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
+                }
+            html += '<i class="form-control-feedback iconfont-wrongcircle text-muted"></i>' +
                     '</div>' +
-                    '</form>' +
-                    '</div>';
-            $('body').append(html);
+                    '<div class="help-block padding-horizontal text-muted">提示</div>';
+            $('#stepForm').append(html);
+            $('#' + eleName).focusEnd();
         }
         // 文章正文
         function getContent() {
@@ -253,7 +266,8 @@
         }
         // 消息提示
         function closeModal() {
-            $('.modal').remove();
+            // $('.modal').remove();
+            $('.modal').hide();
         }
         // 消息提示
         function noData(type, text) {
