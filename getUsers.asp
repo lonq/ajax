@@ -24,20 +24,12 @@ Case "usercapability"
 
 Case "updateUsersFace"
     Call updateUsersFace()
-Case "setUsersFace"
-    Call setUsersFace()
 Case "updateUsersPetName"
     Call updateUsersPetName()
-Case "setUsersPetName"
-    Call setUsersPetName()
 Case "updateUsersEMail"
     Call updateUsersEMail()
-Case "setUsersEMail"
-    Call setUsersEMail()
 Case "updateUsersSignature"
     Call updateUsersSignature()
-Case "setUsersSignature"
-    Call setUsersSignature()
 Case Else
     Call lists()
 End Select
@@ -130,24 +122,11 @@ End Function
 '用户昵称
 Public Function updateUsersPetName()
 Conn.ExeCute("UpDate [LQ_Users] set UsersPetName='"&UsersPetName&"' where UsersID = "&UsersID&"")
-Call ConnClose(Conn)
-End Function
 
-Public Function setUsersPetName()
-Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
-Rs.Open Sql,Conn,1,1
-If Rs.eof And Rs.bof Then
-    Response.Write (0)
-    Response.End
-Else
-    ReturnStr = ReturnStr & "{" & vbCrLf
-    ReturnStr = ReturnStr & """userspetname"": " & Rs("UsersPetName") & "" & vbCrLf
-    ReturnStr = ReturnStr & "}"
-End If
-Call RsClose(Rs)
-setUsersPetName = ReturnStr
-Response.Write (setUsersPetName)
+Response.Write (UsersPetName)
+
+Response.Write (UsersID)
+Call ConnClose(Conn)
 End Function
 
 '用户邮箱
@@ -156,43 +135,9 @@ Conn.ExeCute("UpDate [LQ_Users] set UsersEMail='"&UsersEMail&"' where UsersID = 
 Call ConnClose(Conn)
 End Function
 
-Public Function setUsersEMail()
-Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
-Rs.Open Sql,Conn,1,1
-If Rs.eof And Rs.bof Then
-    Response.Write (0)
-    Response.End
-Else
-    ReturnStr = ReturnStr & "{" & vbCrLf
-    ReturnStr = ReturnStr & """usersemail"": " & Rs("UsersEMail") & "" & vbCrLf
-    ReturnStr = ReturnStr & "}"
-End If
-Call RsClose(Rs)
-setUsersEMail = ReturnStr
-Response.Write (setUsersEMail)
-End Function
-
 '用户签名
 Public Function updateUsersSignature()
 Conn.ExeCute("UpDate [LQ_Users] set UsersSignature='"&UsersSignature&"' where UsersID = "&UsersID&"")
 Call ConnClose(Conn)
-End Function
-
-Public Function setUsersSignature()
-Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
-Rs.Open Sql,Conn,1,1
-If Rs.eof And Rs.bof Then
-    Response.Write (0)
-    Response.End
-Else
-    ReturnStr = ReturnStr & "{" & vbCrLf
-    ReturnStr = ReturnStr & """userssignature"": " & Rs("UsersSignature") & "" & vbCrLf
-    ReturnStr = ReturnStr & "}"
-End If
-Call RsClose(Rs)
-setUsersSignature = ReturnStr
-Response.Write (setUsersSignature)
 End Function
 %>

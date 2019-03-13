@@ -33,11 +33,11 @@
     </header>
 
     <div class="list border-top border-bottom">
-        <a class="item vertical-center item-avatar item-access" href="javascript:;" data-eleName="userFace">
+        <a class="item vertical-center item-avatar item-access" href="javascript:;" data-eleName="usersFace">
             <div class="item-body">
                 <span>头像</span>
             </div>
-            <div class="avatar clear-margin js-value js-userface"></div>
+            <div class="avatar clear-margin js-value js-usersface"></div>
             <div class="item-footer"></div>
         </a>
         <a class="item vertical-center" href="javascript:;">
@@ -110,20 +110,13 @@
                         <a href="javascript:;"><i class="iconfont-angleleft"></i></a>
                     </li>
                 </ul>
-                <h3 class="navbar-title">修改<span>昵称</span></h3>
+                <h3 class="navbar-title">修改<span></span></h3>
                 <ul class="navbar-right">
-                    <li id="ok"><span>确定</span></li>
+                    <li id="ok" onclick="saveForm(this)"><span>确定</span></li>
                 </ul>
             </nav>
         </header>
-        <form class="form-classics" id="stepForm" name="stepForm" method="post">
-            <div class="form-group has-feedback direction-column horizontal-center vertical-center divider">
-                <input type="hidden" name="UsersID" id="UsersID" value="1">
-                <input type="text" class="form-control" name="UsersPetName" id="UsersPetName" value="草原晨曲" placeholder="请输入昵称">
-                <i class="form-control-feedback iconfont-wrongcircle text-muted"></i>
-            </div>
-            <div class="help-block padding-horizontal text-muted">提示</div>
-        </form>
+        <form class="form-classics" id="stepForm" name="stepForm" method="post"></form>
     </div>
 
     <script src="js/zepto.min.js"></script>
@@ -144,11 +137,10 @@
             getContent();
             // 生成表单
             $('.js-edit').on('click', function(){
-                // var $t = $(this);
-                // var eleType = $t.attr('data-eletype');
-                // var eleName = $t.attr('data-eleName');
-                // initForm($t, eleType, eleName);
-                $('.modal').show();
+                var $t = $(this);
+                var eleType = $t.attr('data-eletype');
+                var eleName = $t.attr('data-eleName');
+                initForm($t, eleType, eleName);
             });
             // 关闭表单
             $(document).on('click', '.js-close-btn', function(){
@@ -160,7 +152,7 @@
                 target.val('').focus();
             });
             // 修改头像
-            $('a[data-eleName="userFace"]').on('click', function (e) {
+            $('a[data-eleName="usersFace"]').on('click', function (e) {
                 showActionSheet($('.user-face-actionsheet'));
             });
         });
@@ -169,17 +161,31 @@
             var title = $ele.find('.item-body>span').text();
             var value = $ele.find('.item-footer>span').html();
             var html = '';
-            html += '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">' +
-                    '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
-                if (eleType == 'textarea') {
-                    html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
-                } else {
-                    html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
-                }
+            html += '<div class="modal modal-form bg-gray" style="display: block;">' +
+                    '<form class="form-classics" id="stepForm" name="stepForm" method="post">' +
+                    '<header>' +
+                    '<nav class="navbar navbar-light">' +
+                    '<ul class="navbar-left">' +
+                    '<li class="js-close-btn" data-dismiss="modal"><a href="javascript:;"><i class="iconfont-angleleft"></i></a></li>' +
+                    '</ul>' +
+                    '<h3 class="navbar-title">修改' + title + '</h3>' +
+                    '<ul class="navbar-right">' +
+                    '<li id="ok" onclick="saveForm(\'' + eleName + '\')"><span>确定</span></li>' +
+                    '</ul>' +
+                    '</nav>' +
+                    '</header>' +
+                    '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">';
+            html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
+            if (eleType == 'textarea') {
+                html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
+            } else {
+                html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
+            }
             html += '<i class="form-control-feedback iconfont-wrongcircle text-muted"></i>' +
                     '</div>' +
-                    '<div class="help-block padding-horizontal text-muted">提示</div>';
-            $('#stepForm').append(html);
+                    '</form>' +
+                    '</div>';
+            $('body').append(html);
             $('#' + eleName).focusEnd();
         }
         // 文章正文
@@ -216,7 +222,7 @@
                     } else {
                         userssignature = '他很懒，什么都没留下。';
                     }
-                    $('.js-userface').html('<img src="' + usersface + '">');
+                    $('.js-usersface').html('<img src="' + usersface + '">');
                     $('.js-usersname').html(usersname);
                     $('.js-userspetname').html(userspetname);
                     $('.js-usersemail').html(usersemail);
@@ -230,16 +236,30 @@
             });
         }
         // 修改普通表单
+        function validateForm($ele) {
+            if ($ele == 'UsersPetName') {
+                UsersPetName: $('#UsersPetName').val()
+            } else if ($ele == 'UsersEMail') {
+                UsersEMail: $('#UsersEMail').val()
+            } else if ($ele == 'UsersSignature') {
+                UsersSignature: $('#UsersSignature').val()
+            } else {
+                return false;
+            }
+        }
+        // 修改普通表单
         function saveForm($ele) {
-            var data = $('#stepForm').serialize();
             var value = $('#' + $ele).val();
             $.ajax({
                 type: "POST",
                 url: 'getUsers.asp?Action=update' + $ele,
-                data: data,
+                data: {
+                    UsersID: $('#UsersID').val(),
+                    $ele: $('#' + $ele).val()
+                },
                 timeout: 15000,
                 dataType: "json",
-                success: function (data) {
+                success: function (reponse) {
                     $('.js-' + $ele.toLowerCase()).html(value);
                     closeModal();
                 },
