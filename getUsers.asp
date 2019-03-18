@@ -102,30 +102,9 @@ Conn.ExeCute("Update [LQ_Users] set UsersFace='"&UsersFace&"' where UsersID = "&
 Call ConnClose(Conn)
 End Function
 
-Public Function setUsersFace()
-Set Rs = server.CreateObject("adodb.recordset")
-Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
-Rs.Open Sql,Conn,1,1
-If Rs.eof And Rs.bof Then
-    Response.Write (0)
-    Response.End
-Else
-    ReturnStr = ReturnStr & "{" & vbCrLf
-    ReturnStr = ReturnStr & """usersface"": " & Rs("UsersFace") & "" & vbCrLf
-    ReturnStr = ReturnStr & "}"
-End If
-Call RsClose(Rs)
-setUsersFace = ReturnStr
-Response.Write (setUsersFace)
-End Function
-
 '用户昵称
 Public Function updateUsersPetName()
 Conn.ExeCute("UpDate [LQ_Users] set UsersPetName='"&UsersPetName&"' where UsersID = "&UsersID&"")
-
-Response.Write (UsersPetName)
-
-Response.Write (UsersID)
 Call ConnClose(Conn)
 End Function
 

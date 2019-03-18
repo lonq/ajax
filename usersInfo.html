@@ -101,23 +101,6 @@
         </ul>
         <div class="actionsheet-cancel">取消</div>
     </div>
-    <!-- 表单 -->
-    <div class="modal modal-form bg-gray" style="display: none;">
-        <header>
-            <nav class="navbar navbar-light">
-                <ul class="navbar-left">
-                    <li class="js-close-btn" data-dismiss="modal">
-                        <a href="javascript:;"><i class="iconfont-angleleft"></i></a>
-                    </li>
-                </ul>
-                <h3 class="navbar-title">修改<span></span></h3>
-                <ul class="navbar-right">
-                    <li id="ok" onclick="saveForm(this)"><span>确定</span></li>
-                </ul>
-            </nav>
-        </header>
-        <form class="form-classics" id="stepForm" name="stepForm" method="post"></form>
-    </div>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
@@ -174,7 +157,8 @@
                     '</ul>' +
                     '</nav>' +
                     '</header>' +
-                    '<div class="form-group has-feedback direction-column horizontal-center vertical-center divider">';
+                    '<div class="item">' +
+                    '<div class="item-body">';
             html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
             if (eleType == 'textarea') {
                 html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
@@ -182,6 +166,8 @@
                 html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
             }
             html += '<i class="form-control-feedback iconfont-wrongcircle text-muted"></i>' +
+                    '<span class="help-block">昵称不能为空</span>' +
+                    '</div>' +
                     '</div>' +
                     '</form>' +
                     '</div>';
@@ -237,8 +223,24 @@
         }
         // 修改普通表单
         function validateForm($ele) {
-            if ($ele == 'UsersPetName') {
-                UsersPetName: $('#UsersPetName').val()
+            var $errorMsgObj = $(this).parent();
+            if ($ele == 'UsersPetName') { // 验证昵称
+
+                var nameVal = $.trim(this.value); //原生js去空格方式：this.replace(/(^\s*)|(\s*$)/g, "")
+                var regName = /[~#^$@%&!*()<>:;'"{}【】  ]/;
+                if(nameVal == "" || nameVal.length < 2 || regName.test(nameVal)){
+                    var errorMsg = "昵称不能为空，长度2位以上，不包含特殊字符！";
+                    //class='msg onError' 中间的空格是层叠样式的格式
+                    $errorMsgObj.append("<span class='msg onError'>" + errorMsg + "</span>");
+                }
+                else{
+                    var okMsg=" 输入正确";
+                    $errorMsgObj.find(".high").remove();
+                    $errorMsgObj.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+                }
+
+
+
             } else if ($ele == 'UsersEMail') {
                 UsersEMail: $('#UsersEMail').val()
             } else if ($ele == 'UsersSignature') {
@@ -253,10 +255,7 @@
             $.ajax({
                 type: "POST",
                 url: 'getUsers.asp?Action=update' + $ele,
-                data: {
-                    UsersID: $('#UsersID').val(),
-                    $ele: $('#' + $ele).val()
-                },
+                data: $('#stepForm').serialize(),
                 timeout: 15000,
                 dataType: "json",
                 success: function (reponse) {
@@ -286,8 +285,7 @@
         }
         // 消息提示
         function closeModal() {
-            // $('.modal').remove();
-            $('.modal').hide();
+            $('.modal').remove();
         }
         // 消息提示
         function noData(type, text) {
