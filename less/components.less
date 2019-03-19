@@ -1,55 +1,23 @@
-// 1.左右带横线的文字
-.caption {
-    text-align: center;
-    overflow: hidden;
-    .title {
-        display: inline-block;
-        position: relative;
-        font-size: inherit;
-        &:before,
-        &:after {
-            content: " ";
-            position: absolute;
-            top: 50%;
-            width: 100%;
-            height: 1px;
-            background-color: lighten(@gray-light, 25%);
-        }
-        &:before {
-            right: 100%;
-            margin-right: @padding-base-horizontal;
-        }
-        &:after {
-            left: 100%;
-            margin-left: @padding-base-horizontal;
-        }
-    }
-}
-// 2.搜索
-.search-wrap {
-    padding: @padding-base-vertical @padding-base-horizontal;
-    width: 100%;
-    background-color: #fff;
-}
-.search-box {
-    .search-box(0.906667rem);
-}
-.search-box(@height) {
-    height: @height;
-    line-height: @height;
-    border-radius: @height / 2;
-    background-color: @gray-lighter;
-    .form-control,
-    .btn {
-        padding-top: 0;
-        padding-bottom: 0;
-        height: @height;
-        line-height: @height;
-        vertical-align: middle;
-    }
-}
-// 3.通用列表
+// 1.通用列表
 // 基本设置
+// 标题
+.list-title {
+    margin-top: 0.77em;
+    margin-bottom: 0.3em;
+    padding-left: @padding-base-horizontal;
+    padding-right: @padding-base-horizontal;
+    color: @gray-light;
+    font-size: @font-size-base;
+}
+// 提示
+.list-tips {
+    margin-top: 0.77em;
+    padding-left: @padding-base-horizontal;
+    padding-right: @padding-base-horizontal;
+    color: @gray-light;
+    font-size: @font-size-base;
+}
+// 列表
 .list {
     // 列表组间隔
     & + .list {
@@ -302,26 +270,29 @@
 // 头像
 .item {
     &.item-avatar {
-        &:before {
-            margin-left: 1.84rem;
-            width: calc(100vw - 2.24rem);
+        .item-avatar-variant(@padding-base-horizontal; 1.2rem; 1.2rem);
+    }
+}
+.item-avatar-variant(@marginHorizontal; @width; @height) {
+    &:before {
+        margin-left: @padding-base-horizontal + @width + @marginHorizontal;
+        width: calc(100vw - (@padding-base-horizontal + @width + @marginHorizontal));
+    }
+    .avatar {
+        position: relative;
+        margin: 0 @marginHorizontal 0 0;
+        width: @width;
+        height: @height;
+        img {
+            margin: 0 auto;
+            .img-responsive();
+            border-radius: @border-radius-base;
         }
-        .avatar {
-            position: relative;
-            margin: 0 @padding-base-horizontal 0 0;
-            width: 1.2rem;
-            height: 1.2rem;
-            img {
-                margin: 0 auto;
-                .img-responsive();
-                border-radius: @border-radius-base;
-            }
-            .badge {
-                position: absolute;
-                top: -0.4em;
-                right: -0.4em;
-                z-index: @zindex-base;
-            }
+        .badge {
+            position: absolute;
+            top: -0.4em;
+            right: -0.4em;
+            z-index: @zindex-base;
         }
     }
 }
@@ -341,10 +312,9 @@
 }
 // 开关
 .toggle {
-    .toggle-variant(0.64rem);
+    .toggle-variant(0.64rem; 0.026667rem);
 }
-
-.toggle-variant(@height) {
+.toggle-variant(@height; @border) {
     position: relative;
     display: inline-block;
     pointer-events: auto;
@@ -359,7 +329,7 @@
         pointer-events: none;
         width: @height * 2;
         height: @height;
-        border: 0.053333rem solid @border-color;
+        border: @border solid @border-color;
         border-radius: @height / 2;
         background-color: @gray-lighter;
         .transition-timing-function(ease-in-out);
@@ -369,13 +339,13 @@
         .handle {
             position: absolute;
             display: block;
-            width: @height - 0.053333rem;
-            height: @height - 0.053333rem;
-            border-radius: (@height - 0.053333rem) / 2;
+            width: @height - @border;
+            height: @height - @border;
+            border-radius: (@height - @border) / 2;
             background-color: #fff;
-            top: 0.053333rem;
-            left: 0.053333rem;
-            .box-shadow(0 1px 0.053333rem rgba(0, 0, 0, 0.35));
+            top: @border;
+            left: @border;
+            .box-shadow(0 1px @border rgba(0, 0, 0, 0.35));
             .transition(0.3s cubic-bezier(0, 1.1, 1, 1.1));
         }
     }
@@ -495,28 +465,10 @@
         }
     }
 }
-// 标题和间隔
-.item-title,
+// 间隔
 .item-divider {
     margin-top: 0.77em;
     margin-bottom: 0.3em;
-    padding-left: @padding-base-horizontal;
-    padding-right: @padding-base-horizontal;
-    color: @gray-light;
-    font-size: @font-size-base;
-}
-// 标题
-.list-title {
-    margin-top: 0.77em;
-    margin-bottom: 0.3em;
-    padding-left: @padding-base-horizontal;
-    padding-right: @padding-base-horizontal;
-    color: @gray-light;
-    font-size: @font-size-base;
-}
-// 提示
-.list-tips {
-    margin-top: 0.77em;
     padding-left: @padding-base-horizontal;
     padding-right: @padding-base-horizontal;
     color: @gray-light;

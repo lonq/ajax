@@ -1,3 +1,53 @@
+// 1.左右带横线的文字
+.caption {
+    text-align: center;
+    overflow: hidden;
+    .title {
+        display: inline-block;
+        position: relative;
+        font-size: inherit;
+        &:before,
+        &:after {
+            content: " ";
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background-color: lighten(@gray-light, 25%);
+        }
+        &:before {
+            right: 100%;
+            margin-right: @padding-base-horizontal;
+        }
+        &:after {
+            left: 100%;
+            margin-left: @padding-base-horizontal;
+        }
+    }
+}
+// 2.搜索
+.search-wrap {
+    padding: @padding-base-vertical @padding-base-horizontal;
+    width: 100%;
+    background-color: #fff;
+}
+.search-box {
+    .search-box(0.906667rem);
+}
+.search-box(@height) {
+    height: @height;
+    line-height: @height;
+    border-radius: @height / 2;
+    background-color: @gray-lighter;
+    .form-control,
+    .btn {
+        padding-top: 0;
+        padding-bottom: 0;
+        height: @height;
+        line-height: @height;
+        vertical-align: middle;
+    }
+}
 // /*详情*/
 .detail-picture {
     position: relative;

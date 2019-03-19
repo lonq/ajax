@@ -131,7 +131,7 @@
             });
             // 清除表单字符
             $(document).on('click', '.form-control-feedback.iconfont-wrongcircle', function(){
-                var target = $(this).prev();
+                var target = $(this).prev().children('input').not('#UsersID');
                 target.val('').focus();
             });
             // 修改头像
@@ -153,11 +153,12 @@
                     '</ul>' +
                     '<h3 class="navbar-title">修改' + title + '</h3>' +
                     '<ul class="navbar-right">' +
-                    '<li id="ok" onclick="saveForm(\'' + eleName + '\')"><span>确定</span></li>' +
+                    '<li id="ok" onclick="validateForm(\'' + eleName + '\')"><span>确定</span></li>' +
                     '</ul>' +
                     '</nav>' +
                     '</header>' +
-                    '<div class="item">' +
+                    '<div class="list">' +
+                    '<div class="item divider">' +
                     '<div class="item-body">';
             html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
             if (eleType == 'textarea') {
@@ -165,10 +166,11 @@
             } else {
                 html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
             }
-            html += '<i class="form-control-feedback iconfont-wrongcircle text-muted"></i>' +
-                    '<span class="help-block">昵称不能为空</span>' +
+            html += '</div>' +
+                    '<div class="item-footer form-control-feedback iconfont-wrongcircle text-muted"></div>' +
                     '</div>' +
                     '</div>' +
+                    '<div class="list-tips help-block"></div>' +
                     '</form>' +
                     '</div>';
             $('body').append(html);
@@ -223,31 +225,35 @@
         }
         // 修改普通表单
         function validateForm($ele) {
-            var $errorMsgObj = $(this).parent();
-            if ($ele == 'UsersPetName') { // 验证昵称
-
-                var nameVal = $.trim(this.value); //原生js去空格方式：this.replace(/(^\s*)|(\s*$)/g, "")
-                var regName = /[~#^$@%&!*()<>:;'"{}【】  ]/;
-                if(nameVal == "" || nameVal.length < 2 || regName.test(nameVal)){
+            var $errorMsgObj = $('#' + $ele).parents('.list').siblings('.list-tips');
+            if ($ele == 'UsersPetName') { // 昵称
+                var val = $.trim($('#' + $ele).val());
+                var reg = /[~#^$@%&!*()<>:;'"{}【】]/;
+                if(val == "" || val.length < 2 || reg.test(val)){
                     var errorMsg = "昵称不能为空，长度2位以上，不包含特殊字符！";
-                    //class='msg onError' 中间的空格是层叠样式的格式
-                    $errorMsgObj.append("<span class='msg onError'>" + errorMsg + "</span>");
+                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    return false;
                 }
-                else{
-                    var okMsg=" 输入正确";
-                    $errorMsgObj.find(".high").remove();
-                    $errorMsgObj.append("<span class='msg onSuccess'>" + okMsg + "</span>");
+            } else if ($ele == 'UsersEMail') { // 邮箱
+                var val = $.trim($('#' + $ele).val());
+                var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+                if(val == "" || val.length < 2 || reg.test(val)){
+                    var errorMsg = "邮件格式错误！";
+                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    return false;
                 }
-
-
-
-            } else if ($ele == 'UsersEMail') {
-                UsersEMail: $('#UsersEMail').val()
-            } else if ($ele == 'UsersSignature') {
-                UsersSignature: $('#UsersSignature').val()
+            } else if ($ele == 'UsersSignature') { // 签名
+                var val = $.trim($('#' + $ele).html());
+                var reg = /[~#^$@%&!*()<>:;'"{}【】]/;
+                if(val == "" || val.length < 2 || reg.test(val)){
+                    var errorMsg = "签名不能为空，长度2位以上，不包含特殊字符！";
+                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    return false;
+                }
             } else {
                 return false;
             }
+            saveForm($ele);
         }
         // 修改普通表单
         function saveForm($ele) {
