@@ -2,8 +2,8 @@
 // 基本设置
 // 标题
 .list-title {
-    margin-top: 0.77em;
-    margin-bottom: 0.3em;
+    margin-top: @padding-base-vertical;
+    margin-bottom: @padding-base-vertical / 2;
     padding-left: @padding-base-horizontal;
     padding-right: @padding-base-horizontal;
     color: @gray-light;
@@ -11,7 +11,7 @@
 }
 // 提示
 .list-tips {
-    margin-top: 0.77em;
+    margin-top: @padding-base-vertical;
     padding-left: @padding-base-horizontal;
     padding-right: @padding-base-horizontal;
     color: @gray-light;
@@ -312,9 +312,9 @@
 }
 // 开关
 .toggle {
-    .toggle-variant(0.64rem; 0.026667rem);
+    .toggle-variant(1.28rem; 0.64rem; .04rem);
 }
-.toggle-variant(@height; @border) {
+.toggle-variant(@width; @height; @border) {
     position: relative;
     display: inline-block;
     pointer-events: auto;
@@ -327,10 +327,10 @@
         content: " ";
         cursor: pointer;
         pointer-events: none;
-        width: @height * 2;
+        width: @width;
         height: @height;
         border: @border solid @border-color;
-        border-radius: @height / 2;
+        border-radius: (@height + (@border * 2)) / 2;
         background-color: @gray-lighter;
         .transition-timing-function(ease-in-out);
         .transition-duration(0.3s);
@@ -339,9 +339,9 @@
         .handle {
             position: absolute;
             display: block;
-            width: @height - @border;
-            height: @height - @border;
-            border-radius: (@height - @border) / 2;
+            width: @height - (@border * 2);
+            height: @height - (@border * 2);
+            border-radius: (@height - (@border * 2)) / 2;
             background-color: #fff;
             top: @border;
             left: @border;
@@ -353,17 +353,17 @@
         -webkit-appearance: none;
         position: absolute;
         z-index: @zindex-base;
-        width: 1.066667rem;
-        height: 0.64rem;
+        width: @width;
+        height: @height;
         border: none;
         outline: 0;
-        border-radius: 0.373333rem;
+        border-radius: @height / 2;
         &:checked {
             & + .track {
                 border-color: #1edbb5;
                 background-color: #1edbb5;
                 .handle {
-                    .translate3d(@padding-base-horizontal, 0, 0);
+                    .translate3d((@width / 2), 0, 0);
                     background-color: #fff;
                 }
             }
@@ -467,8 +467,8 @@
 }
 // 间隔
 .item-divider {
-    margin-top: 0.77em;
-    margin-bottom: 0.3em;
+    margin-top: @padding-base-vertical;
+    margin-bottom: @padding-base-vertical / 2;
     padding-left: @padding-base-horizontal;
     padding-right: @padding-base-horizontal;
     color: @gray-light;

@@ -13,6 +13,19 @@ UsersPetName = Trim(Request("UsersPetName"))
 UsersEMail = Trim(Request("UsersEMail"))
 UsersSignature = Trim(Request("UsersSignature"))
 
+Dim RsData, DataUsersName, DataUsersFace, DataUsersPetName, DataUsersEMail, DataUsersSignature
+Set RsData = server.CreateObject("adodb.recordset")
+Sql = "Select * from [LQ_Users] where UsersID = "&UsersID&""
+RsData.Open Sql,Conn,1,1
+If Not(RsData.eof And RsData.bof) Then
+DataUsersName = Trim(RsData("UsersName"))
+DataUsersFace = Trim(RsData("UsersFace"))
+DataUsersPetName = Trim(RsData("UsersPetName"))
+DataUsersEMail = Trim(RsData("UsersEMail"))
+DataUsersSignature = Trim(RsData("UsersSignature"))
+End If
+Call RsClose(RsData)
+
 '执行
 Select Case Action
 Case "lists"
@@ -21,7 +34,6 @@ Case "content"
     Call content()
 Case "usercapability"
     Call usercapability()
-
 Case "updateUsersFace"
     Call updateUsersFace()
 Case "updateUsersPetName"
@@ -104,19 +116,25 @@ End Function
 
 '用户昵称
 Public Function updateUsersPetName()
+If UsersPetName <> DataUsersPetName Then
 Conn.ExeCute("UpDate [LQ_Users] set UsersPetName='"&UsersPetName&"' where UsersID = "&UsersID&"")
+End If
 Call ConnClose(Conn)
 End Function
 
 '用户邮箱
 Public Function updateUsersEMail()
+If UsersEMail <> DataUsersEMail Then
 Conn.ExeCute("UpDate [LQ_Users] set UsersEMail='"&UsersEMail&"' where UsersID = "&UsersID&"")
+End If
 Call ConnClose(Conn)
 End Function
 
 '用户签名
 Public Function updateUsersSignature()
+If UsersSignature <> DataUsersSignature Then
 Conn.ExeCute("UpDate [LQ_Users] set UsersSignature='"&UsersSignature&"' where UsersID = "&UsersID&"")
+End If
 Call ConnClose(Conn)
 End Function
 %>

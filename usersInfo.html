@@ -131,7 +131,7 @@
             });
             // 清除表单字符
             $(document).on('click', '.form-control-feedback.iconfont-wrongcircle', function(){
-                var target = $(this).prev().children('input').not('#UsersID');
+                var target = $(this).prev().children().not('#UsersID');
                 target.val('').focus();
             });
             // 修改头像
@@ -170,11 +170,13 @@
                     '<div class="item-footer form-control-feedback iconfont-wrongcircle text-muted"></div>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="list-tips help-block"></div>' +
+                    '<div class="list-tips"></div>' +
                     '</form>' +
                     '</div>';
             $('body').append(html);
             $('#' + eleName).focusEnd();
+            // 初始化提示消息
+            initMsg($('.list-tips'), eleName);
         }
         // 文章正文
         function getContent() {
@@ -220,38 +222,48 @@
                 },
                 error: function (xhr, type, errorThrown) {
                     // 加载失败
+                    HtmlUtil.msg('错误！');
                 }
             });
+        }
+        // 初始化表单提示
+        function initMsg($ele, eleName) {
+            var _initMsg;
+            if (eleName == 'UsersPetName') { // 昵称
+                _initMsg = '昵称长度2位以上，不包含特殊字符！';
+            } else if (eleName == 'UsersEMail') { // 邮箱
+                _initMsg = '请输入正确的邮箱地址，例如：admin@163.com。';
+            } else if (eleName == 'UsersSignature') { // 签名
+                _initMsg = '选填项。';
+            } else {
+                _initMsg = '';
+            }
+            $ele.html(_initMsg);
         }
         // 修改普通表单
         function validateForm($ele) {
             var $errorMsgObj = $('#' + $ele).parents('.list').siblings('.list-tips');
             if ($ele == 'UsersPetName') { // 昵称
                 var val = $.trim($('#' + $ele).val());
-                var reg = /[~#^$@%&!*()<>:;'"{}【】]/;
-                if(val == "" || val.length < 2 || reg.test(val)){
+                var reg = /^[\u4e00-\u9fa5A-Za-z0-9-_]*$/;
+                if(val == "" || val.length < 2 || !reg.test(val)){
                     var errorMsg = "昵称不能为空，长度2位以上，不包含特殊字符！";
                     $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
                     return false;
                 }
-            } else if ($ele == 'UsersEMail') { // 邮箱
+            }
+            if ($ele == 'UsersEMail') { // 邮箱
                 var val = $.trim($('#' + $ele).val());
-                var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
-                if(val == "" || val.length < 2 || reg.test(val)){
-                    var errorMsg = "邮件格式错误！";
+                var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+                if(val == ""){
+                    var errorMsg = "邮箱不能为空！";
+                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    return false;
+                } else if(!reg.test(val)){
+                    var errorMsg = "邮箱格式错误！";
                     $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
                     return false;
                 }
-            } else if ($ele == 'UsersSignature') { // 签名
-                var val = $.trim($('#' + $ele).html());
-                var reg = /[~#^$@%&!*()<>:;'"{}【】]/;
-                if(val == "" || val.length < 2 || reg.test(val)){
-                    var errorMsg = "签名不能为空，长度2位以上，不包含特殊字符！";
-                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
-                    return false;
-                }
-            } else {
-                return false;
             }
             saveForm($ele);
         }
