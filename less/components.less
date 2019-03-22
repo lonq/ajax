@@ -792,9 +792,6 @@ footer {
                 &:before {
                     .border-top(@border-color);
                 }
-                // &:first-child:before {
-                //     display: none;
-                // }
                 &:active {
                     background-color: @gray-lighter;
                     a {
@@ -892,7 +889,7 @@ footer {
     right: 0;
     bottom: 0;
     left: 0;
-    z-index: 1050;
+    z-index: @zindex-modal;
     display: none;
     overflow: hidden;
     -webkit-overflow-scrolling: touch;
@@ -946,18 +943,9 @@ button.close {
         margin-bottom: 0.266667rem;
     }
 }
-// .modal-backdrop {
-//     position: fixed;
-//     top: 0;
-//     right: 0;
-//     bottom: 0;
-//     left: 0;
-//     z-index: 1040;
-//     background-color: rgba(0, 0, 0, 0.6);
-// }
 .modal-header {
     min-height: 0.438095rem;
-    padding: 0.266667rem 0.4rem;
+    padding: @padding-base-vertical @padding-base-horizontal;
     border-bottom: 1px solid @border-color;
     .close {
         margin-top: -0.053333rem;
@@ -965,24 +953,24 @@ button.close {
 }
 .modal-title {
     margin: 0;
-    line-height: 1.47058824;
-    color: #999;
-    font-size: 0.426667rem;
+    line-height: @line-height-base;
+    color: @gray-light;
+    font-size: @font-size-large;
     font-weight: 300;
 }
 .modal-body {
     position: relative;
-    padding: 0.266667rem 0.4rem;
+    padding: @padding-base-vertical @padding-base-horizontal;
     max-height: 13.333333rem;
     overflow: auto;
 }
 .modal-footer {
-    padding: 0.266667rem 0.4rem;
+    padding: @padding-base-vertical @padding-base-horizontal;
     text-align: right;
     border-top: 1px solid @border-color;
     .btn + .btn {
         margin-bottom: 0;
-        margin-left: 0.133333rem;
+        margin-left: @padding-small-vertical;
     }
     .btn-group {
         .btn + .btn {
@@ -1006,7 +994,7 @@ button.close {
             }
         }
         .btn {
-            margin: 0.266667rem 0;
+            margin: @padding-base-vertical 0;
             border: transparent;
             background: none;
         }
@@ -1023,8 +1011,6 @@ button.close {
 .modal-form {
     background-color: @body-bg;
 }
-//
-
 
 // Tables
 // --------------------------------------------------
@@ -1124,7 +1110,6 @@ th {
 // Zebra-striping
 //
 
-
 // Default zebra-stripe styles (alternating gray and transparent backgrounds)
 .table-striped {
     > tbody > tr:nth-of-type(odd) {
@@ -1134,7 +1119,6 @@ th {
 // Hover effect
 //
 
-
 // Placed here since it has to come after the potential zebra striping
 .table-hover {
     > tbody > tr:hover {
@@ -1143,7 +1127,6 @@ th {
 }
 // Table cell sizing
 //
-
 
 // Reset default table behavior
 table col[class*="col-"] {
@@ -1164,7 +1147,6 @@ table {
 // Table backgrounds
 //
 
-
 // Exact selectors below required to override `.table-striped` and prevent
 // inheritance to nested tables.
 // Generate the contextual variants
@@ -1175,7 +1157,6 @@ table {
 .table-row-variant(danger; @state-danger-bg);
 // Responsive tables
 //
-
 
 // Wrap your tables in `.table-responsive` and we'll make them mobile friendly
 // by enabling horizontal scrolling. Only applies <768px. Everything above that
@@ -1239,7 +1220,6 @@ table {
 }
 //
 
-
 // Progress bars
 // --------------------------------------------------
 // Bar animations
@@ -1289,7 +1269,6 @@ table {
 // Call animation for the active one
 //
 
-
 // `.progress.active .progress-bar` is deprecated as of v3.2.0 in favor of the
 // `.progress-bar.active` approach.
 .progress.active .progress-bar,
@@ -1309,43 +1288,6 @@ table {
 }
 .progress-bar-danger {
     .progress-bar-variant(@progress-bar-danger-bg);
-}
-/*404*/
-.wrap {
-    .msg {
-        padding-top: 10%;
-        height: 100%;
-        text-align: center;
-        .msg-content {
-            background-color: #fff;
-            .pic {
-                padding-bottom: 0.4rem;
-                img {
-                    display: block;
-                    margin: 0 auto;
-                    max-width: 100%;
-                    height: auto;
-                }
-            }
-            .topic {
-                margin: 0 auto;
-                padding: 10% 0;
-                .title {
-                    display: inline-block;
-                    font-weight: 600;
-                    line-height: 1.2rem;
-                    font-size: 1.066667rem;
-                }
-                .des {
-                    display: inline-block;
-                    font-weight: 600;
-                    line-height: 0.533333rem;
-                    font-size: 0.4rem;
-                    color: #666;
-                }
-            }
-        }
-    }
 }
 /* 导航 */
 .navbar {
@@ -1670,6 +1612,128 @@ table {
         // Will remove come v4 in all likelihood.
         .dropdown-menu-left {
             .dropdown-menu-left();
+        }
+    }
+}
+
+// 表单
+.form-classics {
+    .item {
+        padding: 0;
+        &.divider {
+            position: relative;
+            &:before {
+                .border-top(@border-color);
+            }
+            :first-child:before {
+                display: none;
+            }
+        }
+        .form-control {
+            min-width: 100%;
+            font-size: @font-size-base;
+            line-height: @line-height-base;
+            color: @gray-dark;
+            border: none;
+            background-color: #fff;
+            cursor: pointer;
+            -webkit-appearance: none;
+        }
+        .form-control-feedback {
+            font-size: @font-size-base;
+            line-height: @line-height-base;
+        }
+    }
+}
+
+// 消息
+.msg {
+    padding: @padding-base-horizontal;
+    h1 {
+        line-height: 1;
+        text-align: center;
+        i {
+            font-size: @font-size-base * 6;
+            text-align: center;
+            vertical-align: middle;
+        }
+    }
+    h3 {
+        padding: @padding-base-horizontal 0;
+        font-size: @font-size-large;
+    }
+    p {
+        margin-top: @padding-base-horizontal;
+        font-size: @font-size-base;
+        color: @gray-light;
+    }
+    .links {
+        margin-top: @padding-large-vertical;
+        .btn + .btn {
+            margin-left: @padding-small-horizontal;
+        }
+    }
+}
+.msg {
+    &.msg-default {
+        .msg-color-variant(@gray-light);
+    }
+    &.msg-primary {
+        .msg-color-variant(@brand-primary);
+    }
+    &.msg-success {
+        .msg-color-variant(@brand-success);
+    }
+    &.msg-info {
+        .msg-color-variant(@brand-info);
+    }
+    &.msg-warning {
+        .msg-color-variant(@brand-warning);
+    }
+    &.msg-danger {
+        .msg-color-variant(@brand-danger);
+    }
+}
+.msg-color-variant(@color) {
+    h1,
+    h3 {
+        color: @color;
+    }
+}
+
+/*404*/
+.wrap {
+    height: 100%;
+    .msg {
+        text-align: center;
+        .msg-content {
+            background-color: #fff;
+            .pic {
+                padding-bottom: 0.4rem;
+                img {
+                    display: block;
+                    margin: 0 auto;
+                    max-width: 100%;
+                    height: auto;
+                }
+            }
+            .topic {
+                margin: 0 auto;
+                padding: 10% 0;
+                .title {
+                    display: inline-block;
+                    font-weight: 600;
+                    line-height: 1.2;
+                    font-size: @font-size-base * 3;
+                }
+                .des {
+                    display: inline-block;
+                    font-weight: 600;
+                    line-height: @line-height-base;
+                    font-size: @font-size-base;
+                    color: @gray;
+                }
+            }
         }
     }
 }

@@ -128,7 +128,6 @@
     </div>
 
     <script src="js/zepto.min.js"></script>
-    <!-- <script src="js/jquery.min.js"></script> -->
     <script src="js/touch.min.js"></script>
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
@@ -137,109 +136,6 @@
     <script src="js/focusEnd.js"></script>
     <script src="js/common.js"></script>
     <script src="js/config.js"></script>
-    <script src="js/cropper.min.js"></script>
-
-    <script>
-        // 获取浏览器的userAgent
-        var agent = navigator.userAgent.toLowerCase();
-        var isIos = (agent.indexOf('iphone') != -1) || (agent.indexOf('ipad') != -1);
-        if (isIos) {
-            $('.js-upFile').removeAttr('capture');   //在苹果上，只要有capture='camera'，它就只打开照相机，其他情况下，相册，相机都会有
-        }
-
-        $(".js-upFile").change(function (e) {
-            if (test(this.value) == false) {
-                alert('格式错误！');
-                return;
-            }
-            var objUrl = getObjectURL(this.files[0]);
-            if (objUrl) {
-                //预览图片
-                $("#image").attr("src", objUrl);
-                //初始化裁剪插件，cropper
-                var cropperImage = document.getElementById('image');
-                var cropper = new Cropper(cropperImage, {
-                    dragMode: 'move',
-                    aspectRatio: 1,
-                    viewMode: 1,
-                    restore: false,
-                    guides: false,
-                    center: false,
-                    highlight: false,
-                    cropBoxMovable: false,
-                    cropBoxResizable: false,
-                    toggleDragModeOnDblclick: false,
-                    crop: function (e) {
-
-                    }
-                });
-            }
-        });
-        //创建一个可存取file的url
-        function getObjectURL(file) {
-            var url = null;
-            if (window.createObjectURL != undefined) { // basic
-                url = window.createObjectURL(file);
-            } else if (window.URL != undefined) { // mozilla(firefox)
-                url = window.URL.createObjectURL(file);
-            } else if (window.webkitURL != undefined) { // webkit or chrome
-                url = window.webkitURL.createObjectURL(file);
-            }
-            return url;
-        }
-        //图片格式
-        function test(value) {
-            var regexp = new RegExp("(.JPEG|.jpeg|.JPG|.jpg|.PNG|.png)$", 'g');
-            return regexp.test(value);
-        }
-
-        // 确认裁剪，保存图片
-        $(".sure").click(function () {
-            // 这里获取到的是base64，如果保存base64到服务器，直接用此值
-            var data_src = cropper.getCroppedCanvas().toDataURL('image/png');
-            //销毁
-            cropper.destroy();
-            $("#image").attr("src", "");
-        });
-
-        // 一般情况下，上传文件比传base64要好，理由：大文件上传会因为网络问题导致不稳
-        //定， 所以，一般上传大小有限制，而base64体积都会增大，尤其大图片（此处给我公司 
-        //CTO来个掌声（虽然你不知道他是谁），很有技术追求）
-        $(".sure").click(function () {
-            var ImageURL = cropper.getCroppedCanvas().toDataURL('image/png');
-            var block = ImageURL.split(";");
-            var contentType = block[0].split(":")[1];
-            var realData = block[1].split(",")[1];
-            // base64转blob
-            var blob = b64toBlob(realData, contentType);
-            // blob转file
-            var newFile = new File([blob], "filename.png", { type: contentType })
-            //  此处调用plupload进行上传，省略了初始化代码，看者自己搜用法
-            uploader.addFile(newFile);
-            uploader.start();
-            //销毁
-            cropper.destroy();
-            $("#image").attr("src", "");
-        });
-        // blob相关知识查看我的博文：https://www.cnblogs.com/lichunyan/p/9187286.html
-        function b64toBlob(b64Data, contentType, sliceSize) {
-            contentType = contentType || '';
-            sliceSize = sliceSize || 512;
-            var byteCharacters = atob(b64Data);
-            var byteArrays = [];
-            for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-                var slice = byteCharacters.slice(offset, offset + sliceSize);
-                var byteNumbers = new Array(slice.length);
-                for (var i = 0; i < slice.length; i++) {
-                    byteNumbers[i] = slice.charCodeAt(i);
-                }
-                var byteArray = new Uint8Array(byteNumbers);
-                byteArrays.push(byteArray);
-            }
-            var blob = new Blob(byteArrays, { type: contentType });
-            return blob;
-        }
-    </script>
 
     <script type="text/javascript">
         //<![CDATA[
