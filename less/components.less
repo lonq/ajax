@@ -288,6 +288,15 @@
             .img-responsive();
             border-radius: @border-radius-base;
         }
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: @zindex-base;
+            width: inherit;
+            height: inherit;
+            .opacity(0);
+        }
         .badge {
             position: absolute;
             top: -0.4em;

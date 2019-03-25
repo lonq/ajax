@@ -1,0 +1,30 @@
+<!doctype html><html lang="en">
+<head><meta charset="utf-8" />
+    <script type="text/javascript" src="http://www.bcty365.com/statics/js/bcty365_js/jquery.min.js"></script>
+    <script type="text/javascript" src="mobileFix.mini.js"></script>
+    <script type="text/javascript" src="exif.js"></script>
+    <script type="text/javascript" src="lrz.js"></script>
+</head>
+<body>
+<input type="file" name="file" id="fileuplaod">
+<script>
+    var input = document.getElementById('fileuplaod');
+    input.onchange = function () {
+
+        lrz(this.files[0], {
+            before: function() {
+            },
+            fail: function(err) {
+                //console.error(err);
+            },
+            always: function() {
+            },
+            done: function (results) {
+
+               alert(results.base64);
+            }
+        });
+    }
+</script>
+</body>
+</html>
