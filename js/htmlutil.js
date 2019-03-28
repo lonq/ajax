@@ -101,12 +101,35 @@ var HtmlUtil = {
         }
     },
     // 9.无阻断消息提示(基于“dialog2-master”插件)
-    msg: function (str) {
+    msg: function(str) {
         $(document).dialog({
             type: 'notice',
             infoText: str,
             autoClose: 1500,
             position: 'bottom'
         });
+    },
+    // 10.判断图片加载
+    isImgLoad: function(obj, callback) {
+        // 查找所有图，迭代处理
+        $(obj).each(function () {
+            // 找到为0就将isImgLoaded设为false，并退出each
+            if (this.height === 0) {
+                isImgLoaded = false;
+                return false;
+            }
+        });
+        // 为true，没有发现为0的。加载完毕
+        if (isImgLoaded) {
+            clearTimeout(imgTimer); // 清除定时器
+            // 回调函数
+            callback();
+            // 为false，因为找到了没有加载完成的图，将调用定时器递归
+        } else {
+            isImgLoaded = true;
+            imgTimer = setTimeout(function () {
+                HtmlUtil.isImgLoad(obj, callback); // 递归扫描
+            }, 500); // 我这里设置的是500毫秒就扫描一次，可以自己调整
+        }
     }
 };

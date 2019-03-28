@@ -3,7 +3,7 @@
     input.onchange = function () {
         var html = '';
         html += '<div id="modalUsersFaceForm" class="modal modal-form" style="background-color: #000;">' +
-                '<form class="form-classics" id="usersFaceForm" name="usersFaceForm" method="post" style="height: 100%;">' +
+                // '<form class="form-classics" id="usersFaceForm" name="usersFaceForm" method="POST" style="height: 100%;">' +
                 '<header>' +
                 '<nav class="navbar navbar-dark bg-transparent affix affix-top">' +
                 '<ul class="navbar-left">' +
@@ -19,7 +19,7 @@
                 '</header>' +
                 '<ul class="list-unstyled flex-wrap horizontal-center vertical-center" id="report" style="height: 100%;">' +
                 '</ul>' +
-                '</form>' +
+                // '</form>' +
                 '</div>';
         $('body').append(html);
         lrz(this.files[0], {
@@ -37,8 +37,7 @@
                    demo_report("客户端预压的图片", results.base64, results.base64.length * 0.8);
                    var xhr = new XMLHttpRequest();
                    var data = { base64: results.base64, size: results.base64.length };
-                //    xhr.open("POST", "/");
-                   xhr.open("GET", "upload.asp", true);
+                   xhr.open("POST", "upload.asp", true);
                    xhr.setRequestHeader("Content-Type", "application/json; charset=utf-8");
                    xhr.onreadystatechange = function() {
                        if (xhr.readyState === 4 && xhr.status === 200) {

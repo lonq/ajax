@@ -122,6 +122,10 @@
         var targetObj = $('.swiper-slide.list'); //目标数据容器
         var pullDown = $('.pull-down');
         var pullUp = $('.pull-up');
+
+        var imgTimer; // 针对图片加载的定时器
+        var isImgLoaded = true; // 控制图片是否加载完成的变量
+
         // 选项卡
         var tabSwiper = new Swiper('.tab-swiper',{
             slidesPerView: 3,
@@ -341,6 +345,11 @@
                             }
                         });
                     }
+                    // 判断图片加载状况，加载完成后回调
+                    HtmlUtil.isImgLoad('.content img', function(){
+                        // 加载完成
+                        vSwiper.update();
+                    });
                     vSwiper.update();
                 },
                 error: function (xhr, type, errorThrown) {
