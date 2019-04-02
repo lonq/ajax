@@ -376,6 +376,7 @@
             var imgAltArr = [];
             var strSwiper = '';
             if ($img.length > 0) {
+                $('header').hide();
                 $('.article-content img').each(function (e) {
                     var _t = $(this);
                     var _src = _t.attr('src');
@@ -439,6 +440,7 @@
         // 关闭画廊
         function closeGallerySwiper($obj) {
             var $galleryShare = $obj.prev('header');
+            $('header').show();
             $obj.remove();
             if ($galleryShare != 'undefined') {
                 $galleryShare.remove();

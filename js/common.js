@@ -11,7 +11,7 @@ function getFooter(pageName) {
     '</li>' +
     '<li>' +
     '<a class="btn btn-clear" href="productsList.html">' +
-    '<i class="icon"><span class="badge">6</span></i><span class="tip">产品</span>' +
+    '<i class="icon"></i><span class="tip">产品</span>' +
     '</a>' +
     '</li>' +
     '<li>' +
@@ -21,7 +21,7 @@ function getFooter(pageName) {
     '</li>' +
     '<li>' +
     '<a class="btn btn-clear" href="usersCenter.html">' +
-    '<i class="icon"></i><span class="tip">我</span>' +
+    '<i class="icon"><span class="badge">6</span></i><span class="tip">我</span>' +
     '</a>' +
     '</li>' +
     '</ul>';
