@@ -288,7 +288,7 @@
             .img-responsive();
             border-radius: @border-radius-base;
         }
-        input[type="file"] {
+        form {
             position: absolute;
             top: 0;
             left: 0;
@@ -296,6 +296,10 @@
             width: inherit;
             height: inherit;
             .opacity(0);
+            input[type="file"] {
+                width: inherit;
+                height: inherit;
+            }
         }
         .badge {
             position: absolute;
