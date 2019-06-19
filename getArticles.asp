@@ -82,7 +82,7 @@ Else
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
         OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
 			OneRecord = OneRecord & """pictures"": ["
@@ -92,7 +92,7 @@ Else
 			OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
 			OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """video"": """ & Rs("video") & """," & vbCrLf
         OneRecord = OneRecord & """duration"": " & Rs("duration") & "," & vbCrLf
@@ -154,7 +154,7 @@ Else
     ReturnStr = ReturnStr & """rows"": ["
     For i = 1 To x
         OneRecord = "{" & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
 			OneRecord = OneRecord & """pictures"": ["
@@ -164,7 +164,7 @@ Else
 			OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
 			OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
         OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
@@ -207,7 +207,7 @@ Else
     ReturnStr = ReturnStr & """rows"": ["
     Do While Not Rs.eof
         OneRecord = "{" & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
 			OneRecord = OneRecord & """pictures"": ["
@@ -217,7 +217,7 @@ Else
 			OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
 			OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
         OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
@@ -258,7 +258,7 @@ Else
     OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
     OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
     OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
-    If Instr(Rs("Picture"), ",") > 0 Then
+    If Len(trim(Rs("Picture"))) > 0 Then
         Picture = split(Rs("Picture"), ",")
         arrPicture = ""
         OneRecord = OneRecord & """pictures"": ["
@@ -268,7 +268,7 @@ Else
         OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
         OneRecord = OneRecord & "]," & vbCrLf
     Else
-        OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+        OneRecord = OneRecord & """pictures"": ""," & vbCrLf
     End If
     OneRecord = OneRecord & """video"": """ & Rs("video") & """," & vbCrLf
     OneRecord = OneRecord & """duration"": " & Rs("duration") & "," & vbCrLf
@@ -331,7 +331,7 @@ Else
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
         OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
 			OneRecord = OneRecord & """pictures"": ["
@@ -341,7 +341,7 @@ Else
 			OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
 			OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """video"": """ & Rs("video") & """," & vbCrLf
         OneRecord = OneRecord & """duration"": " & Rs("duration") & "," & vbCrLf
@@ -388,7 +388,7 @@ Else
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
         OneRecord = OneRecord & """types"": " & Rs("Types") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """ & Rs("Title") & """," & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
 			OneRecord = OneRecord & """pictures"": ["
@@ -398,7 +398,7 @@ Else
 			OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
 			OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """video"": """ & Rs("video") & """," & vbCrLf
         OneRecord = OneRecord & """duration"": " & Rs("duration") & "," & vbCrLf

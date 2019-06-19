@@ -92,7 +92,7 @@ If Rs.eof And Rs.bof Then
 Else
     ReturnStr = "{" & vbCrLf
     ReturnStr = ReturnStr & """title"": """& Rs("Title") & """," & vbCrLf
-    If Instr(Rs("Picture"), ",") > 0 Then
+    If trim(Rs("Picture")).length > 0 Then
         Picture = split(Rs("Picture"), ",")
         arrPicture = ""
         OneRecord = OneRecord & """pictures"": ["
@@ -102,7 +102,7 @@ Else
         OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
         OneRecord = OneRecord & "]," & vbCrLf
     Else
-        OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+        OneRecord = OneRecord & """pictures"": ""," & vbCrLf
     End If
     ReturnStr = ReturnStr & OneRecord
     ReturnStr = ReturnStr & """description"": """& Rs("Description") & """," & vbCrLf
@@ -154,7 +154,7 @@ Else
     ReturnStr = ReturnStr & """rows"": ["
     For i = 1 To x
         OneRecord = "{" & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
             OneRecord = OneRecord & """pictures"": ["
@@ -164,10 +164,10 @@ Else
             OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
             OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": """ & Rs("ID") & """," & vbCrLf
-        OneRecord = OneRecord & """title"": """& Rs("Title") & """," & vbCrLf
+        OneRecord = OneRecord & """title"": """& i & Rs("Title") & """," & vbCrLf
         OneRecord = OneRecord & """linkurl"": """ & Rs("LinkUrl") & """," & vbCrLf
         OneRecord = OneRecord & """description"": """ & Rs("Description") & """," & vbCrLf
         OneRecord = OneRecord & """price"": """ & FormatNumber(Rs("Price"), 2, -1) & """," & vbCrLf
@@ -204,7 +204,7 @@ Else
     ReturnStr = ReturnStr & """rows"": ["
     Do While Not Rs.eof
         OneRecord = "{" & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
             OneRecord = OneRecord & """pictures"": ["
@@ -214,7 +214,7 @@ Else
             OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
             OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": " & Rs("ID") & "," & vbCrLf
         OneRecord = OneRecord & """title"": """& Rs("Title") & """," & vbCrLf
@@ -368,7 +368,7 @@ Else
     For i = 1 To x
         OneRecord = "{" & vbCrLf
         OneRecord = OneRecord & """title"": """& Rs("Title") & """," & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
             OneRecord = OneRecord & """pictures"": ["
@@ -378,7 +378,7 @@ Else
             OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
             OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": """ & Rs("ID") & """," & vbCrLf
         OneRecord = OneRecord & """linkurl"": """ & Rs("LinkUrl") & """," & vbCrLf
@@ -417,7 +417,7 @@ Else
     ReturnStr = ReturnStr & """rows"": ["
     Do While Not Rs.eof
         OneRecord = "{" & vbCrLf
-        If Instr(Rs("Picture"), ",") > 0 Then
+        If Len(trim(Rs("Picture"))) > 0 Then
             Picture = split(Rs("Picture"), ",")
             arrPicture = ""
             OneRecord = OneRecord & """pictures"": ["
@@ -427,7 +427,7 @@ Else
             OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
             OneRecord = OneRecord & "]," & vbCrLf
         Else
-            OneRecord = OneRecord & """pictures"": """ & Rs("Picture") & """," & vbCrLf
+            OneRecord = OneRecord & """pictures"": ""," & vbCrLf
         End If
         OneRecord = OneRecord & """id"": """ & Rs("ID") & """," & vbCrLf
         OneRecord = OneRecord & """title"": """& Rs("Title") & """," & vbCrLf
