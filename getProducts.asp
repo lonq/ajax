@@ -92,19 +92,18 @@ If Rs.eof And Rs.bof Then
 Else
     ReturnStr = "{" & vbCrLf
     ReturnStr = ReturnStr & """title"": """& Rs("Title") & """," & vbCrLf
-    If trim(Rs("Picture")).length > 0 Then
+    If Len(trim(Rs("Picture"))) > 0 Then
         Picture = split(Rs("Picture"), ",")
         arrPicture = ""
-        OneRecord = OneRecord & """pictures"": ["
+        ReturnStr = ReturnStr & """pictures"": ["
         For P = 0 to ubound(Picture)
             arrPicture = arrPicture & """" & picture(P)& ""","
         Next
-        OneRecord = OneRecord & left(arrPicture, InStrRev(arrPicture, ",") - 1)
-        OneRecord = OneRecord & "]," & vbCrLf
+        ReturnStr = ReturnStr & left(arrPicture, InStrRev(arrPicture, ",") - 1)
+        ReturnStr = ReturnStr & "]," & vbCrLf
     Else
-        OneRecord = OneRecord & """pictures"": ""," & vbCrLf
+        ReturnStr = ReturnStr & """pictures"": ""," & vbCrLf
     End If
-    ReturnStr = ReturnStr & OneRecord
     ReturnStr = ReturnStr & """description"": """& Rs("Description") & """," & vbCrLf
     ReturnStr = ReturnStr & """content"": """ & HTMLEncodes(Rs("Content")) & """," & vbCrLf
     ReturnStr = ReturnStr & """price"": """ & FormatNumber(Rs("Price"), 2, -1) & """," & vbCrLf
