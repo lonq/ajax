@@ -109,6 +109,41 @@ var HtmlUtil = {
             position: 'bottom'
         });
     },
+    // 消息提示
+    loadingMsg: function(str) {
+        loading = $(document).dialog({
+            type: 'toast',
+            infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
+            infoText: str
+        });
+    },
+    // 9-1.消息提示
+    noDataMsg: function(target, type, text) {
+        let color, icon;
+        let pullUp = target.next('.pull-up');
+        let pullDown = target.prev('.pull-down');
+        switch (type) {
+            case 'primary':
+                color = 'msg msg-primary';
+                icon = 'icon iconfont-success';
+                break;
+            case 'danger':
+                color = 'msg msg-danger';
+                icon = 'icon iconfont-error';
+                break;
+            default:
+                color = 'msg msg-default';
+                icon = 'icon iconfont-infocircle';
+        }
+        var str = '';
+        str += '<div class="' + color + '">';
+        str += '<h1><i class="' + icon + '"></i></h1>' +
+            '<h3 class="text-center">' + text + '</h3>' +
+            '</div>';
+        if (pullUp) pullUp.hide();
+        if (pullDown) pullDown.hide();
+        target.html(str);
+    },
     // 10.判断图片加载
     isImgLoad: function(obj, callback) {
         // 查找所有图，迭代处理
@@ -131,5 +166,19 @@ var HtmlUtil = {
                 HtmlUtil.isImgLoad(obj, callback); // 递归扫描
             }, 500); // 我这里设置的是500毫秒就扫描一次，可以自己调整
         }
+    },
+    // 6.byte格式化
+    getFileSize: function(size) {
+        if (!size) return;
+        var num = 1024.00; //byte
+        if (size < num)
+            return size + "B";
+        if (size < Math.pow(num, 2))
+            return (size / num).toFixed(2) + "K"; //kb
+        if (size < Math.pow(num, 3))
+            return (size / Math.pow(num, 2)).toFixed(2) + "M"; //M
+        if (size < Math.pow(num, 4))
+            return (size / Math.pow(num, 3)).toFixed(2) + "G"; //G
+        return (size / Math.pow(num, 4)).toFixed(2) + "T"; //T
     }
 };

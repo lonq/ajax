@@ -15,10 +15,10 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>视频详情</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <link href="js/video.js-7.3.0/video-js.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -35,10 +35,10 @@
             <div class="swiper-slide d">
                 <div class="pull-down" style="display: none;">下拉更新</div>
                 <div class="video-wrap"></div>
-                <div class="list border-top border-bottom">
+                <div class="list items">
                     <div class="item vertical-center">更多视频</div>
                 </div>
-                <div class="list main"></div>
+                <div class="list items main"></div>
                 <div class="pull-up">上拉加载更多</div>
             </div>
         </div>
@@ -49,7 +49,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/video.js-7.3.0/video.min.js"></script>
     <script src="js/common.js"></script>
@@ -95,10 +95,6 @@
             getData();
             // 修正容器高度
             fixedContainerH();
-            // 点击播放视频
-            $(document).on('tap', '.video-js', function(){
-                playCurVideo();
-            });
         });
         //修正容器高度
         function fixedContainerH() {
@@ -141,22 +137,26 @@
                     if (reponse == 0) {
                         pullUp.html('').hide();
                         pullDown.hide();
-                        noData('default', '什么也没找到~');
+                        HtmlUtil.noDataMsg(targetObj, 'default', '什么也没找到~');
                     } else {
                         // 有数据
                         var str = '';
                         var types = reponse.types;
                         var linkurl = reponse.linkurl;
+                        var video = reponse.video;
                         if (linkurl != '') {
                             linkurl = linkurl;
                         } else {
                             linkurl = 'javascript:;'
                         }
+                        if (video == '') {
+                            video = undefined;
+                        }
                         var sharing = reponse.sharing > 9999 ? (reponse.sharing/10000).toFixed(1) + "万" : reponse.sharing;
                         var comments = reponse.comments > 9999 ? (reponse.comments/10000).toFixed(1) + "万" : reponse.comments;
                         str += '<div class="v-video">' +
                             '<video id="video' + reponse.id + '" class="video-js vjs-fluid vjs-big-play-centered">' +
-                            '<source src="' + reponse.video + '" type="video/mp4">' +
+                            '<source src="' + video + '" type="video/mp4">' +
                             '<p class="vjs-no-js">播放视频需要启用 JavaScript，推荐使用<a href="http://videojs.com/html5-video-support/" target="_blank">支持HTML5</a>的浏览器访问。</p>' +
                             '</video>' +
                             '<div class="margin-bottom padding border-bottom bg-white">' +
@@ -198,7 +198,7 @@
                         loadFlag = false;
                         pullUp.html('').hide();
                         pullDown.hide();
-                        noData('default', '什么也没找到~');
+                        HtmlUtil.noDataMsg(targetObj, 'default', '什么也没找到~');
                     } else {
                         loadFlag = true;
                         // 有数据
@@ -211,15 +211,18 @@
                             pullUp.html('<div class="caption"><p class="title">我是有底线的</p></div>').show();
                         } else {
                             $.each(list, function (i, k) {
-                                str += '<a class="item item-thumb item-access" href="videos.html?ID=' + k.id + '&types=' + k.types + '">' +
-                                    '<div class="thumb thumb-sm">' +
+                                var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
+                                var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
+                                str += '<a class="item item-thumb item-access direction-column" href="videos.html?ID=' + k.id + '&types=' + k.types + '">' +
+                                    '<div class="thumb">' +
                                     '<div class="v-play"></div>' +
-                                    '<img src="' + k.pictures + '">' +
+                                    '<img src="' + k.pictures + '" style="width: 9.2rem;height: 5.2rem;">' +
                                     '</div>' +
-                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                    '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
-                                    '<li>' + k.source + '</li>' +
+                                    '<div class="item-body">' +
+                                    '<h5 class="item-body-title text-ellipsis">' + k.title + '</h5>' +
+                                    '<ul class="item-body-info justify-content-space-between text-muted">' +
+                                    '<li><i class="icon iconfont-share"></i>&nbsp;' + sharing + '</li>' +
+                                    '<li><i class="icon iconfont-commenting"></i>&nbsp;' + comments + '</li>' +
                                     '<li><i class="icon iconfont-clock"></i>&nbsp;' + secToTime(k.duration) + '</li>' +
                                     '</ul>' +
                                     '</div>' +
@@ -252,42 +255,16 @@
             videojs(curID, {"controls": true, "autoplay": false, "preload": "auto"}, function () {
                 var myPlayer = videojs(curID);
                 myPlayer.ready(function () {
-                    var myPlayer = this;
 		            // this.play();
-                    $('#' + curID).parents('.thumb').addClass('active');
                 });
-                myPlayer.on("ended", function (event) {
-		            // console.log(1);
+                myPlayer.on("ended", function () {
+		            console.log('播放完毕');
                 });
+                myPlayer.on('error', function(e){
+                    myPlayer.errorDisplay.close();   //将错误信息不显示
+                    HtmlUtil.msg('视频错误，code:' + myPlayer.error_.code);
+                })
             });
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                color = 'msg msg-primary';
-                icon = 'icon iconfont-correctcircle';
-                break;
-                default:
-                color = 'msg msg-default';
-                icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-            '<h3 class="text-center">' + text + '</h3>' +
-            '</div>';
-            targetObj.html(str);
         }
         // 秒转换为时间
         function secToTime(result) {

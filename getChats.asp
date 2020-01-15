@@ -1,6 +1,4 @@
-<!--#include file="inc/conn.asp"-->
-<!--#include file="inc/config.asp"-->
-<!--#include file="inc/function.asp"--><%
+<!--#include file="token.asp"--><%
 '常用变量
 Dim Sql, Rs, RsMax, Action, ID, FromID, ChatsID, GetMaxChatsListsID, ReturnStr, OneRecord
 Dim Picture, arrPicture, P

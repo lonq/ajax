@@ -12,7 +12,7 @@
 * {
     font-family: @font-family-base;
     .box-sizing(border-box);
-    outline: none;
+    outline: 0;
 }
 html,
 body {
@@ -105,8 +105,8 @@ input[disabled] {
 .text-ellipsis {
     .text-ellipsis();
 }
-.mtext-ellipsis {
-    .mtext-ellipsis(2);
+.text-ellipsis-lines {
+    .text-ellipsis-lines(2);
 }
 /*显示、隐藏*/
 .invisible {
@@ -157,6 +157,10 @@ input[disabled] {
     position: absolute;
 }
 /*边距*/
+.margin-horizontal-xs {
+    margin-right: @padding-small-horizontal;
+    margin-left: @padding-small-horizontal;
+}
 .margin-horizontal {
     margin-right: @padding-base-horizontal;
     margin-left: @padding-base-horizontal;
@@ -164,6 +168,10 @@ input[disabled] {
 .margin-horizontal-lg {
     margin-right: @padding-large-horizontal;
     margin-left: @padding-large-horizontal;
+}
+.margin-vertical-xs {
+    margin-top: @padding-small-vertical;
+    margin-bottom: @padding-small-vertical;
 }
 .margin-vertical {
     margin-top: @padding-base-vertical;
@@ -173,14 +181,26 @@ input[disabled] {
     margin-top: @padding-large-vertical;
     margin-bottom: @padding-large-vertical;
 }
+.margin-top-xs {
+    margin-top: @padding-small-vertical;
+}
 .margin-top {
     margin-top: @padding-base-vertical;
 }
 .margin-top-lg {
     margin-top: @padding-large-vertical;
 }
+.margin-right-xs {
+    margin-right: @padding-small-horizontal;
+}
 .margin-right {
     margin-right: @padding-base-horizontal;
+}
+.margin-right-lg {
+    margin-right: @padding-large-horizontal;
+}
+.margin-bottom-xs {
+    margin-bottom: @padding-small-vertical;
 }
 .margin-bottom {
     margin-bottom: @padding-base-vertical;
@@ -188,8 +208,14 @@ input[disabled] {
 .margin-bottom-lg {
     margin-bottom: @padding-large-vertical;
 }
+.margin-left-xs {
+    margin-left: @padding-small-horizontal;
+}
 .margin-left {
     margin-left: @padding-base-horizontal;
+}
+.margin-left-lg {
+    margin-left: @padding-large-horizontal;
 }
 .clear-margin {
     margin: 0 !important;
@@ -197,51 +223,92 @@ input[disabled] {
 .clear-margin-top {
     margin-top: 0 !important;
 }
+.clear-margin-right {
+    margin-right: 0 !important;
+}
 .clear-margin-bottom {
     margin-bottom: 0 !important;
+}
+.clear-margin-left {
+    margin-left: 0 !important;
+}
+.padding {
+    padding: @padding-base-vertical @padding-base-horizontal;
+}
+.padding-horizontal-xs {
+    padding-right: @padding-small-horizontal;
+    padding-left: @padding-small-horizontal;
 }
 .padding-horizontal {
     padding-right: @padding-base-horizontal;
     padding-left: @padding-base-horizontal;
 }
-.padding-vertical {
-    padding-top: @padding-base-vertical;
-    padding-bottom: @padding-base-vertical;
-}
 .padding-horizontal-lg {
     padding-right: @padding-large-horizontal;
     padding-left: @padding-large-horizontal;
+}
+.padding-vertical-xs {
+    padding-top: @padding-small-vertical;
+    padding-bottom: @padding-small-vertical;
+}
+.padding-vertical {
+    padding-top: @padding-base-vertical;
+    padding-bottom: @padding-base-vertical;
 }
 .padding-vertical-lg {
     padding-top: @padding-large-vertical;
     padding-bottom: @padding-large-vertical;
 }
-.clear-padding {
-    padding: 0 !important;
-}
-.padding {
-    padding: @padding-base-vertical @padding-base-horizontal;
-}
-.padding-lg {
-    padding: @padding-large-vertical @padding-large-horizontal;
+.padding-top-xs {
+    padding-top: @padding-small-vertical;
 }
 .padding-top {
     padding-top: @padding-base-vertical;
 }
+.padding-top-lg {
+    padding-top: @padding-large-vertical;
+}
+.padding-right-xs {
+    padding-right: @padding-small-horizontal;
+}
 .padding-right {
     padding-right: @padding-base-horizontal;
+}
+.padding-right-lg {
+    padding-right: @padding-large-horizontal;
+}
+.padding-bottom-xs {
+    padding-bottom: @padding-small-vertical;
 }
 .padding-bottom {
     padding-bottom: @padding-base-vertical;
 }
+.padding-bottom-lg {
+    padding-bottom: @padding-large-vertical;
+}
+.padding-left-xs {
+    padding-left: @padding-small-horizontal;
+}
 .padding-left {
     padding-left: @padding-base-horizontal;
 }
-.fill-width {
-    width: 100% !important;
+.padding-left-lg {
+    padding-left: @padding-large-horizontal;
 }
-.fill-height {
-    height: 100% !important;
+.clear-padding {
+    padding: 0 !important;
+}
+.clear-padding-top {
+    padding-top: 0 !important;
+}
+.clear-padding-right {
+    padding-right: 0 !important;
+}
+.clear-padding-bottom {
+    padding-bottom: 0 !important;
+}
+.clear-padding-left {
+    padding-left: 0 !important;
 }
 /*边框*/
 .clear-border,
@@ -255,14 +322,36 @@ input[disabled] {
         .border-top(@border-color);
     }
 }
+.border-right {
+    position: relative;
+    &:after {
+        .border-right(@border-color);
+    }
+}
 .border-bottom {
     position: relative;
     &:after {
         .border-bottom(@border-color);
     }
 }
+.border-left {
+    position: relative;
+    &:before {
+        .border-left(@border-color);
+    }
+}
 .border {
-    border: 1px solid @border-color;
+    position: relative;
+    &:before {
+        .border(@border-color; @border-radius-base);
+    }
+}
+// 宽高
+.fill-width {
+    width: 100% !important;
+}
+.fill-height {
+    height: 100% !important;
 }
 /* 响应式图片 */
 img {
@@ -344,8 +433,8 @@ img {
 .text-justify {
     text-align: justify;
 }
-.text-nowrap {
-    white-space: nowrap;
+.text-wrap-break {
+    .text-wrap-break();
 }
 // Transformation
 .text-lowercase {
@@ -698,12 +787,13 @@ input[type="button"].btn-fill {
     text-align: center;
     background-color: @badge-bg;
     border-radius: @badge-border-radius;
+    vertical-align: middle;
     // Empty badges collapse automatically (not available in IE8)
     &:empty {
         display: none;
     }
     &.badge-dot {
-        display: inherit;
+        display: inline-block;
         padding: 0.4em;
         min-width: 0;
     }
@@ -729,16 +819,13 @@ input[type="button"].btn-fill {
 }
 .form-control {
     display: block;
-    padding: @padding-base-horizontal;
     width: 100%;
-    // height: 0.906667rem;
     line-height: @line-height-base;
     font-size: @font-size-base;
     color: @gray-dark;
     background-color: #fff;
     background-image: none;
-    border: 1px solid @border-color;
-    border-radius: @border-radius-base;
+    border: 0;
     &[disabled],
     &[readonly] {
         background-color: #eee;
@@ -750,7 +837,7 @@ input[type="button"].btn-fill {
 }
 .form-control-feedback {
     display: block;
-    padding: @padding-base-horizontal;
+    padding-left: @padding-base-horizontal;
     line-height: @line-height-base;
     text-align: center;
 }

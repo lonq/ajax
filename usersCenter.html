@@ -15,51 +15,41 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>用户中心</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
 <body>
     <div class="siderbar-swiper">
-        <div class="swiper-wrapper transparent">
+        <div class="swiper-wrapper">
             <div class="swiper-slide siderbar">
-                <div class="list border-top border-bottom">
-                    <a class="item item-avatar item-access" href="javascript:;">
-                        <div class="js-userface avatar"><img src="images/placeholder-avatar.jpg"></div>
-                        <div class="item-body overflow-hidden space-top">
-                            <h4 class="js-userspetname title text-ellipsis">-</h4>
-                            <p class=" js-usersautograph text-muted text-xs mtext-ellipsis">-</p>
-                        </div>
-                        <div class="item-footer"></div>
-                    </a>
-                </div>
-                <div class="list border-top border-bottom">
-                    <a class="item vertical-center item-access" href="setting.html">
+                <div class="items border-top border-bottom">
+                    <a class="item item-access" href="setting.html">
                         <div class="item-body">
                             <span>设置</span>
                         </div>
                         <div class="item-footer"></div>
                     </a>
                 </div>
-                <div class="list border-top border-bottom">
-                    <a class="item vertical-center item-access" href="FeedbackFunction.html">
+                <div class="items border-top border-bottom">
+                    <a class="item item-access" href="FeedbackFunction.html">
                         <div class="item-body">
                             <span>功能反馈</span>
                         </div>
                         <div class="item-footer"></div>
                     </a>
                 </div>
-                <div class="list border-top border-bottom">
-                    <a class="item vertical-center item-access" href="about.html">
+                <div class="items border-top border-bottom">
+                    <a class="item item-access" href="about.html">
                         <div class="item-body">
                             <span>关于</span>
                         </div>
                         <div class="item-footer"></div>
                     </a>
                 </div>
-                <div class="list padding-horizontal">
+                <div class="items padding-horizontal">
                     <a href="logout.asp" class="btn btn-lg btn-default btn-block">退出登录</a>
                 </div>
             </div>
@@ -125,22 +115,22 @@
 
                 <div class="js-user-capability"></div>
 
-                <div class="list border-top border-bottom margin-top">
-                    <a class="item vertical-center item-access" href="javascript:;">
+                <div class="items margin-top">
+                    <div class="item" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-file text-success"></i></div>
                         <div class="item-body">
-                            <span>已解锁答案</span>
+                            <span>已解锁答案</span><span class="badge margin-left-xs">3</span>
+                        </div>
+                        <a class="item-link text-primary" href="#">链接</a>
+                    </div>
+                    <a class="item item-access" href="javascript:;">
+                        <div class="item-header"><i class="icon iconfont-clock text-danger"></i></div>
+                        <div class="item-body">
+                            <span>待解决问题</span><span class="badge badge-dot margin-left-xs"></span>
                         </div>
                         <div class="item-footer"></div>
                     </a>
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-header"><i class="icon iconfont-clock text-danger"></i></div>
-                        <div class="item-body">
-                            <span>待解决问题</span>
-                        </div>
-                        <div class="item-footer"><span class="badge">3</span></div>
-                    </a>
-                    <a class="item vertical-center item-access" href="friends.html">
+                    <a class="item item-access" href="friends.html">
                         <div class="item-header"><i class="icon iconfont-crowds text-warning"></i></div>
                         <div class="item-body">
                             <span>我的好友</span>
@@ -149,29 +139,21 @@
                     </a>
                 </div>
 
-                <div class="list border-top border-bottom">
-                    <a class="item vertical-center item-access" href="usersInfo.html">
+                <div class="items">
+                    <a class="item item-access" href="usersInfo.html">
                         <div class="item-header"><i class="icon iconfont-user text-primary"></i></div>
                         <div class="item-body">
                             <span>个人信息</span>
                         </div>
-                        <div class="item-footer item-note js-usersname">-</div>
+                        <div class="item-footer text-note js-usersname">-</div>
                     </a>
-                    <a class="item vertical-center item-access" href="javascript:;">
+                    <a class="item item-access" href="javascript:;">
                         <div class="item-header"><i class="icon iconfont-wallet text-warning"></i></div>
                         <div class="item-body">
                             <span>钱包</span>
                         </div>
-                        <div class="item-footer item-note"><small>余额：&yen;&nbsp;</small><span class="text-md text-danger">320.00</span></div>
+                        <div class="item-footer text-note"><small>余额：&yen;&nbsp;</small><span class="text-md text-danger">320.00</span></div>
                     </a>
-                    <a class="item vertical-center item-access" href="javascript:;">
-                        <div class="item-header"><i class="icon iconfont-edit text-muted"></i></div>
-                        <div class="item-body">
-                            <span>功能反馈</span>
-                        </div>
-                        <div class="item-footer"></div>
-                    </a>
-                    <div class="list-title"></div>
                 </div>
 
                 <div class="fixed-bottom"></div>
@@ -182,24 +164,12 @@
 
     <footer id="footer"></footer>
 
-    <div class="actionsheet user-face-actionsheet">
-        <div class="actionsheet-title padding-horizontal">
-            <i class="close iconfont-wrong"></i>
-            <p class="text-center">设置头像</p>
-        </div>
-        <ul class="actionsheet-menu direction-column text-center">
-            <li>图库<input type="file" id="image" accept="image/*" capture="camera"></li>
-            <li>照相机<input type="file" id="video" accept="video/*" capture="camcorder"></li>
-        </ul>
-        <div class="actionsheet-cancel">取消</div>
-    </div>
-
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/dropdown.js"></script>
@@ -210,12 +180,15 @@
         var targetObj = $('.siderbar-swiper');
         var _headerH = 0;
         var _footer, _footerH, _offsetHeight;
-        var siderbarButton = $('#siderbarButton');
+        var menuButton = $('#siderbarButton');
         var siderbar = $('.siderbar');
 
         var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户ID
         $(function () {
             // 侧滑菜单栏
+            var openMenu = function () {
+                siderbarSwiper.slidePrev();
+            };
             var siderbarSwiper = new Swiper('.siderbar-swiper', {
                 slidesPerView: 'auto',
                 initialSlide: 1,
@@ -223,34 +196,25 @@
                 slideToClickedSlide: true,
                 height: 'auto',
                 on: {
-                    init: function () {
-                        $('.siderbar-swiper>.swiper-wrapper').removeClass('transparent'); //缓解初始加载时视图偏移
+                    slideChangeTransitionStart: function () {
                         var slider = this;
-                        siderbarButton.on('tap', function () {
-                            if (slider.activeIndex === 0) {
-                                slider.slideNext();
-                            } else {
-                                slider.slidePrev();
-                            }
-                        });
-                    },
-                    slideChange: function () {
-                        var slider = this;
-                        if (slider.activeIndex === 0) {
+                        if (slider.activeIndex === 1) {
+                            menuButton.on('tap', openMenu);
+                            backdropState($('.content'), 'siderbar-backdrop', 'off');
+                            siderbar.css({
+                                'z-index': ''
+                            });
+                            $('footer').show();
+                        } else {
+                            menuButton.off('tap', openMenu);
                             backdropState($('.content'), 'siderbar-backdrop', 'on');
                             var siderbarZindex = Number($('.siderbar-backdrop').css('z-index')) + 1;
                             siderbar.css({
                                 'z-index': siderbarZindex
                             });
                             $('footer').hide();
-                        } else {
-                            backdropState($('.content'), 'siderbar-backdrop', 'off');
-                            siderbar.css({
-                                'z-index': ''
-                            });
-                            $('footer').show();
                         }
-                    },
+                    }
                 }
             });
             //插入底部菜单
@@ -259,10 +223,6 @@
             getContent();
             // 插入用户功能
             getUserCapability($('.js-user-capability'));
-            //底部弹出菜单
-            $('.js-userface').on('click', function (e) {
-                showActionSheet($('.user-face-actionsheet'));
-            });
             // 修正容器高度
             fixedContainerH();
         });
@@ -319,7 +279,7 @@
                         userssignature = '他很懒，什么都没留下。';
                     }
                     $('.js-usersautograph').html(userssignature);
-                    $('.js-usersname').html('<small>用户名：</small>' + usersname);
+                    $('.js-usersname').html('<span>用户名：</span>' + usersname);
                     $('.js-userspetname').html(userspetname);
                     $('.js-userface').html('<img src="' + usersface + '">');
                 },
@@ -345,7 +305,7 @@
                         // 有数据
                         var str = '';
                         var list = reponse;
-                        str += '<div class="list-title">相关功能</div>' +
+                        str += '<div class="items-title">相关功能</div>' +
                             '<ul class="user-capability border-top border-bottom padding-vertical bg-white">';
                         $.each(list, function (i, k) {
                             var linkurl = k.linkurl;
@@ -372,50 +332,6 @@
                     pullUp.html('加载失败！');
                 }
             });
-        }
-        // 遮罩层
-        function backdropState(parent, classnames, state) {
-            parent.prepend('<div class="backdrop '+ classnames +'"></div>');
-            if (state == 'on') {
-                $('html, body').css({
-                    'overflow': 'hidden'
-                });
-                $('.backdrop').addClass(classnames);
-            }
-            if (state == 'off') {
-                $('html, body').css({
-                    'overflow': ''
-                });
-                $('.backdrop').remove();
-            }
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                    color = 'msg msg-primary';
-                    icon = 'icon iconfont-correctcircle';
-                    break;
-                default:
-                    color = 'msg msg-default';
-                    icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-                '<h3 class="text-center">' + text + '</h3>' +
-                '</div>';
-            targetObj.html(str);
         }
         //]]>
     </script>

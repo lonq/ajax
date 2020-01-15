@@ -1,4 +1,4 @@
-var selfUrl = 'http://' + window.location.host + '/ajax'; // 本站网址
+var selfUrl = 'https://' + window.location.host + ''; // 本站网址
 $.fn.cookie('prevLink', document.referrer); // 来路网址
 
 // footer菜单
@@ -59,4 +59,37 @@ function forwardUrl(prevLink) {
         }
         location.href = prevLink;
     }
+}
+// 遮罩层
+function backdropState(parent, classnames, state) {
+    parent.prepend('<div class="backdrop '+ classnames +'"></div>');
+    if (state == 'on') {
+        $('html, body').css({
+            'overflow': 'hidden'
+        });
+        $('.backdrop').addClass(classnames);
+    }
+    if (state == 'off') {
+        $('html, body').css({
+            'overflow': ''
+        });
+        $('.backdrop').remove();
+    }
+}
+// 清除表单控件的值
+function clearEleValue(flag, obj, objBtn) {
+    var $flag = $(flag);
+    var $obj = $(obj);
+    var $val = $obj.val();
+    var $objBtn = $(objBtn);
+    if (!$flag) return;
+    $val.length > 0 ? $objBtn.removeClass('invisible') : $objBtn.addClass('invisible');
+    $obj.on('keyup', function() {
+        $val = $(this).val();
+        $val.length > 0 ? $objBtn.removeClass('invisible') : $objBtn.addClass('invisible');
+    });
+    $objBtn.on('click', function() {
+        $objBtn.addClass('invisible');
+        $obj.val('').focus();
+    })
 }

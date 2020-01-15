@@ -15,9 +15,9 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>-</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -92,7 +92,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/clipboard.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
@@ -125,7 +125,7 @@
             slidesPerView: "auto",
             mousewheelControl: true,
             freeMode: true,
-            observer: true,
+            // observer: true,
             observeParents: true,
             scrollbar: {
                 el: ".v-swiper-scrollbar"
@@ -330,7 +330,7 @@
                         loadFlag = false;
                         pullUp.hide();
                         pullDown.hide();
-                        noData('default', '现在可以开始聊天了~');
+                        HtmlUtil.noDataMsg(target, 'default', '什么也没找到~');
                     } else {
                         // 有数据
                         var str = '';
@@ -414,7 +414,7 @@
                         });
                         target.append(str);
                         localStorage.setItem('oldChatsListsID', listid);
-                        msg('更新了' + total + '条数据');
+                        HtmlUtil.msg('更新了' + total + '条数据');
                     }
                     vSwiper.update(); // 更新容器尺寸
                 },
@@ -457,7 +457,7 @@
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {
-                    msg('添加失败！');
+                    HtmlUtil.msg('添加失败！');
                 }
             });
         }
@@ -487,7 +487,7 @@
                     vSwiper.update(); // 更新容器尺寸
                 },
                 error: function (xhr, type, errorThrown) {
-                    msg('添加失败！');
+                    HtmlUtil.msg('添加失败！');
                 }
             });
         }
@@ -536,45 +536,18 @@
                                 dataType: "json",
                                 success: function (reponse) {
                                     $p.remove();
-                                    msg('删除成功！');
+                                    HtmlUtil.msg('删除成功！');
                                     fixedContainerH();
                                     vSwiper.update(); // 更新容器尺寸
                                 },
                                 error: function (xhr, type, errorThrown) {
-                                    msg('错误！');
+                                    HtmlUtil.msg('错误！');
                                 }
                             });
                         }
                     }
                 ]
             });
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                    color = 'msg msg-primary';
-                    icon = 'icon iconfont-correctcircle';
-                    break;
-                default:
-                    color = 'msg msg-default';
-                    icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h3 class="text-center">' + text + '</h3>';
-            str += '</div>';
-            targetObj.html(str);
         }
         // 相隔一天
         function daysBetween(startTime, endTime) {

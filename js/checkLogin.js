@@ -4,16 +4,16 @@ $(function () {
         type: 'post',
         url: 'token.asp',
         timeout: 15000,
-        dataType: 'json',
+        dataType: 'html',
         success: function (reponse) {
-            if (reponse == 0) {
+            if (reponse === 'Login Failed') {
                 window.location.href = 'login.html';
             } else {
                 $.fn.cookie('prevLink', { expires: -1 });
             }
         },
         error: function (xhr, type, errorThrown) {
-            $('body').html('加载失败！');
+            $('body').html('数据错误');
         }
     });
 });

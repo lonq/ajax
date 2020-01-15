@@ -1,7 +1,7 @@
 // 1.通用列表
 // 基本设置
 // 标题
-.list-title {
+.items-title {
     margin-top: @padding-base-vertical;
     margin-bottom: @padding-base-vertical / 2;
     padding-left: @padding-base-horizontal;
@@ -10,7 +10,7 @@
     font-size: @font-size-base;
 }
 // 提示
-.list-tips {
+.items-tips {
     margin-top: @padding-base-vertical;
     padding-left: @padding-base-horizontal;
     padding-right: @padding-base-horizontal;
@@ -18,66 +18,38 @@
     font-size: @font-size-base;
 }
 // 列表
-.list {
+.items {
+    position: relative;
     // 列表组间隔
-    & + .list {
+    & + .items {
         margin-top: @padding-base-vertical;
     }
-    position: relative;
     // 顶部底部细线
-    &.border-top {
-        &:before {
-            .border-top(@border-color);
-        }
+    &:before {
+        .border-top(@border-color);
     }
-    &.border-bottom {
-        &:after {
-            .border-bottom(@border-color);
-        }
-    }
-    // 卡片样式
-    &.card {
-        .item {
-            &:after {
-                .border-bottom(@border-color);
-            }
-            &:before,
-            &:after {
-                margin-left: 0;
-                margin-right: 0;
-                width: calc(100vw);
-            }
-        }
-        & + .item {
-            margin-top: @padding-base-vertical;
-        }
+    &:after {
+        .border-bottom(@border-color);
     }
     // 清除border
     &.clear-border {
         .item {
-            &:before {
+            &:before, &:after {
                 display: none;
             }
         }
     }
-    font-size: @font-size-base;
-    line-height: @line-height-base;
-    // 小字号
-    small {
-        line-height: @line-height-base;
-    }
-    // 右边文字
-    .item-note {
-        float: right;
-        color: @gray-light;
-    }
 }
 // 列表下面的对象
+// 基础item
 .item {
     position: relative;
     .display-flex();
+    .align-items(center);
     padding: @padding-base-horizontal;
     color: @gray-dark;
+    font-size: @font-size-base;
+    line-height: @line-height-base;
     text-decoration: none;
     background-color: rgb(255, 255, 255);
     overflow: hidden;
@@ -97,27 +69,34 @@
         margin-right: 0;
         width: calc(100vw - @padding-base-horizontal);
     }
-    // 垂直排列
-    &.direction-column {
-        .flex-direction(column);
+    // 头
+    .item-header {
+        margin-right: @padding-small-horizontal;
     }
-    // 水平居中
-    &.horizontal-center {
-        .justify-content();
+    // 正文
+    .item-body {
+        .box-flex();
     }
-    // 垂直居中
-    &.vertical-center {
-        .align-items();
+    // 尾
+    .item-footer {
+        text-align: right;
+        max-width: 70%;
     }
     // 链接
     &.item-link {
-        font-size: @font-size-base;
         color: @link-color;
         &:first-child {
             &:before {
                 display: block;
             }
         }
+    }
+    // 徽章
+    .badge {
+        background-color: @brand-danger;
+    }
+    .text-note {
+        color: @gray-light;
     }
     // 右边按钮
     &.item-button-right {
@@ -152,104 +131,30 @@
                 .matrix(0.71, 0.71, -0.71, 0.71, 0, 0);
             }
         }
-        // 清除右箭头
-        &.item-access-clear-flag {
-            .item-footer {
-                &:after {
-                    display: none;
-                }
-            }
+    }
+    // 水平排列
+    &.direction-column {
+        .flex-direction(column);
+        > * + * {
+            margin-top: @padding-base-vertical;
         }
-    }
-    // 头
-    .item-header {
-        .icon {
-            margin-right: @padding-small-horizontal;
-        }
-    }
-    // 正文
-    .item-body {
-        .box-flex();
-        font-size: @font-size-base;
-        min-width: 6em;
-    }
-    // 尾
-    .item-footer {
-        text-align: right;
-        color: @gray-light;
-    }
-    // 徽章
-    .badge {
-        background-color: @brand-danger;
-    }
-    // 文本
-    .text {
-        .box-flex();
-    }
-    h4 {
-        font-size: @font-size-large;
-    }
-    h5 {
-        font-size: @font-size-base;
-    }
-    .text-lg {
-        font-size: @font-size-large !important;
-    }
-    .text-muted {
-        color: @gray-light;
-    }
-    .desc {
-        font-size: @font-size-base;
     }
 }
-// 缩略图
+// 媒体item
 .item {
     &.item-thumb {
-        &:before {
-            margin-left: 0;
-            margin-right: 0;
-            width: calc(100vw);
-        }
-        .thumb {
-            position: relative;
-            &.thumb-xs {
-                margin-right: @padding-base-horizontal;
-                width: 30%;
-            }
-            &.thumb-sm {
-                margin-right: @padding-base-horizontal;
-                width: 35%;
-            }
-            &.thumb-md {
-                margin-right: @padding-base-horizontal;
-                width: 40%;
-            }
-            &.thumb-lg {
-                margin-right: @padding-base-horizontal;
-                width: 45%;
-            }
-            .badge {
-                position: absolute;
-                top: -0.4em;
-                right: -0.4em;
-                z-index: @zindex-base;
-            }
-            img,
-            video {
-                margin: 0 auto;
-                .img-responsive();
-            }
+        .item-thumb-variant();
+        .item-body {
+            .item-body-variant();
         }
     }
-    // 图片右对齐
-    &.item-thumb-right {
-        .thumb {
-            margin: 0 0 0 @padding-base-horizontal !important;
+    &.item-avatar {
+        .item-avatar-variant(@padding-base-horizontal; 1.2rem; 1.2rem);
+        .item-body {
+            .item-body-variant();
         }
     }
-}
-// 缩略图组
-.item {
+    // 缩略图组
     &.item-thumb-group {
         .thumb {
             .display-flex();
@@ -266,14 +171,89 @@
             }
         }
     }
-}
-// 头像
-.item {
-    &.item-avatar {
-        .item-avatar-variant(@padding-base-horizontal; 1.2rem; 1.2rem);
+    // 图片右对齐
+    &.item-thumb-right {
+        .thumb {
+            margin: 0 0 0 @padding-base-horizontal !important;
+        }
     }
 }
+// item-body参数
+.item-body-variant() {
+    .display-flex();
+    .flex-direction(column); // 垂直排列
+    /*垂直排列后，两端对齐*/
+    &.justify-content-space-between {
+        .justify-content(space-between);
+    }
+    .item-body-title {
+        font-size: @font-size-large;
+    }
+    .item-body-desc {
+        margin-top: @padding-small-vertical;
+        font-size: @font-size-base;
+    }
+    .item-body-info {
+        .display-flex();
+        .align-items(center);
+        margin-top: @padding-small-vertical;
+        margin-bottom: 0;
+        padding-left: 0;
+        font-size: @font-size-small;
+        /*水平两端对齐，需要容器带有宽度或高度*/
+        &.justify-content-space-between {
+            .justify-content(space-between);
+        }
+        >li {
+            list-style: none;
+            & + li {
+                padding-left: @padding-base-horizontal;
+            }
+        }
+    }
+}
+// 缩略图参数
+.item-thumb-variant() {
+    .align-items(normal);
+    /*垂直居中*/
+    &.vertical-center {
+        .align-items(center);
+    }
+    .thumb {
+        position: relative;
+        width: 100%;
+        max-height: 100%;
+        &.thumb-xs {
+            margin-right: @padding-base-horizontal;
+            width: 30%;
+        }
+        &.thumb-sm {
+            margin-right: @padding-base-horizontal;
+            width: 35%;
+        }
+        &.thumb-md {
+            margin-right: @padding-base-horizontal;
+            width: 40%;
+        }
+        &.thumb-lg {
+            margin-right: @padding-base-horizontal;
+            width: 45%;
+        }
+        .badge {
+            position: absolute;
+            top: -0.4em;
+            right: -0.4em;
+            z-index: @zindex-base;
+        }
+    }
+}
+// 头像参数
 .item-avatar-variant(@marginHorizontal; @width; @height) {
+    .align-items(normal);
+    /*垂直居中*/
+    &.vertical-center {
+        .align-items(center);
+    }
     &:before {
         margin-left: @padding-base-horizontal + @width + @marginHorizontal;
         width: calc(100vw - (@padding-base-horizontal + @width + @marginHorizontal));
@@ -286,20 +266,17 @@
         img {
             margin: 0 auto;
             .img-responsive();
-            border-radius: @border-radius-base;
+            border-radius: 50%;
         }
-        form {
+        form,
+        input {
             position: absolute;
             top: 0;
             left: 0;
             z-index: @zindex-base;
-            width: inherit;
-            height: inherit;
+            width: 100%;
+            height: 100%;
             .opacity(0);
-            input[type="file"] {
-                width: inherit;
-                height: inherit;
-            }
         }
         .badge {
             position: absolute;
@@ -309,6 +286,60 @@
         }
     }
 }
+// 水平排列
+.items {
+    &.horizontal {
+        .display-flex();
+        -webkit-flex-wrap: wrap;
+        flex-wrap: wrap;
+        &:before,
+        &:after {
+            display: none;
+        }
+        .border-top {
+            &:before,
+            &:after {
+                display: none;
+            }
+        }
+        .item {
+            .box-flex();
+            -webkit-flex-basis: 48%;
+            flex-basis: 48%;
+            max-width: 49.4%;
+            background-color: #fff;
+            overflow: hidden;
+            .flex-direction(column);
+            .align-items(normal);
+            &:before {
+                display: none;
+            }
+            &:nth-child(2n) {
+                margin-bottom: @padding-small-vertical;
+            }
+            &:nth-child(2n-1) {
+                margin-right: @padding-small-vertical;
+                margin-bottom: @padding-small-vertical;
+            }
+            .thumb {
+                margin: 0 0 @padding-base-vertical 0;
+                width: auto !important;
+                img {
+                    display: block;
+                    margin: 0 auto;
+                }
+            }
+            &.item-thumb-right {
+                .thumb {
+                    margin: @padding-base-vertical 0 0 0;
+                    width: auto;
+                }
+            }
+        }
+    }
+}
+// 面板item
+
 // item开关
 .item {
     &.item-toggle {
@@ -422,57 +453,6 @@
                     top: 50%;
                     right: @padding-base-horizontal;
                     margin-top: -0.24rem;
-                }
-            }
-        }
-    }
-}
-// 水平排列视图
-.list {
-    &.view-horizontal {
-        .display-flex();
-        -webkit-flex-wrap: wrap;
-        flex-wrap: wrap;
-        &:before,
-        &:after {
-            display: none;
-        }
-        .border-top {
-            &:before,
-            &:after {
-                display: none;
-            }
-        }
-        .item {
-            .box-flex();
-            -webkit-flex-basis: 48%;
-            flex-basis: 48%;
-            max-width: 49.4%;
-            background-color: #fff;
-            overflow: hidden;
-            .flex-direction(column);
-            &:before {
-                display: none;
-            }
-            &:nth-child(2n) {
-                margin-bottom: @padding-small-vertical;
-            }
-            &:nth-child(2n-1) {
-                margin-right: @padding-small-vertical;
-                margin-bottom: @padding-small-vertical;
-            }
-            &.vertical-center {
-                -webkit-align-items: normal;
-                align-items: normal;
-            }
-            .thumb {
-                margin: 0 0 @padding-base-vertical 0;
-                width: auto !important;
-            }
-            &.item-thumb-right {
-                .thumb {
-                    margin: @padding-base-vertical 0 0 0;
-                    width: auto;
                 }
             }
         }
@@ -1632,30 +1612,6 @@ table {
 // 表单
 .form-classics {
     .item {
-        padding: 0;
-        &.divider {
-            position: relative;
-            &:before {
-                .border-top(@border-color);
-            }
-            :first-child:before {
-                display: none;
-            }
-        }
-        .form-control {
-            min-width: 100%;
-            font-size: @font-size-base;
-            line-height: @line-height-base;
-            color: @gray-dark;
-            border: none;
-            background-color: #fff;
-            cursor: pointer;
-            -webkit-appearance: none;
-        }
-        .form-control-feedback {
-            font-size: @font-size-base;
-            line-height: @line-height-base;
-        }
     }
 }
 

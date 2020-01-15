@@ -1,5 +1,4 @@
-<!--#include file="inc/conn.asp"-->
-<!--#include file="inc/function.asp"--><%
+<!--#include file="token.asp"--><%
 '常用变量
 Dim Sql, Rs
 Action = Trim(Request("Action"))

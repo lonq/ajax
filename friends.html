@@ -15,9 +15,9 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>我的好友</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -42,7 +42,7 @@
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
                 <div class="pull-down" style="display: none;">下拉更新</div>
-                <div class="list main border-top"></div>
+                <div class="list items main"></div>
                 <div class="pull-up">上拉加载更多</div>
             </div>
         </div>
@@ -53,7 +53,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/dropdown.js"></script>
@@ -146,7 +146,7 @@
                         loadFlag = false;
                         pullUp.hide();
                         pullDown.hide();
-                        noData('default', '什么也没找到~');
+                        HtmlUtil.noDataMsg(target, 'default', '什么也没找到~');
                     } else {
                         // 有数据
                         var str = '';
@@ -164,9 +164,9 @@
                                     str += '<span class="badge">' + k.chatsrecordcount + '</span>';
                                 }
                                 str += '</div>' +
-                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h5 class="text-ellipsis clearfix"><small class="timeago pull-right text-muted" datetime="' + k.chatsaddtime + '"></small>' + k.userspetName + '</h5>' +
-                                    '<p class="desc text-muted text-xs">' + k.chatscontent + '</p>' +
+                                    '<div class="item-body direction-column justify-content-space-between space-top">' +
+                                    '<h4 class="item-body-title text-ellipsis clearfix"><small class="timeago pull-right text-muted" datetime="' + k.chatsaddtime + '"></small>' + k.userspetName + '</h4>' +
+                                    '<p class="item-body-desc text-muted text-xs">' + k.chatscontent + '</p>' +
                                     '</div>' +
                                     // '<label class="checkbox margin-left">' +
                                     // '<input type="checkbox" name="r11">' +
@@ -195,42 +195,6 @@
                 }
             });
         };
-        // 消息提示
-        function loadingMsg(str) {
-            loading = $(document).dialog({
-                type: 'toast',
-                infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
-                infoText: str
-            });
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                    color = 'msg msg-primary';
-                    icon = 'icon iconfont-correctcircle';
-                    break;
-                default:
-                    color = 'msg msg-default';
-                    icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-                '<h3 class="text-center">' + text + '</h3>' +
-                '</div>';
-            targetObj.html(str);
-        }
         //]]>
     </script>
 </body>

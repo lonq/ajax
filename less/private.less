@@ -35,18 +35,27 @@
     .search-box(0.906667rem);
 }
 .search-box(@height) {
+    padding-left: @padding-base-horizontal;
     height: @height;
     line-height: @height;
     border-radius: @height / 2;
     background-color: @gray-lighter;
-    .form-control,
     .btn {
         padding-top: 0;
         padding-bottom: 0;
         height: @height;
         line-height: @height;
         vertical-align: middle;
+        background-color: transparent;
     }
+}
+// 焦点图
+.swiper-container {
+    --swiper-theme-color: #fff;
+    --swiper-pagination-color: #fff;
+}
+.swiper-pagination-bullet {
+    background: #fff !important;
 }
 // /*详情*/
 .detail-picture {
@@ -211,6 +220,7 @@
             height: @height;
             color: @gray-dark;
             border: 0;
+            background-color: transparent;
         }
         .toggle {
             input:checked {
@@ -293,7 +303,7 @@
     font-size: @font-size-small;
     text-align: center;
     color: inherit;
-    .mtext-ellipsis(2);
+    .text-ellipsis-lines(2);
 }
 ul.user-info {
     .list-unstyled();
@@ -427,9 +437,11 @@ ul.user-capability {
 }
 // 用户名片
 .user-qrcode-wrap {
+    width: 100%;
     background-color: #fff;
     .user-qrcode {
         position: relative;
+        margin: @padding-base-vertical auto;
         width: 5.333333rem;
         height: 5.333333rem;
         img {
@@ -474,7 +486,7 @@ ul.user-capability {
             height: (@padding-base-vertical * 2) + (@font-size-base * @line-height-base);
             img {
                 .img-responsive(inline-block);
-                border-radius: @border-radius-base;
+                border-radius: 50%;
             }
         }
         &.fromchats {

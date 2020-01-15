@@ -15,9 +15,9 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>产品详情</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -47,9 +47,9 @@
                 <div class="h-swiper">
                     <div class="pull-down" style="display: none;">下拉更新</div>
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide list"></div>
-                        <div class="swiper-slide list"></div>
-                        <div class="swiper-slide list"></div>
+                        <div class="swiper-slide list items"></div>
+                        <div class="swiper-slide list items"></div>
+                        <div class="swiper-slide list items"></div>
                     </div>
                     <div class="pull-up">上拉加载更多</div>
                 </div>
@@ -94,7 +94,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/common.js"></script>
@@ -299,19 +299,23 @@
                             str += '<img src="' + reponse.pictures + '">';
                         }
                         str += '</div>' +
-                        '<div class="detail-box flex-wrap margin-top padding border-top border-bottom direction-column justify-content-space-between border-bottom relative">' +
-                        '<div class="flex-wrap justify-content-space-between vertical-center">' +
-                        '<h3 class="text-lg text-danger"><small>¥</small>' + reponse.price + '</h3>' +
-                        '<ul class="list-unstyled list-inline text-xs text-center">' +
-                        '<li><a class="text-muted" href="#"><i class="icon iconfont-share"></i><br>' + sharing + '</a></li>' +
-                        '<li><a class="text-muted" href="#"><i class="icon iconfont-commenting"></i><br>' + comments + '</a></li>' +
+                        '<div class="detail-box items">' +
+                        '<div class="item item-thumb">' +
+                        '<div class="item-body">' +
+                        '<div class="flex-wrap vertical-center justify-content-space-between">' +
+                        '<p class="text-lg text-danger"><small>&yen;</small>' + reponse.price + '</p>' +
+                        '<ul class="list-unstyled list-inline text-muted">' +
+                        '<li><a class="text-muted" href="#"><i class="icon iconfont-share"></i> ' + sharing + '</a></li>' +
+                        '<li><a class="text-muted" href="#"><i class="icon iconfont-commenting"></i> ' + comments + '</a></li>' +
                         '</ul>' +
                         '</div>' +
-                        '<h1 class="title">' + reponse.title + '</h1>' +
-                        '<p class="margin-top">' + reponse.description + '</p>' +
+                        '<h4 class="item-body-title text-ellipsis margin-vertical">' + reponse.title + '</h4>' +
+                        '<p class="item-body-desc text-ellipsis-lines">' + reponse.description + '</p>' +
                         '</div>' +
-                        '<div class="list border-top border-bottom margin-top">' +
-                        '<a href="#" class="item vertical-center item-access">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="items margin-top">' +
+                        '<a href="#" class="item item-access">' +
                         '<div class="item-body text-muted">' +
                         '<span>领券</span>' +
                         '<span class="label margin-left">默认</span>' +
@@ -320,8 +324,8 @@
                         '<div class="item-footer"></div>' +
                         '</a>' +
                         '</div>' +
-                        '<div class="list border-top">' +
-                        '<div class="item vertical-center">' +
+                        '<div class="items">' +
+                        '<div class="item border-bottom">' +
                         '<div class="item-header"><i class="icon iconfont-picture"></i></div>' +
                         '<div class="item-body">' +
                         '<span>图文详情</span>' +
@@ -345,12 +349,12 @@
                             }
                         });
                     }
+                    vSwiper.update();
                     // 判断图片加载状况，加载完成后回调
                     HtmlUtil.isImgLoad('.content img', function(){
                         // 加载完成
                         vSwiper.update();
                     });
-                    vSwiper.update();
                 },
                 error: function (xhr, type, errorThrown) {
                     targetObj.eq(target).html('加载失败！');
@@ -375,9 +379,7 @@
                     if (reponse == 0) {
                         // 首次加载无数据
                         loadFlagArr[target] = false;
-                        pullUp.hide();
-                        pullDown.hide();
-                        noData(target, 'default', '暂无数据');
+                        HtmlUtil.noDataMsg(targetObj.eq(target), 'default', '暂无数据');
                     } else {
                         // 有数据
                         var str = '';
@@ -394,11 +396,12 @@
                                     '<div class="avatar">' +
                                     '<img src="' + k.avatar + '">' +
                                     '</div>' +
-                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h5 class="title text-ellipsis">' + k.nickname + '</h5>' +
-                                    '<p class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></p>' +
-                                    '<p class="desc">' + k.comment + '</p>' +
-                                    '</div>' +
+                                    '<div class="item-body">' +
+                                    '<ul class="item-body-info justify-content-space-between">' +
+                                    '<li class="text-ellipsis">' + k.nickname + '</li>' +
+                                    '<li class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></li>' +
+                                    '</ul>' +
+                                    '<p class="item-body-desc">' + k.comment + '</p>' +
                                     '</div>';
                             });
                             // 上拉结束提示
@@ -436,6 +439,7 @@
                     ID: id
                 },
                 success: function (reponse) {
+                    // 无数据
                     if (reponse != 0) {
                         // 有数据
                         var str = '';
@@ -447,16 +451,17 @@
                                 '<div class="avatar">' +
                                 '<img src="' + k.avatar + '">' +
                                 '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h5 class="title text-ellipsis">' + k.nickname + '</h5>' +
-                                '<p class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></p>' +
-                                '<p class="desc">' + k.comment + '</p>' +
-                                '</div>' +
+                                '<div class="item-body">' +
+                                '<ul class="item-body-info justify-content-space-between">' +
+                                '<li class="text-ellipsis">' + k.nickname + '</li>' +
+                                '<li class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></li>' +
+                                '</ul>' +
+                                '<p class="item-body-desc">' + k.comment + '</p>' +
                                 '</div>';
                         });
                         targetObj.eq(target).prepend(str);
                         localStorage.setItem('oldCommentsID', commentsid);
-                        msg('更新了' + total + '条数据');
+                        HtmlUtil.msg('更新了' + total + '条数据');
                     }
                     timeago(null, 'zh_CN').render($('.timeago')); // 格式化时间
                     vSwiper.update(); // 更新容器尺寸
@@ -483,9 +488,7 @@
                     if (reponse == 0) {
                         // 首次加载无数据
                         loadFlagArr[target] = false;
-                        pullUp.hide();
-                        pullDown.hide();
-                        noData(target, 'default', '暂无数据');
+                        HtmlUtil.noDataMsg(targetObj.eq(target), 'default', '暂无数据');
                     } else {
                         // 有数据
                         var str = '';
@@ -506,19 +509,19 @@
                                 }
                                 var sharing = k.sharing > 9999 ? (k.sharing/10000).toFixed(1) + "万" : k.sharing;
                                 var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
-                                str += '<a class="item item-thumb item-access" href="' + linkurl + '">' +
+                                str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
                                     '<div class="thumb thumb-md">';
-                                    if (k.pictures.constructor === Array) {
-                                        str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
-                                    } else {
-                                        str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
-                                    }
-                                    str += '</div>' +
-                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                    '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
-                                    '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
-                                    '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                if (k.pictures.constructor === Array) {
+                                    str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
+                                } else {
+                                    str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
+                                }
+                                str += '</div>' +
+                                    '<div class="item-body">' +
+                                    '<h4 class="item-body-title text-ellipsis">' + k.title + '</h4>' +
+                                    '<p class="item-body-desc text-ellipsis-lines">' + k.description + '</p>' +
+                                    '<p class="text-lg text-danger"><small>&yen;</small>' + k.price + '</p>' +
+                                    '<ul class="item-body-info text-muted">' +
                                     '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
                                     '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
                                     '</ul>' +
@@ -575,17 +578,17 @@
                             var comments = k.comments > 9999 ? (k.comments/10000).toFixed(1) + "万" : k.comments;
                             str += '<a class="item item-thumb item-access" href=' + linkurl + '>' +
                                 '<div class="thumb thumb-md">';
-                                if (k.pictures.constructor === Array) {
-                                    str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
-                                } else {
-                                    str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
-                                }
-                                str += '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h4 class="title text-ellipsis-2">' + k.title + '</h4>' +
-                                '<p class="desc text-muted text-ellipsis">' + k.description + '</p>' +
-                                '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
-                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                            if (k.pictures.constructor === Array) {
+                                str += '<img src="' + k.pictures[0] + '" style="width: 3.68rem;height: 3.68rem;">';
+                            } else {
+                                str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
+                            }
+                            str += '</div>' +
+                                '<div class="item-body">' +
+                                '<h4 class="item-body-title text-ellipsis">' + k.title + '</h4>' +
+                                '<p class="item-body-desc text-ellipsis-lines">' + k.description + '</p>' +
+                                '<p class="text-lg text-danger"><small>&yen;</small>' + k.price + '</p>' +
+                                '<ul class="item-body-info text-muted">' +
                                 '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
                                 '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
                                 '</ul>' +
@@ -594,7 +597,7 @@
                         });
                         targetObj.eq(target).prepend(str);
                         localStorage.setItem('oldRecommendationsID', recommendationsid);
-                        msg('更新了' + total + '条数据');
+                        HtmlUtil.msg('更新了' + total + '条数据');
                     }
                     vSwiper.update(); // 更新容器尺寸
                 },
@@ -603,34 +606,6 @@
                 }
             });
         };
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(target, type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                color = 'msg msg-primary';
-                icon = 'icon iconfont-correctcircle';
-                break;
-                default:
-                color = 'msg msg-default';
-                icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-            '<h3 class="text-center">' + text + '</h3>' +
-            '</div>';
-            targetObj.eq(target).html(str);
-        }
         //]]>
     </script>
 </body>

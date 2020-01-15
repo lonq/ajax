@@ -15,9 +15,8 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>用户信息</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -32,20 +31,20 @@
         </nav>
     </header>
 
-    <div class="list border-top border-bottom">
-        <a class="item vertical-center item-avatar item-access" href="javascript:;" data-eleName="usersFace">
+    <div class="list items border-top border-bottom">
+        <a class="item item-avatar item-access vertical-center js-userface-edit" href="javascript:;" data-eletype="text" data-eleName="usersFace">
             <div class="item-body">
                 <span>头像</span>
             </div>
-            <div class="avatar clear-margin" id="container_node">
+            <div class="avatar clear-margin">
                 <div class="js-usersface"></div>
-                <form class="form-classics" id="usersFaceForm" name="usersFaceForm" method="POST">
+                <!-- <form class="form-classics" id="usersFaceForm" name="usersFaceForm" method="POST">
                     <input id="fileuplaod" name="fileuplaod" type="file" accept="image/*" onchange="">
-                </form>
+                </form> -->
             </div>
             <div class="item-footer"></div>
         </a>
-        <a class="item vertical-center" href="javascript:;">
+        <a class="item" href="javascript:;">
             <div class="item-body">
                 <span>用户名</span>
             </div>
@@ -53,7 +52,7 @@
                 <span class="js-value js-usersname"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersPetName">
+        <a class="item item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersPetName">
             <div class="item-body">
                 <span>昵称</span>
             </div>
@@ -61,7 +60,15 @@
                 <span class="js-value js-userspetname"></span>
             </div>
         </a>
-        <a class="item vertical-center item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersEMail">
+        <a class="item item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersPhone">
+            <div class="item-body">
+                <span>手机号</span>
+            </div>
+            <div class="item-footer item-note">
+                <span class="js-value js-usersphone"></span>
+            </div>
+        </a>
+        <a class="item item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersEMail">
             <div class="item-body">
                 <span>邮箱</span>
             </div>
@@ -69,7 +76,7 @@
                 <span class="js-value js-usersemail"></span>
             </div>
         </a>
-        <a class="item vertical-center" href="javascript:;">
+        <a class="item" href="javascript:;">
             <div class="item-body">
                 <span>注册时间</span>
             </div>
@@ -77,7 +84,7 @@
                 <span class="js-value js-addtime"></span>
             </div>
         </a>
-        <a class="item vertical-center" href="javascript:;">
+        <a class="item" href="javascript:;">
             <div class="item-body">
                 <span>最后一次登录</span>
             </div>
@@ -85,7 +92,7 @@
                 <span class="js-value js-logindate"></span>
             </div>
         </a>
-        <a class="item item-access js-edit" href="javascript:;" data-eletype="textarea" data-eleName="UsersSignature">
+        <a class="item item-thumb item-access js-edit" href="javascript:;" data-eletype="textarea" data-eleName="UsersSignature">
             <div class="item-body">
                 <span>签名</span>
             </div>
@@ -112,10 +119,10 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
+    <script src="js/uploadFiles.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/focusEnd.js"></script>
-    <script src="js/zepto-cut-photo-master/zepto.cutphoto.min.js"></script>
-    <script src="js/uploadFiles.js"></script>
+    <script src="js/zepto-cut-photo-master/js/zepto.cutphoto.js"></script>
     <script src="js/common.js"></script>
     <script src="js/config.js"></script>
 
@@ -125,6 +132,13 @@
         $(function () {
             // 插入正文
             getContent();
+            // 生成头像表单
+            $('.js-userface-edit').on('click', function(){
+                var $t = $(this);
+                var eleType = $t.attr('data-eletype');
+                var eleName = $t.attr('data-eleName');
+                initUserFaceForm($t, eleType, eleName);
+            });
             // 生成表单
             $('.js-edit').on('click', function(){
                 var $t = $(this);
@@ -135,25 +149,15 @@
             // 关闭表单
             $(document).on('click', '.js-close-btn', function(){
                 closeModal();
-                $('#fileuplaod').val('');
-            });
-            // 清除表单字符
-            $(document).on('click', '.form-control-feedback.iconfont-wrongcircle', function(){
-                var target = $(this).prev().children().not('#UsersID');
-                target.val('').focus();
-            });
-            // 修改头像
-            $('a[data-eleName="usersFace"]').on('click', function (e) {
-                // showActionSheet($('.user-face-actionsheet'));
             });
         });
         // 表单
-        function initForm($ele, eleType, eleName) {
-            var title = $ele.find('.item-body>span').text();
-            var value = $ele.find('.item-footer>span').html();
+        function initForm($target, eleType, eleName) {
+            var title = $target.find('.item-body>span').text();
+            var value = $target.find('.item-footer>span').html();
             var html = '';
             html += '<div id="modalForm" class="modal modal-form bg-gray" style="display: block;">' +
-                    '<form class="form-classics" id="stepForm" name="stepForm" method="post">' +
+                    '<form class="form-classics" id="stepForm" name="stepForm" onsubmit="return validateForm(\'' + eleName + '\')">' +
                     '<header>' +
                     '<nav class="navbar navbar-light">' +
                     '<ul class="navbar-left">' +
@@ -165,26 +169,30 @@
                     '</ul>' +
                     '</nav>' +
                     '</header>' +
-                    '<div class="list">' +
-                    '<div class="item divider">' +
+                    '<div class="list items">' +
+                    '<div class="item js-clear-value">' +
                     '<div class="item-body">';
             html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
             if (eleType == 'textarea') {
-                html += '<textarea class="form-control" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
+                html += '<textarea class="form-control js-clear-ele" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
             } else {
-                html += '<input type="' + eleType + '" class="form-control" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
+                html += '<input type="' + eleType + '" class="form-control js-clear-ele" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
             }
             html += '</div>' +
-                    '<div class="item-footer form-control-feedback iconfont-wrongcircle text-muted"></div>' +
+                    '<div class="item-footer form-control-feedback">' +
+                    '<i class="iconfont-wrongcircle text-muted js-clear-btn"></i>' +
                     '</div>' +
                     '</div>' +
-                    '<div class="list-tips"></div>' +
+                    '</div>' +
+                    '<div class="items-tips"></div>' +
                     '</form>' +
                     '</div>';
             $('body').append(html);
             $('#' + eleName).focusEnd();
+            // 清除表单控件的值
+            clearEleValue('.js-clear-value', '.js-clear-ele', '.js-clear-btn');
             // 初始化提示消息
-            initMsg($('.list-tips'), eleName);
+            initMsg($('.items-tips'), eleName);
         }
         // 文章正文
         function getContent() {
@@ -200,6 +208,7 @@
                     // 有数据
                     var usersname = reponse.usersname;
                     var userspetname = reponse.userspetname;
+                    var usersphone = reponse.usersphone;
                     var userssignature = reponse.userssignature;
                     var usersemail = reponse.usersemail;
                     var usersface = reponse.usersface;
@@ -223,6 +232,7 @@
                     $('.js-usersface').html('<img src="' + usersface + '">');
                     $('.js-usersname').html(usersname);
                     $('.js-userspetname').html(userspetname);
+                    $('.js-usersphone').html(usersphone);
                     $('.js-usersemail').html(usersemail);
                     $('.js-addtime').html(addtime);
                     $('.js-logindate').html(logindate);
@@ -235,57 +245,83 @@
             });
         }
         // 初始化表单提示
-        function initMsg($ele, eleName) {
-            var _initMsg;
+        function initMsg($target, eleName) {
+            var $ele = $('#' + eleName);
+            var _initMsg = '';
             if (eleName == 'UsersPetName') { // 昵称
-                _initMsg = '昵称长度2位以上，不包含特殊字符！';
+                let len = 18;
+                _initMsg = '昵称长度2-'+ len +'位，不包含特殊字符！';
+                $ele.attr('maxlength', len);
+            } else if (eleName == 'UsersPhone') { // 手机号
+                let len = 11;
+                _initMsg = '请输入正确的手机号，长度'+ len +'位。';
+                $ele.attr('maxlength', len);
             } else if (eleName == 'UsersEMail') { // 邮箱
                 _initMsg = '请输入正确的邮箱地址，例如：admin@163.com。';
             } else if (eleName == 'UsersSignature') { // 签名
-                _initMsg = '选填项。';
+                let len = 50;
+                _initMsg = '选填项，最大长度'+ len +'位。';
+                $ele.attr('maxlength', len);
             } else {
                 _initMsg = '';
             }
-            $ele.html(_initMsg);
+            $target.html(_initMsg);
         }
         // 修改普通表单
-        function validateForm($ele) {
-            var $errorMsgObj = $('#' + $ele).parents('.list').siblings('.list-tips');
-            if ($ele == 'UsersPetName') { // 昵称
-                var val = $.trim($('#' + $ele).val());
-                var reg = /^[\u4e00-\u9fa5A-Za-z0-9-_]*$/;
-                if(val == "" || val.length < 2 || !reg.test(val)){
-                    var errorMsg = "昵称不能为空，长度2位以上，不包含特殊字符！";
+        function validateForm(eleName) {
+            var $ele = $('#' + eleName);
+            var $errorMsgObj = $ele.parents('.items').siblings('.items-tips');
+            var val = $.trim($ele.val());
+            if (eleName == 'UsersPetName') { // 昵称
+                let reg = /^[\u4e00-\u9fa5A-Za-z0-9-_]*$/;
+                if(val == "" || val.length < 2 || val.length > 18 || !reg.test(val)){
+                    var errorMsg = "昵称不能为空，长度2-18位，不包含特殊字符！";
                     $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    $ele.focus();
                     return false;
                 }
             }
-            if ($ele == 'UsersEMail') { // 邮箱
-                var val = $.trim($('#' + $ele).val());
-                var reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
+            if (eleName == 'UsersPhone') { // 手机号
+                let reg = /^0?1[3|4|5|6|7|8][0-9]\d{8}$/;
+                if(val == ""){
+                    var errorMsg = "手机号不能为空！";
+                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    $ele.focus();
+                    return false;
+                } else if(!reg.test(val)){
+                    var errorMsg = "手机号格式错误！";
+                    $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    $ele.focus();
+                    return false;
+                }
+            }
+            if (eleName == 'UsersEMail') { // 邮箱
+                let reg = /^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/;
                 if(val == ""){
                     var errorMsg = "邮箱不能为空！";
                     $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    $ele.focus();
                     return false;
                 } else if(!reg.test(val)){
                     var errorMsg = "邮箱格式错误！";
                     $errorMsgObj.html("<span class='text-danger'>" + errorMsg + "</span>");
+                    $ele.focus();
                     return false;
                 }
             }
-            saveForm($ele);
+            saveForm(eleName);
         }
         // 修改普通表单
-        function saveForm($ele) {
-            var value = $('#' + $ele).val();
+        function saveForm(eleName) {
+            var val = $('#' + eleName).val();
             $.ajax({
                 type: "POST",
-                url: 'getUsers.asp?Action=update' + $ele,
+                url: 'getUsers.asp?Action=update' + eleName,
                 data: $('#stepForm').serialize(),
                 timeout: 15000,
                 dataType: "json",
                 success: function (reponse) {
-                    $('.js-' + $ele.toLowerCase()).html(value);
+                    $('.js-' + eleName.toLowerCase()).html(val);
                     closeModal();
                 },
                 error: function () {
@@ -309,28 +345,9 @@
             actionsheet.removeClass('actionsheet-toggle');
             backdrop.remove();
         }
-        // 消息提示
+        // 关闭模态框
         function closeModal() {
             $('.modal').remove();
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                    color = 'msg msg-primary';
-                    icon = 'icon iconfont-correctcircle';
-                    break;
-                default:
-                    color = 'msg msg-default';
-                    icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-                '<h3 class="text-center">' + text + '</h3>' +
-                '</div>';
-            targetObj.html(str);
         }
         //]]>
     </script>

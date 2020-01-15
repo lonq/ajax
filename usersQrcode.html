@@ -15,8 +15,8 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>我的名片</title>
-    <link href="css/style.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -115,12 +115,7 @@
                 timeout: 15000,
                 dataType: 'json',
                 success: function (reponse) {
-                    // 无数据
-                    if (reponse == 0) {
-                        pullUp.hide().html();
-                        pullDown.hide();
-                        noData('default', '什么也没找到~');
-                    } else {
+                    if (reponse != 0) {
                         // 有数据
                         var str = '';
                         var usersname = reponse.usersname;
@@ -143,18 +138,16 @@
                         } else {
                             userssignature = '他很懒，什么都没留下。';
                         }
-                        str += '<div class="list clear-border user-qrcode-wrap">' +
-                            '<div class="item item-avatar">' +
+                        str += '<div class="items user-qrcode-wrap">' +
+                            '<div class="item item-avatar border-bottom">' +
                             '<div class="avatar"><img src="' + usersface + '"></div>' +
                             '<div class="item-body overflow-hidden space-top">' +
-                            '<h4 class="title text-ellipsis">' + userspetname + '</h4>' +
+                            '<h3 class="title text-ellipsis">' + userspetname + '</h3>' +
                             '<p class="text-muted text-xs text-ellipsis-2">' + userssignature + '</p>' +
                             '</div>' +
                             '</div>' +
-                            '<div class="item horizontal-center">' +
                             '<div id="userQrcode" class="user-qrcode"><img class="icon" src="images/mini-logo.png"></div>' +
-                            '</div>' +
-                            '<div class="item horizontal-center text-sm text-muted">扫描二维码，加我为好友</div>' +
+                            '<div class="padding-bottom text-center text-xs text-muted">扫描二维码，加我为好友</div>' +
                             '</div>';
                         $('.js-content').html(str);
                         // 生成二维码
@@ -169,53 +162,9 @@
                     }
                 },
                 error: function (xhr, type, errorThrown) {
-                    pullUp.html('加载失败！');
+                    HtmlUtil.msg('数据加载失败！');
                 }
             });
-        }
-        // 遮罩层
-        function backdropState(parent, classnames, state) {
-            parent.prepend('<div class="backdrop '+ classnames +'"></div>');
-            if (state == 'on') {
-                $('html, body').css({
-                    'overflow': 'hidden'
-                });
-                $('.backdrop').addClass(classnames);
-            }
-            if (state == 'off') {
-                $('html, body').css({
-                    'overflow': ''
-                });
-                $('.backdrop').remove();
-            }
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                    color = 'msg msg-primary';
-                    icon = 'icon iconfont-correctcircle';
-                    break;
-                default:
-                    color = 'msg msg-default';
-                    icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-                '<h3 class="text-center">' + text + '</h3>' +
-                '</div>';
-            targetObj.html(str);
         }
         //]]>
     </script>

@@ -1,6 +1,4 @@
-<!--#include file="inc/conn.asp"-->
-<!--#include file="inc/config.asp"-->
-<!--#include file="inc/function.asp"-->
+<!--#include file="token.asp"-->
 <!--#include file="inc/Upload_class.inc"--><%
 '页面名称
 Dim MyFileName,ItemName

@@ -15,9 +15,9 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>产品列表</title>
-    <link href="css/style.css" rel="stylesheet">
-    <link href="js/swiper-4.4.1/dist/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
@@ -36,7 +36,7 @@
         <div class="swiper-wrapper w">
             <div class="swiper-slide d">
                 <div class="pull-down" style="display: none;">下拉更新</div>
-                <div class="list main" id="viewWrap"></div>
+                <div class="list items main" id="viewWrap"></div>
                 <div class="pull-up">上拉加载更多</div>
             </div>
         </div>
@@ -49,7 +49,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-4.4.1/dist/js/swiper.min.js"></script>
+    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/common.js"></script>
@@ -66,6 +66,8 @@
         var targetObj = $('.list.main'); //目标数据容器
         var pullDown = $('.pull-down');
         var pullUp = $('.pull-up');
+
+        var isMode = 'vertical';
 
         //初始化y轴滚动
         var vSwiper = new Swiper('.v-swiper', {
@@ -98,23 +100,30 @@
             //插入底部菜单
             getFooter('productsList.html');
             // 默认加载第一选项第一屏数据
-            getData(targetObj);
+            showData();
             // 修正容器高度
             fixedContainerH();
             //切换视图
             $('#changeViewMode').on('click', function () {
-                var $targetObj = $('#viewWrap');
-                var $icon = $(this).children('i');
-                if ($targetObj.hasClass('view-horizontal')) {
-                    $icon.attr('class', 'iconfont-modeimage');
-                    $targetObj.removeClass('view-horizontal');
-                } else {
-                    $icon.attr('class', 'iconfont-modelist');
-                    $targetObj.addClass('view-horizontal');
-                }
-                vSwiper.update(); // 更新容器尺寸
+                showData();
             });
         });
+        //列表显示模式
+        function showData() {
+            var $Obj = $('#viewWrap');
+            var $icon = $('#changeViewMode').children('i');
+            if (!$Obj) return;
+            if ($Obj.hasClass('vertical')) {
+                isMode = 'horizontal';
+                $Obj.addClass('horizontal').removeClass('vertical');
+                $icon.attr('class', 'iconfont-modeimage');
+            } else {
+                isMode = 'vertical';
+                $Obj.addClass('vertical').removeClass('horizontal');
+                $icon.attr('class', 'iconfont-modelist');
+            }
+            getData(targetObj, isMode);
+        }
         //修正容器高度
         function fixedContainerH() {
             $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
@@ -148,7 +157,7 @@
                     pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
                     //加载数据
                     page++;
-                    getData(targetObj);
+                    getData(targetObj, isMode);
                 }
             }
         }
@@ -161,7 +170,8 @@
             }
         }
         // 产品列表
-        function getData(target) {
+        function getData(target, mode) {
+            mode = isMode;
             $.ajax({
                 type: 'GET',
                 url: 'getProducts.asp?Action=lists',
@@ -177,7 +187,7 @@
                         loadFlag = false;
                         pullUp.hide();
                         pullDown.hide();
-                        noData('default', '什么也没找到~');
+                        HtmlUtil.noDataMsg(target, 'default', '什么也没找到~');
                     } else {
                         // 有数据
                         var str = '';
@@ -206,11 +216,15 @@
                                     str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
                                 }
                                 str += '</div>' +
-                                    '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                    '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                    '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
-                                    '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
-                                    '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                    '<div class="item-body">';
+                                if (mode == 'horizontal') {
+                                    str += '<h4 class="item-body-title text-ellipsis-lines">' + k.title + '</h4>';
+                                } else {
+                                    str += '<h4 class="item-body-title text-ellipsis">' + k.title + '</h4>' +
+                                        '<p class="item-body-desc text-ellipsis-lines">' + k.description + '</p>';
+                                }
+                                str += '<p class="text-lg text-danger"><small>&yen;</small>' + k.price + '</p>' +
+                                    '<ul class="item-body-info text-muted">' +
                                     '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
                                     '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
                                     '</ul>' +
@@ -273,11 +287,15 @@
                                 str += '<img src="' + k.pictures + '" style="width: 3.68rem;height: 3.68rem;">';
                             }
                             str += '</div>' +
-                                '<div class="text flex-wrap direction-column justify-content-space-between space-top">' +
-                                '<h4 class="title text-ellipsis">' + k.title + '</h4>' +
-                                '<p class="desc mtext-ellipsis">' + k.description + '</p>' +
-                                '<p class="text-lg text-danger"><small>¥</small>' + k.price + '</p>' +
-                                '<ul class="flex-wrap justify-content-space-between list-unstyled text-xs text-muted">' +
+                                '<div class="item-body">';
+                            if (mode == 'horizontal') {
+                                str += '<h4 class="item-body-title text-ellipsis-lines">' + k.title + '</h4>';
+                            } else {
+                                str += '<h4 class="item-body-title text-ellipsis">' + k.title + '</h4>' +
+                                    '<p class="item-body-desc text-ellipsis-lines">' + k.description + '</p>';
+                            }
+                            str += '<p class="text-lg text-danger"><small>&yen;</small>' + k.price + '</p>' +
+                                '<ul class="item-body-info text-muted">' +
                                 '<li><i class="icon iconfont-share"></i> ' + sharing + '</li>' +
                                 '<li><i class="icon iconfont-commenting"></i> ' + comments + '</li>' +
                                 '</ul>' +
@@ -286,7 +304,7 @@
                         });
                         target.prepend(str);
                         localStorage.setItem('oldProductListsID', listid);
-                        msg('更新了' + total + '条数据');
+                        HtmlUtil.msg('更新了' + total + '条数据');
                     }
                     vSwiper.update(); // 更新容器尺寸
                 },
@@ -295,42 +313,6 @@
                 }
             });
         };
-        // 消息提示
-        function loadingMsg(str) {
-            loading = $(document).dialog({
-                type: 'toast',
-                infoIcon: 'js/dialog2-master/dist/images/icon/loading.gif',
-                infoText: str
-            });
-        }
-        // 消息提示
-        function msg(str) {
-            $(document).dialog({
-                type: 'notice',
-                infoText: str,
-                autoClose: 1500,
-                position: 'bottom'
-            });
-        }
-        // 消息提示
-        function noData(type, text) {
-            var color, icon;
-            switch (type) {
-                case 'primary':
-                    color = 'msg msg-primary';
-                    icon = 'icon iconfont-correctcircle';
-                    break;
-                default:
-                    color = 'msg msg-default';
-                    icon = 'icon iconfont-infocircle';
-            }
-            var str = '';
-            str += '<div class="' + color + '">';
-            str += '<h1><i class="' + icon + '"></i></h1>' +
-                '<h3 class="text-center">' + text + '</h3>' +
-                '</div>';
-            targetObj.html(str);
-        }
         //]]>
     </script>
 </body>
