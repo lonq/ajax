@@ -92,6 +92,7 @@
 
             self.options.modalTemplate = self.$modal;
         },
+        // 关闭模态框
         closeModal: function () {
             var self = this;
             self.$modal.remove();
