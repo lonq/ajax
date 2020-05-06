@@ -29,12 +29,12 @@ window.Clipboard = (function(window, document, navigator) {
     function copyToClipboard() {
         try {
             if (document.execCommand("Copy")) {
-                msg("复制成功！");
+                HtmlUtil.msg("复制成功！");
             } else {
-                msg("复制失败！请手动复制！");
+                HtmlUtil.msg("复制失败！请手动复制！");
             }
         } catch (err) {
-            msg("复制错误！请手动复制！");
+            HtmlUtil.msg("复制错误！请手动复制！");
         }
         document.body.removeChild(textArea);
     }
