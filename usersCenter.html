@@ -15,17 +15,17 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>用户中心</title>
-    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.3.0/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
 </head>
 
 <body>
-    <div class="siderbar-swiper">
+    <div class="siderbar-swiper swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide siderbar">
-                <div class="items border-top border-bottom">
+                <div class="items">
                     <a class="item item-access" href="setting.html">
                         <div class="item-body">
                             <span>设置</span>
@@ -33,7 +33,7 @@
                         <div class="item-footer"></div>
                     </a>
                 </div>
-                <div class="items border-top border-bottom">
+                <div class="items">
                     <a class="item item-access" href="FeedbackFunction.html">
                         <div class="item-body">
                             <span>功能反馈</span>
@@ -41,7 +41,7 @@
                         <div class="item-footer"></div>
                     </a>
                 </div>
-                <div class="items border-top border-bottom">
+                <div class="items">
                     <a class="item item-access" href="about.html">
                         <div class="item-body">
                             <span>关于</span>
@@ -156,8 +156,6 @@
                     </a>
                 </div>
 
-                <div class="fixed-bottom"></div>
-
             </div>
         </div>
     </div>
@@ -169,7 +167,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
+    <script src="js/swiper-5.3.0/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/dropdown.js"></script>
@@ -194,28 +192,31 @@
                 initialSlide: 1,
                 resistanceRatio: 0,
                 slideToClickedSlide: true,
-                height: 'auto',
                 on: {
-                    slideChangeTransitionStart: function () {
-                        var slider = this;
-                        if (slider.activeIndex === 1) {
-                            menuButton.on('tap', openMenu);
-                            backdropState($('.content'), 'siderbar-backdrop', 'off');
-                            siderbar.css({
-                                'z-index': ''
-                            });
-                            $('footer').show();
-                        } else {
-                            menuButton.off('tap', openMenu);
+					slideChangeTransitionStart: function () {
+						var slider = this;
+						if (slider.activeIndex === 0) {
+                            menuButton.off('click', openMenu);
                             backdropState($('.content'), 'siderbar-backdrop', 'on');
                             var siderbarZindex = Number($('.siderbar-backdrop').css('z-index')) + 1;
                             siderbar.css({
                                 'z-index': siderbarZindex
                             });
                             $('footer').hide();
-                        }
-                    }
-                }
+						}
+					},
+					slideChangeTransitionEnd: function () {
+						var slider = this;
+						if (slider.activeIndex === 1) {
+                            menuButton.on('click', openMenu);
+                            backdropState($('.content'), 'siderbar-backdrop', 'off');
+                            siderbar.css({
+                                'z-index': ''
+                            });
+                            $('footer').show();
+						}
+					},
+				}
             });
             //插入底部菜单
             getFooter('usersCenter.html');
@@ -229,7 +230,6 @@
         //修正容器高度
         function fixedContainerH() {
             $('.v-swiper, .v-swiper>.swiper-wrapper').css('height', 'calc(100vh - ' + _offsetHeight + 'px)');
-            $('.fixed-bottom').css('padding-top', _offsetHeight); // 因swiper限制，需补足底部菜单栏高度
         }
         // 显示actionsheet
         function showActionSheet(actionsheet) {
@@ -306,7 +306,7 @@
                         var str = '';
                         var list = reponse;
                         str += '<div class="items-title">相关功能</div>' +
-                            '<ul class="user-capability border-top border-bottom padding-vertical bg-white">';
+                            '<ul class="user-capability padding-vertical bg-white">';
                         $.each(list, function (i, k) {
                             var linkurl = k.linkurl;
                             if (linkurl != '') {

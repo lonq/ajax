@@ -15,6 +15,7 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>用户信息</title>
+    <link href="js/image-process-master/dist/image-clip.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
@@ -31,19 +32,17 @@
         </nav>
     </header>
 
-    <div class="list items border-top border-bottom">
-        <a class="item item-avatar item-access vertical-center js-userface-edit" href="javascript:;" data-eletype="text" data-eleName="usersFace">
+    <div class="list items">
+        <label class="item item-avatar item-access vertical-center js-userface-edit" href="javascript:;" data-title="头像" data-eletype="text" data-eleName="usersFace">
             <div class="item-body">
                 <span>头像</span>
             </div>
             <div class="avatar clear-margin">
                 <div class="js-usersface"></div>
-                <!-- <form class="form-classics" id="usersFaceForm" name="usersFaceForm" method="POST">
-                    <input id="fileuplaod" name="fileuplaod" type="file" accept="image/*" onchange="">
-                </form> -->
+                <input type="file" name="uploadfile" id="uploadfile" class="uploadfile" accept="image/*">
             </div>
             <div class="item-footer"></div>
-        </a>
+        </label>
         <a class="item" href="javascript:;">
             <div class="item-body">
                 <span>用户名</span>
@@ -52,7 +51,7 @@
                 <span class="js-value js-usersname"></span>
             </div>
         </a>
-        <a class="item item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersPetName">
+        <a class="item item-access js-edit" href="javascript:;" data-title="昵称" data-eletype="text" data-eleName="UsersPetName">
             <div class="item-body">
                 <span>昵称</span>
             </div>
@@ -60,7 +59,23 @@
                 <span class="js-value js-userspetname"></span>
             </div>
         </a>
-        <a class="item item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersPhone">
+        <a class="item item-access js-edit" href="javascript:;" data-title="性别" data-eletype="radio" data-eleName="UsersSex">
+            <div class="item-body">
+                <span>性别</span>
+            </div>
+            <div class="item-footer item-note">
+                <span class="js-value js-userssex"></span>
+            </div>
+        </a>
+        <a class="item item-access js-edit" href="javascript:;" data-title="生日" data-eletype="text" data-eleName="UsersBirthday">
+            <div class="item-body">
+                <span>生日</span>
+            </div>
+            <div class="item-footer item-note">
+                <span class="js-value js-usersbirthday"></span>
+            </div>
+        </a>
+        <a class="item item-access js-edit" href="javascript:;" data-title="手机号" data-eletype="text" data-eleName="UsersPhone">
             <div class="item-body">
                 <span>手机号</span>
             </div>
@@ -68,7 +83,7 @@
                 <span class="js-value js-usersphone"></span>
             </div>
         </a>
-        <a class="item item-access js-edit" href="javascript:;" data-eletype="text" data-eleName="UsersEMail">
+        <a class="item item-access js-edit" href="javascript:;" data-title="邮箱" data-eletype="text" data-eleName="UsersEMail">
             <div class="item-body">
                 <span>邮箱</span>
             </div>
@@ -92,7 +107,7 @@
                 <span class="js-value js-logindate"></span>
             </div>
         </a>
-        <a class="item item-thumb item-access js-edit" href="javascript:;" data-eletype="textarea" data-eleName="UsersSignature">
+        <a class="item item-thumb item-access js-edit" href="javascript:;" data-title="签名" data-eletype="textarea" data-eleName="UsersSignature">
             <div class="item-body">
                 <span>签名</span>
             </div>
@@ -101,99 +116,128 @@
             </div>
         </a>
     </div>
-    <!-- 上传头像 -->
-    <div class="actionsheet user-face-actionsheet">
-        <div class="actionsheet-title padding-horizontal">
-            <i class="close iconfont-wrong"></i>
-            <p class="text-center">设置头像</p>
-        </div>
-        <ul class="actionsheet-menu direction-column text-center">
-            <li>图库<input type="file" id="video" accept="video/*" capture="camcorder"></li>
-            <li>照相机<input type="file" id="image" accept="image/*" capture="camera"></li>
-        </ul>
-        <div class="actionsheet-cancel">取消</div>
-    </div>
 
     <script src="js/zepto.min.js"></script>
     <script src="js/touch.min.js"></script>
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/uploadFiles.js"></script>
+    <script src="js/image-process-master/dist/image-clip.min.js"></script>
+    <script src="js/rolldate-master/dist/rolldate.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/focusEnd.js"></script>
-    <script src="js/zepto-cut-photo-master/js/zepto.cutphoto.js"></script>
     <script src="js/common.js"></script>
     <script src="js/config.js"></script>
+    <script src="js/upload-avatar.js"></script>
+    <script src="js/modify-form.js"></script>
 
     <script type="text/javascript">
         //<![CDATA[
         var usersid = HtmlUtil.getCookie($.fn.cookie('LQCookies'), 'UsersID'); // 用户ID
         $(function () {
+            // 上传头像
+            $('#uploadfile').uploadAvatar({
+                modalContainer: '#modalForm',
+                modalForm: '#stepForm',
+                modalTitle: '修改头像',
+                submit: function ($form, params) { // 提交逻辑
+                    var self = this;
+                    var imgData = self.getUrlData();
+                    var $target = $(self.options.croppedContainer);
+                    var url = 'getUsers.asp?Action=updateUsersFace';
+                    params = {UsersID: usersid, urlData: imgData};
+                    if (!self.options.isClip) {
+                        HtmlUtil.msg('请先裁切');
+                        return;
+                    }
+                    var img = new Image();
+                    img.src = imgData;
+                    img.onload = function () {
+                        // 上传图片
+                        $.ajax({
+                            type: 'post',
+                            url: url,
+                            timeout: 15000,
+                            dataType: 'json',
+                            data: params,
+                            success: function (reponse) {
+                                if (reponse == 1) {
+                                    $target.html(img);
+                                    self.closeModal();
+                                }
+                            },
+                            error: function (xhr, type, errorThrown) {
+                                console.log('失败')
+                            }
+                        });
+                    }
+                }
+            });
+            // 修改表单
+            $('.js-edit').on('click', function () {
+                var sexArr = ['保密', '男', '女'];
+                var $this = $(this);
+                var _modalTitle = $this.attr('data-title');
+                var _widgetType = $this.attr('data-eletype');
+                var _widget = $this.attr('data-eleName');
+                var _resultContainer = $this.find('.item-footer>span');
+                var _widgetText = _resultContainer.text();
+                $this.modifyForm({
+                    modalTitle: '修改' + _modalTitle, // 模态框标题
+                    widget: _widget, // 提交的控件ID
+                    widgetValue: _widgetText, // 控件值
+                    widgetType: _widgetType, // 控件类型
+                    resultContainer: _resultContainer, // 结果显示容器
+                    initialization: function ($form, params) { // 初始化提示消息
+                        var self = this;
+                        var $UsersID = $('<input type="hidden" name="UsersID" value="' + usersid + '">')
+                        initMsg(self.$modalFooter, _widget);
+                        if (_widgetType == 'radio') {
+                            for (let i = 0; i < sexArr.length; i++) {
+                                if (sexArr[i] == _widgetText) {
+                                    self.$modalBodyWidget += '<label class="item item-access"><div class="radio item-header"><input type="radio" name="' + _widget + '" value="' + sexArr[i] + '" checked></div><div class="item-body">' + sexArr[i] + '</div></label>';
+                                } else {
+                                    self.$modalBodyWidget += '<label class="item item-access"><div class="radio item-header"><input type="radio" name="' + _widget + '" value="' + sexArr[i] + '"></div><div class="item-body">' + sexArr[i] + '</div></label>';
+                                }
+                            }
+                            self.$modalBody.append(self.$modalBodyWidget);
+                        }
+                        self.$modalBody.append($UsersID);
+                    },
+                    submit: function ($form, params) { // 提交逻辑
+                        var self = this;
+                        var valid = validateForm(_widget); // 验证表单
+                        var $target = _resultContainer;
+                        var eleVal = '';
+                        if (_widgetType == 'select') {
+                            eleVal = HtmlUtil.htmlClaer($('[name=' + _widget + ']:selected').val());
+                        } else if (_widgetType == 'radio' || _widgetType == 'checkbox') {
+                            eleVal = HtmlUtil.htmlClaer($('[name=' + _widget + ']:checked').val());
+                        } else {
+                            eleVal = HtmlUtil.htmlClaer($('[name=' + _widget + ']').val());
+                        }
+                        params = $form.serialize();
+                        if (valid) {
+                            $.ajax({
+                                type: 'POST',
+                                url: 'getUsers.asp?Action=update' + _widget,
+                                data: params,
+                                timeout: 15000,
+                                success: function (reponse) {
+                                    $target.html(eleVal);
+                                    self.closeModal();
+                                },
+                                error: function () {
+                                    HtmlUtil.msg('错误！');
+                                }
+                            });
+                        }
+                    }
+                });
+            });
             // 插入正文
             getContent();
-            // 生成头像表单
-            $('.js-userface-edit').on('click', function(){
-                var $t = $(this);
-                var eleType = $t.attr('data-eletype');
-                var eleName = $t.attr('data-eleName');
-                initUserFaceForm($t, eleType, eleName);
-            });
-            // 生成表单
-            $('.js-edit').on('click', function(){
-                var $t = $(this);
-                var eleType = $t.attr('data-eletype');
-                var eleName = $t.attr('data-eleName');
-                initForm($t, eleType, eleName);
-            });
-            // 关闭表单
-            $(document).on('click', '.js-close-btn', function(){
-                closeModal();
-            });
         });
-        // 表单
-        function initForm($target, eleType, eleName) {
-            var title = $target.find('.item-body>span').text();
-            var value = $target.find('.item-footer>span').html();
-            var html = '';
-            html += '<div id="modalForm" class="modal modal-form bg-gray" style="display: block;">' +
-                    '<form class="form-classics" id="stepForm" name="stepForm" onsubmit="return validateForm(\'' + eleName + '\')">' +
-                    '<header>' +
-                    '<nav class="navbar navbar-light">' +
-                    '<ul class="navbar-left">' +
-                    '<li class="js-close-btn" data-dismiss="modal"><a href="javascript:;"><i class="iconfont-angleleft"></i></a></li>' +
-                    '</ul>' +
-                    '<h3 class="navbar-title">修改' + title + '</h3>' +
-                    '<ul class="navbar-right">' +
-                    '<li id="ok" onclick="validateForm(\'' + eleName + '\')"><span>确定</span></li>' +
-                    '</ul>' +
-                    '</nav>' +
-                    '</header>' +
-                    '<div class="list items">' +
-                    '<div class="item js-clear-value">' +
-                    '<div class="item-body">';
-            html += '<input type="hidden" name="UsersID" id="UsersID" value="' + usersid + '">';
-            if (eleType == 'textarea') {
-                html += '<textarea class="form-control js-clear-ele" name="' + eleName + '" id="' + eleName + '" rows="3" placeholder="请输入' + title + '">' + value + '</textarea>';
-            } else {
-                html += '<input type="' + eleType + '" class="form-control js-clear-ele" name="' + eleName + '" id="' + eleName + '" value="' + value + '" placeholder="请输入' + title + '">';
-            }
-            html += '</div>' +
-                    '<div class="item-footer form-control-feedback">' +
-                    '<i class="iconfont-wrongcircle text-muted js-clear-btn"></i>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="items-tips"></div>' +
-                    '</form>' +
-                    '</div>';
-            $('body').append(html);
-            $('#' + eleName).focusEnd();
-            // 清除表单控件的值
-            clearEleValue('.js-clear-value', '.js-clear-ele', '.js-clear-btn');
-            // 初始化提示消息
-            initMsg($('.items-tips'), eleName);
-        }
         // 文章正文
         function getContent() {
             $.ajax({
@@ -208,6 +252,8 @@
                     // 有数据
                     var usersname = reponse.usersname;
                     var userspetname = reponse.userspetname;
+                    var userssex = reponse.userssex;
+                    var usersbirthday = reponse.usersbirthday;
                     var usersphone = reponse.usersphone;
                     var userssignature = reponse.userssignature;
                     var usersemail = reponse.usersemail;
@@ -232,6 +278,8 @@
                     $('.js-usersface').html('<img src="' + usersface + '">');
                     $('.js-usersname').html(usersname);
                     $('.js-userspetname').html(userspetname);
+                    $('.js-userssex').html(userssex);
+                    $('.js-usersbirthday').html(usersbirthday);
                     $('.js-usersphone').html(usersphone);
                     $('.js-usersemail').html(usersemail);
                     $('.js-addtime').html(addtime);
@@ -246,12 +294,17 @@
         }
         // 初始化表单提示
         function initMsg($target, eleName) {
-            var $ele = $('#' + eleName);
+            var $ele = $('[name=' + eleName + ']');
             var _initMsg = '';
             if (eleName == 'UsersPetName') { // 昵称
                 let len = 18;
                 _initMsg = '昵称长度2-'+ len +'位，不包含特殊字符！';
                 $ele.attr('maxlength', len);
+            } else if (eleName == 'UsersBirthday') { // 生日
+                _initMsg = '选填';
+                // 时间选择器
+                rolldate('#UsersBirthday');
+                // $ele.attr('readonly', true);
             } else if (eleName == 'UsersPhone') { // 手机号
                 let len = 11;
                 _initMsg = '请输入正确的手机号，长度'+ len +'位。';
@@ -267,9 +320,9 @@
             }
             $target.html(_initMsg);
         }
-        // 修改普通表单
+        // 表单验证
         function validateForm(eleName) {
-            var $ele = $('#' + eleName);
+            var $ele = $('[name=' + eleName + ']');
             var $errorMsgObj = $ele.parents('.items').siblings('.items-tips');
             var val = $.trim($ele.val());
             if (eleName == 'UsersPetName') { // 昵称
@@ -309,45 +362,20 @@
                     return false;
                 }
             }
-            saveForm(eleName);
+            return true;
         }
-        // 修改普通表单
-        function saveForm(eleName) {
-            var val = $('#' + eleName).val();
-            $.ajax({
-                type: "POST",
-                url: 'getUsers.asp?Action=update' + eleName,
-                data: $('#stepForm').serialize(),
-                timeout: 15000,
-                dataType: "json",
-                success: function (reponse) {
-                    $('.js-' + eleName.toLowerCase()).html(val);
-                    closeModal();
-                },
-                error: function () {
-                    HtmlUtil.msg('错误！');
+        // 日期选择
+        function rolldate(obj) {
+            const date = new Date();
+            new Rolldate({
+                el: obj,
+                format: 'YYYY-MM-DD',
+                beginYear: date.getFullYear() - 100,
+                endYear: date.getFullYear(),
+                init: function () {
+                    this.config.lang.clear = '';
                 }
             });
-        }
-        // 显示actionsheet
-        function showActionSheet(actionsheet) {
-            actionsheet.before('<div class="actionsheet-backdrop"></div>');
-            var backdrop = $('.actionsheet-backdrop');
-            var actionsheetCancel = $('.actionsheet-cancel, .actionsheet .close');
-            backdrop.on('click', hideActionSheet);
-            actionsheetCancel.on('click', hideActionSheet);
-            actionsheet.addClass('actionsheet-toggle');
-        }
-        // 关闭actionsheet
-        function hideActionSheet() {
-            var actionsheet = $('.actionsheet');
-            var backdrop = $('.actionsheet-backdrop');
-            actionsheet.removeClass('actionsheet-toggle');
-            backdrop.remove();
-        }
-        // 关闭模态框
-        function closeModal() {
-            $('.modal').remove();
         }
         //]]>
     </script>

@@ -15,7 +15,7 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>产品详情</title>
-    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.3.0/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
@@ -94,7 +94,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
+    <script src="js/swiper-5.3.0/package/js/swiper.min.js"></script>
     <script src="js/timeago.js-master/dist/timeago.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/common.js"></script>
@@ -138,7 +138,8 @@
             },
             on: {
                 slideChangeTransitionEnd: function(event){
-                    $('.v-swiper>.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)');
+                    vSwiper.translateTo(0, 0, false, false);
+                    // $('.v-swiper>.swiper-wrapper').css('transform', 'translate3d(0px, 0px, 0px)');
                     $('.h-swiper>.swiper-wrapper>.swiper-slide-active').css('height', 'auto').siblings('.swiper-slide').css('height', '0px');
                     getData(hSwiper.activeIndex);
                 },
@@ -219,7 +220,9 @@
         function pullUpAction() {
             var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
+            var _contentRealHeight = _viewHeight - _contentHeight + _offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
+                vSwiper.translateTo(_contentRealHeight, 500, false, false);
                 if (loadFlagArr[hSwiper.activeIndex]) {
                     pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
                     // 加载数据
@@ -402,6 +405,7 @@
                                     '<li class="text-muted"><small class="timeago" datetime="' + k.addtime + '"></small></li>' +
                                     '</ul>' +
                                     '<p class="item-body-desc">' + k.comment + '</p>' +
+                                    '</div>'+
                                     '</div>';
                             });
                             // 上拉结束提示

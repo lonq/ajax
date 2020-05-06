@@ -15,7 +15,7 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>设置</title>
-    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.3.0/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
@@ -32,51 +32,58 @@
         </nav>
     </header>
 
-    <div class="items border-top border-bottom">
-        <div class="item">
+    <div class="items">
+        <label class="item item-access">
             <div class="item-body">
-                <span>设置一</span>
+                <span>开关</span>
             </div>
-            <label class="toggle">
+            <div class="toggle">
                 <input type="checkbox" value="on" />
                 <div class="track"><div class="handle"></div></div>
-            </label>
-        </div>
-        <div class="item item-radio">
-            <label class="radio">
+            </div>
+        </label>
+        <label class="item item-access">
+            <div class="radio item-header">
                 <input type="radio" name="r1">
-            </label>单选一
-        </div>
-        <div class="item item-radio">
-            <label class="radio">
+            </div>
+            <div class="item-body">单选一</div>
+        </label>
+        <label class="item item-access">
+            <div class="radio item-header">
                 <input type="radio" name="r1">
-            </label>单选二
-        </div>
-        <div class="item item-checkbox item-checkbox-right">
-            <label class="checkbox">
+            </div>
+            <div class="item-body">单选二</div>
+        </label>
+        <label class="item item-access">
+            <div class="checkbox item-header">
                 <input type="checkbox">
-            </label>多选一
-        </div>
-        <div class="item item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11">
-            </label>单选二
-        </div>
-        <div class="item item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11">
-            </label>单选二
-        </div>
-        <div class="item item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11" disabled>
-            </label>单选二
-        </div>
-        <div class="item item-checkbox item-checkbox-right">
-            <label class="checkbox">
-                <input type="radio" name="r11" checked disabled>
-            </label>单选二
-        </div>
+            </div>
+            <div class="item-body">多选一</div>
+        </label>
+        <label class="item item-access">
+            <div class="item-body">多选二</div>
+            <div class="checkbox">
+                <input type="checkbox">
+            </div>
+        </label>
+        <label class="item item-access">
+            <div class="item-body">多选三</div>
+            <div class="checkbox">
+                <input type="checkbox" checked>
+            </div>
+        </label>
+        <label class="item item-access">
+            <div class="item-body">多选四</div>
+            <div class="checkbox">
+                <input type="checkbox" disabled>
+            </div>
+        </label>
+        <label class="item item-access">
+            <div class="item-body">多选五</div>
+            <div class="checkbox">
+                <input type="checkbox" checked disabled>
+            </div>
+        </label>
     </div>
 
     <script src="js/zepto.min.js"></script>

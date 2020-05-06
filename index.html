@@ -15,7 +15,7 @@
     <meta name="author" content="lonq">
     <meta name="copyright" content="lonq">
     <title>首页</title>
-    <link href="js/swiper-5.2.1/package/css/swiper.min.css" rel="stylesheet">
+    <link href="js/swiper-5.3.0/package/css/swiper.min.css" rel="stylesheet">
     <link href="js/dialog2-master/dist/css/dialog.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <script src="js/flexible.js"></script>
@@ -41,7 +41,7 @@
     <script src="js/htmlutil.js"></script>
     <script src="js/zepto.cookie.min.js"></script>
     <script src="js/checkLogin.js"></script>
-    <script src="js/swiper-5.2.1/package/js/swiper.min.js"></script>
+    <script src="js/swiper-5.3.0/package/js/swiper.min.js"></script>
     <script src="js/dialog2-master/dist/js/dialog.min.js"></script>
     <script src="js/common.js"></script>
 
@@ -66,8 +66,6 @@
             slidesPerView: 'auto',
             mousewheelControl: true,
             freeMode: true,
-            observer: true,
-            observeParents: true,
             scrollbar: {
                 el: '.v-swiper-scrollbar'
             },
@@ -124,7 +122,9 @@
         function pullUpAction() {
             var _viewHeight = $('.v-swiper>.swiper-wrapper').get(0).offsetHeight;
             var _contentHeight = $('.v-swiper>.swiper-wrapper>.swiper-slide').get(0).offsetHeight;
+            var _contentRealHeight = _viewHeight - _contentHeight + _offsetHeight;
             if (vSwiper.translate < 0 && vSwiper.translate <= _viewHeight - _contentHeight + _offsetHeight) {
+                vSwiper.translateTo(_contentRealHeight, 500, false, false);
                 if (loadFlag) {
                     pullUp.html('<i class="iconfont-loading animation-spinner"></i> 加载中...').show();
                     //加载数据

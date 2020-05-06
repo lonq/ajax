@@ -1,7 +1,8 @@
 // 1.通用列表
 // 基本设置
 // 标题
-.items-title {
+.items-title,
+.items-divider {
     margin-top: @padding-base-vertical;
     margin-bottom: @padding-base-vertical / 2;
     padding-left: @padding-base-horizontal;
@@ -33,10 +34,10 @@
     }
     // 清除border
     &.clear-border {
-        .item {
-            &:before, &:after {
-                display: none;
-            }
+        border: none !important;
+        &:before,
+        &:after {
+            content: none !important;
         }
     }
 }
@@ -100,7 +101,7 @@
     }
     // 右边按钮
     &.item-button-right {
-        padding: 0.186667rem @padding-base-horizontal;
+        // padding: 0.186667rem @padding-base-horizontal;
         .btn {
             margin-left: @padding-base-vertical;
             padding: 0.106667rem @padding-base-vertical;
@@ -419,62 +420,14 @@
         }
     }
 }
-// 选择框
-.item {
-    &.item-radio {
-        padding-left: 1.173333rem;
-        .radio {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: @padding-base-horizontal;
-            .display-flex();
-            .align-items();
-        }
-    }
-    &.item-checkbox {
-        padding-left: 1.173333rem;
-        .checkbox {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: @padding-base-horizontal;
-            .display-flex();
-            .align-items();
-        }
-        &.item-checkbox-right {
-            padding-right: @padding-base-horizontal;
-            padding-left: @padding-base-horizontal;
-            .checkbox {
-                input {
-                    position: absolute;
-                    top: 50%;
-                    right: @padding-base-horizontal;
-                    margin-top: -0.24rem;
-                }
-            }
-        }
-    }
-}
-// 间隔
-.item-divider {
-    margin-top: @padding-base-vertical;
-    margin-bottom: @padding-base-vertical / 2;
-    padding-left: @padding-base-horizontal;
-    padding-right: @padding-base-horizontal;
-    color: @gray-light;
-    font-size: @font-size-base;
-}
 // 面板
 .panel {
     position: relative;
-    margin-top: @padding-base-vertical;
     background-color: #fff;
     overflow: hidden;
-    &:first-child {
-        margin-top: 0;
+    // 面板组间隔
+    & + .panel {
+        margin-top: @padding-base-vertical;
     }
     &:before {
         .border-top(@border-color);
@@ -483,12 +436,19 @@
         .border-bottom(@border-color);
     }
     .panel-header {
-        position: relative;
         padding: @padding-base-vertical @padding-base-horizontal;
-        color: @gray-light;
-        font-size: @font-size-base;
-        &:after {
-            .border-bottom(@border-color);
+        font-size: @font-size-large;
+    }
+    .panel-body {
+        position: relative;
+        &:before {
+            .border-top(@border-color);
+        }
+    }
+    .panel-footer {
+        position: relative;
+        &:before {
+            .border-top(@border-color);
         }
     }
 }
@@ -496,6 +456,9 @@
 .form-preview {
     position: relative;
     background-color: #fff;
+    & + .form-preview {
+        margin-top: @padding-base-vertical;
+    }
     &:before {
         .border-top(@border-color);
     }
@@ -503,37 +466,15 @@
         .border-bottom(@border-color);
     }
     .form-preview-header {
-        position: relative;
         padding: @padding-base-vertical @padding-base-horizontal;
-        text-align: right;
-        line-height: 2.5em;
-        &:after {
-            .border-bottom(@border-color);
-            left: @padding-base-horizontal;
-        }
-        .form-preview-value {
-            font-style: normal;
-            font-size: 1.6em;
-        }
+        font-size: @font-size-large;
     }
     .form-preview-body {
-        padding: @padding-base-vertical @padding-base-horizontal;
-        font-size: 0.9em;
-        color: @gray-dark;
-    }
-    .form-preview-footer {
         position: relative;
-        line-height: 1.333333rem;
-        .display-flex();
+        padding: @padding-base-vertical @padding-base-horizontal;
+        clear: both;
         &:before {
             .border-top(@border-color);
-        }
-    }
-    .form-preview-item {
-        position: relative;
-        overflow: hidden;
-        & + .form-preview-item {
-            margin-top: @padding-base-vertical;
         }
         .form-preview-label {
             float: left;
@@ -550,44 +491,51 @@
             word-break: normal;
             word-wrap: break-word;
         }
+    }
+    .form-preview-footer {
+        position: relative;
+        line-height: 1.333333rem;
+        .display-flex();
+        &:before {
+            .border-top(@border-color);
+        }
         .form-preview-btn {
             position: relative;
-            display: block;
-            .box-flex();
-            color: @gray-dark;
+            .box-flex(1);
+            font-size: @font-size-large;
             text-align: center;
+            border-radius: 0;
             -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+            &.form-preview-btn-default {
+                color: @gray-light;
+            }
+            &.form-preview-btn-primary {
+                color: @brand-primary;
+            }
             &:active {
                 background-color: @gray-lighter;
             }
-            &:after {
-                .border-bottom(@border-color);
+            &:before {
+                .border-left(@border-color);
             }
             &:first-child {
-                &:after {
+                &:before {
                     display: none;
                 }
             }
         }
-        .form-preview-btn-default {
-            color: @gray-light;
-        }
-        .form-preview-btn-primary {
-            color: @brand-primary;
-        }
     }
 }
-// 顶部悬浮
-header {
-    &#header {
-        padding-top: 1.173333rem;
-    }
+// 顶部底部悬浮
+header#header {
+    padding-top: 1.173333rem;
+    width: 100%;
+    height: 1.173333rem;
 }
-// 底部悬浮
-footer {
-    &#footer {
-        padding-top: 1.44rem;
-    }
+footer#footer {
+    padding-top: 1.44rem;
+    width: 100%;
+    height: 1.44rem;
 }
 .footer {
     .footer-variant(1.44rem; @gray-light; @brand-primary);
@@ -604,8 +552,15 @@ footer {
     &:before {
         .border-top(@border-color);
     }
-    .item-fill {
-        .button-size(0; @padding-base-horizontal; @font-size-base; @height; 0);
+    &.buttons {
+        > .btn {
+            padding-top: 0;
+            padding-bottom: 0;
+            height: @height;
+            line-height: @height;
+            border: 0;
+            border-radius: 0;
+        }
     }
     .btn-curve {
         border-radius: (@height / 2) !important;
@@ -630,9 +585,6 @@ footer {
     .tip {
         display: block;
         text-align: center;
-    }
-    .single-btn {
-        width: 60%;
     }
     .item-flex {
         .box-flex();
@@ -1291,6 +1243,7 @@ table {
     width: 100%;
     height: @nav-height;
     color: @gray-dark;
+    font-size: @font-size-large;
     &.affix {
         position: fixed;
     }
@@ -1305,6 +1258,7 @@ table {
     .navbar-right {
         .display-flex();
         .align-items(center);
+        font-size: inherit;
     }
     .navbar-title {
         position: absolute;
@@ -1315,7 +1269,7 @@ table {
         width: 7em;
         height: @nav-height;
         line-height: @nav-height;
-        font-size: @font-size-large;
+        font-size: inherit;
         text-align: center;
         .text-ellipsis();
     }
@@ -1328,14 +1282,12 @@ table {
             height: @nav-height;
             line-height: @nav-height;
             text-align: center;
-            font-size: @font-size-large;
             > a {
                 position: relative;
                 display: block;
                 height: @nav-height;
                 line-height: @nav-height;
                 text-align: center;
-                font-size: @font-size-large;
                 -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
                 .badge {
                     position: absolute;
@@ -1347,6 +1299,9 @@ table {
                         display: block;
                     }
                 }
+            }
+            > input, > button {
+                font-size: inherit;
             }
             i + span {
                 display: inline-block;

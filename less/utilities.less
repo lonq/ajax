@@ -311,10 +311,12 @@ input[disabled] {
     padding-left: 0 !important;
 }
 /*边框*/
-.clear-border,
-.clear-border:before,
-.clear-border:after {
+.clear-border {
     border: none !important;
+    &:before,
+    &:after {
+        content: none !important;
+    }
 }
 .border-top {
     position: relative;
@@ -1161,7 +1163,8 @@ input[type="button"].btn-fill {
     }
     /*清除横向排列的按钮边框*/
     &.clear-border > .flex-item .btn {
-        border: 0;
+        border: none;
+        border-radius: 0;
     }
 }
 // 间隔
