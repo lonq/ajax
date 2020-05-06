@@ -44,7 +44,7 @@
                 self.clearValue('.js-clear-value', '.js-clear-ele', '.js-clear-btn');
             }
         },
-        // 创建文档
+        // 创建模态框
         createDOM: function () {
             var self = this;
             self.$modal = $('<div id="' + cutFirstStr(self.options.modalContainer) + '" class="modal modal-form" style="display: block;"></div>');
